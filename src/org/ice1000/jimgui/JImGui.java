@@ -24,6 +24,10 @@ public class JImGui implements AutoCloseable, Closeable {
 		demoMainLoop(nativeObjectPtr);
 	}
 
+	public boolean glfwWindowShouldClose() {
+		return glfwWindowShouldClose(nativeObjectPtr);
+	}
+
 	/** @return see {@link JImGui#nativeObjectPtr} */
 	private static native long allocateNativeObjects();
 
@@ -31,4 +35,6 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 
 	private static native void demoMainLoop(long nativeObjectPtr);
+
+	private static native boolean glfwWindowShouldClose(long nativeObjectPtr);
 }

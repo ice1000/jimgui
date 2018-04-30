@@ -106,3 +106,7 @@ void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong nativeO
 
 }
 
+jboolean Java_org_ice1000_jimgui_JImGui_glfwWindowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
+}
+
