@@ -21,7 +21,7 @@ jlong Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) {
 	glfwSwapInterval(1); // Enable vsync
 
 	// Setup Dear ImGui binding
-	IMGUI_CHECKVERSION();
+	// IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
