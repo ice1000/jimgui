@@ -20,6 +20,7 @@ val javah = task<Exec>("javah") {
 	val target = file("jni").resolve("javah").absolutePath
 	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
 	val className = "org.ice1000.jimgui.JImGui"
+	// TODO use javac -h (simply replacing javah with javac -h does not work)
 	commandLine("javah", "-d", target, "-classpath", classpath, className)
 	dependsOn(tasks["classes"])
 }
