@@ -17,6 +17,7 @@ tasks.withType<JavaCompile> {
 }
 
 val javah = task<Exec>("javah") {
+	group = tasks["init"].group
 	val target = file("jni").resolve("javah").absolutePath
 	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
 	val className = "org.ice1000.jimgui.JImGui"

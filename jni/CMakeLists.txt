@@ -33,6 +33,7 @@ link_directories(imgui impl)
 add_library(jimgui SHARED
 		imgui
 		imgui/imgui.cpp
+		imgui/imgui_demo.cpp
 		imgui/imgui_draw.cpp
 		${IMGUI_IMPL}
 		javah

@@ -20,9 +20,15 @@ public class JImGui implements AutoCloseable, Closeable {
 		deallocateNativeObjects(nativeObjectPtr);
 	}
 
+	public void demoMainLoop() {
+		demoMainLoop(nativeObjectPtr);
+	}
+
 	/** @return see {@link JImGui#nativeObjectPtr} */
 	private static native long allocateNativeObjects();
 
 	/** @param nativeObjectPtr see {@link JImGui#nativeObjectPtr} */
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
+
+	private static native void demoMainLoop(long nativeObjectPtr);
 }

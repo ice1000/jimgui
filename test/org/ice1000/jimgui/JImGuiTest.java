@@ -23,4 +23,11 @@ public class JImGuiTest {
 			nativeObjectPtr.setAccessible(false);
 		}
 	}
+
+	@Test
+	public void demoMainLoop() {
+		try (JImGui imGui = new JImGui()) {
+			imGui.demoMainLoop();
+		}
+	}
 }

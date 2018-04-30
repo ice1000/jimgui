@@ -93,3 +93,5 @@ gradle-app.setting
 *.so
 *.dll
 *.dylib
+
+*.ini
