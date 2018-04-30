@@ -90,3 +90,6 @@ gradle-app.setting
 
 *.iml
 .idea
+*.so
+*.dll
+*.dylib

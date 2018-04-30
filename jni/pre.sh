@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
 rm -rf imgui
+rm -rf impl
+
+export GITHUB=https://raw.githubusercontent.com/ocornut/imgui/master
+export TO_IMGUI=--directory-prefix=imgui
+export TO_IMPL=--directory-prefix=impl
+
 mkdir imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imgui.cpp --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imgui.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imgui_demo.cpp --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imgui_draw.cpp --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imgui_internal.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/imconfig.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/stb_rect_pack.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/stb_textedit.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/stb_truetype.h --directory-prefix=imgui
-# wget https://raw.githubusercontent.com/ocornut/imgui/master/examples/opengl3_example/imgui_impl_glfw_gl3.h --directory-prefix=imgui
-# wget https://raw.githubusercontent.com/ocornut/imgui/master/examples/opengl3_example/imgui_impl_glfw_gl3.cpp --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/examples/opengl2_example/imgui_impl_glfw_gl2.h --directory-prefix=imgui
-wget https://raw.githubusercontent.com/ocornut/imgui/master/examples/opengl2_example/imgui_impl_glfw_gl2.cpp --directory-prefix=imgui
+mkdir impl
+
+wget ${GITHUB}/imgui.cpp ${TO_IMGUI}
+wget ${GITHUB}/imgui.h ${TO_IMGUI}
+wget ${GITHUB}/imgui_draw.cpp ${TO_IMGUI}
+wget ${GITHUB}/imgui_internal.h ${TO_IMGUI}
+wget ${GITHUB}/imconfig.h ${TO_IMGUI}
+wget ${GITHUB}/stb_rect_pack.h ${TO_IMGUI}
+wget ${GITHUB}/stb_textedit.h ${TO_IMGUI}
+wget ${GITHUB}/stb_truetype.h ${TO_IMGUI}
+wget ${GITHUB}/examples/opengl3_example/imgui_impl_glfw_gl3.h ${TO_IMPL}
+wget ${GITHUB}/examples/opengl3_example/imgui_impl_glfw_gl3.cpp ${TO_IMPL}
+wget ${GITHUB}/examples/opengl2_example/imgui_impl_glfw_gl2.h ${TO_IMPL}
+wget ${GITHUB}/examples/opengl2_example/imgui_impl_glfw_gl2.cpp ${TO_IMPL}

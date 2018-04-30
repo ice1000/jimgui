@@ -6,8 +6,14 @@ import java.io.Closeable;
  * @author ice1000
  * @since v0.1
  */
+@SuppressWarnings("WeakerAccess")
 public class JImGui implements AutoCloseable, Closeable {
-	private long nativeObjectPtr = allocateNativeObjects();
+	private long nativeObjectPtr;
+
+	public JImGui() {
+		JniLoader.load();
+		nativeObjectPtr = allocateNativeObjects();
+	}
 
 	@Override
 	public void close() {
