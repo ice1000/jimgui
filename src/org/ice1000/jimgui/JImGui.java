@@ -45,14 +45,21 @@ public class JImGui implements AutoCloseable, Closeable {
 		text(text.getBytes(StandardCharsets.UTF_8));
 	}
 
+	public void sameLine() {
+		sameLine(0, -1);
+	}
+
+	public native void sameLine(float posX, float spacingW);
+
 	/**
 	 * Create {@link java.awt.Button} like text button
 	 *
 	 * @param text the text to display
+	 * @return true if clicked
 	 */
-	public void button(@NotNull String text) {
+	public boolean button(@NotNull String text) {
 		if (io == null) alreadyDisposed();
-		button(text.getBytes(StandardCharsets.UTF_8));
+		return button(text.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -61,13 +68,19 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @param text   the text to display
 	 * @param height button height
 	 * @param width  button width
+	 * @return true if clicked
 	 */
-	public void button(@NotNull String text, float width, float height) {
+	public boolean button(@NotNull String text, float width, float height) {
 		if (io == null) alreadyDisposed();
-		button(text.getBytes(StandardCharsets.UTF_8), width, height);
+		return button(text.getBytes(StandardCharsets.UTF_8), width, height);
 	}
 
-	public @Nullable JImGuiIO getIo() {
+	public @Nullable JImGuiIO tryGetIO() {
+		return io;
+	}
+
+	public @NotNull JImGuiIO getIO() {
+		if (io == null) alreadyDisposed();
 		return io;
 	}
 
@@ -102,7 +115,7 @@ public class JImGui implements AutoCloseable, Closeable {
 
 	private static native void text(byte[] text);
 
-	private static native void button(byte[] text);
+	private static native boolean button(byte[] text);
 
-	private static native void button(byte[] text, float width, float height);
+	private static native boolean button(byte[] text, float width, float height);
 }

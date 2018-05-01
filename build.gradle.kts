@@ -41,8 +41,8 @@ import org.jetbrains.annotations.*;
 @SuppressWarnings("ALL")
 public final class $className {
 	@Contract(pure = true)
-	public static @Nullable JImGuiIO getInstance(@NotNull JImGui owner) {
-		return owner.getIo();
+	public static @NotNull JImGuiIO getInstance(@NotNull JImGui owner) {
+		return owner.getIO();
 	}
 	$className() { }
 """
@@ -78,13 +78,18 @@ public final class $className {
 	// `targetC++File`.parentFile.mkdirs()
 	doFirst {
 		val javaCode = members.joinToString(System.lineSeparator(), prefixJava, postfix = "\n}") { (type, name) ->
-			"\t\tpublic native $type get$name();"
+			"""		public native $type get$name();
+				|		public native void set$name($type newValue);""".trimMargin()
 		}
 		targetJavaFile.writeText(javaCode)
 		val `c++Code` = members.joinToString(System.lineSeparator(), `prefixC++`, "#pragma clang diagnostic pop") { (type, name) ->
 			"""JNIEXPORT j$type JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_get$name(JNIEnv *, jobject) {
 	return ImGui::GetIO().$name;
+}
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGuiIO_set$name(JNIEnv *, jobject, j$type newValue) {
+	ImGui::GetIO().$name = newValue;
 }
 """
 		}
