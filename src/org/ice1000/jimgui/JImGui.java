@@ -1,6 +1,8 @@
 package org.ice1000.jimgui;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Closeable;
 import java.nio.charset.StandardCharsets;
@@ -14,18 +16,22 @@ public class JImGui implements AutoCloseable, Closeable {
 	/** package-private by design */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
+	private @Nullable JImGuiIO io;
 
 	public JImGui() {
 		nativeObjectPtr = allocateNativeObjects();
+		io = new JImGuiIO(this);
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
 	@Override
 	public void close() {
 		deallocateNativeObjects(nativeObjectPtr);
+		io = null;
 	}
 
 	public void demoMainLoop() {
+		if (io == null) alreadyDisposed();
 		demoMainLoop(background.nativeObjectPtr);
 	}
 
@@ -35,6 +41,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @param text the text to display
 	 */
 	public void text(@NotNull String text) {
+		if (io == null) alreadyDisposed();
 		text(text.getBytes(StandardCharsets.UTF_8));
 	}
 
@@ -44,6 +51,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @param text the text to display
 	 */
 	public void button(@NotNull String text) {
+		if (io == null) alreadyDisposed();
 		button(text.getBytes(StandardCharsets.UTF_8));
 	}
 
@@ -55,14 +63,22 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @param width  button width
 	 */
 	public void button(@NotNull String text, float width, float height) {
+		if (io == null) alreadyDisposed();
 		button(text.getBytes(StandardCharsets.UTF_8), width, height);
 	}
 
 	public boolean windowShouldClose() {
+		if (io == null) alreadyDisposed();
 		return windowShouldClose(nativeObjectPtr);
 	}
 
+	@Contract(" -> fail")
+	private void alreadyDisposed() {
+		throw new IllegalStateException("Window already disposed.");
+	}
+
 	public void render() {
+		if (io == null) alreadyDisposed();
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
