@@ -37,7 +37,7 @@ val javah = task<Exec>("javah") {
 }
 
 // TODO move to buildSrc
-val genBinding = task("genBinding") {
+val genBindings = task("genBindings") {
 	group = init.group
 	val codeGenTargetFile = file("gen/org/ice1000/jimgui")
 	val className = "JImGuiIO"
@@ -61,9 +61,11 @@ public final class $className {
 }
 """
 	val members = listOf(
+			"int" to "MetricsRenderVertices",
+			"int" to "MetricsRenderIndices",
+			"int" to "MetricsActiveWindows",
 			"float" to "DeltaTime",
 			"float" to "MouseDoubleClickTime",
-			"float" to "MouseDoubleClickMaxDist",
 			"float" to "MouseDoubleClickMaxDist",
 			"float" to "KeyRepeatDelay",
 			"float" to "KeyRepeatRate",
@@ -78,20 +80,19 @@ public final class $className {
 		val text = members.joinToString(System.lineSeparator(), prefix, suffix) { (type, name) ->
 			"""
 	private static native $type get$name(long nativeObjectPtr);
-	public $type get$name() { return get$name(nativeObjectPtr); }
-"""
+	public $type get$name() { return get$name(nativeObjectPtr); }"""
 		}
 		codeGenTargetFile.resolve("$className.java").writeText(text)
 	}
 }
 
-val clearBinding = task<Delete>("clearBinding") {
+val clearBindings = task<Delete>("clearBindings") {
 	group = clean.group
 	doFirst { file("gen").deleteRecursively() }
 }
 
-classes.dependsOn(genBinding)
-clean.dependsOn(clearBinding)
+classes.dependsOn(genBindings)
+clean.dependsOn(clearBindings)
 
 java.sourceSets {
 	"main" {
