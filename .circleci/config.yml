@@ -42,7 +42,7 @@ jobs:
       - run: cd ~
       - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
       - run: tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
-      - run: cd repo
+      - run: cd ~/repo
 
       - save_cache:
           paths:
