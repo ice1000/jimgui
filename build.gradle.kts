@@ -16,23 +16,33 @@ tasks.withType<JavaCompile> {
 	}
 }
 
+val classes = tasks["classes"]
+val init = tasks["init"]
+
 val javah = task<Exec>("javah") {
-	group = tasks["init"].group
+	group = init.group
 	val target = file("jni").resolve("javah").absolutePath
 	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
 	val className = arrayOf(
 			"org.ice1000.jimgui.JImGui",
+			"org.ice1000.jimgui.JImGuiIO",
 			"org.ice1000.jimgui.JImVec4",
 			"org.ice1000.jimgui.MutableJImVec4"
 	)
-	// TODO use javac -h (simply replacing javah with javac -h does not work)
 	commandLine("javah", "-d", target, "-classpath", classpath, *className)
-	dependsOn(tasks["classes"])
+	dependsOn(classes)
 }
+
+// TODO move to buildSrc
+val genBinding = task("genBinding") {
+	group = init.group
+}
+
+classes.dependsOn(genBinding)
 
 java.sourceSets {
 	"main" {
-		java.setSrcDirs(listOf("src"))
+		java.setSrcDirs(listOf("src", "gen"))
 		resources.setSrcDirs(listOf("res"))
 	}
 

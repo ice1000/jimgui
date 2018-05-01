@@ -11,7 +11,8 @@ import java.nio.charset.StandardCharsets;
  */
 @SuppressWarnings("WeakerAccess")
 public class JImGui implements AutoCloseable, Closeable {
-	private long nativeObjectPtr;
+	/** package-private by design */
+	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 
 	public JImGui() {
