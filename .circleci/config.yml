@@ -51,7 +51,7 @@ jobs:
 
       - run: bash gradlew javah
 
-      - run: |
+      - run: >
         mkdir -p res/native
         cd jni
         mkdir -p cmake-build-debug
