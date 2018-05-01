@@ -14,46 +14,81 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
+      PATH: "~/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
     steps:
       - checkout
 
+      - run:
+          name: Install clang, make, cmake, glfw3, pkg-config
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y clang make cmake libglfw3-dev pkg-config
+
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
+          - v1-dependencies-{{ checksum "build.gradle.kts" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: gradle dependencies
+      - run: bash gradlew dependencies
 
       - save_cache:
           paths:
             - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
-      - run: mkdir -p jni/cmake-build-debug
-      - run: mkdir -p res/native
-      - run: cd jni/cmake-build-debug
-      - run: cmake ..
-      - run: make
-      - run: cp *.so ../../res/native
-      - run: cd ../..
+#      - restore_cache:
+#          keys:
+#          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
+#          # fallback to using the latest cache if no exact match is found
+#          - v1-dependencies-
+#
+#      - run:
+#          name: Download CMake
+#          command: |
+#            cd ~
+#            wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
+#            tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
+#            cd ~/repo
+#
+#      - save_cache:
+#          paths:
+#            - ~/cmake-3.6.2-Linux-x86_64
+#          key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
 
-      - run: gradle jar
+      - run:
+          name: Generate native library headers
+          command: bash gradlew javah
+
+      - run:
+          name: Build native library
+          command: |
+            mkdir -p res/native
+            cd jni
+            mkdir -p cmake-build-debug
+            ls -l
+            cat pre.sh | bash
+            cd cmake-build-debug
+            cmake ..
+            make
+            cp *.so ../../res/native
+            cd ../..
+
+      - run: bash gradlew jar
 
       - store_artifacts:
           path: build/libs
 
-      - run: gradle test
-
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/junit
-      - store_artifacts:
-          path: ~/junit
+#      - run: bash gradlew test
+#
+#      - run:
+#          name: Save test results
+#          command: |
+#            mkdir -p ~/junit/
+#            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+#          when: always
+#
+#      - store_test_results:
+#          path: ~/junit

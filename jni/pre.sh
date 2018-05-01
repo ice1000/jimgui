@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 rm -rf imgui
 rm -rf impl
 
