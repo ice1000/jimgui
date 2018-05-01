@@ -39,10 +39,13 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: cd ~
-      - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
-      - run: tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
-      - run: cd ~/repo
+      - run:
+          name: Download CMake
+          command: |
+            cd ~
+            wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
+            tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
+            cd ~/repo
 
       - save_cache:
           paths:
