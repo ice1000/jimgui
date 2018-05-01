@@ -15,8 +15,6 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
       PATH: "~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      CMAKE_C_COMPILER: clang
-      CMAKE_CXX_COMPILER: clang++
 
     steps:
       - checkout
@@ -25,9 +23,7 @@ jobs:
           name: Install clang
           command: |
             sudo apt-get update
-            sudo apt-get install -y clang
-            export CMAKE_C_COMPILER=clang
-            export CMAKE_CXX_COMPILER=clang++
+            sudo apt-get install -y clang make cmake
 
       # Download and cache dependencies
       - restore_cache:
@@ -43,24 +39,24 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}
 
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: Download CMake
-          command: |
-            cd ~
-            wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
-            tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
-            cd ~/repo
-
-      - save_cache:
-          paths:
-            - ~/cmake-3.6.2-Linux-x86_64
-          key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
+#      - restore_cache:
+#          keys:
+#          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
+#          # fallback to using the latest cache if no exact match is found
+#          - v1-dependencies-
+#
+#      - run:
+#          name: Download CMake
+#          command: |
+#            cd ~
+#            wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
+#            tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
+#            cd ~/repo
+#
+#      - save_cache:
+#          paths:
+#            - ~/cmake-3.6.2-Linux-x86_64
+#          key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
 
       - run:
           name: Generate native library headers
@@ -75,7 +71,7 @@ jobs:
             ls -l
             cat pre.sh | bash
             cd cmake-build-debug
-            ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
+            cmake ..
             make
             cp *.so ../../res/native
             cd ../..
