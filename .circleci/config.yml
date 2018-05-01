@@ -49,19 +49,23 @@ jobs:
             - ~/cmake-3.6.2-Linux-x86_64
           key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
 
-      - run: bash gradlew javah
+      - run:
+          name: Generate native library headers
+          command: bash gradlew javah
 
-      - run: >
-        mkdir -p res/native
-        cd jni
-        mkdir -p cmake-build-debug
-        ls -l
-        cat pre.sh | bash
-        cd cmake-build-debug
-        ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
-        make
-        cp *.so ../../res/native
-        cd ../..
+      - run:
+          name: Build native library
+          command: |
+            mkdir -p res/native
+            cd jni
+            mkdir -p cmake-build-debug
+            ls -l
+            cat pre.sh | bash
+            cd cmake-build-debug
+            ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
+            make
+            cp *.so ../../res/native
+            cd ../..
 
       - run: bash gradlew jar
 
