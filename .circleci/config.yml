@@ -14,9 +14,10 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
-      PATH: ~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:$PATH
 
     steps:
+      - export PATH=~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:$PATH
+
       - checkout
 
       # Download and cache dependencies
