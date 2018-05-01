@@ -16,7 +16,7 @@ jobs:
       TERM: dumb
 
     steps:
-      - export PATH=~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:$PATH
+      - export PATH="~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:$PATH"
 
       - checkout
 
