@@ -11,10 +11,14 @@ import java.nio.file.Paths;
 import java.util.function.Consumer;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 
 public class JImGuiTest {
 	@BeforeClass
 	public static void useAlternativeJeniLib() {
+		// prevent auto-run
+		// noinspection ConstantConditions
+		assumeFalse(true);
 		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
 		JniLoader.load();
 	}
