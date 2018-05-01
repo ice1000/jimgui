@@ -20,7 +20,7 @@ public class JImGui implements AutoCloseable, Closeable {
 
 	public JImGui() {
 		nativeObjectPtr = allocateNativeObjects();
-		io = new JImGuiIO(this);
+		io = new JImGuiIO();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
@@ -65,6 +65,10 @@ public class JImGui implements AutoCloseable, Closeable {
 	public void button(@NotNull String text, float width, float height) {
 		if (io == null) alreadyDisposed();
 		button(text.getBytes(StandardCharsets.UTF_8), width, height);
+	}
+
+	public @Nullable JImGuiIO getIo() {
+		return io;
 	}
 
 	public boolean windowShouldClose() {

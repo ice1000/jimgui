@@ -25,26 +25,39 @@ val init = tasks["init"]
 // TODO move to buildSrc
 val genBindings = task("genBindings") {
 	group = init.group
-	val codeGenTargetFile = file("gen/org/ice1000/jimgui")
 	val className = "JImGuiIO"
+	val targetJavaFile = file("gen/org/ice1000/jimgui").resolve("$className.java")
+	val `targetC++File` = file("jni/generated.cpp")
 	@Language("JAVA", suffix = "}")
-	val prefix = """
+	val prefixJava = """
 package org.ice1000.jimgui;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /**
  * @author ice1000
  * @since v0.1
  */
+@SuppressWarnings("ALL")
 public final class $className {
-	private long nativeObjectPtr;
-	public $className(@NotNull JImGui owner) { nativeObjectPtr = getNativeObjects(owner.nativeObjectPtr); }
+	@Contract(pure = true)
+	public static @Nullable JImGuiIO getInstance(@NotNull JImGui owner) {
+		return owner.getIo();
+	}
+	$className() { }
 """
-	@Language("JAVA", prefix = "class JImGuiIO {")
-	val suffix = """
-	private static native long getNativeObjects(long ownerPtr);
-}
+	@Language("C++")
+	val `prefixC++` = """
+///
+/// author: ice1000
+/// since: v0.1
+///
+
+#include <org_ice1000_jimgui_JImGuiIO.h>
+#include <imgui.h>
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 """
 	val members = listOf(
 			"int" to "MetricsRenderVertices",
@@ -61,14 +74,21 @@ public final class $className {
 			"float" to "Framerate",
 			"float" to "IniSavingRate"
 	)
-	codeGenTargetFile.mkdirs()
+	targetJavaFile.parentFile.mkdirs()
+	// `targetC++File`.parentFile.mkdirs()
 	doFirst {
-		val text = members.joinToString(System.lineSeparator(), prefix, suffix) { (type, name) ->
-			"""
-	private static native $type get$name(long nativeObjectPtr);
-	public $type get$name() { return get$name(nativeObjectPtr); }"""
+		val javaCode = members.joinToString(System.lineSeparator(), prefixJava, postfix = "\n}") { (type, name) ->
+			"\t\tpublic native $type get$name();"
 		}
-		codeGenTargetFile.resolve("$className.java").writeText(text)
+		targetJavaFile.writeText(javaCode)
+		val `c++Code` = members.joinToString(System.lineSeparator(), `prefixC++`, "#pragma clang diagnostic pop") { (type, name) ->
+			"""JNIEXPORT j$type JNICALL
+Java_org_ice1000_jimgui_JImGuiIO_get$name(JNIEnv *, jobject) {
+	return ImGui::GetIO().$name;
+}
+"""
+		}
+		`targetC++File`.writeText(`c++Code`)
 	}
 }
 

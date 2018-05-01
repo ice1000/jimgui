@@ -16,8 +16,9 @@ public class JImGuiTest {
 	@BeforeClass
 	public static void useAlternativeJeniLib() {
 		// prevent auto-run
-		// noinspection ConstantConditions
-		assumeFalse(true);
+		if ("true".equals(System.getenv("CI")))
+			// noinspection ConstantConditions
+			assumeFalse(true);
 		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
 		JniLoader.load();
 	}
@@ -30,6 +31,13 @@ public class JImGuiTest {
 			assertTrue((long) nativeObjectPtr.get(imGui) != 0);
 			nativeObjectPtr.setAccessible(false);
 		}
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void jniDisposal() {
+		JImGui imGui = new JImGui();
+		imGui.close();
+		imGui.demoMainLoop();
 	}
 
 	@Test
