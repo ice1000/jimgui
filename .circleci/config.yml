@@ -54,7 +54,7 @@ jobs:
       - run: mkdir -p res/native
       - run: cd jni
       - run: mkdir -p cmake-build-debug
-      - run: bash pre.sh
+      - run: cat pre.sh | bash
       - run: cd cmake-build-debug
       - run: ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
       - run: make
