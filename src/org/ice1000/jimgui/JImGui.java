@@ -35,7 +35,7 @@ public class JImGui implements AutoCloseable, Closeable {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
-	public static native void initNewFrame();
+	public native void initNewFrame();
 
 	/** @return see {@link JImGui#nativeObjectPtr} */
 	private static native long allocateNativeObjects();

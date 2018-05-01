@@ -24,7 +24,7 @@ public final class JniLoader {
 		if (___.contains("Linux")) fileName = libName + ".so";
 		else if (___.contains("Windows")) fileName = libName + ".dll";
 		else /* if (___.contains("OSX")) */ fileName = libName + ".dylib";
-		return new File(fileName).getAbsolutePath();
+		return fileName;
 	}
 
 	public static void load() {

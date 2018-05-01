@@ -32,7 +32,7 @@ public class JImGuiTest {
 		try (JImGui imGui = new JImGui()) {
 			int i = 0;
 			while (!imGui.windowShouldClose() && i++ < 1000) {
-				JImGui.initNewFrame();
+				imGui.initNewFrame();
 				imGui.demoMainLoop();
 				imGui.render();
 			}
