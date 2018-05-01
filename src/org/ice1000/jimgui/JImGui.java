@@ -14,7 +14,6 @@ public class JImGui implements AutoCloseable, Closeable {
 	private @NotNull JImVec4 background;
 
 	public JImGui() {
-		JniLoader.load();
 		nativeObjectPtr = allocateNativeObjects();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}

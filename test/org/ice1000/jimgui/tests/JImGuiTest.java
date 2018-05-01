@@ -1,7 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
-import org.ice1000.jimgui.JniLoader;
+import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,6 +14,7 @@ public class JImGuiTest {
 	@BeforeClass
 	public static void useAlternativeJeniLib() {
 		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
+		JniLoader.load();
 	}
 
 	@Test

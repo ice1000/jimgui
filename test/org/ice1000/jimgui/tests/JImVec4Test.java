@@ -1,7 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImVec4;
-import org.ice1000.jimgui.JniLoader;
+import org.ice1000.jimgui.util.JniLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
