@@ -22,10 +22,12 @@ jobs:
       - checkout
 
       - run:
-          name: Install clang-5.0
+          name: Install clang
           command: |
             sudo apt-get update
             sudo apt-get install -y clang
+            export CMAKE_C_COMPILER=clang
+            export CMAKE_CXX_COMPILER=clang++
 
       # Download and cache dependencies
       - restore_cache:
