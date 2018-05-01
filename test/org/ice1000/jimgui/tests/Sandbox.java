@@ -13,6 +13,7 @@ public class Sandbox {
 		AtomicInteger count = new AtomicInteger();
 		JImGuiUtil.run(imGui -> {
 			if (imGui.button("Click me!")) count.getAndIncrement();
+			imGui.sameLine();
 			imGui.text("Click count: " + count);
 			imGui.text("fps: " + imGui.getIO().getFramerate());
 		});

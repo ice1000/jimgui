@@ -55,6 +55,7 @@ public final class $className {
 
 #include <org_ice1000_jimgui_JImGuiIO.h>
 #include <imgui.h>
+#define boolean bool
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
@@ -63,7 +64,20 @@ public final class $className {
 			"int" to "MetricsRenderVertices",
 			"int" to "MetricsRenderIndices",
 			"int" to "MetricsActiveWindows",
-			"float" to "DeltaTime",
+			"boolean" to "FontAllowUserScaling",
+			"boolean" to "OptMacOSXBehaviors",
+			"boolean" to "OptCursorBlink",
+			"boolean" to "MouseDrawCursor",
+			"boolean" to "KeyCtrl",
+			"boolean" to "KeyShift",
+			"boolean" to "KeyAlt",
+			"boolean" to "KeySuper",
+			"boolean" to "WantCaptureMouse",
+			"boolean" to "WantCaptureKeyboard",
+			"boolean" to "WantTextInput",
+			"boolean" to "WantSetMousePos",
+			"boolean" to "NavActive",
+			"boolean" to "NavVisible",
 			"float" to "MouseDoubleClickTime",
 			"float" to "MouseDoubleClickMaxDist",
 			"float" to "KeyRepeatDelay",
@@ -85,7 +99,7 @@ public final class $className {
 		val `c++Code` = members.joinToString(System.lineSeparator(), `prefixC++`, "#pragma clang diagnostic pop") { (type, name) ->
 			"""JNIEXPORT j$type JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_get$name(JNIEnv *, jobject) {
-	return ImGui::GetIO().$name;
+	return static_cast<j$type> (ImGui::GetIO().$name);
 }
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_set$name(JNIEnv *, jobject, j$type newValue) {
