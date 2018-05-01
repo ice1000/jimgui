@@ -14,6 +14,7 @@ jobs:
       # Customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
+      PATH: ~/cmake-3.6.2-Linux-x86_64/bin:$PATH
 
     steps:
       - checkout
@@ -21,7 +22,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
+          - v1-dependencies-{{ checksum "build.gradle.kts" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
@@ -30,7 +31,23 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: cd ~
+      - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz --directory-prefix
+      - run: tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
+      - run: cd ~/repo
+
+      - save_cache:
+          paths:
+            - ~/cmake-3.6.2-Linux-x86_64
+          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
 
       - run: mkdir -p jni/cmake-build-debug
       - run: mkdir -p res/native

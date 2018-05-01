@@ -1,5 +1,7 @@
 # jimgui
 
+[![CircleCI](https://circleci.com/gh/ice1000/jimgui.svg?style=svg)](https://circleci.com/gh/ice1000/jimgui)
+
 Hand-written pure Java binding for dear-imgui.
 
 This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-based lightweight IDE for experiment purpose.
