@@ -20,9 +20,12 @@ val javah = task<Exec>("javah") {
 	group = tasks["init"].group
 	val target = file("jni").resolve("javah").absolutePath
 	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
-	val className = "org.ice1000.jimgui.JImGui"
+	val className = arrayOf(
+			"org.ice1000.jimgui.JImGui",
+			"org.ice1000.jimgui.JImVec4"
+	)
 	// TODO use javac -h (simply replacing javah with javac -h does not work)
-	commandLine("javah", "-d", target, "-classpath", classpath, className)
+	commandLine("javah", "-d", target, "-classpath", classpath, *className)
 	dependsOn(tasks["classes"])
 }
 
@@ -51,5 +54,6 @@ repositories {
 }
 
 dependencies {
+	compile(group = "org.jetbrains", name = "annotations", version = "16.0.1")
 	testCompile(group = "junit", name = "junit", version = "4.12")
 }

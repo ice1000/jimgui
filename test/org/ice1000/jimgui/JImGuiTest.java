@@ -27,7 +27,11 @@ public class JImGuiTest {
 	@Test
 	public void demoMainLoop() {
 		try (JImGui imGui = new JImGui()) {
-			imGui.demoMainLoop();
+			while (!imGui.windowShouldClose()) {
+				JImGui.initNewFrame();
+				imGui.demoMainLoop();
+				imGui.render();
+			}
 		}
 	}
 }
