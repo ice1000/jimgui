@@ -76,12 +76,16 @@ jobs:
             cp *.so ../../res/native
             cd ../..
 
-      - run: bash gradlew jar
+      - run:
+          name: Build jar
+          command: bash gradlew jar
 
       - store_artifacts:
           path: build/libs
 
-      - run: bash gradlew test
+      - run:
+          name: Run tests
+          command: bash gradlew test
 
       - run:
           name: Save test results
