@@ -60,7 +60,7 @@ jobs:
 
       - run:
           name: Generate native library headers
-          command: bash gradlew javah
+          command: bash gradlew genBinding javah
 
       - run:
           name: Build native library
