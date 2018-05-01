@@ -2,11 +2,13 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.util.JniLoader;
+import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.nio.file.Paths;
+import java.util.function.Consumer;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,6 +17,17 @@ public class JImGuiTest {
 	public static void useAlternativeJeniLib() {
 		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
 		JniLoader.load();
+	}
+
+	public static void testWithin(long millis, @NotNull Consumer<JImGui> runnable) {
+		try (JImGui imGui = new JImGui()) {
+			int i = 0;
+			while (!imGui.windowShouldClose() && i++ < millis) {
+				imGui.initNewFrame();
+				runnable.accept(imGui);
+				imGui.render();
+			}
+		}
 	}
 
 	@Test
@@ -29,13 +42,27 @@ public class JImGuiTest {
 
 	@Test
 	public void demoMainLoop() {
-		try (JImGui imGui = new JImGui()) {
-			int i = 0;
-			while (!imGui.windowShouldClose() && i++ < 1000) {
-				imGui.initNewFrame();
-				imGui.demoMainLoop();
-				imGui.render();
-			}
-		}
+		testWithin(1000, JImGui::demoMainLoop);
+	}
+
+	@Test
+	public void text() {
+		testWithin(30000, jImGui -> jImGui.text("Boy next door"));
+	}
+
+	@Test
+	public void button() {
+		testWithin(30000, jImGui -> jImGui.button("Boy next door"));
+	}
+
+
+	@Test
+	public void sizedButton() {
+		testWithin(30000, jImGui -> jImGui.button("Boy next door", 100, 100));
+	}
+
+	@Test
+	public void textUnicode() {
+		testWithin(30000, jImGui -> jImGui.text("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩"));
 	}
 }

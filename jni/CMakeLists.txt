@@ -24,7 +24,7 @@ if (glfw3_FOUND)
 endif ()
 
 #set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp)
-set(IMGUI_IMPL impl/imgui_impl_glfw_gl2.cpp)
+set(IMGUI_IMPL impl/imgui_impl_glfw_gl2.cpp basics.h)
 
 include_directories(${JNI_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} imgui javah impl)
 

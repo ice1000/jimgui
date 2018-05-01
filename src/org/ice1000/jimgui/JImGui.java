@@ -3,6 +3,7 @@ package org.ice1000.jimgui;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Closeable;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author ice1000
@@ -27,6 +28,35 @@ public class JImGui implements AutoCloseable, Closeable {
 		demoMainLoop(background.nativeObjectPtr);
 	}
 
+	/**
+	 * Create {@link java.awt.Label} like text label
+	 *
+	 * @param text the text to display
+	 */
+	public void text(@NotNull String text) {
+		text(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	/**
+	 * Create {@link java.awt.Button} like text button
+	 *
+	 * @param text the text to display
+	 */
+	public void button(@NotNull String text) {
+		button(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	/**
+	 * Create {@link java.awt.Button} like text button
+	 *
+	 * @param text   the text to display
+	 * @param height button height
+	 * @param width  button width
+	 */
+	public void button(@NotNull String text, float width, float height) {
+		button(text.getBytes(StandardCharsets.UTF_8), width, height);
+	}
+
 	public boolean windowShouldClose() {
 		return windowShouldClose(nativeObjectPtr);
 	}
@@ -48,4 +78,10 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 
 	private static native void render(long nativeObjectPtr, long colorPtr);
+
+	private static native void text(byte[] text);
+
+	private static native void button(byte[] text);
+
+	private static native void button(byte[] text, float width, float height);
 }

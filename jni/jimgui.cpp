@@ -10,6 +10,11 @@
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 
+#include "basics.h"
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
 static void glfw_error_callback(int error, const char *description) {
 	fprintf(stderr, "Error %d: %s\n", error, description);
 }
@@ -57,12 +62,8 @@ void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong colorPt
 	{
 		static float f = 0.0f;
 		static int counter = 0;
-		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 		ImGui::ColorEdit3("clear color", (float *) clear_color); // Edit 3 floats representing a color
-
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
-		ImGui::Checkbox("Another Window", &show_another_window);
 
 		if (ImGui::Button(
 				"Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
@@ -72,15 +73,6 @@ void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong colorPt
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate,
 		            ImGui::GetIO().Framerate);
-	}
-
-	// 2. Show another simple window. In most cases you will use an explicit Begin/End pair to name your windows.
-	if (show_another_window) {
-		ImGui::Begin("Another Window", &show_another_window);
-		ImGui::Text("Hello from another window!");
-		if (ImGui::Button("Close Me"))
-			show_another_window = false;
-		ImGui::End();
 	}
 
 	// 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
@@ -95,7 +87,7 @@ jboolean Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlon
 	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
 }
 
-void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass) {
+void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jobject) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL2_NewFrame();
 }
@@ -111,6 +103,30 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	ImGui::Render();
 	ImGui_ImplGlfwGL2_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(window);
+}
+
+void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	ImGui::Text(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
+void Java_org_ice1000_jimgui_JImGui_button___3B(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	ImGui::Button(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
+void Java_org_ice1000_jimgui_JImGui_button___3BFF(JNIEnv *env, jclass, jbyteArray _text, jfloat width, jfloat height) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	ImGui::Button(reinterpret_cast<const char *>(text), ImVec2(width, height));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
 }
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
@@ -157,3 +173,5 @@ void Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeO
 void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
 	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }
+
+#pragma clang diagnostic pop
