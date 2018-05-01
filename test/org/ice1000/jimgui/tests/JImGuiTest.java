@@ -30,7 +30,8 @@ public class JImGuiTest {
 	@Test
 	public void demoMainLoop() {
 		try (JImGui imGui = new JImGui()) {
-			while (!imGui.windowShouldClose()) {
+			int i = 0;
+			while (!imGui.windowShouldClose() && i++ < 1000) {
 				JImGui.initNewFrame();
 				imGui.demoMainLoop();
 				imGui.render();
