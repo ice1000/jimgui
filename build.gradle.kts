@@ -22,20 +22,6 @@ val classes = tasks["classes"]
 val clean = tasks["clean"]
 val init = tasks["init"]
 
-val javah = task<Exec>("javah") {
-	group = init.group
-	val target = file("jni").resolve("javah").absolutePath
-	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
-	val className = arrayOf(
-			"org.ice1000.jimgui.JImGui",
-			"org.ice1000.jimgui.JImGuiIO",
-			"org.ice1000.jimgui.JImVec4",
-			"org.ice1000.jimgui.MutableJImVec4"
-	)
-	commandLine("javah", "-d", target, "-classpath", classpath, *className)
-	dependsOn(classes)
-}
-
 // TODO move to buildSrc
 val genBindings = task("genBindings") {
 	group = init.group
@@ -84,6 +70,21 @@ public final class $className {
 		}
 		codeGenTargetFile.resolve("$className.java").writeText(text)
 	}
+}
+
+val javah = task<Exec>("javah") {
+	group = init.group
+	val target = file("jni").resolve("javah").absolutePath
+	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
+	val className = arrayOf(
+			"org.ice1000.jimgui.JImGui",
+			"org.ice1000.jimgui.JImGuiIO",
+			"org.ice1000.jimgui.JImVec4",
+			"org.ice1000.jimgui.MutableJImVec4"
+	)
+	commandLine("javah", "-d", target, "-classpath", classpath, *className)
+	dependsOn(classes)
+	dependsOn(genBindings)
 }
 
 val clearBindings = task<Delete>("clearBindings") {
