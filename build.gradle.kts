@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
+
 group = "org.ice1000.jimgui"
 version = "v0.1"
 
@@ -17,6 +19,7 @@ tasks.withType<JavaCompile> {
 }
 
 val classes = tasks["classes"]
+val clean = tasks["clean"]
 val init = tasks["init"]
 
 val javah = task<Exec>("javah") {
@@ -36,12 +39,59 @@ val javah = task<Exec>("javah") {
 // TODO move to buildSrc
 val genBinding = task("genBinding") {
 	group = init.group
+	val codeGenTargetFile = file("gen/org/ice1000/jimgui")
+	val className = "JImGuiIO"
+	@Language("JAVA", suffix = "}")
+	val prefix = """
+package org.ice1000.jimgui;
+
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * @author ice1000
+ * @since v0.1
+ */
+public final class $className {
+	private long nativeObjectPtr;
+	public $className(@NotNull JImGui owner) { nativeObjectPtr = getNativeObjects(owner.nativeObjectPtr); }
+"""
+	@Language("JAVA", prefix = "class JImGuiIO {")
+	val suffix = """
+	private static native long getNativeObjects(long ownerPtr);
+}
+"""
+	val members = listOf(
+			"float" to "DeltaTime",
+			"float" to "MouseDoubleClickTime",
+			"float" to "MouseDoubleClickMaxDist",
+			"float" to "MouseDoubleClickMaxDist",
+			"float" to "KeyRepeatDelay",
+			"float" to "KeyRepeatRate",
+			"float" to "FontGlobalScale",
+			"float" to "MouseWheel",
+			"float" to "MouseWheelH",
+			"float" to "Framerate",
+			"float" to "IniSavingRate"
+	)
+	codeGenTargetFile.mkdirs()
 	doFirst {
-		// TODO
+		val text = members.joinToString(System.lineSeparator(), prefix, suffix) { (type, name) ->
+			"""
+	private static native $type get$name(long nativeObjectPtr);
+	public $type get$name() { return get$name(nativeObjectPtr); }
+"""
+		}
+		codeGenTargetFile.resolve("$className.java").writeText(text)
 	}
 }
 
+val clearBinding = task<Delete>("clearBinding") {
+	group = clean.group
+	doFirst { file("gen").deleteRecursively() }
+}
+
 classes.dependsOn(genBinding)
+clean.dependsOn(clearBinding)
 
 java.sourceSets {
 	"main" {

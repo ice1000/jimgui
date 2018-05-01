@@ -97,3 +97,4 @@ gradle-app.setting
 *.dylib
 
 *.ini
+gen
