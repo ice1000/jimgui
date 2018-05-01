@@ -19,6 +19,12 @@ jobs:
     steps:
       - checkout
 
+      - run:
+        name: Install clang-5.0
+        command: |
+          sudo apt-get update
+          sudo apt-get install clang-5.0
+
       # Download and cache dependencies
       - restore_cache:
           keys:
