@@ -17,7 +17,6 @@ jobs:
       PATH: "~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
     steps:
-
       - checkout
 
       # Download and cache dependencies
@@ -43,17 +42,21 @@ jobs:
       - run: cd ~
       - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
       - run: tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
-      - run: cd ~/repo
+      - run: cd repo
 
       - save_cache:
           paths:
             - ~/cmake-3.6.2-Linux-x86_64
           key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
 
-      - run: mkdir -p jni/cmake-build-debug
+      - run: bash gradlew javah
+
       - run: mkdir -p res/native
-      - run: cd jni/cmake-build-debug
-      - run: cmake ..
+      - run: cd jni
+      - run: mkdir -p cmake-build-debug
+      - run: bash pre.sh
+      - run: cd cmake-build-debug
+      - run: ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
       - run: make
       - run: cp *.so ../../res/native
       - run: cd ../..
@@ -71,7 +74,6 @@ jobs:
             mkdir -p ~/junit/
             find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
           when: always
+
       - store_test_results:
-          path: ~/junit
-      - store_artifacts:
           path: ~/junit
