@@ -16,6 +16,7 @@ public class Sandbox {
 			imGui.sameLine();
 			imGui.text("Click count: " + count);
 			imGui.text("fps: " + imGui.getIO().getFramerate());
+			imGui.text("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 		});
 	}
 }
