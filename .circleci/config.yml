@@ -51,16 +51,17 @@ jobs:
 
       - run: bash gradlew javah
 
-      - run: mkdir -p res/native
-      - run: cd jni
-      - run: mkdir -p cmake-build-debug
-      - run: ls -l
-      - run: cat pre.sh | bash
-      - run: cd cmake-build-debug
-      - run: ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
-      - run: make
-      - run: cp *.so ../../res/native
-      - run: cd ../..
+      - run: |
+        mkdir -p res/native
+        cd jni
+        mkdir -p cmake-build-debug
+        ls -l
+        cat pre.sh | bash
+        cd cmake-build-debug
+        ~/cmake-3.6.2-Linux-x86_64/bin/cmake ..
+        make
+        cp *.so ../../res/native
+        cd ../..
 
       - run: bash gradlew jar
 
