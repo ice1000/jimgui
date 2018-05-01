@@ -36,6 +36,9 @@ val javah = task<Exec>("javah") {
 // TODO move to buildSrc
 val genBinding = task("genBinding") {
 	group = init.group
+	doFirst {
+		// TODO
+	}
 }
 
 classes.dependsOn(genBinding)
