@@ -37,26 +37,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
-
-#      - restore_cache:
-#          keys:
-#          - v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
-#          # fallback to using the latest cache if no exact match is found
-#          - v1-dependencies-
-#
-#      - run:
-#          name: Download CMake
-#          command: |
-#            cd ~
-#            wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
-#            tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
-#            cd ~/repo
-#
-#      - save_cache:
-#          paths:
-#            - ~/cmake-3.6.2-Linux-x86_64
-#          key: v1-dependencies-{{ checksum "jni/CMakeLists.txt" }}
+          key: v1-
 
       - run:
           name: Generate native library headers
@@ -68,8 +49,7 @@ jobs:
             mkdir -p res/native
             cd jni
             mkdir -p cmake-build-debug
-            ls -l
-            cat pre.sh | bash
+            bash pre.sh
             cd cmake-build-debug
             cmake ..
             make
