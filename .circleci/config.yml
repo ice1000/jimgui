@@ -15,6 +15,8 @@ jobs:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
       PATH: "~/cmake-3.6.2-Linux-x86_64/bin:~/.yarn/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      CMAKE_C_COMPILER: clang
+      CMAKE_CXX_COMPILER: clang++
 
     steps:
       - checkout
