@@ -3,9 +3,10 @@ package org.ice1000.jimgui;
 import java.io.Closeable;
 
 /**
- * Off-stack Vector
+ * Off-stack Vector, read only
  *
  * @author ice1000
+ * @see MutableJImVec4 which is mutable
  * @since v0.1
  */
 public class JImVec4 implements Closeable, AutoCloseable {

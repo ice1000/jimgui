@@ -142,18 +142,18 @@ jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObject
 	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w;
 }
 
-jfloat Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x = newValue;
+void Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x = newValue;
 }
 
-jfloat Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y = newValue;
+void Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y = newValue;
 }
 
-jfloat Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z = newValue;
+void Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z = newValue;
 }
 
-jfloat Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
+void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }
