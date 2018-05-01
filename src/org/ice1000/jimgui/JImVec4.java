@@ -21,41 +21,42 @@ public class JImVec4 implements Closeable, AutoCloseable {
 	}
 
 	/** Don't call this unless necessary. */
-	public float getW() {
+	public final float getW() {
 		return getW(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
-	public float getX() {
+	public final float getX() {
 		return getX(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
-	public float getY() {
+	public final float getY() {
 		return getY(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
-	public float getZ() {
+	public final float getZ() {
 		return getZ(nativeObjectPtr);
 	}
 
 	/** @return see {@link JImVec4#nativeObjectPtr} */
 	private static native long allocateNativeObjects();
 
-	private static native float getZ(long nativeObjectPtr);
+	private static native float getZ(final long nativeObjectPtr);
 
-	private static native float getY(long nativeObjectPtr);
+	private static native float getY(final long nativeObjectPtr);
 
-	private static native float getX(long nativeObjectPtr);
+	private static native float getX(final long nativeObjectPtr);
 
-	private static native float getW(long nativeObjectPtr);
+	private static native float getW(final long nativeObjectPtr);
 
-	private static native long allocateNativeObjects(float a, float b, float c, float d);
+	private static native long allocateNativeObjects(float x, float y, float z, float w);
 
 	/** @param nativeObjectPtr see {@link JImVec4#nativeObjectPtr} */
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 
+	/** Should only be called once. */
 	@Override
 	public void close() {
 		deallocateNativeObjects(nativeObjectPtr);

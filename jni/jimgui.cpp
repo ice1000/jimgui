@@ -8,6 +8,7 @@
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImVec4.h>
+#include <org_ice1000_jimgui_MutableJImVec4.h>
 
 static void glfw_error_callback(int error, const char *description) {
 	fprintf(stderr, "Error %d: %s\n", error, description);
@@ -39,12 +40,11 @@ void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jl
 	glfwTerminate();
 }
 
-void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto *window = reinterpret_cast<GLFWwindow *>(nativeObjectPtr);
+void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong colorPtr) {
+	auto clear_color = reinterpret_cast<ImVec4 *> (colorPtr);
 
 	static bool show_demo_window = false;
 	static bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 
 	// Main loop
 	// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -59,7 +59,7 @@ void Java_org_ice1000_jimgui_JImGui_demoMainLoop(JNIEnv *, jclass, jlong nativeO
 		static int counter = 0;
 		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-		ImGui::ColorEdit3("clear color", (float *) &clear_color); // Edit 3 floats representing a color
+		ImGui::ColorEdit3("clear color", (float *) clear_color); // Edit 3 floats representing a color
 
 		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
 		ImGui::Checkbox("Another Window", &show_another_window);
@@ -140,4 +140,20 @@ jfloat Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObject
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w;
+}
+
+jfloat Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x = newValue;
+}
+
+jfloat Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y = newValue;
+}
+
+jfloat Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z = newValue;
+}
+
+jfloat Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }

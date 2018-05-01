@@ -25,7 +25,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public void demoMainLoop() {
-		demoMainLoop(nativeObjectPtr);
+		demoMainLoop(background.nativeObjectPtr);
 	}
 
 	public boolean windowShouldClose() {
@@ -44,7 +44,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	/** @param nativeObjectPtr see {@link JImGui#nativeObjectPtr} */
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 
-	private static native void demoMainLoop(long nativeObjectPtr);
+	private static native void demoMainLoop(long colorPtr);
 
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 

@@ -1,5 +1,7 @@
-package org.ice1000.jimgui;
+package org.ice1000.jimgui.tests;
 
+import org.ice1000.jimgui.JImGui;
+import org.ice1000.jimgui.JniLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

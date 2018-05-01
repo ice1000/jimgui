@@ -22,7 +22,8 @@ val javah = task<Exec>("javah") {
 	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
 	val className = arrayOf(
 			"org.ice1000.jimgui.JImGui",
-			"org.ice1000.jimgui.JImVec4"
+			"org.ice1000.jimgui.JImVec4",
+			"org.ice1000.jimgui.MutableJImVec4"
 	)
 	// TODO use javac -h (simply replacing javah with javac -h does not work)
 	commandLine("javah", "-d", target, "-classpath", classpath, *className)
