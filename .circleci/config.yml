@@ -41,7 +41,7 @@ jobs:
           - v1-dependencies-
 
       - run: cd ~
-      - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz --directory-prefix
+      - run: wget https://cmake.org/files/v3.6/cmake-3.6.2-Linux-x86_64.tar.gz
       - run: tar -xvf cmake-3.6.2-Linux-x86_64.tar.gz
       - run: cd ~/repo
 
