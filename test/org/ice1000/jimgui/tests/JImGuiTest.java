@@ -35,6 +35,7 @@ public class JImGuiTest {
 	public void jniDisposal() {
 		JImGui imGui = new JImGui();
 		imGui.close();
+		assertTrue(imGui.isDisposed());
 		imGui.getIO();
 	}
 }

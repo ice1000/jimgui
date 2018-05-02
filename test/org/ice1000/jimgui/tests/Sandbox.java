@@ -34,6 +34,7 @@ public class Sandbox {
 				imGui.separator();
 				imGui.text(green, "Woa!");
 				imGui.spacing();
+				imGui.bullet();
 				imGui.text(yellow, "Woa!");
 			}
 		});

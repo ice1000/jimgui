@@ -108,7 +108,7 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text);
-	ImGui::Text(reinterpret_cast<const char *>(text));
+	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
 	__release(Byte, text);
 	__JNI__FUNCTION__CLEAN__
 }
@@ -200,6 +200,18 @@ void Java_org_ice1000_jimgui_JImGui_newLine(JNIEnv *, jobject) {
 
 void Java_org_ice1000_jimgui_JImGui_spacing(JNIEnv *, jobject) {
 	ImGui::Spacing();
+}
+
+void Java_org_ice1000_jimgui_JImGui_beginGroup(JNIEnv *, jobject) {
+	ImGui::BeginGroup();
+}
+
+void Java_org_ice1000_jimgui_JImGui_endGroup(JNIEnv *, jobject) {
+	ImGui::EndGroup();
+}
+
+void Java_org_ice1000_jimgui_JImGui_bullet(JNIEnv *, jobject) {
+	ImGui::Bullet();
 }
 
 jfloat Java_org_ice1000_jimgui_JImGui_getTextLineHeight(JNIEnv *, jobject) {

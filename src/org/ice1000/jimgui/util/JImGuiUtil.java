@@ -1,8 +1,10 @@
 package org.ice1000.jimgui.util;
 
 import org.ice1000.jimgui.JImGui;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 import java.util.function.LongSupplier;
 
@@ -68,5 +70,10 @@ public class JImGuiUtil {
 				}
 			}
 		}
+	}
+
+	@Contract(pure = true)
+	public static @NotNull byte[] getBytes(@NotNull String text) {
+		return (text + '\0').getBytes(StandardCharsets.UTF_8);
 	}
 }

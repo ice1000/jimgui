@@ -5,7 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Closeable;
-import java.nio.charset.StandardCharsets;
+
+import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
 /**
  * @author ice1000
@@ -36,27 +37,27 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public void text(@NotNull String text) {
-		text(text.getBytes(StandardCharsets.UTF_8));
+		text(getBytes(text));
 	}
 
 	public void bulletText(@NotNull String text) {
-		bulletText((text + '\0').getBytes(StandardCharsets.UTF_8));
+		bulletText(getBytes(text));
 	}
 
 	public void labelText(@NotNull String label, @NotNull String text) {
-		labelText((label + '\0').getBytes(StandardCharsets.UTF_8), (text + '\0').getBytes(StandardCharsets.UTF_8));
+		labelText(getBytes(label), getBytes(text));
 	}
 
 	public void textDisabled(@NotNull String text) {
-		textDisabled((text + '\0').getBytes(StandardCharsets.UTF_8));
+		textDisabled(getBytes(text));
 	}
 
 	public void textWrapped(@NotNull String text) {
-		textWrapped((text + '\0').getBytes(StandardCharsets.UTF_8));
+		textWrapped(getBytes(text));
 	}
 
 	public void text(@NotNull JImVec4 color, @NotNull String text) {
-		textColored(color.nativeObjectPtr, (text + '\0').getBytes(StandardCharsets.UTF_8));
+		textColored(color.nativeObjectPtr, getBytes(text));
 	}
 
 	public void sameLine() {
@@ -64,7 +65,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public boolean button(@NotNull String text) {
-		return button((text + '\0').getBytes(StandardCharsets.UTF_8));
+		return button(getBytes(text));
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @return true if clicked
 	 */
 	public boolean smallButton(@NotNull String text) {
-		return smallButton((text + '\0').getBytes(StandardCharsets.UTF_8));
+		return smallButton(getBytes(text));
 	}
 
 	/**
@@ -86,7 +87,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @return true if clicked
 	 */
 	public boolean button(@NotNull String text, float width, float height) {
-		return button((text + '\0').getBytes(StandardCharsets.UTF_8), width, height);
+		return button(getBytes(text), width, height);
 	}
 
 	public @Nullable JImGuiIO tryGetIO() {
@@ -94,8 +95,13 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public @NotNull JImGuiIO getIO() {
-		if (io == null) alreadyDisposed();
+		if (null == io) alreadyDisposed();
 		return io;
+	}
+
+	@Contract(pure = true)
+	public boolean isDisposed() {
+		return io == null;
 	}
 
 	/** @return shouldn't be closed, will close automatically */
@@ -127,6 +133,9 @@ public class JImGui implements AutoCloseable, Closeable {
 	public native void separator();
 	public native void newLine();
 	public native void spacing();
+	public native void beginGroup();
+	public native void endGroup();
+	public native void bullet();
 	public native void initNewFrame();
 	public native float getTextLineHeight();
 	public native float getTextLineHeightWithSpacing();
