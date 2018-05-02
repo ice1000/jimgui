@@ -49,8 +49,6 @@ public class JImGui implements AutoCloseable, Closeable {
 		sameLine(0, -1);
 	}
 
-	public native void sameLine(float posX, float spacingW);
-
 	/**
 	 * Create {@link java.awt.Button} like text button
 	 *
@@ -110,25 +108,19 @@ public class JImGui implements AutoCloseable, Closeable {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
+	public native void sameLine(float posX, float spacingW);
+	public native void separator();
+	public native void newLine();
+	public native void spacing();
 	public native void initNewFrame();
 
-	/** @return see {@link JImGui#nativeObjectPtr} */
 	private static native long allocateNativeObjects();
-
-	/** @param nativeObjectPtr see {@link JImGui#nativeObjectPtr} */
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
-
 	private static native void demoMainLoop(long colorPtr);
-
 	private static native boolean windowShouldClose(long nativeObjectPtr);
-
 	private static native void render(long nativeObjectPtr, long colorPtr);
-
 	private static native void text(byte[] text);
-
 	private static native boolean button(byte[] text);
-
 	private static native boolean smallButton(byte[] text);
-
 	private static native boolean button(byte[] text, float width, float height);
 }

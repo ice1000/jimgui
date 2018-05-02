@@ -145,6 +145,18 @@ void Java_org_ice1000_jimgui_JImGui_sameLine(JNIEnv *, jobject, jfloat pos_x, jf
 	ImGui::SameLine(pos_x, spacing_w);
 }
 
+void Java_org_ice1000_jimgui_JImGui_separator(JNIEnv *, jobject) {
+	ImGui::Separator();
+}
+
+void Java_org_ice1000_jimgui_JImGui_newLine(JNIEnv *, jobject) {
+	ImGui::NewLine();
+}
+
+void Java_org_ice1000_jimgui_JImGui_spacing(JNIEnv *, jobject) {
+	ImGui::Spacing();
+}
+
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }

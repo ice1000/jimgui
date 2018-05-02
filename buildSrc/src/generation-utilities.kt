@@ -29,7 +29,7 @@ Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue
 
 fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
 		"""private static native void set$name(long $ptrName, $type newValue);
-public void set$name($type newValue) { return set$name($ptrName, newValue); }"""
+public final void set$name($type newValue) { return set$name($ptrName, newValue); }"""
 
 val eol: String = System.lineSeparator()
 
