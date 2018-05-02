@@ -8,6 +8,8 @@ This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-ba
 
 # Build
 
+To compile a jar library, run:
+
 ```
 $ bash gradlew genBindings javah
 $ cmake jni
@@ -15,4 +17,17 @@ $ make
 $ mkdir -p res/native
 $ mv *.so res/native
 $ bash gradlew jar
+```
+
+To run tests, run:
+
+```
+$ bash gradlew genBindings javah
+$ cd jni
+$ mkdir -p cmake-build-debug
+$ cd cmake-build-debug
+$ cmake ..
+$ make
+$ cd ../..
+$ bash gradlew test
 ```
