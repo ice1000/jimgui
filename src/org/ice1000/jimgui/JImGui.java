@@ -39,16 +39,20 @@ public class JImGui implements AutoCloseable, Closeable {
 		text(text.getBytes(StandardCharsets.UTF_8));
 	}
 
+	public void bulletText(@NotNull String text) {
+		bulletText((text + '\0').getBytes(StandardCharsets.UTF_8));
+	}
+
 	public void textDisabled(@NotNull String text) {
-		textDisabled(text.getBytes(StandardCharsets.UTF_8));
+		textDisabled((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void textWrapped(@NotNull String text) {
-		textWrapped(text.getBytes(StandardCharsets.UTF_8));
+		textWrapped((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void text(@NotNull JImVec4 color, @NotNull String text) {
-		textColored(color.nativeObjectPtr, text.getBytes(StandardCharsets.UTF_8));
+		textColored(color.nativeObjectPtr, (text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void sameLine() {
@@ -56,7 +60,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public boolean button(@NotNull String text) {
-		return button(text.getBytes(StandardCharsets.UTF_8));
+		return button((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -66,8 +70,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @return true if clicked
 	 */
 	public boolean smallButton(@NotNull String text) {
-		if (io == null) alreadyDisposed();
-		return smallButton(text.getBytes(StandardCharsets.UTF_8));
+		return smallButton((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -79,7 +82,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @return true if clicked
 	 */
 	public boolean button(@NotNull String text, float width, float height) {
-		return button(text.getBytes(StandardCharsets.UTF_8), width, height);
+		return button((text + '\0').getBytes(StandardCharsets.UTF_8), width, height);
 	}
 
 	public @Nullable JImGuiIO tryGetIO() {
@@ -136,6 +139,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void text(byte[] text);
+	private static native void bulletText(byte[] text);
 	private static native void textDisabled(byte[] text);
 	private static native void textWrapped(byte[] text);
 	private static native void textColored(long colorPtr, byte[] text);

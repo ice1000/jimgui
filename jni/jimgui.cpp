@@ -121,6 +121,15 @@ void Java_org_ice1000_jimgui_JImGui_textDisabled(JNIEnv *env, jclass, jbyteArray
 	__JNI__FUNCTION__CLEAN__
 }
 
+void Java_org_ice1000_jimgui_JImGui_bulletText(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	text[__len(text)] = '\0';
+	ImGui::BulletText(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
 void Java_org_ice1000_jimgui_JImGui_textWrapped(JNIEnv *env, jclass, jbyteArray _text) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text);
