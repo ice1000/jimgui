@@ -50,7 +50,6 @@ Java_org_ice1000_jimgui_JImGuiIO_set$name(JNIEnv *, jobject, j$type newValue) {
 """
 		}
 		`targetC++File`.writeText(`c++Code`)
-
 	}
 }
 

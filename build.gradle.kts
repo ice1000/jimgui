@@ -1,4 +1,4 @@
-import org.ice1000.gradle.GenIOTask
+import org.ice1000.gradle.*
 
 group = "org.ice1000.jimgui"
 version = "v0.1"
@@ -24,28 +24,24 @@ val init = tasks["init"]
 
 val genBindings = task<GenIOTask>("genBindings")
 
-val javah = task<Exec>("javah") {
-	group = init.group
-	val target = file("jni").resolve("javah").absolutePath
-	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
-	val className = arrayOf(
+val javah = task<GenNativeHeaderTask>("javah") {
+	classes(
 			"org.ice1000.jimgui.JImGui",
 			"org.ice1000.jimgui.JImGuiIO",
 			"org.ice1000.jimgui.JImVec4",
 			"org.ice1000.jimgui.MutableJImVec4"
 	)
-	commandLine("javah", "-d", target, "-classpath", classpath, *className)
 	dependsOn(classes)
 	dependsOn(genBindings)
 }
 
-val clearBindings = task<Delete>("clearBindings") {
+val clearGenerated = task<Delete>("clearBindings") {
 	group = clean.group
-	doFirst { file("gen").deleteRecursively() }
+	delete("gen")
 }
 
 classes.dependsOn(genBindings)
-clean.dependsOn(clearBindings)
+clean.dependsOn(clearGenerated)
 
 java.sourceSets {
 	"main" {
