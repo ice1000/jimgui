@@ -176,6 +176,15 @@ jboolean Java_org_ice1000_jimgui_JImGui_smallButton(JNIEnv *env, jclass, jbyteAr
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
 }
 
+jboolean Java_org_ice1000_jimgui_JImGui_arrowButton(JNIEnv *env, jclass, jbyteArray _text, jint direction) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	auto res = ImGui::ArrowButton(reinterpret_cast<const char *>(text), direction);
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
+}
+
 jboolean Java_org_ice1000_jimgui_JImGui_button___3BFF(
 		JNIEnv *env, jclass, jbyteArray _text, jfloat width, jfloat height) {
 	__JNI__FUNCTION__INIT__

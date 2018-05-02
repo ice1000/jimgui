@@ -1,5 +1,6 @@
 package org.ice1000.jimgui.tests;
 
+import org.ice1000.jimgui.JImDir;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.util.JImGuiUtil;
@@ -36,6 +37,7 @@ public class Sandbox {
 				imGui.spacing();
 				imGui.bullet();
 				imGui.text(yellow, "Woa!");
+				imGui.arrowButton("Woa!", JImDir.ImGuiDir_Down);
 			}
 		});
 	}

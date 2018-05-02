@@ -68,24 +68,14 @@ public class JImGui implements AutoCloseable, Closeable {
 		return button(getBytes(text));
 	}
 
-	/**
-	 * Create {@link java.awt.Button} like text button
-	 *
-	 * @param text the text to display
-	 * @return true if clicked
-	 */
 	public boolean smallButton(@NotNull String text) {
 		return smallButton(getBytes(text));
 	}
 
-	/**
-	 * Create {@link java.awt.Button} like text button
-	 *
-	 * @param text   the text to display
-	 * @param height button height
-	 * @param width  button width
-	 * @return true if clicked
-	 */
+	public boolean arrowButton(@NotNull String text, @NotNull JImDir direction) {
+		return arrowButton(getBytes(text), direction.intValue);
+	}
+
 	public boolean button(@NotNull String text, float width, float height) {
 		return button(getBytes(text), width, height);
 	}
@@ -162,6 +152,7 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native void textColored(long colorPtr, byte[] text);
 	private static native boolean button(byte[] text);
 	private static native boolean smallButton(byte[] text);
+	private static native boolean arrowButton(byte[] text, int direction);
 	private static native boolean button(byte[] text, float width, float height);
 	//endregion
 }
