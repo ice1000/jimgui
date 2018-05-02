@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.ice1000.gradle
 
 import org.gradle.api.tasks.Exec

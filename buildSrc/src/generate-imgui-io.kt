@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.ice1000.gradle
 
 import org.gradle.api.DefaultTask
@@ -20,8 +22,7 @@ open class GenIOTask : DefaultTask(), Runnable {
 		val `targetC++File` = File("jni/generated.cpp")
 		targetJavaFile.parentFile.mkdirs()
 		// `targetC++File`.parentFile.mkdirs()
-		val javaCode = StringBuilder()
-		javaCode.append(prefixJava)
+		val javaCode = StringBuilder(prefixJava)
 		primitiveMembers.joinTo(javaCode, eol) { (type, name) ->
 			javaPrimitiveGetter(type, name)
 		}
@@ -30,18 +31,16 @@ open class GenIOTask : DefaultTask(), Runnable {
 		}
 		javaCode.append("\n}")
 		targetJavaFile.writeText("$javaCode")
-		val `c++Code` = primitiveMembers.joinToString(eol, `prefixC++`, CXX_SUFFIX) { (type, name) ->
-			"""JNIEXPORT j$type JNICALL
-Java_org_ice1000_jimgui_${CLASS_NAME}_get$name(JNIEnv *, jobject) {
-	return static_cast<j$type> (ImGui::GetIO().$name);
-}
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_${CLASS_NAME}_set$name(JNIEnv *, jobject, j$type newValue) {
-	ImGui::GetIO().$name = newValue;
-}
-"""
+		// ImGui::GetIO().$name
+		val `c++Code` = StringBuilder(`prefixC++`)
+		primitiveMembers.joinTo(`c++Code`, eol) { (type, name) ->
+			`c++PrimitiveGetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
 		}
-		`targetC++File`.writeText(`c++Code`)
+		primitiveMembers.joinTo(`c++Code`, eol) { (type, name) ->
+			`c++PrimitiveSetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
+		}
+		`c++Code`.append(CXX_SUFFIX)
+		`targetC++File`.writeText("$`c++Code`")
 	}
 
 	companion object {

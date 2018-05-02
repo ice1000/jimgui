@@ -35,9 +35,9 @@ val javah = task<GenNativeHeaderTask>("javah") {
 	dependsOn(genBindings)
 }
 
-val clearGenerated = task<Delete>("clearBindings") {
+val clearGenerated = task<Delete>("clearGenerated") {
 	group = clean.group
-	delete("gen")
+	delete("gen", "jni/generated.cpp")
 }
 
 classes.dependsOn(genBindings)
