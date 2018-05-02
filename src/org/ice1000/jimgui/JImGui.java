@@ -136,6 +136,9 @@ public class JImGui implements AutoCloseable, Closeable {
 	public native void setCursorPos(float newX, float newY);
 	public native void setCursorPosX(float newValue);
 	public native void setCursorPosY(float newValue);
+	public native void dummy(float width, float height);
+	public native void indent(float indentW);
+	public native void unindent(float indentW);
 	//endregion
 
 	//region Private native interfaces

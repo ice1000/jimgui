@@ -211,6 +211,10 @@ void Java_org_ice1000_jimgui_JImGui_spacing(JNIEnv *, jobject) {
 	ImGui::Spacing();
 }
 
+void Java_org_ice1000_jimgui_JImGui_dummy(JNIEnv *, jobject, jfloat w, jfloat h) {
+	ImGui::Dummy(ImVec2(w, h));
+}
+
 void Java_org_ice1000_jimgui_JImGui_beginGroup(JNIEnv *, jobject) {
 	ImGui::BeginGroup();
 }
@@ -257,6 +261,14 @@ void Java_org_ice1000_jimgui_JImGui_setCursorPosY(JNIEnv *, jobject, jfloat newV
 
 void Java_org_ice1000_jimgui_JImGui_setCursorPos(JNIEnv *, jobject, jfloat newX, jfloat newY) {
 	ImGui::SetCursorPos(ImVec2(newX, newY));
+}
+
+void Java_org_ice1000_jimgui_JImGui_indent(JNIEnv *, jobject, jfloat w) {
+	ImGui::Indent(w);
+}
+
+void Java_org_ice1000_jimgui_JImGui_unindent(JNIEnv *, jobject, jfloat w) {
+	ImGui::Unindent(w);
 }
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
