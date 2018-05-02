@@ -6,7 +6,6 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,8 +27,8 @@ public class Sandbox {
 			imGui.smallButton("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.newLine();
 			imGui.newLine();
-			try (MutableJImVec4 red = JImVec4.fromAWT(Color.RED);
-			     MutableJImVec4 yellow = JImVec4.fromAWT(Color.YELLOW);
+			try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
+			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
 			     MutableJImVec4 green = JImVec4.fromJFX(javafx.scene.paint.Color.GREEN)) {
 				imGui.text(red, "Woa!");
 				imGui.separator();

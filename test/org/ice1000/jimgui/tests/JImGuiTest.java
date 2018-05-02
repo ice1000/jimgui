@@ -15,10 +15,8 @@ import static org.junit.Assume.assumeFalse;
 public class JImGuiTest {
 	@BeforeClass
 	public static void useAlternativeJeniLib() {
-		// prevent auto-run
-		if ("true".equals(System.getenv("CI")))
-			// noinspection ConstantConditions
-			assumeFalse(true);
+		assumeFalse("true".equals(System.getenv("CI")));
+		assumeFalse("true".equals(System.getProperty("java.awt.headless")));
 		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
 		JniLoader.load();
 	}
@@ -37,6 +35,6 @@ public class JImGuiTest {
 	public void jniDisposal() {
 		JImGui imGui = new JImGui();
 		imGui.close();
-		imGui.demoMainLoop();
+		imGui.getIO();
 	}
 }

@@ -9,11 +9,10 @@ This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-ba
 # Build
 
 ```
-$ bash gradlew javah
-$ cd jni
-$ cmake .
+$ bash gradlew genBindings javah
+$ cmake jni
 $ make
-$ mv *.so ..
-$ cd ..
-$ bash gradlew test
+$ mkdir -p res/native
+$ mv *.so res/native
+$ bash gradlew jar
 ```

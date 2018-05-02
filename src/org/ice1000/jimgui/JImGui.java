@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  */
 @SuppressWarnings("WeakerAccess")
 public class JImGui implements AutoCloseable, Closeable {
-	/** package-private by design */
+	/** package-private by design， */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
