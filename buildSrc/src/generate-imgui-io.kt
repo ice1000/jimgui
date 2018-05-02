@@ -32,11 +32,11 @@ open class GenIOTask : DefaultTask(), Runnable {
 		targetJavaFile.writeText("$javaCode")
 		val `c++Code` = primitiveMembers.joinToString(eol, `prefixC++`, CXX_SUFFIX) { (type, name) ->
 			"""JNIEXPORT j$type JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_get$name(JNIEnv *, jobject) {
+Java_org_ice1000_jimgui_${CLASS_NAME}_get$name(JNIEnv *, jobject) {
 	return static_cast<j$type> (ImGui::GetIO().$name);
 }
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_set$name(JNIEnv *, jobject, j$type newValue) {
+Java_org_ice1000_jimgui_${CLASS_NAME}_set$name(JNIEnv *, jobject, j$type newValue) {
 	ImGui::GetIO().$name = newValue;
 }
 """

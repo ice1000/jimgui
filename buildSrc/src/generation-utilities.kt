@@ -7,8 +7,16 @@ import org.intellij.lang.annotations.Language
 fun javaPrimitiveGetter(type: String, name: String) =
 		"public native $type get$name();"
 
+fun javaPrimitiveMemberGetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
+		"""private static native $type get$name(long $ptrName);
+public $type get$name() { return get$name($ptrName); }"""
+
 fun javaPrimitiveSetter(type: String, name: String) =
 		"public native void set$name($type newValue);"
+
+fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
+		"""private static native void set$name(long $ptrName, $type newValue);
+public void set$name($type newValue) { return set$name($ptrName, newValue); }"""
 
 val eol: String = System.lineSeparator()
 
