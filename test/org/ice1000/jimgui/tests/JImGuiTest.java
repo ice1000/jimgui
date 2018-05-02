@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
+import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
@@ -37,5 +38,10 @@ public class JImGuiTest {
 		imGui.close();
 		assertTrue(imGui.isDisposed());
 		imGui.getIO();
+	}
+
+	@Test
+	public void demoMainLoop() {
+		JImGuiUtil.runWithin(5000, JImGui::demoMainLoop);
 	}
 }
