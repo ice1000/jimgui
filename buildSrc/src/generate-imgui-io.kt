@@ -26,16 +26,18 @@ open class GenIOTask : DefaultTask(), Runnable {
 		primitiveMembers.joinTo(javaCode, eol) { (type, name) ->
 			javaPrimitiveGetter(type, name)
 		}
+		javaCode.append(eol)
 		primitiveMembers.joinTo(javaCode, eol) { (type, name) ->
 			javaPrimitiveSetter(type, name)
 		}
-		javaCode.append("\n}")
+		javaCode.append(eol).append('}')
 		targetJavaFile.writeText("$javaCode")
 		// ImGui::GetIO().$name
 		val `c++Code` = StringBuilder(`prefixC++`)
 		primitiveMembers.joinTo(`c++Code`, eol) { (type, name) ->
 			`c++PrimitiveGetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
 		}
+		`c++Code`.append(eol)
 		primitiveMembers.joinTo(`c++Code`, eol) { (type, name) ->
 			`c++PrimitiveSetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
 		}

@@ -130,6 +130,17 @@ void Java_org_ice1000_jimgui_JImGui_bulletText(JNIEnv *env, jclass, jbyteArray _
 	__JNI__FUNCTION__CLEAN__
 }
 
+void Java_org_ice1000_jimgui_JImGui_labelText(JNIEnv *env, jclass, jbyteArray _label, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	__get(Byte, label);
+	text[__len(text)] = '\0';
+	ImGui::LabelText(reinterpret_cast<const char *>(label), reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__release(Byte, label);
+	__JNI__FUNCTION__CLEAN__
+}
+
 void Java_org_ice1000_jimgui_JImGui_textWrapped(JNIEnv *env, jclass, jbyteArray _text) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text);

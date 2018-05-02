@@ -43,6 +43,10 @@ public class JImGui implements AutoCloseable, Closeable {
 		bulletText((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
 
+	public void labelText(@NotNull String label, @NotNull String text) {
+		labelText((label + '\0').getBytes(StandardCharsets.UTF_8), (text + '\0').getBytes(StandardCharsets.UTF_8));
+	}
+
 	public void textDisabled(@NotNull String text) {
 		textDisabled((text + '\0').getBytes(StandardCharsets.UTF_8));
 	}
@@ -118,6 +122,7 @@ public class JImGui implements AutoCloseable, Closeable {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
+	//region Trivial native functions
 	public native void sameLine(float posX, float spacingW);
 	public native void separator();
 	public native void newLine();
@@ -132,7 +137,9 @@ public class JImGui implements AutoCloseable, Closeable {
 	public native void setCursorPos(float newX, float newY);
 	public native void setCursorPosX(float newValue);
 	public native void setCursorPosY(float newValue);
+	//endregion
 
+	//region Private native interfaces
 	private static native long allocateNativeObjects();
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void demoMainLoop(long colorPtr);
@@ -140,10 +147,12 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void text(byte[] text);
 	private static native void bulletText(byte[] text);
+	private static native void labelText(byte[] label, byte[] text);
 	private static native void textDisabled(byte[] text);
 	private static native void textWrapped(byte[] text);
 	private static native void textColored(long colorPtr, byte[] text);
 	private static native boolean button(byte[] text);
 	private static native boolean smallButton(byte[] text);
 	private static native boolean button(byte[] text, float width, float height);
+	//endregion
 }

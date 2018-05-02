@@ -24,6 +24,7 @@ public class Sandbox {
 			imGui.text("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.textWrapped("Boy\u2642next\u26a8door deep dark fantasy oh yes sir billy harrington van darkholm");
 			imGui.textDisabled("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
+			imGui.labelText("Boy\u2642next\u26a8door", "就是邻\u26a2家男\u26a3孩");
 			imGui.smallButton("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.newLine();
 			imGui.newLine();
