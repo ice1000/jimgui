@@ -1,4 +1,4 @@
-import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
+import org.ice1000.gradle.GenIOTask
 
 group = "org.ice1000.jimgui"
 version = "v0.1"
@@ -22,94 +22,7 @@ val classes = tasks["classes"]
 val clean = tasks["clean"]
 val init = tasks["init"]
 
-// TODO move to buildSrc
-val genBindings = task("genBindings") {
-	group = init.group
-	val className = "JImGuiIO"
-	val targetJavaFile = file("gen/org/ice1000/jimgui").resolve("$className.java")
-	val `targetC++File` = file("jni/generated.cpp")
-	@Language("JAVA", suffix = "}")
-	val prefixJava = """
-package org.ice1000.jimgui;
-
-import org.jetbrains.annotations.*;
-
-/**
- * @author ice1000
- * @since v0.1
- */
-@SuppressWarnings("ALL")
-public final class $className {
-	@Contract(pure = true)
-	public static @NotNull JImGuiIO getInstance(@NotNull JImGui owner) {
-		return owner.getIO();
-	}
-	$className() { }
-"""
-	@Language("C++")
-	val `prefixC++` = """
-///
-/// author: ice1000
-/// since: v0.1
-///
-
-#include <org_ice1000_jimgui_JImGuiIO.h>
-#include <imgui.h>
-#define boolean bool
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
-"""
-	val members = listOf(
-			"int" to "MetricsRenderVertices",
-			"int" to "MetricsRenderIndices",
-			"int" to "MetricsActiveWindows",
-			"boolean" to "FontAllowUserScaling",
-			"boolean" to "OptMacOSXBehaviors",
-			"boolean" to "OptCursorBlink",
-			"boolean" to "MouseDrawCursor",
-			"boolean" to "KeyCtrl",
-			"boolean" to "KeyShift",
-			"boolean" to "KeyAlt",
-			"boolean" to "KeySuper",
-			"boolean" to "WantCaptureMouse",
-			"boolean" to "WantCaptureKeyboard",
-			"boolean" to "WantTextInput",
-			"boolean" to "WantSetMousePos",
-			"boolean" to "NavActive",
-			"boolean" to "NavVisible",
-			"float" to "MouseDoubleClickTime",
-			"float" to "MouseDoubleClickMaxDist",
-			"float" to "KeyRepeatDelay",
-			"float" to "KeyRepeatRate",
-			"float" to "FontGlobalScale",
-			"float" to "MouseWheel",
-			"float" to "MouseWheelH",
-			"float" to "Framerate",
-			"float" to "IniSavingRate"
-	)
-	targetJavaFile.parentFile.mkdirs()
-	// `targetC++File`.parentFile.mkdirs()
-	doFirst {
-		val javaCode = members.joinToString(System.lineSeparator(), prefixJava, postfix = "\n}") { (type, name) ->
-			"""		public native $type get$name();
-				|		public native void set$name($type newValue);""".trimMargin()
-		}
-		targetJavaFile.writeText(javaCode)
-		val `c++Code` = members.joinToString(System.lineSeparator(), `prefixC++`, "#pragma clang diagnostic pop") { (type, name) ->
-			"""JNIEXPORT j$type JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_get$name(JNIEnv *, jobject) {
-	return static_cast<j$type> (ImGui::GetIO().$name);
-}
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_set$name(JNIEnv *, jobject, j$type newValue) {
-	ImGui::GetIO().$name = newValue;
-}
-"""
-		}
-		`targetC++File`.writeText(`c++Code`)
-	}
-}
+val genBindings = task<GenIOTask>("genBindings")
 
 val javah = task<Exec>("javah") {
 	group = init.group
