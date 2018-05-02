@@ -1,5 +1,5 @@
 //
-// Created by ice1000 on 18-4-30.
+// Created by ice1000 on 19-4-30.
 //
 
 #include <imgui.h>
@@ -109,6 +109,31 @@ void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) 
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text);
 	ImGui::Text(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
+void Java_org_ice1000_jimgui_JImGui_textDisabled(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	ImGui::TextDisabled(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
+void Java_org_ice1000_jimgui_JImGui_textWrapped(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	ImGui::TextWrapped(reinterpret_cast<const char *>(text));
+	__release(Byte, text);
+	__JNI__FUNCTION__CLEAN__
+}
+
+void Java_org_ice1000_jimgui_JImGui_textColored(JNIEnv *env, jclass, jlong colorPtr, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text);
+	auto color = *reinterpret_cast<ImVec4 *> (colorPtr);
+	ImGui::TextColored(color, reinterpret_cast<const char *>(text));
 	__release(Byte, text);
 	__JNI__FUNCTION__CLEAN__
 }

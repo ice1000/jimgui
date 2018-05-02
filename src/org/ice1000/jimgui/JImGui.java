@@ -26,37 +26,36 @@ public class JImGui implements AutoCloseable, Closeable {
 
 	@Override
 	public void close() {
+		background.close();
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
 	}
 
 	public void demoMainLoop() {
-		if (io == null) alreadyDisposed();
 		demoMainLoop(background.nativeObjectPtr);
 	}
 
-	/**
-	 * Create {@link java.awt.Label} like text label
-	 *
-	 * @param text the text to display
-	 */
 	public void text(@NotNull String text) {
-		if (io == null) alreadyDisposed();
 		text(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public void textDisabled(@NotNull String text) {
+		textDisabled(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public void textWrapped(@NotNull String text) {
+		textWrapped(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public void text(@NotNull JImVec4 color, @NotNull String text) {
+		textColored(color.nativeObjectPtr, text.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void sameLine() {
 		sameLine(0, -1);
 	}
 
-	/**
-	 * Create {@link java.awt.Button} like text button
-	 *
-	 * @param text the text to display
-	 * @return true if clicked
-	 */
 	public boolean button(@NotNull String text) {
-		if (io == null) alreadyDisposed();
 		return button(text.getBytes(StandardCharsets.UTF_8));
 	}
 
@@ -80,7 +79,6 @@ public class JImGui implements AutoCloseable, Closeable {
 	 * @return true if clicked
 	 */
 	public boolean button(@NotNull String text, float width, float height) {
-		if (io == null) alreadyDisposed();
 		return button(text.getBytes(StandardCharsets.UTF_8), width, height);
 	}
 
@@ -93,8 +91,18 @@ public class JImGui implements AutoCloseable, Closeable {
 		return io;
 	}
 
+	/** @return shouldn't be closed, will close automatically */
+	public @NotNull JImVec4 getBackground() {
+		return background;
+	}
+
+	/** @param background shouldn't be closed, will close automatically */
+	public void setBackground(@NotNull JImVec4 background) {
+		this.background.close();
+		this.background = background;
+	}
+
 	public boolean windowShouldClose() {
-		if (io == null) alreadyDisposed();
 		return windowShouldClose(nativeObjectPtr);
 	}
 
@@ -104,7 +112,6 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	public void render() {
-		if (io == null) alreadyDisposed();
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
@@ -129,6 +136,9 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void text(byte[] text);
+	private static native void textDisabled(byte[] text);
+	private static native void textWrapped(byte[] text);
+	private static native void textColored(long colorPtr, byte[] text);
 	private static native boolean button(byte[] text);
 	private static native boolean smallButton(byte[] text);
 	private static native boolean button(byte[] text, float width, float height);

@@ -4,6 +4,7 @@ import org.ice1000.jimgui.JImGui;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
+import java.util.function.LongSupplier;
 
 /**
  * @author ice1000
@@ -16,7 +17,7 @@ public class JImGuiUtil {
 	 * @param millis   millis seconds to run
 	 * @param runnable the task executed in each refreshing
 	 */
-	public static void runWithin(long millis, @NotNull Consumer<JImGui> runnable) {
+	public static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			int i = 0;
 			while (!imGui.windowShouldClose() && i++ < millis) {
@@ -27,12 +28,44 @@ public class JImGuiUtil {
 		}
 	}
 
-	public static void run(@NotNull Consumer<JImGui> runnable) {
+	public static void run(@NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			while (!imGui.windowShouldClose()) {
 				imGui.initNewFrame();
 				runnable.accept(imGui);
 				imGui.render();
+			}
+		}
+	}
+
+	public static void runPer(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
+		try (JImGui imGui = new JImGui()) {
+			long latestRefresh = System.currentTimeMillis();
+			while (!imGui.windowShouldClose()) {
+				long currentTimeMillis = System.currentTimeMillis();
+				if (currentTimeMillis - latestRefresh > millis) {
+					imGui.initNewFrame();
+					runnable.accept(imGui);
+					imGui.render();
+					latestRefresh = currentTimeMillis;
+				}
+			}
+		}
+	}
+
+	public static void runPer(@NotNull LongSupplier millisSupplier, @NotNull Consumer<@NotNull JImGui> runnable) {
+		try (JImGui imGui = new JImGui()) {
+			long latestRefresh = System.currentTimeMillis();
+			long millis = millisSupplier.getAsLong();
+			while (!imGui.windowShouldClose()) {
+				long currentTimeMillis = System.currentTimeMillis();
+				if (currentTimeMillis - latestRefresh > millis) {
+					imGui.initNewFrame();
+					runnable.accept(imGui);
+					imGui.render();
+					latestRefresh = currentTimeMillis;
+					millis = millisSupplier.getAsLong();
+				}
 			}
 		}
 	}

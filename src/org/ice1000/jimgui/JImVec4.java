@@ -1,5 +1,7 @@
 package org.ice1000.jimgui;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Closeable;
 
 /**
@@ -44,22 +46,38 @@ public class JImVec4 implements Closeable, AutoCloseable {
 	/** @return see {@link JImVec4#nativeObjectPtr} */
 	private static native long allocateNativeObjects();
 
-	private static native float getZ(final long nativeObjectPtr);
-
-	private static native float getY(final long nativeObjectPtr);
-
-	private static native float getX(final long nativeObjectPtr);
-
-	private static native float getW(final long nativeObjectPtr);
-
-	private static native long allocateNativeObjects(float x, float y, float z, float w);
-
-	/** @param nativeObjectPtr see {@link JImVec4#nativeObjectPtr} */
-	private static native void deallocateNativeObjects(long nativeObjectPtr);
-
 	/** Should only be called once. */
 	@Override
 	public void close() {
 		deallocateNativeObjects(nativeObjectPtr);
 	}
+
+	/**
+	 * @param color AWT color
+	 * @return a mutable imgui vec4 instance
+	 */
+	public static @NotNull MutableJImVec4 fromAWT(@NotNull java.awt.Color color) {
+		return new MutableJImVec4(color.getRed() / 256f,
+				color.getGreen() / 256f,
+				color.getBlue() / 256f,
+				color.getAlpha() / 256f);
+	}
+
+	/**
+	 * @param color JavaFX color
+	 * @return a mutable imgui vec4 instance
+	 */
+	public static @NotNull MutableJImVec4 fromJFX(@NotNull javafx.scene.paint.Color color) {
+		return new MutableJImVec4((float) color.getRed(),
+				(float) color.getGreen(),
+				(float) color.getBlue(),
+				(float) color.getOpacity());
+	}
+
+	private static native float getZ(final long nativeObjectPtr);
+	private static native float getY(final long nativeObjectPtr);
+	private static native float getX(final long nativeObjectPtr);
+	private static native float getW(final long nativeObjectPtr);
+	private static native long allocateNativeObjects(float x, float y, float z, float w);
+	private static native void deallocateNativeObjects(long nativeObjectPtr);
 }
