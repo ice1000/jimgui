@@ -65,6 +65,17 @@ public class JImGui implements AutoCloseable, Closeable {
 	/**
 	 * Create {@link java.awt.Button} like text button
 	 *
+	 * @param text the text to display
+	 * @return true if clicked
+	 */
+	public boolean smallButton(@NotNull String text) {
+		if (io == null) alreadyDisposed();
+		return smallButton(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	/**
+	 * Create {@link java.awt.Button} like text button
+	 *
 	 * @param text   the text to display
 	 * @param height button height
 	 * @param width  button width
@@ -116,6 +127,8 @@ public class JImGui implements AutoCloseable, Closeable {
 	private static native void text(byte[] text);
 
 	private static native boolean button(byte[] text);
+
+	private static native boolean smallButton(byte[] text);
 
 	private static native boolean button(byte[] text, float width, float height);
 }
