@@ -157,6 +157,42 @@ void Java_org_ice1000_jimgui_JImGui_spacing(JNIEnv *, jobject) {
 	ImGui::Spacing();
 }
 
+jfloat Java_org_ice1000_jimgui_JImGui_getTextLineHeight(JNIEnv *, jobject) {
+	return ImGui::GetTextLineHeight();
+}
+
+jfloat Java_org_ice1000_jimgui_JImGui_getTextLineHeightWithSpacing(JNIEnv *, jobject) {
+	return ImGui::GetTextLineHeightWithSpacing();
+}
+
+jfloat Java_org_ice1000_jimgui_JImGui_getFrameHeight(JNIEnv *, jobject) {
+	return ImGui::GetFrameHeight();
+}
+
+jfloat Java_org_ice1000_jimgui_JImGui_getFrameHeightWithSpacing(JNIEnv *, jobject) {
+	return ImGui::GetFrameHeightWithSpacing();
+}
+
+jfloat Java_org_ice1000_jimgui_JImGui_getCursorPosX(JNIEnv *, jobject) {
+	return ImGui::GetCursorPosX();
+}
+
+jfloat Java_org_ice1000_jimgui_JImGui_getCursorPosY(JNIEnv *, jobject) {
+	return ImGui::GetCursorPosY();
+}
+
+void Java_org_ice1000_jimgui_JImGui_setCursorPosX(JNIEnv *, jobject, jfloat newValue) {
+	ImGui::SetCursorPosX(newValue);
+}
+
+void Java_org_ice1000_jimgui_JImGui_setCursorPosY(JNIEnv *, jobject, jfloat newValue) {
+	ImGui::SetCursorPosY(newValue);
+}
+
+void Java_org_ice1000_jimgui_JImGui_setCursorPos(JNIEnv *, jobject, jfloat newX, jfloat newY) {
+	ImGui::SetCursorPos(ImVec2(newX, newY));
+}
+
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }

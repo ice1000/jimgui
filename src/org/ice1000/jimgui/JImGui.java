@@ -113,6 +113,15 @@ public class JImGui implements AutoCloseable, Closeable {
 	public native void newLine();
 	public native void spacing();
 	public native void initNewFrame();
+	public native float getTextLineHeight();
+	public native float getTextLineHeightWithSpacing();
+	public native float getFrameHeight();
+	public native float getFrameHeightWithSpacing();
+	public native float getCursorPosX();
+	public native float getCursorPosY();
+	public native void setCursorPos(float newX, float newY);
+	public native void setCursorPosX(float newValue);
+	public native void setCursorPosY(float newValue);
 
 	private static native long allocateNativeObjects();
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
