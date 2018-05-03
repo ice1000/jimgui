@@ -12,10 +12,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun cpp(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
-			`c++SimpleMethod`(name, params, type, "return ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.name }})")
+			`c++SimpleMethod`(name, params, type, "return ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.`c++Expr`() }})")
 		}
 		trivialVoidMethods.joinLinesTo(cppCode) { (name, params) ->
-			`c++SimpleMethod`(name, params, null, "ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.name }})")
+			`c++SimpleMethod`(name, params, null, "ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.`c++Expr`() }})")
 		}
 	}
 
@@ -39,8 +39,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Pair("popAllowKeyboardFocus", emptyList()),
 			Pair("pushButtonRepeat", listOf(p("repeat", "boolean"))),
 			Pair("setItemDefaultFocus", emptyList()),
-			Pair("setKeyboardFocusHere", listOf(p("offset", "int"))),
+			Pair("setKeyboardFocusHere", listOf(int("offset"))),
+			Pair("dummy", listOf(vec2("width", "height"))),
 			Pair("spacing", emptyList()),
+			Pair("setCursorPos", listOf(vec2("posX", "spacingW"))),
+			Pair("setCursorScreenPos", listOf(vec2("screenPosX", "screenPosY"))),
+			Pair("setScrollX", listOf(p("scrollX", "float"))),
+			Pair("setScrollY", listOf(p("scrollY", "float"))),
+			Pair("setScrollHere", listOf(float("centerYRatio"))),
+			Pair("setScrollFromPosY", listOf(float("posY"), float("centerYRatio"))),
+			Pair("alignTextToFramePadding", emptyList()),
 			Pair("beginGroup", emptyList()),
 			Pair("endGroup", emptyList()),
 			Pair("bullet", emptyList()))
@@ -52,6 +60,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Triple("getTextLineHeightWithSpacing", "float", emptyList()),
 			Triple("getFrameHeight", "float", emptyList()),
 			Triple("getFrameHeightWithSpacing", "float", emptyList()),
+			Triple("getScrollX", "float", emptyList()),
+			Triple("getScrollY", "float", emptyList()),
+			Triple("getScrollMaxX", "float", emptyList()),
+			Triple("getScrollMaxY", "float", emptyList()),
 			Triple("getCursorPosX", "float", emptyList()),
 			Triple("getCursorPosY", "float", emptyList())
 	)

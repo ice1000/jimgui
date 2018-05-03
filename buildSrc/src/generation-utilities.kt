@@ -4,9 +4,28 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
-fun p(name: String, type: String) = Param(name, type)
+fun p(name: String, type: String) = SimpleParam(name, type)
+fun int(name: String) = SimpleParam(name, "int")
+fun float(name: String) = SimpleParam(name, "float")
+fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
 
-data class Param(val name: String, val type: String)
+sealed class Param {
+	abstract fun java(): String
+	abstract fun `c++`(): String
+	abstract fun `c++Expr`(): String
+}
+
+data class SimpleParam(val name: String, val type: String) : Param() {
+	override fun java() = "$type $name"
+	override fun `c++`() = "j$type $name"
+	override fun `c++Expr`() = name
+}
+
+data class ImVec2(val nameX: String, val nameY: String) : Param() {
+	override fun java() = "float $nameX, float $nameY"
+	override fun `c++`() = "jfloat $nameX, float $nameY"
+	override fun `c++Expr`() = "ImVec2($nameX, $nameY)"
+}
 
 @Language("JAVA", suffix = "class A {}")
 const val CLASS_PREFIX = """package org.ice1000.jimgui;

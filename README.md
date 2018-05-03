@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/ice1000/jimgui.svg?style=svg)](https://circleci.com/gh/ice1000/jimgui)
 
-Hand-written pure Java binding for dear-imgui.
+Pure Java binding for dear-imgui, Kotlin is used as code generation tool.
 
 This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-based lightweight IDE for experiment purpose.
 
