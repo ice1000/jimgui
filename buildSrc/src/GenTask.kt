@@ -37,7 +37,7 @@ public class $className {
 	@TaskAction
 	fun run() {
 		val targetJavaFile = File("gen/org/ice1000/jimgui/$className.java")
-		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.c++")
+		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.cpp")
 		targetJavaFile.parentFile.mkdirs()
 		`targetC++File`.parentFile.mkdirs()
 		val javaCode = StringBuilder(prefixJava)
