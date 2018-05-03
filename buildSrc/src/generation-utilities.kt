@@ -24,7 +24,7 @@ data class SimpleParam(val name: String, val type: String) : Param() {
 
 data class ImVec2(val nameX: String, val nameY: String) : Param() {
 	override fun java() = "float $nameX, float $nameY"
-	override fun `c++`() = "jfloat $nameX, float $nameY"
+	override fun `c++`() = "jfloat $nameX, jfloat $nameY"
 	override fun `c++Expr`() = "ImVec2($nameX, $nameY)"
 }
 
