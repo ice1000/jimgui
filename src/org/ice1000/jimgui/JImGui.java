@@ -13,7 +13,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @since v0.1
  */
 @SuppressWarnings("WeakerAccess")
-public class JImGui implements AutoCloseable, Closeable {
+public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	/** package-private by design， */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
@@ -119,20 +119,8 @@ public class JImGui implements AutoCloseable, Closeable {
 	}
 
 	//region Trivial native functions
-	public native void sameLine(float posX, float spacingW);
-	public native void separator();
-	public native void newLine();
-	public native void spacing();
-	public native void beginGroup();
-	public native void endGroup();
-	public native void bullet();
 	public native void initNewFrame();
-	public native float getTextLineHeight();
-	public native float getTextLineHeightWithSpacing();
-	public native float getFrameHeight();
-	public native float getFrameHeightWithSpacing();
-	public native float getCursorPosX();
-	public native float getCursorPosY();
+	public native void sameLine(float posX, float spacingW);
 	public native void setCursorPos(float newX, float newY);
 	public native void setCursorPosX(float newValue);
 	public native void setCursorPosY(float newValue);

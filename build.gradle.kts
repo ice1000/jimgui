@@ -23,13 +23,17 @@ val clean = tasks["clean"]
 val init = tasks["init"]
 
 val genImGuiIO = task<GenIOTask>("genImGuiIO")
+val genImGui = task<GenGenTask>("genImGui")
 val genBindings = task("genBindings") {
+	group = genImGui.group
 	dependsOn(genImGuiIO)
+	dependsOn(genImGui)
 }
 
 val javah = task<GenNativeHeaderTask>("javah") {
 	classes(
 			"org.ice1000.jimgui.JImGui",
+			"org.ice1000.jimgui.JImGuiGen",
 			"org.ice1000.jimgui.JImGuiIO",
 			"org.ice1000.jimgui.JImVec4",
 			"org.ice1000.jimgui.MutableJImVec4"

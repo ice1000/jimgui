@@ -26,7 +26,7 @@ abstract class GenTask(
 	private val prefixJava
 		@Language("JAVA", suffix = "}")
 		get() = """$CLASS_PREFIX
-public final class $className {
+public class $className {
 	$userCode
 
 	/** package-private by design */
@@ -84,8 +84,9 @@ public final class $className {
 	fun List<Param>.cpp() = joinToString { (name, type) -> "$type $name" }
 
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
-	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String, `c++Expr`: String) =
-			"auto Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject, ${params.cpp()}) -> j$type { $`c++Expr` }"
+	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
+			if (params.isNotEmpty()) ", " else ""}${params.cpp()}) -> ${type?.let { "j$it" } ?: "void"} { $`c++Expr`; }"
 
 	private val eol: String = System.lineSeparator()
 }

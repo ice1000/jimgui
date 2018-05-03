@@ -4,6 +4,8 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
+fun param(name: String, type: String) = Param(name, type)
+
 data class Param(val name: String, val type: String)
 
 @Language("JAVA", suffix = "class A {}")
