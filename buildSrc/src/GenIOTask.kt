@@ -7,33 +7,26 @@ import org.intellij.lang.annotations.Language
 /**
  * @author ice1000
  */
-open class GenIOTask : GenTask() {
+open class GenIOTask : GenTask("JImGuiIO", "imgui_io") {
 	init {
 		description = "Generate binding for ImGui::GetIO"
 	}
 
-	final override val cppFileSuffix = "imgui_io"
-	@Language("TEXT")
-	final override val className = "JImGuiIO"
 	@Language("JAVA")
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
-		primitiveMembers.joinTo(javaCode, eol, postfix = eol) { (type, name) -> javaPrimitiveGetter(type, name) }
-		booleanMembers.joinTo(javaCode, eol, postfix = eol, transform = ::javaBooleanGetter)
-		primitiveMembers.joinTo(javaCode, eol, postfix = eol) { (type, name) -> javaPrimitiveSetter(type, name) }
-		booleanMembers.joinTo(javaCode, eol, postfix = eol, transform = ::javaBooleanSetter)
+		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveGetter(type, name) }
+		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanGetter)
+		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveSetter(type, name) }
+		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
 	}
 
 	override fun cpp(cppCode: StringBuilder) {
-		primitiveMembers.joinTo(cppCode, eol, postfix = eol) { (type, name) ->
-			`c++PrimitiveGetter`(type, name, "ImGui::GetIO().$name")
-		}
-		booleanMembers.joinTo(cppCode, eol, postfix = eol) { `c++BooleanGetter`(it, "ImGui::GetIO().$it") }
-		primitiveMembers.joinTo(cppCode, eol, postfix = eol) { (type, name) ->
-			`c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name")
-		}
-		booleanMembers.joinTo(cppCode, eol, postfix = eol) { `c++BooleanSetter`(it, "ImGui::GetIO().$it") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, "ImGui::GetIO().$name") }
+		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, "ImGui::GetIO().$it") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name") }
+		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, "ImGui::GetIO().$it") }
 	}
 
 	private val booleanMembers = listOf(

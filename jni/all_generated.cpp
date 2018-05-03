@@ -6,6 +6,6 @@
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 #include "generated_imgui_io.cpp"
-#include "generated_imgui.cpp"
+//#include "generated_imgui.cpp"
 
 #pragma clang diagnostic pop

@@ -28,7 +28,7 @@ public final class JniLoader {
 	public static void load() {
 		if (!isLoaded) {
 			if (jniLibraryPath != null) System.load(jniLibraryPath);
-			else NativeUtils.loadLibraryFromJar(jniLibraryPathInJar);
+			else NativeUtil.loadLibraryFromJar(jniLibraryPathInJar);
 			isLoaded = true;
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Class NativeUtils is published under the The MIT License:
+ * Class NativeUtil is published under the The MIT License:
  *
  * Copyright (c) 2012 Adam Heinrich <adam@adamh.cz>
  *
@@ -38,7 +38,7 @@ import java.nio.file.*;
  * @see <a href="http://adamheinrich.com/blog/2012/how-to-load-native-jni-library-from-jar">http://adamheinrich.com/blog/2012/how-to-load-native-jni-library-from-jar</a>
  * @see <a href="https://github.com/adamheinrich/native-utils">https://github.com/adamheinrich/native-utils</a>
  */
-public final class NativeUtils {
+public final class NativeUtil {
 	/** The minimum length a prefix for a file has to have according to {@link File#createTempFile(String, String)}}. */
 	private static final int MIN_PREFIX_LENGTH = 3;
 	public static final String NATIVE_FOLDER_PATH_PREFIX = "nativeutils";
@@ -47,7 +47,7 @@ public final class NativeUtils {
 	private static File temporaryDir;
 
 	/** Private constructor - this class will never be instanced */
-	private NativeUtils() {
+	private NativeUtil() {
 	}
 
 	/**
@@ -80,7 +80,7 @@ public final class NativeUtils {
 
 		File temp = new File(temporaryDir, filename);
 
-		try (InputStream is = NativeUtils.class.getResourceAsStream(path)) {
+		try (InputStream is = NativeUtil.class.getResourceAsStream(path)) {
 			Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException | NullPointerException e) {
 			System.err.println("Deleting since load failed... " + temp.delete());

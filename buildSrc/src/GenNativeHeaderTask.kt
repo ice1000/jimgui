@@ -9,8 +9,8 @@ import java.nio.file.Paths
  * @author ice1000
  */
 open class GenNativeHeaderTask : Exec() {
-	val target = Paths.get("jni", "javah").toAbsolutePath().toString()
-	val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
+	private val target = Paths.get("jni", "javah").toAbsolutePath().toString()
+	private val classpath = project.buildDir.absoluteFile.resolve("classes").resolve("java").resolve("main")
 
 	init {
 		group = "code generation"

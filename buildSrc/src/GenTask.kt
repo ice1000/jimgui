@@ -5,24 +5,25 @@ import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
 import java.io.File
 
-abstract class GenTask : DefaultTask() {
+@Suppress("PrivatePropertyName", "LocalVariableName")
+abstract class GenTask(
+		val className: String,
+		private val `c++FileSuffix`: String
+) : DefaultTask() {
 	init {
 		group = "code generation"
 	}
 
-	abstract val className: String
-	abstract val cppFileSuffix: String
-
 	@Language("Text")
 	open val userCode = ""
 
-	val `prefixC++`
+	private val `prefixC++`
 		@Language("C++")
 		get() = """$CXX_PREFIX
 #include <org_ice1000_jimgui_$className.h>
 """
 
-	val prefixJava
+	private val prefixJava
 		@Language("JAVA", suffix = "}")
 		get() = """$CLASS_PREFIX
 public final class $className {
@@ -36,7 +37,7 @@ public final class $className {
 	@TaskAction
 	fun run() {
 		val targetJavaFile = File("gen/org/ice1000/jimgui/$className.java")
-		val `targetC++File` = File("jni/generated_$cppFileSuffix.cpp")
+		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.cpp")
 		targetJavaFile.parentFile.mkdirs()
 		`targetC++File`.parentFile.mkdirs()
 		val javaCode = StringBuilder(prefixJava)
@@ -82,10 +83,9 @@ public final class $className {
 	fun List<Param>.java() = joinToString { (name, type) -> "$name: $type" }
 	fun List<Param>.cpp() = joinToString { (name, type) -> "$type $name" }
 
-
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
-	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String) =
-			"auto Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject) -> j$type { ImGui::Separator(); }"
+	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String, `c++Expr`: String) =
+			"auto Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject, ${params.cpp()}) -> j$type { $`c++Expr` }"
 
-	val eol: String = System.lineSeparator()
+	private val eol: String = System.lineSeparator()
 }

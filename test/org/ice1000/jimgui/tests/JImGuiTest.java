@@ -40,8 +40,8 @@ public class JImGuiTest {
 		imGui.getIO();
 	}
 
-	@Test
-	public void demoMainLoop() {
+	public static void main(String[] args) {
+		useAlternativeJeniLib();
 		JImGuiUtil.runWithin(5000, JImGui::demoMainLoop);
 	}
 }
