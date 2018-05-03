@@ -32,10 +32,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		io = null;
 	}
 
-	public void demoMainLoop() {
-		demoMainLoop(background.nativeObjectPtr);
-	}
-
 	public void text(@NotNull String text) {
 		text(getBytes(text));
 	}
@@ -123,7 +119,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	//region Private native interfaces
 	private static native long allocateNativeObjects();
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
-	private static native void demoMainLoop(long colorPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void text(byte[] text);

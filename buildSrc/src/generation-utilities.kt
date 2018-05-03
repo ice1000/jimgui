@@ -5,6 +5,7 @@ package org.ice1000.gradle
 import org.intellij.lang.annotations.Language
 
 fun p(name: String, type: String) = SimpleParam(name, type)
+fun bool(name: String) = SimpleParam(name, "boolean")
 fun int(name: String) = SimpleParam(name, "int")
 fun float(name: String) = SimpleParam(name, "float")
 fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
