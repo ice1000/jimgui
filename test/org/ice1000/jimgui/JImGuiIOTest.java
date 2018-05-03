@@ -13,12 +13,24 @@ public class JImGuiIOTest {
 
 	@Test
 	public void testBinding() {
-		JImGuiUtil.runWithin(5000, imGui -> {
+		JImGuiUtil.runWithin(8000, imGui -> {
 			imGui.text("framerate: " + imGui.getIO().getFramerate());
-			imGui.text("isKeyCtrl: " + imGui.getIO().isKeyCtrl());
-			imGui.text("isKeyAlt: " + imGui.getIO().isKeyAlt());
-			imGui.text("isKeyShift: " + imGui.getIO().isKeyShift());
-			imGui.text("isKeySuper: " + imGui.getIO().isKeySuper());
+			if (imGui.getIO().isKeyCtrl()) {
+				imGui.text("[Ctrl]");
+				imGui.sameLine();
+			}
+			if (imGui.getIO().isKeyAlt()) {
+				imGui.text("[Alt]");
+				imGui.sameLine();
+			}
+			if (imGui.getIO().isKeySuper()) {
+				imGui.text("[Super]");
+				imGui.sameLine();
+			}
+			if (imGui.getIO().isKeyShift()) {
+				imGui.text("[Shift]");
+				imGui.sameLine();
+			}
 		});
 	}
 }

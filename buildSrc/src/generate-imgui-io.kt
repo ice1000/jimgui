@@ -18,10 +18,10 @@ open class GenIOTask : DefaultTask(), Runnable {
 
 	@TaskAction
 	override fun run() {
-		val targetJavaFile = File("gen/org/ice1000/jimgui").resolve("$CLASS_NAME.java")
-		val `targetC++File` = File("jni/generated.cpp")
+		val targetJavaFile = File("gen/org/ice1000/jimgui/$CLASS_NAME.java")
+		val targetCppFile = File("jni/generated_imgui_io.cpp")
 		targetJavaFile.parentFile.mkdirs()
-		// `targetC++File`.parentFile.mkdirs()
+		 targetCppFile.parentFile.mkdirs()
 		val javaCode = StringBuilder(prefixJava)
 		primitiveMembers.joinTo(javaCode, eol, postfix = eol) { (type, name) -> javaPrimitiveGetter(type, name) }
 		booleanMembers.joinTo(javaCode, eol, postfix = eol, transform = ::javaBooleanGetter)
@@ -29,17 +29,17 @@ open class GenIOTask : DefaultTask(), Runnable {
 		booleanMembers.joinTo(javaCode, eol, postfix = eol, transform = ::javaBooleanSetter)
 		javaCode.append(eol).append('}')
 		targetJavaFile.writeText("$javaCode")
-		val `c++Code` = StringBuilder(`prefixC++`)
-		primitiveMembers.joinTo(`c++Code`, eol, postfix = eol) { (type, name) ->
-			`c++PrimitiveGetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
+		val cppCode = StringBuilder(`prefixC++`)
+		primitiveMembers.joinTo(cppCode, eol, postfix = eol) { (type, name) ->
+			cppPrimitiveGetter(CLASS_NAME, type, name, "ImGui::GetIO().$name")
 		}
-		booleanMembers.joinTo(`c++Code`, eol, postfix = eol) { `c++BooleanGetter`(CLASS_NAME, it, "ImGui::GetIO().$it") }
-		primitiveMembers.joinTo(`c++Code`, eol, postfix = eol) { (type, name) ->
-			`c++PrimitiveSetter`(CLASS_NAME, type, name, "ImGui::GetIO().$name")
+		booleanMembers.joinTo(cppCode, eol, postfix = eol) { `c++BooleanGetter`(CLASS_NAME, it, "ImGui::GetIO().$it") }
+		primitiveMembers.joinTo(cppCode, eol, postfix = eol) { (type, name) ->
+			cppPrimitiveSetter(CLASS_NAME, type, name, "ImGui::GetIO().$name")
 		}
-		booleanMembers.joinTo(`c++Code`, eol, postfix = eol) { `c++BooleanSetter`(CLASS_NAME, it, "ImGui::GetIO().$it") }
-		`c++Code`.append(CXX_SUFFIX)
-		`targetC++File`.writeText("$`c++Code`")
+		booleanMembers.joinTo(cppCode, eol, postfix = eol) { `c++BooleanSetter`(CLASS_NAME, it, "ImGui::GetIO().$it") }
+		cppCode.append(CXX_SUFFIX)
+		targetCppFile.writeText("$cppCode")
 	}
 
 	companion object {

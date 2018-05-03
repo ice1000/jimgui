@@ -37,7 +37,7 @@ add_library(jimgui SHARED
 		imgui/imgui_draw.cpp
 		${IMGUI_IMPL}
 		javah
-		jimgui.cpp
-		generated.cpp)
+		all_generated.cpp
+		jimgui.cpp)
 
 target_link_libraries(jimgui ${GLFW_STATIC_LIBRARIES})
