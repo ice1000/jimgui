@@ -195,80 +195,12 @@ jboolean Java_org_ice1000_jimgui_JImGui_button___3BFF(
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
 }
 
-void Java_org_ice1000_jimgui_JImGui_sameLine(JNIEnv *, jobject, jfloat pos_x, jfloat spacing_w) {
-	ImGui::SameLine(pos_x, spacing_w);
-}
-
-void Java_org_ice1000_jimgui_JImGui_separator(JNIEnv *, jobject) {
-	ImGui::Separator();
-}
-
-void Java_org_ice1000_jimgui_JImGui_newLine(JNIEnv *, jobject) {
-	ImGui::NewLine();
-}
-
-void Java_org_ice1000_jimgui_JImGui_spacing(JNIEnv *, jobject) {
-	ImGui::Spacing();
-}
-
 void Java_org_ice1000_jimgui_JImGui_dummy(JNIEnv *, jobject, jfloat w, jfloat h) {
 	ImGui::Dummy(ImVec2(w, h));
 }
 
-void Java_org_ice1000_jimgui_JImGui_beginGroup(JNIEnv *, jobject) {
-	ImGui::BeginGroup();
-}
-
-void Java_org_ice1000_jimgui_JImGui_endGroup(JNIEnv *, jobject) {
-	ImGui::EndGroup();
-}
-
-void Java_org_ice1000_jimgui_JImGui_bullet(JNIEnv *, jobject) {
-	ImGui::Bullet();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getTextLineHeight(JNIEnv *, jobject) {
-	return ImGui::GetTextLineHeight();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getTextLineHeightWithSpacing(JNIEnv *, jobject) {
-	return ImGui::GetTextLineHeightWithSpacing();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getFrameHeight(JNIEnv *, jobject) {
-	return ImGui::GetFrameHeight();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getFrameHeightWithSpacing(JNIEnv *, jobject) {
-	return ImGui::GetFrameHeightWithSpacing();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getCursorPosX(JNIEnv *, jobject) {
-	return ImGui::GetCursorPosX();
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getCursorPosY(JNIEnv *, jobject) {
-	return ImGui::GetCursorPosY();
-}
-
-void Java_org_ice1000_jimgui_JImGui_setCursorPosX(JNIEnv *, jobject, jfloat newValue) {
-	ImGui::SetCursorPosX(newValue);
-}
-
-void Java_org_ice1000_jimgui_JImGui_setCursorPosY(JNIEnv *, jobject, jfloat newValue) {
-	ImGui::SetCursorPosY(newValue);
-}
-
 void Java_org_ice1000_jimgui_JImGui_setCursorPos(JNIEnv *, jobject, jfloat newX, jfloat newY) {
 	ImGui::SetCursorPos(ImVec2(newX, newY));
-}
-
-void Java_org_ice1000_jimgui_JImGui_indent(JNIEnv *, jobject, jfloat w) {
-	ImGui::Indent(w);
-}
-
-void Java_org_ice1000_jimgui_JImGui_unindent(JNIEnv *, jobject, jfloat w) {
-	ImGui::Unindent(w);
 }
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {

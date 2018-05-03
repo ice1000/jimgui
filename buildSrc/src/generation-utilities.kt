@@ -4,7 +4,7 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
-fun param(name: String, type: String) = Param(name, type)
+fun p(name: String, type: String) = Param(name, type)
 
 data class Param(val name: String, val type: String)
 
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.*;
 @Language("C++")
 const val CXX_PREFIX = """///
 /// author: ice1000
-/// since: v0.1
+/// generated code, edits are not expected.
 ///
 
 #pragma clang diagnostic push

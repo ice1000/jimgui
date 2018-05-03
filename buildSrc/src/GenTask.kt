@@ -80,8 +80,8 @@ public class $className {
 			"private static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
 //endregion
 
-	fun List<Param>.java() = joinToString { (name, type) -> "$name: $type" }
-	fun List<Param>.cpp() = joinToString { (name, type) -> "$type $name" }
+	fun List<Param>.java() = joinToString { (name, type) -> "$type $name" }
+	fun List<Param>.cpp() = joinToString { (name, type) -> "j$type $name" }
 
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =

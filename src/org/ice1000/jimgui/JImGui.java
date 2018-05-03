@@ -118,16 +118,9 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
-	//region Trivial native functions
 	public native void initNewFrame();
-	public native void sameLine(float posX, float spacingW);
-	public native void setCursorPos(float newX, float newY);
-	public native void setCursorPosX(float newValue);
-	public native void setCursorPosY(float newValue);
 	public native void dummy(float width, float height);
-	public native void indent(float indentW);
-	public native void unindent(float indentW);
-	//endregion
+	public native void setCursorPos(float posX, float spacingW);
 
 	//region Private native interfaces
 	private static native long allocateNativeObjects();
