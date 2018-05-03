@@ -3,7 +3,9 @@
 //
 
 #include <imgui.h>
-#include <imgui_impl_glfw_gl2.h>
+#include <imgui_impl_glfw_gl3.h>
+#include "impl/GL/glcorearb.h" // avoid conflicting with system include
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
@@ -22,10 +24,17 @@ static void glfw_error_callback(int error, const char *description) {
 auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) -> jlong {
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit())
-		return NULL;
+		return 1;
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#if __APPLE__
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 	GLFWwindow *window = glfwCreateWindow(1280, 720, "ImGui GLFW+OpenGL2 example", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
+	gl3wInit();
 
 	// Setup Dear ImGui binding
 	// IMGUI_CHECKVERSION();
@@ -33,13 +42,13 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) -> j
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	ImGui_ImplGlfwGL2_Init(window, true);
+	ImGui_ImplGlfwGL3_Init(window, true);
 	return reinterpret_cast<jlong>(window);
 }
 
 void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto *window = reinterpret_cast<GLFWwindow *>(nativeObjectPtr);
-	ImGui_ImplGlfwGL2_Shutdown();
+	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -51,7 +60,7 @@ jboolean Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlon
 
 void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jobject) {
 	glfwPollEvents();
-	ImGui_ImplGlfwGL2_NewFrame();
+	ImGui_ImplGlfwGL3_NewFrame();
 }
 
 void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
@@ -63,7 +72,7 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 	glClear(GL_COLOR_BUFFER_BIT);
 	ImGui::Render();
-	ImGui_ImplGlfwGL2_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(window);
 }
 

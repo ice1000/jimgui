@@ -10,7 +10,6 @@ find_package(JNI REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(glfw3 REQUIRED)
-#find_package(gl3w QUIET)
 
 pkg_search_module(GLFW REQUIRED glfw3)
 
@@ -23,8 +22,8 @@ if (glfw3_FOUND)
 	message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
 endif ()
 
-#set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp)
-set(IMGUI_IMPL impl/imgui_impl_glfw_gl2.cpp)
+set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp impl/gl3w.c)
+#set(IMGUI_IMPL impl/imgui_impl_glfw_gl2.cpp)
 
 include_directories(${JNI_INCLUDE_DIRS} ${GLFW_INCLUDE_DIRS} imgui javah impl)
 
