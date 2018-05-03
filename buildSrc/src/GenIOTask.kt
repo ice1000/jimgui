@@ -22,7 +22,7 @@ open class GenIOTask : GenTask("JImGuiIO", "imgui_io") {
 		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
 	}
 
-	override fun cpp(cppCode: StringBuilder) {
+	override fun `c++`(cppCode: StringBuilder) {
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, "ImGui::GetIO().$name") }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, "ImGui::GetIO().$it") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name") }

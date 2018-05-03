@@ -37,7 +37,7 @@ public class $className {
 	@TaskAction
 	fun run() {
 		val targetJavaFile = File("gen/org/ice1000/jimgui/$className.java")
-		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.cpp")
+		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.c++")
 		targetJavaFile.parentFile.mkdirs()
 		`targetC++File`.parentFile.mkdirs()
 		val javaCode = StringBuilder(prefixJava)
@@ -45,12 +45,12 @@ public class $className {
 		javaCode.append(eol).append('}')
 		targetJavaFile.writeText("$javaCode")
 		val cppCode = StringBuilder(`prefixC++`)
-		cpp(cppCode)
+		`c++`(cppCode)
 		cppCode.append(CXX_SUFFIX)
 		`targetC++File`.writeText("$cppCode")
 	}
 
-	abstract fun cpp(cppCode: StringBuilder)
+	abstract fun `c++`(cppCode: StringBuilder)
 	abstract fun java(javaCode: StringBuilder)
 
 	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
@@ -81,12 +81,13 @@ public class $className {
 //endregion
 
 	fun List<Param>.java() = joinToString { it.java() }
-	fun List<Param>.cpp() = joinToString { it.`c++`() }
+	fun List<Param>.`c++`() = joinToString { it.`c++`() }
+	fun List<Param>.`c++Expr`() = joinToString { it.`c++Expr`() }
 
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
-			if (params.isNotEmpty()) ", " else ""}${params.cpp()}) -> ${type?.let { "j$it" } ?: "void"} { $`c++Expr`; }"
+			if (params.isNotEmpty()) ", " else ""}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { $`c++Expr`; }"
 
 	private val eol: String = System.lineSeparator()
 }

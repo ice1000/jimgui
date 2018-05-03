@@ -12,6 +12,7 @@ mkdir impl
 wget ${GITHUB}/imgui.cpp ${TO_IMGUI}
 wget ${GITHUB}/imgui.h ${TO_IMGUI}
 wget ${GITHUB}/imgui_draw.cpp ${TO_IMGUI}
+wget ${GITHUB}/imgui_demo.cpp ${TO_IMGUI}
 wget ${GITHUB}/imgui_internal.h ${TO_IMGUI}
 wget ${GITHUB}/imconfig.h ${TO_IMGUI}
 wget ${GITHUB}/stb_rect_pack.h ${TO_IMGUI}

@@ -10,12 +10,14 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		trivialVoidMethods.joinLinesTo(javaCode) { (name, params) -> javaSimpleMethod(name, params, "void") }
 	}
 
-	override fun cpp(cppCode: StringBuilder) {
+	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
+
+	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
-			`c++SimpleMethod`(name, params, type, "return ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.`c++Expr`() }})")
+			`c++SimpleMethod`(name, params, type, "return ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
 		trivialVoidMethods.joinLinesTo(cppCode) { (name, params) ->
-			`c++SimpleMethod`(name, params, null, "ImGui::${name[0].toUpperCase()}${name.drop(1)}(${params.joinToString { it.`c++Expr`() }})")
+			`c++SimpleMethod`(name, params, null, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
 	}
 
