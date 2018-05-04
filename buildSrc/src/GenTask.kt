@@ -87,7 +87,8 @@ public class $className {
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
-			if (params.isNotEmpty()) ", " else ""}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { $`c++Expr`; }"
+			if (params.isNotEmpty()) ", " else ""}${params.`c++`()}) -> ${type?.let { "j$it" }
+					?: "void"} { ${type?.let { "return " }.orEmpty()}$`c++Expr`; }"
 
 	private val eol: String = System.lineSeparator()
 }
