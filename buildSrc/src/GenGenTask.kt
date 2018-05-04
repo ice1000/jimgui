@@ -8,9 +8,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
 			javaCode.appendln(javaSimpleMethod(name, params, type))
-			val defaults = ArrayList<String>()
+			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
-				val default = param.default() ?: return@outer
+				val default = param.default() ?: kotlin.run {
+					defaults += param.javaExpr()
+					return@inner
+				}
 				defaults += default
 				javaCode.appendln(javaOverloadMethod(name, params.dropLast(index + 1), defaults, type))
 			}
@@ -39,7 +42,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("newLine"),
 			Fun("pushItemWidth", float("itemWidth")),
 			Fun("popItemWidth"),
-			Fun("pushTextWrapPos", float("wrapPosX")),
+			Fun("pushTextWrapPos", float("wrapPosX", default = "0.0f")),
 			Fun("popTextWrapPos"),
 			Fun("pushAllowKeyboardFocus", bool("allowKeyboardFocus")),
 			Fun("popAllowKeyboardFocus"),
