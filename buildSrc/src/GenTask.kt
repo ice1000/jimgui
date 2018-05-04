@@ -81,14 +81,31 @@ public class $className {
 //endregion
 
 	fun List<Param>.java() = joinToString { it.java() }
+	fun List<Param>.javaExpr() = joinToString { it.javaExpr() }
 	fun List<Param>.`c++`() = joinToString { it.`c++`() }
 	fun List<Param>.`c++Expr`() = joinToString { it.`c++Expr`() }
 
-	fun javaSimpleMethod(name: String, params: List<Param>, type: String) = "public native $type $name(${params.java()});"
+	fun javaSimpleMethod(name: String, params: List<Param>, type: String?) =
+			"public native ${type(type)} $name(${params.java()});"
+
+	fun javaOverloadMethod(name: String, params: List<Param>, defaults: List<String>, type: String?) =
+			"public ${type(type)} $name(${params.java()}) { ${ret(type)}$name(${params.javaExpr()
+			}${comma(params)}${defaults.joinToString()}); }"
+
+	private fun type(type: String?) = type ?: "void"
+
+	fun javaPrivateFunction(name: String, params: List<Param>, type: String) = "private static native $type $name(${params.java()});"
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
-			if (params.isNotEmpty()) ", " else ""}${params.`c++`()}) -> ${type?.let { "j$it" }
-					?: "void"} { ${type?.let { "return " }.orEmpty()}$`c++Expr`; }"
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { ${ret(type)}$`c++Expr`; }"
+
+	fun `c++PrivateFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jclass${
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { ${ret(type)}$`c++Expr`; }"
+
+	private fun comma(params: List<Param>) = if (params.isNotEmpty()) ", " else ""
+
+	private fun ret(type: String?) = type?.let { "return " }.orEmpty()
 
 	private val eol: String = System.lineSeparator()
 }

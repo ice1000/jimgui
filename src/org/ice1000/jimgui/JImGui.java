@@ -56,10 +56,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		textColored(color.nativeObjectPtr, getBytes(text));
 	}
 
-	public void sameLine() {
-		sameLine(0, -1);
-	}
-
 	public boolean button(@NotNull String text) {
 		return button(getBytes(text));
 	}

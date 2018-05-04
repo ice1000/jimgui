@@ -6,10 +6,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	override fun java(javaCode: StringBuilder) {
-		trivialMethods.forEach { (name, type, params) ->
-			javaCode.appendln(javaSimpleMethod(name, params, type ?: "void"))
-			params.asReversed().forEach inner@{ param ->
-				val default = param.default() ?: return@inner
+		trivialMethods.forEach outer@{ (name, type, params) ->
+			javaCode.appendln(javaSimpleMethod(name, params, type))
+			val defaults = ArrayList<String>()
+			params.asReversed().forEachIndexed inner@{ index, param ->
+				val default = param.default() ?: return@outer
+				defaults += default
+				javaCode.appendln(javaOverloadMethod(name, params.dropLast(index + 1), defaults, type))
 			}
 		}
 	}
@@ -23,11 +26,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	private val trivialMethods = listOf(
-			Fun("sameLine", float("posX"), float("spacingW")),
+			Fun("sameLine", float("posX", default = "0.0f"), float("spacingW", default = "-1.0f")),
 			Fun("setCursorPosX", float("newValue")),
 			Fun("setCursorPosY", float("newValue")),
-			Fun("indent", float("indentW")),
-			Fun("unindent", float("indentW")),
+			Fun("indent", float("indentW", default = "0.0f")),
+			Fun("unindent", float("indentW", default = "0.0f")),
 			Fun("beginMainMenuBar"),
 			Fun("endMainMenuBar"),
 			Fun("beginMenuBar"),
@@ -40,7 +43,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("popTextWrapPos"),
 			Fun("pushAllowKeyboardFocus", bool("allowKeyboardFocus")),
 			Fun("popAllowKeyboardFocus"),
-			Fun("pushButtonRepeat", bool("repeat")),
+			Fun("pushButtonRepeat", bool("repeat", default = "false")),
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
 			Fun("dummy", vec2("width", "height")),

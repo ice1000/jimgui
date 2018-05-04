@@ -28,6 +28,7 @@ data class Fun(val name: String, val type: String?, val param: List<Param>) {
 
 sealed class Param {
 	abstract fun java(): String
+	abstract fun javaExpr(): String
 	abstract fun `c++`(): String
 	abstract fun `c++Expr`(): String
 	open fun init() = ""
@@ -37,6 +38,7 @@ sealed class Param {
 
 data class SimpleParam(val name: String, val type: String, val default: String?) : Param() {
 	override fun java() = "$type $name"
+	override fun javaExpr() = name
 	override fun `c++`() = "j$type $name"
 	override fun `c++Expr`() = name
 	override fun default() = default
@@ -46,6 +48,7 @@ data class SimpleParam(val name: String, val type: String, val default: String?)
 
 data class ImVec2(val nameX: String, val nameY: String) : Param() {
 	override fun java() = "float $nameX, float $nameY"
+	override fun javaExpr() = "$nameX, $nameY"
 	override fun `c++`() = "jfloat $nameX, jfloat $nameY"
 	override fun `c++Expr`() = "ImVec2($nameX, $nameY)"
 }
