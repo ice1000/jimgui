@@ -6,8 +6,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	override fun java(javaCode: StringBuilder) {
-		trivialMethods.joinLinesTo(javaCode) { (name, type, params) -> javaSimpleMethod(name, params, type) }
-		trivialVoidMethods.joinLinesTo(javaCode) { (name, params) -> javaSimpleMethod(name, params, "void") }
+		trivialMethods.forEach { (name, type, params) ->
+			javaCode.appendln(javaSimpleMethod(name, params, type ?: "void"))
+		}
+		trivialVoidMethods.forEach { (name, _, params) ->
+			javaCode.appendln(javaSimpleMethod(name, params, "void"))
+		}
 	}
 
 	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
@@ -16,57 +20,57 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
 			`c++SimpleMethod`(name, params, type, "return ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
-		trivialVoidMethods.joinLinesTo(cppCode) { (name, params) ->
+		trivialVoidMethods.joinLinesTo(cppCode) { (name, _, params) ->
 			`c++SimpleMethod`(name, params, null, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
 	}
 
 	private val trivialVoidMethods = listOf(
-			Pair("sameLine", listOf(float("posX"), float("spacingW"))),
-			Pair("setCursorPosX", listOf(float("newValue"))),
-			Pair("setCursorPosY", listOf(float("newValue"))),
-			Pair("indent", listOf(float("indentW"))),
-			Pair("unindent", listOf(float("indentW"))),
-			Pair("beginMainMenuBar", emptyList()),
-			Pair("endMainMenuBar", emptyList()),
-			Pair("beginMenuBar", emptyList()),
-			Pair("endMenuBar", emptyList()),
-			Pair("separator", emptyList()),
-			Pair("newLine", emptyList()),
-			Pair("pushItemWidth", listOf(float("itemWidth"))),
-			Pair("popItemWidth", emptyList()),
-			Pair("pushTextWrapPos", listOf(float("wrapPosX"))),
-			Pair("popTextWrapPos", emptyList()),
-			Pair("pushAllowKeyboardFocus", listOf(bool("allowKeyboardFocus"))),
-			Pair("popAllowKeyboardFocus", emptyList()),
-			Pair("pushButtonRepeat", listOf(bool("repeat"))),
-			Pair("setItemDefaultFocus", emptyList()),
-			Pair("setKeyboardFocusHere", listOf(int("offset"))),
-			Pair("dummy", listOf(vec2("width", "height"))),
-			Pair("spacing", emptyList()),
-			Pair("setCursorPos", listOf(vec2("posX", "spacingW"))),
-			Pair("setCursorScreenPos", listOf(vec2("screenPosX", "screenPosY"))),
-			Pair("setScrollX", listOf(float("scrollX"))),
-			Pair("setScrollY", listOf(float("scrollY"))),
-			Pair("setScrollHere", listOf(float("centerYRatio"))),
-			Pair("setScrollFromPosY", listOf(float("posY"), float("centerYRatio"))),
-			Pair("alignTextToFramePadding", emptyList()),
-			Pair("beginGroup", emptyList()),
-			Pair("endGroup", emptyList()),
-			Pair("bullet", emptyList()))
+			Fun("sameLine", listOf(float("posX"), float("spacingW"))),
+			Fun("setCursorPosX", listOf(float("newValue"))),
+			Fun("setCursorPosY", listOf(float("newValue"))),
+			Fun("indent", listOf(float("indentW"))),
+			Fun("unindent", listOf(float("indentW"))),
+			Fun("beginMainMenuBar"),
+			Fun("endMainMenuBar"),
+			Fun("beginMenuBar"),
+			Fun("endMenuBar"),
+			Fun("separator"),
+			Fun("newLine"),
+			Fun("pushItemWidth", listOf(float("itemWidth"))),
+			Fun("popItemWidth"),
+			Fun("pushTextWrapPos", listOf(float("wrapPosX"))),
+			Fun("popTextWrapPos"),
+			Fun("pushAllowKeyboardFocus", listOf(bool("allowKeyboardFocus"))),
+			Fun("popAllowKeyboardFocus"),
+			Fun("pushButtonRepeat", listOf(bool("repeat"))),
+			Fun("setItemDefaultFocus"),
+			Fun("setKeyboardFocusHere", listOf(int("offset"))),
+			Fun("dummy", listOf(vec2("width", "height"))),
+			Fun("spacing"),
+			Fun("setCursorPos", listOf(vec2("posX", "spacingW"))),
+			Fun("setCursorScreenPos", listOf(vec2("screenPosX", "screenPosY"))),
+			Fun("setScrollX", listOf(float("scrollX"))),
+			Fun("setScrollY", listOf(float("scrollY"))),
+			Fun("setScrollHere", listOf(float("centerYRatio"))),
+			Fun("setScrollFromPosY", listOf(float("posY"), float("centerYRatio"))),
+			Fun("alignTextToFramePadding"),
+			Fun("beginGroup"),
+			Fun("endGroup"),
+			Fun("bullet"))
 
-	private val trivialMethods = listOf<Triple<String, String, List<Param>>>(
-			Triple("getTextLineHeight", "float", emptyList()),
-			Triple("getFontSize", "float", emptyList()),
-			Triple("calcItemWidth", "float", emptyList()),
-			Triple("getTextLineHeightWithSpacing", "float", emptyList()),
-			Triple("getFrameHeight", "float", emptyList()),
-			Triple("getFrameHeightWithSpacing", "float", emptyList()),
-			Triple("getScrollX", "float", emptyList()),
-			Triple("getScrollY", "float", emptyList()),
-			Triple("getScrollMaxX", "float", emptyList()),
-			Triple("getScrollMaxY", "float", emptyList()),
-			Triple("getCursorPosX", "float", emptyList()),
-			Triple("getCursorPosY", "float", emptyList())
+	private val trivialMethods = listOf(
+			Fun("getTextLineHeight", "float"),
+			Fun("getFontSize", "float"),
+			Fun("calcItemWidth", "float"),
+			Fun("getTextLineHeightWithSpacing", "float"),
+			Fun("getFrameHeight", "float"),
+			Fun("getFrameHeightWithSpacing", "float"),
+			Fun("getScrollX", "float"),
+			Fun("getScrollY", "float"),
+			Fun("getScrollMaxX", "float"),
+			Fun("getScrollMaxY", "float"),
+			Fun("getCursorPosX", "float"),
+			Fun("getCursorPosY", "float")
 	)
 }
