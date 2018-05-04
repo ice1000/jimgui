@@ -4,10 +4,10 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
-fun p(name: String, type: String) = SimpleParam(name, type)
-fun bool(name: String) = SimpleParam(name, "boolean")
-fun int(name: String) = SimpleParam(name, "int")
-fun float(name: String) = SimpleParam(name, "float")
+fun p(name: String, type: String, default: String? = null) = SimpleParam(name, type, default)
+fun bool(name: String, default: String? = null) = SimpleParam(name, "boolean", default)
+fun int(name: String, default: String? = null) = SimpleParam(name, "int", default)
+fun float(name: String, default: String? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
 
 /**
@@ -32,12 +32,14 @@ sealed class Param {
 	abstract fun `c++Expr`(): String
 	open fun init() = ""
 	open fun release() = ""
+	open fun default(): String? = null
 }
 
-data class SimpleParam(val name: String, val type: String) : Param() {
+data class SimpleParam(val name: String, val type: String, val default: String?) : Param() {
 	override fun java() = "$type $name"
 	override fun `c++`() = "j$type $name"
 	override fun `c++Expr`() = name
+	override fun default() = default
 }
 
 // data class StringParam(val name: String)

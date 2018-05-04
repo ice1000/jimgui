@@ -8,6 +8,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach { (name, type, params) ->
 			javaCode.appendln(javaSimpleMethod(name, params, type ?: "void"))
+			params.asReversed().forEach inner@{ param ->
+				val default = param.default() ?: return@inner
+			}
 		}
 	}
 
