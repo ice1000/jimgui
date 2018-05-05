@@ -32,7 +32,6 @@ install:
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
   - 7z x wget.zip -oC:\projects\deps > nul
-  - move C:\projects\deps\wget-* C:\projects\deps\wget # Move to a version-agnostic directory
   - set PATH=C:\projects\deps\wget;%PATH%
   - wget --version
 
