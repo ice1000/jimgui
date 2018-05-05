@@ -12,7 +12,7 @@
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 
-#include "basics.h"
+#include "basics.hpp"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"

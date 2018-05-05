@@ -87,7 +87,7 @@ const val CXX_PREFIX = """///
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 #include <imgui.h>
-#include "basics.h""""
+#include "basics.hpp""""
 
 @Language("C++")
 const val CXX_SUFFIX = "#pragma clang diagnostic pop"
