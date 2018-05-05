@@ -109,6 +109,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getFrameHeight", "float"),
 			Fun("getFrameHeightWithSpacing", "float"),
 
+			// Windows Utilities
+			Fun("isWindowAppearing", "boolean"),
+			Fun("isWindowCollapsed", "boolean"),
+			Fun("getWindowWidth", "float"),
+			Fun("getWindowHeight", "float"),
+			Fun("setWindowSize", size(), int("cond", default = 0)),
+
+			// Inputs
+			Fun("isMousePosValid", "boolean"),
+
 			// ID stack/scopes
 			Fun("popID"),
 			Fun("pushID", int("intID")),

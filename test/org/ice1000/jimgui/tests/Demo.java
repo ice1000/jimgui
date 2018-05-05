@@ -14,6 +14,16 @@ public class Demo {
 		JImGuiUtil.runPer(15, imGui -> {
 			showUserGuide(imGui);
 			showExampleAppMainMenuBar(imGui);
+			if (imGui.button("200x200")) imGui.setWindowSize(200, 200);
+			imGui.sameLine();
+			if (imGui.button("500x500")) imGui.setWindowSize(500, 500);
+			imGui.sameLine();
+			if (imGui.button("800x200")) imGui.setWindowSize(800, 200);
+			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
+			imGui.separator();
+			if (imGui.isMousePosValid()) ;
+//			ImGui.text("Mouse Position: (%.1f,%.1f)", , );
+			else imGui.text("Mouse Position: <invalid>");
 		});
 	}
 
@@ -48,7 +58,7 @@ public class Demo {
 				imGui.menuItem("Hello");
 				imGui.menuItem("Sailor");
 				if (imGui.beginMenu("Recurse..")) {
-					// ShowExampleMenuFile();
+					showExampleMenuFile(imGui);
 					imGui.endMenu();
 				}
 				imGui.endMenu();
