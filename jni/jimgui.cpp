@@ -93,6 +93,14 @@ void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name,
 	__JNI__FUNCTION__CLEAN__
 }
 
+void Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _stringID) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, stringID)
+	ImGui::PushID(reinterpret_cast<const char *>(stringID));
+	__release(Byte, stringID)
+	__JNI__FUNCTION__CLEAN__
+}
+
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
