@@ -7,14 +7,15 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			if (params.any { it is StringParam }) javaCode.append("protected static native ")
-			else javaCode.append("public native ")
+			if (params.any { it is StringParam }) javaCode.append("\tprotected static native ")
+			else javaCode.append("\tpublic native ")
 			javaCode.append(type(type))
 					.append(' ')
 					.append(name)
 					.append('(')
 			params.joinTo(javaCode) { it.java() }
 			javaCode.append(");")
+			javaCode.append(eol)
 			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
 				val default = param.default() ?: kotlin.run {
@@ -22,9 +23,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					return@inner
 				}
 				defaults += default
-				javaCode.append("\t\t")
-						.append("public")
-						.append(' ')
+				javaCode.append("\tpublic ")
 						.append(type(type))
 						.append(' ')
 						.append(name)
@@ -37,7 +36,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append('(')
 				newParams.joinTo(javaCode) { it.javaExpr() }
 				if (newParams.isNotEmpty()) javaCode.append(',')
-				defaults.joinTo(javaCode)
+				defaults.asReversed().joinTo(javaCode)
 				javaCode.append(");}").append(eol)
 			}
 		}
