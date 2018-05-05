@@ -31,7 +31,7 @@ install:
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
   - 7z x wget.zip -owget
   - set WGET=C:\projects\deps\wget\wget.exe
-  - %WGET% --version
+  - "%WGET% --version"
 
   ############################################################################
   # Install GLFW3
@@ -65,8 +65,6 @@ build_script:
   - mkdir res
   - mkdir res\native
   - cd jni
-
-  - set
 
   - pre
   - cd cmake-build-debug
