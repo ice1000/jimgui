@@ -24,32 +24,6 @@ install:
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
   - 7z x -y pkg-config_win32.zip -opkg-config
 
-  ############################################################################
-  # Install wget
-  ############################################################################
-  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
-  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -owget
-  - set WGET=C:\projects\deps\wget\wget.exe
-  - "%WGET% --version"
-
-  ############################################################################
-  # Install GLFW3
-  ############################################################################
-  - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
-  - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
-  - unzip glfw-3.2.1.zip
-  - cd glfw-3.2.1
-  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
-          -DBUILD_SHARED_LIBS=ON \
-          -DGLFW_BUILD_EXAMPLES=OFF \
-          -DGLFW_BUILD_TESTS=OFF \
-          -DGLFW_BUILD_DOCS=OFF \
-          .
-  - mingw32-make.exe
-  - mingw32-make.exe install
-  - cd ..
-
   - refreshenv
 
 cache:
