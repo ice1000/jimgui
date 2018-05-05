@@ -7,7 +7,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			javaCode.appendln(javaSimpleMethod(name, params, type))
+			javaCode.appendln(if (params.any { it is StringParam })
+				javaStringedFunction(name, params, type)
+			else javaSimpleMethod(name, params, type))
 			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
 				val default = param.default() ?: kotlin.run {

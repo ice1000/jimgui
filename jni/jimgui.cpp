@@ -76,50 +76,6 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	glfwSwapBuffers(window);
 }
 
-void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_textDisabled(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	ImGui::TextDisabled(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_bulletText(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	text[__len(text)] = '\0';
-	ImGui::BulletText(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_labelText(JNIEnv *env, jclass, jbyteArray _label, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	__get(Byte, label);
-	text[__len(text)] = '\0';
-	ImGui::LabelText(reinterpret_cast<const char *>(label), reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__release(Byte, label);
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_textWrapped(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	ImGui::TextWrapped(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-}
-
 void Java_org_ice1000_jimgui_JImGui_textColored(JNIEnv *env, jclass, jlong colorPtr, jbyteArray _text) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text);
@@ -138,24 +94,6 @@ jboolean Java_org_ice1000_jimgui_JImGui_button___3B(JNIEnv *env, jclass, jbyteAr
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
 }
 
-jboolean Java_org_ice1000_jimgui_JImGui_smallButton(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	auto res = ImGui::SmallButton(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
-}
-
-jboolean Java_org_ice1000_jimgui_JImGui_arrowButton(JNIEnv *env, jclass, jbyteArray _text, jint direction) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	auto res = ImGui::ArrowButton(reinterpret_cast<const char *>(text), direction);
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
-}
-
 jboolean Java_org_ice1000_jimgui_JImGui_button___3BFF(
 		JNIEnv *env, jclass, jbyteArray _text, jfloat width, jfloat height) {
 	__JNI__FUNCTION__INIT__
@@ -164,14 +102,6 @@ jboolean Java_org_ice1000_jimgui_JImGui_button___3BFF(
 	__release(Byte, text);
 	__JNI__FUNCTION__CLEAN__
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
-}
-
-void Java_org_ice1000_jimgui_JImGui_dummy(JNIEnv *, jobject, jfloat w, jfloat h) {
-	ImGui::Dummy(ImVec2(w, h));
-}
-
-void Java_org_ice1000_jimgui_JImGui_setCursorPos(JNIEnv *, jobject, jfloat newX, jfloat newY) {
-	ImGui::SetCursorPos(ImVec2(newX, newY));
 }
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
