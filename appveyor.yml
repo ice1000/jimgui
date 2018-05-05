@@ -28,6 +28,12 @@ install:
   - cmake --version
 
   ############################################################################
+  # Install PkgConfig
+  ############################################################################
+  - appveyor DownloadFile "http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip" -FileName "C:\pkg-config_win32.zip"
+  - 7z x -y "C:\pkg-config_win32.zip" -o"C:\pkg-config"
+
+  ############################################################################
   # Install wget
   ############################################################################
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
