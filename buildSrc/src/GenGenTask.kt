@@ -24,7 +24,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
-			`c++SimpleMethod`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
+			val initParams = params.mapNotNull { it.surrounding() }
+			if (initParams.isNotEmpty()) {
+				`c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
+						init = initParams.joinToString(" ", prefix = "__JNI__FUNCTION__INIT__ ") { it.first },
+						deinit = initParams.joinToString(" ", postfix = " __JNI__FUNCTION__CLEAN__") { it.second })
+			} else `c++SimpleMethod`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
 	}
 
@@ -72,6 +77,14 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollMaxY", "float"),
 			Fun("getCursorPosX", "float"),
 			Fun("getCursorPosY", "float"),
+			Fun("text", string("text")),
+			Fun("bulletText", string("text")),
+			Fun("labelText", string("label"), string("text")),
+			Fun("textDisabled", string("text")),
+			Fun("textWrapped", string("text")),
+//			Fun("button", "boolean", string("text")),
+			Fun("smallButton", "boolean", string("text")),
+			Fun("arrowButton", "boolean", string("text"), int("direction")),
 			Fun("bullet")
 	)
 }

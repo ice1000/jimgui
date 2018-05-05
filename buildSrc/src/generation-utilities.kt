@@ -9,6 +9,7 @@ fun bool(name: String, default: String? = null) = SimpleParam(name, "boolean", d
 fun int(name: String, default: String? = null) = SimpleParam(name, "int", default)
 fun float(name: String, default: String? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
+fun string(name: String) = StringParam(name)
 
 /**
  * @property name String function name
@@ -31,8 +32,7 @@ sealed class Param {
 	abstract fun javaExpr(): String
 	abstract fun `c++`(): String
 	abstract fun `c++Expr`(): String
-	open fun init() = ""
-	open fun release() = ""
+	open fun surrounding(): Pair<String, String>? = null
 	open fun default(): String? = null
 }
 
@@ -44,7 +44,13 @@ data class SimpleParam(val name: String, val type: String, val default: String?)
 	override fun default() = default
 }
 
-// data class StringParam(val name: String)
+data class StringParam(val name: String) : Param() {
+	override fun java() = "byte[] $name"
+	override fun javaExpr() = name
+	override fun `c++`() = "jbyteArray _$name"
+	override fun `c++Expr`() = "reinterpret_cast<const char *>($name)"
+	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
+}
 
 data class ImVec2(val nameX: String, val nameY: String) : Param() {
 	override fun java() = "float $nameX, float $nameY"

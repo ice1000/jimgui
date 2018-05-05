@@ -117,15 +117,8 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
-	private static native void text(byte[] text);
-	private static native void bulletText(byte[] text);
-	private static native void labelText(byte[] label, byte[] text);
-	private static native void textDisabled(byte[] text);
-	private static native void textWrapped(byte[] text);
 	private static native void textColored(long colorPtr, byte[] text);
 	private static native boolean button(byte[] text);
-	private static native boolean smallButton(byte[] text);
-	private static native boolean arrowButton(byte[] text, int direction);
 	private static native boolean button(byte[] text, float width, float height);
 	//endregion
 }

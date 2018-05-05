@@ -99,14 +99,15 @@ public class $className {
 			"private static native $type $name(${params.java()});"
 
 	fun javaOverloadMethod(name: String, params: List<Param>, defaults: List<String>, type: String?) =
-			"public ${type(type)} $name(${params.java()}) { ${ret(type)}$name(${params.javaExpr()
-			}${comma(params)}${defaults.joinToString()}); }"
+			"public ${type(type)} $name(${params.java()}) { ${ret(type)}$name(${params.javaExpr()}${
+			comma(params)}${defaults.joinToString()}); }"
 
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { ${ret(type)}$`c++Expr`; }"
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} {$eol${ret(type)}$`c++Expr`; }"
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
-			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jclass${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { $init ${ret(type)}$`c++Expr`; $deinit }"
+			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *env, jclass${
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" }
+					?: "void"} {$eol$init ${ret(type)}$`c++Expr`; $deinit }"
 }
