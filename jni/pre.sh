@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 rm -rf imgui
 rm -rf impl
-rm basics.hpp
 
 export GITHUB=https://raw.githubusercontent.com/ocornut/imgui/master
 export COV_GITHUB=https://raw.githubusercontent.com/covscript/covscript-imgui/master
@@ -26,4 +25,3 @@ wget ${GITHUB}/examples/opengl3_example/imgui_impl_glfw_gl3.cpp ${TO_IMPL}
 wget ${COV_GITHUB}/include/GL/gl3w.h ${TO_IMPL}/GL
 wget ${COV_GITHUB}/include/GL/glcorearb.h ${TO_IMPL}/GL
 wget ${COV_GITHUB}/src/gl3w.c ${TO_IMPL}
-wget ${ICE_GITHUB}/jni/global/basics.hpp

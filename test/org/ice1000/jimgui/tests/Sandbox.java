@@ -18,7 +18,9 @@ public class Sandbox {
 		JImGuiUtil.runPer(15, imGui -> {
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
-					imGui.text("Hi!");
+					imGui.menuItem("Copy", "Ctrl+C");
+					imGui.menuItem("Paste", "Ctrl+V");
+					imGui.menuItem("Open");
 					imGui.endMenu();
 				}
 				imGui.endMainMenuBar();
