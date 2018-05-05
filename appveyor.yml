@@ -41,14 +41,6 @@ install:
 #  - mingw32-make.exe install
 #  - cd ..
 
-  ############################################################################
-  # Install wget
-  ############################################################################
-  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
-  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -owget
-  - wget --version
-
   - refreshenv
 
 cache:
@@ -64,6 +56,14 @@ build_script:
   - mkdir res
   - mkdir res\native
   - cd jni
+
+  ############################################################################
+  # Install wget
+  ############################################################################
+  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
+  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
+  - 7z x wget.zip -owget
+  - wget --version
 
   - pre
   - cd cmake-build-debug
