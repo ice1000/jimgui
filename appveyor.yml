@@ -91,7 +91,9 @@ build_script:
   - cd jni
   # - pre
   - cd cmake-build-debug
-  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" ..
+  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
+          -DPKG_CONFIG_EXECUTABLE="C:\pkg-config\bin\pkg-config.exe" \
+         ..
   - mingw32-make.exe
   - copy *.dll ..\..\res\native\
   - cd ..\..
