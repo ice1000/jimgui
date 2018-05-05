@@ -37,16 +37,18 @@ install:
   ############################################################################
   # Install GLFW3
   ############################################################################
-  - start "C:\Program Files (X86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat"
-  # Remove the VS Xamarin targets to reduce AppVeyor specific noise in build
-  # logs.  See also http://help.appveyor.com/discussions/problems/4569
-  - del "C:\Program Files (x86)\MSBuild\12.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets"
   - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
   - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
   - unzip glfw-3.2.1.zip
   - cd glfw-3.2.1
-  - cmake -G "Visual Studio 12" -DBUILD_SHARED_LIBS=ON -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_DOCS=OFF .
-  - cmake --build . --config Release --target install -- /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /verbosity:minimal
+  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
+          -DBUILD_SHARED_LIBS=ON \
+          -DGLFW_BUILD_EXAMPLES=OFF \
+          -DGLFW_BUILD_TESTS=OFF \
+          -DGLFW_BUILD_DOCS=OFF \
+          .
+  - make
+  - make install
   - cd ..
 
   ############################################################################
@@ -82,6 +84,7 @@ build_script:
   - cd cmake-build-debug
   - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
           -DPKG_CONFIG_EXECUTABLE="C:\pkg-config\bin\pkg-config.exe" \
+          -Dglfw3_DIR="C:\Program Files (x86)\GLFW\lib\cmake\glfw3" \
          ..
   - mingw32-make.exe
   - copy *.dll ..\..\res\native\
