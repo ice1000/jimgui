@@ -5,7 +5,7 @@ import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
 import java.io.File
 
-@Suppress("PrivatePropertyName", "LocalVariableName")
+@Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
 		val className: String,
 		private val `c++FileSuffix`: String
@@ -80,32 +80,33 @@ public class $className {
 			"private static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
 //endregion
 
+	//region Trivial helpers
 	fun List<Param>.java() = joinToString { it.java() }
+
 	fun List<Param>.javaExpr() = joinToString { it.javaExpr() }
 	fun List<Param>.`c++`() = joinToString { it.`c++`() }
 	fun List<Param>.`c++Expr`() = joinToString { it.`c++Expr`() }
+	private fun comma(params: List<Param>) = if (params.isNotEmpty()) ", " else ""
+	private fun type(type: String?) = type ?: "void"
+	private fun ret(type: String?) = type?.let { "return " }.orEmpty()
+	private val eol: String = System.lineSeparator()
+	//endregion
 
 	fun javaSimpleMethod(name: String, params: List<Param>, type: String?) =
 			"public native ${type(type)} $name(${params.java()});"
+
+	fun javaStringedFunction(name: String, params: List<Param>, type: String) =
+			"private static native $type $name(${params.java()});"
 
 	fun javaOverloadMethod(name: String, params: List<Param>, defaults: List<String>, type: String?) =
 			"public ${type(type)} $name(${params.java()}) { ${ret(type)}$name(${params.javaExpr()
 			}${comma(params)}${defaults.joinToString()}); }"
 
-	private fun type(type: String?) = type ?: "void"
-
-	fun javaPrivateFunction(name: String, params: List<Param>, type: String) = "private static native $type $name(${params.java()});"
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jobject${
 			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { ${ret(type)}$`c++Expr`; }"
 
-	fun `c++PrivateFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$name(JNIEnv *, jclass${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { ${ret(type)}$`c++Expr`; }"
-
-	private fun comma(params: List<Param>) = if (params.isNotEmpty()) ", " else ""
-
-	private fun ret(type: String?) = type?.let { "return " }.orEmpty()
-
-	private val eol: String = System.lineSeparator()
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} { $init ${ret(type)}$`c++Expr`; $deinit }"
 }
