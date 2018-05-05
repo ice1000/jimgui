@@ -6,7 +6,7 @@ set TO_IMPL=--directory-prefix=impl
 
 mkdir imgui
 mkdir impl
-mkdir impl/GL
+mkdir impl\GL
 
 wget %GITHUB%/imgui.cpp %TO_IMGUI%
 wget %GITHUB%/imgui.h %TO_IMGUI%
