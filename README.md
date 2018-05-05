@@ -6,6 +6,10 @@ Pure Java binding for dear-imgui, Kotlin is used as code generation tool.
 
 This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-based lightweight IDE for experiment purpose.
 
+# Demo
+
+See [this java file](test/org/ice1000/jimgui/tests/Demo.java).
+
 # Build
 
 To compile a jar library, run:

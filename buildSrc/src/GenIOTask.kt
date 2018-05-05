@@ -7,7 +7,7 @@ import org.intellij.lang.annotations.Language
 /**
  * @author ice1000
  */
-open class GenIOTask : GenTask("JImGuiIO", "imgui_io") {
+open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	init {
 		description = "Generate binding for ImGui::GetIO"
 	}
