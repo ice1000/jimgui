@@ -4,6 +4,7 @@ environment:
   CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
   CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
+  PATH: C:\projects\deps;C:\projects\deps\cmake\bin;%PATH%
 #
 
 install:
@@ -21,9 +22,9 @@ install:
   ############################################################################
   - set CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-win64-x64.zip"
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake.zip
-  - 7z x cmake.zip -oC:\projects\deps > nul
+  - 7z x cmake.zip -oC:\projects\deps
   - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
-  - set PATH=C:\projects\deps\cmake\bin;%PATH%
+  # - set PATH=C:\projects\deps\cmake\bin;%PATH%
   - cmake --version
 
   ############################################################################
@@ -31,8 +32,8 @@ install:
   ############################################################################
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -oC:\projects\deps > nul
-  - set PATH=%cd%;%PATH%
+  - 7z x wget.zip -oC:\projects\deps
+  # - set PATH=%cd%;%PATH%
   - wget --version
 
   ############################################################################
