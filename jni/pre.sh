@@ -9,8 +9,8 @@ export ICE_GITHUB=https://raw.githubusercontent.com/ice1000/algo4j/master
 export TO_IMGUI=--directory-prefix=imgui
 export TO_IMPL=--directory-prefix=impl
 
-mkdir -p imgui/GL
-mkdir -p impl
+mkdir -p imgui
+mkdir -p impl/GL
 
 wget ${GITHUB}/imgui.cpp ${TO_IMGUI}
 wget ${GITHUB}/imgui.h ${TO_IMGUI}

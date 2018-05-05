@@ -40,10 +40,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		return arrowButton(getBytes(text), direction.intValue);
 	}
 
-	public boolean button(@NotNull String text) {
-		return button(getBytes(text), 0, 0);
-	}
-
 	public @Nullable JImGuiIO tryGetIO() {
 		return io;
 	}

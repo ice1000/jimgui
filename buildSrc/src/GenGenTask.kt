@@ -24,13 +24,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append(ret(type))
 						.append(name)
 						.append('(')
-				params.forEachIndexed { index, param ->
-					if (index != 0) javaCode.append(",")
-					if (param is StringParam) javaCode.append("getBytes(")
-							.append(param.name)
-							.append(')')
-					else javaCode.append(param.javaExpr())
-				}
+				params.joinTo(javaCode) { it.javaExpr() }
 				javaCode
 						.append(");}")
 						.append(eol)
@@ -55,7 +49,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append(name)
 						.append('(')
 				val newParams = params.dropLast(index + 1)
-				newParams.joinTo(javaCode) { it.java() }
+				newParams.joinTo(javaCode) { it.javaDefault() }
 				javaCode.append("){")
 						.append(ret(type))
 						.append(name)
@@ -93,12 +87,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	private val trivialMethods = listOf(
 			// Cursor / Layout
 			Fun("separator"),
-			Fun("sameLine", float("posX", default = "0.0f"), float("spacingW", default = "-1.0f")),
+			Fun("sameLine", float("posX", default = 0), float("spacingW", default = -1)),
 			Fun("newLine"),
 			Fun("spacing"),
-			Fun("dummy", vec2("width", "height")),
-			Fun("indent", float("indentW", default = "0.0f")),
-			Fun("unindent", float("indentW", default = "0.0f")),
+			Fun("dummy", size()),
+			Fun("indent", float("indentW", default = 0)),
+			Fun("unindent", float("indentW", default = 0)),
 			Fun("beginGroup"),
 			Fun("endGroup"),
 			Fun("getCursorPosX", "float"),
@@ -121,12 +115,22 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("textWrapped", string("text")),
 
 			// Widgets: Main
-			Fun("button", "boolean", string("text"), vec2("width", "height")),
+			Fun("button", "boolean", string("text"), size("0,0")),
 			Fun("smallButton", "boolean", string("text")),
-			Fun("invisibleButton", "boolean", string("text"), vec2("width", "height")),
+			Fun("invisibleButton", "boolean", string("text"), vec2("width", "height", default = "0.0f, 0.0f")),
 			Fun("arrowButton", "boolean", string("text"), int("direction")),
 			Fun("radioButton", "boolean", string("text"), bool("active")),
 			Fun("bullet"),
+			Fun("progressBar", float("fraction"), size("-1,0"), string("overlay", default = "(byte[])null")),
+
+			// Widgets: Trees
+			Fun("treeNode", "boolean", string("label")),
+			Fun("treePush", string("stringID")),
+			Fun("treePop"),
+			Fun("treeAdvanceToLabelPos"),
+			Fun("getTreeNodeToLabelSpacing", "float"),
+			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
+			Fun("collapsingHeader", "boolean", string("label"), int("flags", default = 0)),
 
 			// Tooltips
 			Fun("setTooltip", string("text")),
@@ -144,15 +148,28 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("endMenu"),
 			Fun("menuItem", "boolean",
 					string("label"),
-					string("shortcut" /*, default = "null"*/),
+					string("shortcut", default = "(byte[])null"),
 					bool("selected", default = false),
 					bool("enabled", default = true)),
+
+			// Columns
+			Fun("columns",
+					int("count", default = 1),
+					string("id", default = "(byte[])null"),
+					bool("border", default = true)),
+			Fun("nextColumn"),
+			Fun("getColumnIndex", "int"),
+			Fun("getColumnWidth", "float", int("columnIndex", default = -1)),
+			Fun("getColumnOffset", "float", int("columnIndex", default = -1)),
+			Fun("setColumnWidth", int("columnIndex"), float("width")),
+			Fun("setColumnOffset", int("columnIndex"), float("offsetX")),
+			Fun("getColumnsCount", "int"),
 
 			// Parameters stacks (current window)
 			Fun("pushItemWidth", float("itemWidth")),
 			Fun("popItemWidth"),
 			Fun("calcItemWidth", "float"),
-			Fun("pushTextWrapPos", float("wrapPosX", default = "0.0f")),
+			Fun("pushTextWrapPos", float("wrapPosX", default = 0)),
 			Fun("popTextWrapPos"),
 			Fun("pushAllowKeyboardFocus", bool("allowKeyboardFocus")),
 			Fun("popAllowKeyboardFocus"),
