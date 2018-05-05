@@ -32,7 +32,7 @@ install:
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
   - 7z x wget.zip -oC:\projects\deps > nul
-  - set PATH=C:\projects\deps\wget;%PATH%
+  - set PATH=%cd%;%PATH%
   - wget --version
   - cd C:\projects\jimgui\
   - cd jni
