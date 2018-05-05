@@ -4,7 +4,7 @@ environment:
   CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
   CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
-  PATH: C:\projects\deps\wget;C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;%PATH%
+  PATH: C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;%PATH%
 #
 
 install:
@@ -30,23 +30,25 @@ install:
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
   - 7z x wget.zip -owget
+  - set WGET=C:\projects\deps\wget\wget.exe
+  - %WGET% --version
 
-#  ############################################################################
-#  # Install GLFW3
-#  ############################################################################
-#  - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
-#  - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
-#  - unzip glfw-3.2.1.zip
-#  - cd glfw-3.2.1
-#  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
-#          -DBUILD_SHARED_LIBS=ON \
-#          -DGLFW_BUILD_EXAMPLES=OFF \
-#          -DGLFW_BUILD_TESTS=OFF \
-#          -DGLFW_BUILD_DOCS=OFF \
-#          .
-#  - mingw32-make.exe
-#  - mingw32-make.exe install
-#  - cd ..
+  ############################################################################
+  # Install GLFW3
+  ############################################################################
+  - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
+  - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
+  - unzip glfw-3.2.1.zip
+  - cd glfw-3.2.1
+  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
+          -DBUILD_SHARED_LIBS=ON \
+          -DGLFW_BUILD_EXAMPLES=OFF \
+          -DGLFW_BUILD_TESTS=OFF \
+          -DGLFW_BUILD_DOCS=OFF \
+          .
+  - mingw32-make.exe
+  - mingw32-make.exe install
+  - cd ..
 
   - refreshenv
 
@@ -64,7 +66,7 @@ build_script:
   - mkdir res\native
   - cd jni
 
-  - wget --version
+  - set
 
   - pre
   - cd cmake-build-debug

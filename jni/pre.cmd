@@ -8,16 +8,16 @@ mkdir imgui
 mkdir impl
 mkdir impl\GL
 
-wget %GITHUB%/imgui.cpp %TO_IMGUI%
-wget %GITHUB%/imgui.h %TO_IMGUI%
-wget %GITHUB%/imgui_draw.cpp %TO_IMGUI%
-wget %GITHUB%/imgui_internal.h %TO_IMGUI%
-wget %GITHUB%/imconfig.h %TO_IMGUI%
-wget %GITHUB%/stb_rect_pack.h %TO_IMGUI%
-wget %GITHUB%/stb_textedit.h %TO_IMGUI%
-wget %GITHUB%/stb_truetype.h %TO_IMGUI%
-wget %GITHUB%/examples/opengl3_example/imgui_impl_glfw_gl3.h %TO_IMPL%
-wget %GITHUB%/examples/opengl3_example/imgui_impl_glfw_gl3.cpp %TO_IMPL%
-wget %COV_GITHUB%/include/GL/gl3w.h %TO_IMPL%/GL
-wget %COV_GITHUB%/include/GL/glcorearb.h %TO_IMPL%/GL
-wget %COV_GITHUB%/src/gl3w.c %TO_IMPL%
+%WGET% %GITHUB%/imgui.cpp %TO_IMGUI%
+%WGET% %GITHUB%/imgui.h %TO_IMGUI%
+%WGET% %GITHUB%/imgui_draw.cpp %TO_IMGUI%
+%WGET% %GITHUB%/imgui_internal.h %TO_IMGUI%
+%WGET% %GITHUB%/imconfig.h %TO_IMGUI%
+%WGET% %GITHUB%/stb_rect_pack.h %TO_IMGUI%
+%WGET% %GITHUB%/stb_textedit.h %TO_IMGUI%
+%WGET% %GITHUB%/stb_truetype.h %TO_IMGUI%
+%WGET% %GITHUB%/examples/opengl3_example/imgui_impl_glfw_gl3.h %TO_IMPL%
+%WGET% %GITHUB%/examples/opengl3_example/imgui_impl_glfw_gl3.cpp %TO_IMPL%
+%WGET% %COV_GITHUB%/include/GL/gl3w.h %TO_IMPL%/GL
+%WGET% %COV_GITHUB%/include/GL/glcorearb.h %TO_IMPL%/GL
+%WGET% %COV_GITHUB%/src/gl3w.c %TO_IMPL%
