@@ -87,7 +87,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	private val trivialMethods = listOf(
 			// Cursor / Layout
 			Fun("separator"),
-			Fun("sameLine", float("posX", default = 0), float("spacingW", default = -1)),
+			Fun("sameLine",
+					float("posX", default = 0),
+					float("spacingW", default = -1)),
 			Fun("newLine"),
 			Fun("spacing"),
 			Fun("dummy", size()),
@@ -117,11 +119,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Widgets: Main
 			Fun("button", "boolean", string("text"), size("0,0")),
 			Fun("smallButton", "boolean", string("text")),
-			Fun("invisibleButton", "boolean", string("text"), vec2("width", "height", default = "0.0f, 0.0f")),
+			Fun("invisibleButton", "boolean",
+					string("text"),
+					size("0,0")),
 			Fun("arrowButton", "boolean", string("text"), int("direction")),
 			Fun("radioButton", "boolean", string("text"), bool("active")),
 			Fun("bullet"),
-			Fun("progressBar", float("fraction"), size("-1,0"), string("overlay", default = "(byte[])null")),
+			Fun("progressBar",
+					float("fraction"),
+					size("-1,0"),
+					string("overlay", default = "(byte[])null")),
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", string("label")),
@@ -130,7 +137,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
-			Fun("collapsingHeader", "boolean", string("label"), int("flags", default = 0)),
+			Fun("collapsingHeader", "boolean",
+					string("label"),
+					int("flags", default = 0)),
 
 			// Tooltips
 			Fun("setTooltip", string("text")),
@@ -164,6 +173,23 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setColumnWidth", int("columnIndex"), float("width")),
 			Fun("setColumnOffset", int("columnIndex"), float("offsetX")),
 			Fun("getColumnsCount", "int"),
+
+			// Logging/Capture: all text output from interface is captured to tty/file/clipboard.
+			Fun("logToTTY", int("maxDepth", default = -1)),
+			Fun("logToFile",
+					int("maxDepth", default = -1),
+					string("fileName", default = "(byte[])null")),
+			Fun("logToClipboard", int("maxDepth", default = -1)),
+			Fun("logFinish"),
+			Fun("logButtons"),
+			Fun("logText", string("text")),
+
+			// Clipping
+			Fun("pushClipRect",
+					vec2("clipRectMinWidth", "clipRectMinHeight"),
+					vec2("clipRectMaxWidth", "clipRectMaxHeight"),
+					bool("intersectWithCurrentClipRect")),
+			Fun("popClipRect"),
 
 			// Parameters stacks (current window)
 			Fun("pushItemWidth", float("itemWidth")),
