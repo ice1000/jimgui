@@ -1,6 +1,3 @@
-rd /s /q "imgui"
-rd /s /q "impl"
-
 set GITHUB=https://raw.githubusercontent.com/ocornut/imgui/master
 set COV_GITHUB=https://raw.githubusercontent.com/covscript/covscript-imgui/master
 set ICE_GITHUB=https://raw.githubusercontent.com/ice1000/algo4j/master

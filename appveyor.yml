@@ -40,6 +40,11 @@ install:
   ############################################################################
   - set PATH="C:\Program Files\LLVM\bin";%PATH%
   - clang-cl -v
+  - refreshenv
+
+cache:
+  - C:\Users\appveyor\.gradle
+#
 
 build_script:
   - cd C:\projects\jimgui\
