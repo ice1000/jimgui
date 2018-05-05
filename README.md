@@ -1,6 +1,7 @@
 # jimgui
 
 [![CircleCI](https://circleci.com/gh/ice1000/jimgui.svg?style=svg)](https://circleci.com/gh/ice1000/jimgui)
+[![Build status](https://ci.appveyor.com/api/projects/status/9dn7mora07srvvis?svg=true)](https://ci.appveyor.com/project/ice1000/jimgui)
 
 Pure Java binding for dear-imgui, Kotlin is used as code generation tool.
 

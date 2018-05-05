@@ -1,0 +1,70 @@
+environment:
+  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
+  CXX: C:\Program Files\LLVM\bin\clang-cl.exe
+  CC:  C:\Program Files\LLVM\bin\clang-cl.exe
+  CMAKE_CXX_COMPILER: C:\Program Files\LLVM\bin\clang-cl.exe
+  CMAKE_CC_COMPILER:  C:\Program Files\LLVM\bin\clang-cl.exe
+#
+
+install:
+  # CMake refuses to generate MinGW Makefiles if sh.exe is in the Path
+  - ps: Get-Command sh.exe -All | Remove-Item
+
+  ############################################################################
+  # All external dependencies are installed in C:\projects\deps
+  ############################################################################
+  - mkdir C:\projects\deps
+  - cd C:\projects\deps
+
+  ############################################################################
+  # Install a recent CMake
+  ############################################################################
+  - set CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-win64-x64.zip"
+  - appveyor DownloadFile %CMAKE_URL% -FileName cmake.zip
+  - 7z x cmake.zip -oC:\projects\deps > nul
+  - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
+  - set PATH=C:\projects\deps\cmake\bin;%PATH%
+  - cmake --version
+
+  ############################################################################
+  # Install wget
+  ############################################################################
+  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
+  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
+  - 7z x wget.zip -oC:\projects\deps > nul
+  - move C:\projects\deps\wget-* C:\projects\deps\wget # Move to a version-agnostic directory
+  - set PATH=C:\projects\deps\wget;%PATH%
+  - wget --version
+
+  ############################################################################
+  # Setup the path to Clang-cl
+  ############################################################################
+  - set PATH="C:\Program Files\LLVM\bin";%PATH%
+  - clang-cl -v
+
+build_script:
+  - echo %CMAKE_CC_COMPILER%
+  - echo %CMAKE_CXX_COMPILER%
+  - gradlew genBindings javah --info
+  - mkdir jni\cmake-build-debug
+  - mkdir res
+  - mkdir res\native
+  - cd jni
+  - pre
+  - cd cmake-build-debug
+  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" ..
+  - mingw32-make.exe
+  - copy *.dll ..\..\res\native\
+  - cd ..\..
+  - gradlew jar --info
+  - gradlew test --info
+#
+
+before_build:
+  - set Path=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;%Path%
+#
+
+artifacts:
+  - path: 'build\libs\*.jar'
+    name: jimgui
+#
