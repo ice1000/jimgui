@@ -22,7 +22,7 @@ install:
   ############################################################################
   - set CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-win64-x64.zip"
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake.zip
-  - 7z x cmake.zip -o C:\projects\deps
+  - 7z x cmake.zip -o.
   - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
   # - set PATH=C:\projects\deps\cmake\bin;%PATH%
   - cmake --version
@@ -32,7 +32,7 @@ install:
   ############################################################################
   - set PKG_CONFIG_URL="http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip"
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
-  - 7z x -y pkg-config_win32.zip -o pkg-config
+  - 7z x -y pkg-config_win32.zip -opkg-config
 
   ############################################################################
   # Install GLFW3
@@ -54,7 +54,7 @@ install:
   ############################################################################
   - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
   - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -o wget
+  - 7z x wget.zip -owget
   - wget --version
 
   ############################################################################
