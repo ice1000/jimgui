@@ -4,7 +4,7 @@ environment:
   CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
   CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
-  PATH: C:\projects\deps\wget;C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;C:\projects\deps\cmake\bin;%PATH%
+  PATH: C:\projects\deps\wget;C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;%PATH%
 #
 
 install:
@@ -18,38 +18,28 @@ install:
   - cd C:\projects\deps
 
   ############################################################################
-  # Install a recent CMake
-  ############################################################################
-  - set CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-win64-x64.zip"
-  - appveyor DownloadFile %CMAKE_URL% -FileName cmake.zip
-  - 7z x cmake.zip -o.
-  - move C:\projects\deps\cmake-* C:\projects\deps\cmake # Move to a version-agnostic directory
-  # - set PATH=C:\projects\deps\cmake\bin;%PATH%
-  - cmake --version
-
-  ############################################################################
   # Install PkgConfig
   ############################################################################
   - set PKG_CONFIG_URL="http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip"
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
   - 7z x -y pkg-config_win32.zip -opkg-config
 
-  ############################################################################
-  # Install GLFW3
-  ############################################################################
-  - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
-  - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
-  - unzip glfw-3.2.1.zip
-  - cd glfw-3.2.1
-  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
-          -DBUILD_SHARED_LIBS=ON \
-          -DGLFW_BUILD_EXAMPLES=OFF \
-          -DGLFW_BUILD_TESTS=OFF \
-          -DGLFW_BUILD_DOCS=OFF \
-          .
-  - make
-  - make install
-  - cd ..
+#  ############################################################################
+#  # Install GLFW3
+#  ############################################################################
+#  - set GLFW_URL="https://github.com/glfw/glfw/archive/3.2.1.zip"
+#  - appveyor DownloadFile %GLFW_URL% -FileName glfw-3.2.1.zip
+#  - unzip glfw-3.2.1.zip
+#  - cd glfw-3.2.1
+#  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
+#          -DBUILD_SHARED_LIBS=ON \
+#          -DGLFW_BUILD_EXAMPLES=OFF \
+#          -DGLFW_BUILD_TESTS=OFF \
+#          -DGLFW_BUILD_DOCS=OFF \
+#          .
+#  - mingw32-make.exe
+#  - mingw32-make.exe install
+#  - cd ..
 
   ############################################################################
   # Install wget
@@ -59,11 +49,6 @@ install:
   - 7z x wget.zip -owget
   - wget --version
 
-  ############################################################################
-  # Setup the path to Clang-cl
-  ############################################################################
-  - set PATH="C:\Program Files\LLVM\bin";%PATH%
-  - clang-cl -v
   - refreshenv
 
 cache:
