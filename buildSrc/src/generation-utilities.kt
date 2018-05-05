@@ -86,3 +86,6 @@ const val CXX_PREFIX = """///
 
 @Language("C++")
 const val CXX_SUFFIX = "#pragma clang diagnostic pop"
+
+@Language("C++", suffix = "(){}")
+const val JNI_FUNC_PREFIX = "JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_"

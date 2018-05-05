@@ -7,9 +7,14 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			javaCode.appendln(if (params.any { it is StringParam })
-				javaStringedFunction(name, params, type)
-			else javaSimpleMethod(name, params, type))
+			if (params.any { it is StringParam }) javaCode.append("protected static native ")
+			else javaCode.append("public native ")
+			javaCode.append(type(type))
+					.append(' ')
+					.append(name)
+					.append('(')
+			params.joinTo(javaCode) { it.java() }
+			javaCode.append(");")
 			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
 				val default = param.default() ?: kotlin.run {
@@ -17,12 +22,37 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					return@inner
 				}
 				defaults += default
-				javaCode.appendln(javaOverloadMethod(name, params.dropLast(index + 1), defaults, type))
+				javaCode.append("\t\t")
+						.append("public")
+						.append(' ')
+						.append(type(type))
+						.append(' ')
+						.append(name)
+						.append('(')
+				val newParams = params.dropLast(index + 1)
+				newParams.joinTo(javaCode) { it.java() }
+				javaCode.append("){")
+						.append(ret(type))
+						.append(name)
+						.append('(')
+				newParams.joinTo(javaCode) { it.javaExpr() }
+				if (newParams.isNotEmpty()) javaCode.append(',')
+				defaults.joinTo(javaCode)
+				javaCode.append(");}").append(eol)
 			}
 		}
 	}
 
 	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
+
+	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} {$eol${ret(type)}$`c++Expr`; }"
+
+	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
+			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" }
+					?: "void"} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res;")} }"
 
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
