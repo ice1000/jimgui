@@ -24,6 +24,13 @@ install:
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
   - 7z x -y pkg-config_win32.zip -opkg-config
 
+  ############################################################################
+  # Install wget
+  ############################################################################
+  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
+  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
+  - 7z x wget.zip -owget
+
 #  ############################################################################
 #  # Install GLFW3
 #  ############################################################################
@@ -57,12 +64,6 @@ build_script:
   - mkdir res\native
   - cd jni
 
-  ############################################################################
-  # Install wget
-  ############################################################################
-  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
-  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -owget
   - wget --version
 
   - pre
