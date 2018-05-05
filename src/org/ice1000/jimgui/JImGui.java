@@ -32,36 +32,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		io = null;
 	}
 
-	public void text(@NotNull String text) {
-		text(getBytes(text));
-	}
-
-	public void bulletText(@NotNull String text) {
-		bulletText(getBytes(text));
-	}
-
-	public void labelText(@NotNull String label, @NotNull String text) {
-		labelText(getBytes(label), getBytes(text));
-	}
-
-	public void textDisabled(@NotNull String text) {
-		textDisabled(getBytes(text));
-	}
-
-	public void textWrapped(@NotNull String text) {
-		textWrapped(getBytes(text));
-	}
-
 	public void text(@NotNull JImVec4 color, @NotNull String text) {
 		textColored(color.nativeObjectPtr, getBytes(text));
 	}
 
 	public boolean button(@NotNull String text) {
 		return button(getBytes(text));
-	}
-
-	public boolean smallButton(@NotNull String text) {
-		return smallButton(getBytes(text));
 	}
 
 	public boolean arrowButton(@NotNull String text, @NotNull JImDir direction) {

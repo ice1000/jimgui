@@ -7,15 +7,41 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			if (params.any { it is StringParam }) javaCode.append("\tprotected static native ")
-			else javaCode.append("\tpublic native ")
+			if (params.any { it is StringParam }) {
+				javaCode.append("\tpublic ")
+						.append(type(type))
+						.append(' ')
+						.append(name)
+						.append('(')
+				params.forEachIndexed { index, param ->
+					if (index != 0) javaCode.append(",")
+					if (param is StringParam) javaCode.append("@NotNull String ")
+							.append(param.name)
+					else javaCode.append(param.java())
+				}
+				javaCode
+						.append("){")
+						.append(ret(type))
+						.append(name)
+						.append('(')
+				params.forEachIndexed { index, param ->
+					if (index != 0) javaCode.append(",")
+					if (param is StringParam) javaCode.append("getBytes(")
+							.append(param.name)
+							.append(')')
+					else javaCode.append(param.javaExpr())
+				}
+				javaCode
+						.append(");}")
+						.append(eol)
+						.append("\tprotected static native ")
+			} else javaCode.append("\tpublic native ")
 			javaCode.append(type(type))
 					.append(' ')
 					.append(name)
 					.append('(')
 			params.joinTo(javaCode) { it.java() }
-			javaCode.append(");")
-			javaCode.append(eol)
+			javaCode.append(");").append(eol)
 			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
 				val default = param.default() ?: kotlin.run {
