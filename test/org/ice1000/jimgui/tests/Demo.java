@@ -21,9 +21,17 @@ public class Demo {
 			if (imGui.button("800x200")) imGui.setWindowSize(800, 200);
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
 			imGui.separator();
-			if (imGui.isMousePosValid()) ;
-//			ImGui.text("Mouse Position: (%.1f,%.1f)", , );
+			if (imGui.isMousePosValid())
+				imGui.text("Mouse Position: (" + imGui.getMousePosX() + ", " + imGui.getMousePosY() + ")");
 			else imGui.text("Mouse Position: <invalid>");
+			if (imGui.treeNode("This is a tree node")) {
+				imGui.text("Which?");
+				if (imGui.treeNode("This is a child node")) {
+					imGui.text("What?");
+					imGui.treePop();
+				}
+				imGui.treePop();
+			}
 		});
 	}
 
