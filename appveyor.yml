@@ -4,7 +4,7 @@ environment:
   CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
   CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
-  PATH: C:\projects\deps\pkg-config\bin\;C:\projects\deps\cmake\bin;%PATH%
+  PATH: C:\projects\deps\wget;C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;C:\projects\deps\cmake\bin;%PATH%
 #
 
 install:
@@ -50,6 +50,14 @@ install:
   - cd ..
 
   ############################################################################
+  # Install wget
+  ############################################################################
+  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
+  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
+  - 7z x wget.zip -o wget
+  - wget --version
+
+  ############################################################################
   # Setup the path to Clang-cl
   ############################################################################
   - set PATH="C:\Program Files\LLVM\bin";%PATH%
@@ -70,15 +78,7 @@ build_script:
   - mkdir res\native
   - cd jni
 
-  ############################################################################
-  # Install wget
-  ############################################################################
-  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
-  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
-  - 7z x wget.zip -o .
-  - wget --version
   - pre
-
   - cd cmake-build-debug
   - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
           -DPKG_CONFIG_EXECUTABLE="C:\pkg-config\bin\pkg-config.exe" \
