@@ -8,7 +8,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
 			if (params.any { it is StringParam }) {
-				javaCode.append("\tpublic ")
+				javaCode.append("\tpublic final ")
 						.append(type(type))
 						.append(' ')
 						.append(name)
@@ -35,7 +35,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append(");}")
 						.append(eol)
 						.append("\tprotected static native ")
-			} else javaCode.append("\tpublic native ")
+			} else javaCode.append("\tpublic final native ")
 			javaCode.append(type(type))
 					.append(' ')
 					.append(name)
@@ -44,7 +44,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			javaCode.append(");").append(eol)
 			val defaults = ArrayList<String>(params.size)
 			params.asReversed().forEachIndexed inner@{ index, param ->
-				val default = param.default() ?: kotlin.run {
+				val default = param.default?.toString() ?: kotlin.run {
 					defaults += param.javaExpr()
 					return@inner
 				}
@@ -91,57 +91,87 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	private val trivialMethods = listOf(
+			// Cursor / Layout
+			Fun("separator"),
 			Fun("sameLine", float("posX", default = "0.0f"), float("spacingW", default = "-1.0f")),
-			Fun("setCursorPosX", float("newValue")),
-			Fun("setCursorPosY", float("newValue")),
+			Fun("newLine"),
+			Fun("spacing"),
+			Fun("dummy", vec2("width", "height")),
 			Fun("indent", float("indentW", default = "0.0f")),
 			Fun("unindent", float("indentW", default = "0.0f")),
-			Fun("beginMainMenuBar"),
-			Fun("endMainMenuBar"),
-			Fun("beginMenuBar"),
-			Fun("endMenuBar"),
-			Fun("separator"),
-			Fun("newLine"),
-			Fun("pushItemWidth", float("itemWidth")),
-			Fun("popItemWidth"),
-			Fun("pushTextWrapPos", float("wrapPosX", default = "0.0f")),
-			Fun("popTextWrapPos"),
-			Fun("pushAllowKeyboardFocus", bool("allowKeyboardFocus")),
-			Fun("popAllowKeyboardFocus"),
-			Fun("pushButtonRepeat", bool("repeat", default = "false")),
-			Fun("setItemDefaultFocus"),
-			Fun("setKeyboardFocusHere", int("offset")),
-			Fun("dummy", vec2("width", "height")),
-			Fun("spacing"),
-			Fun("setCursorPos", vec2("posX", "spacingW")),
-			Fun("setCursorScreenPos", vec2("screenPosX", "screenPosY")),
-			Fun("setScrollX", float("scrollX")),
-			Fun("setScrollY", float("scrollY")),
-			Fun("setScrollHere", float("centerYRatio")),
-			Fun("setScrollFromPosY", float("posY"), float("centerYRatio")),
-			Fun("alignTextToFramePadding"),
 			Fun("beginGroup"),
 			Fun("endGroup"),
+			Fun("getCursorPosX", "float"),
+			Fun("getCursorPosY", "float"),
+			Fun("setCursorPos", vec2("posX", "spacingW")),
+			Fun("setCursorScreenPos", vec2("screenPosX", "screenPosY")),
+			Fun("setCursorPosX", float("newValue")),
+			Fun("setCursorPosY", float("newValue")),
+			Fun("alignTextToFramePadding"),
 			Fun("getTextLineHeight", "float"),
-			Fun("getFontSize", "float"),
-			Fun("calcItemWidth", "float"),
 			Fun("getTextLineHeightWithSpacing", "float"),
 			Fun("getFrameHeight", "float"),
 			Fun("getFrameHeightWithSpacing", "float"),
-			Fun("getScrollX", "float"),
-			Fun("getScrollY", "float"),
-			Fun("getScrollMaxX", "float"),
-			Fun("getScrollMaxY", "float"),
-			Fun("getCursorPosX", "float"),
-			Fun("getCursorPosY", "float"),
+
+			// Widgets: Text
 			Fun("text", string("text")),
 			Fun("bulletText", string("text")),
 			Fun("labelText", string("label"), string("text")),
 			Fun("textDisabled", string("text")),
 			Fun("textWrapped", string("text")),
+
+			// Widgets: Main
 //			Fun("button", "boolean", string("text")),
 			Fun("smallButton", "boolean", string("text")),
 			Fun("arrowButton", "boolean", string("text"), int("direction")),
-			Fun("bullet")
+			Fun("bullet"),
+
+			// Tooltips
+			Fun("setTooltip", string("text")),
+			Fun("beginTooltip"),
+			Fun("endTooltip"),
+
+			// Menus
+			Fun("beginMainMenuBar", "boolean"),
+			Fun("endMainMenuBar"),
+			Fun("beginMenuBar", "boolean"),
+			Fun("endMenuBar"),
+			Fun("beginMenu", "boolean",
+					string("label"),
+					bool("enabled", default = true)),
+			Fun("endMenu"),
+			Fun("menuItem", "boolean",
+					string("label"),
+					string("shortcut" /*, default = "null"*/),
+					bool("selected", default = false),
+					bool("enabled", default = true)),
+
+			// Parameters stacks (current window)
+			Fun("pushItemWidth", float("itemWidth")),
+			Fun("popItemWidth"),
+			Fun("calcItemWidth", "float"),
+			Fun("pushTextWrapPos", float("wrapPosX", default = "0.0f")),
+			Fun("popTextWrapPos"),
+			Fun("pushAllowKeyboardFocus", bool("allowKeyboardFocus")),
+			Fun("popAllowKeyboardFocus"),
+			Fun("pushButtonRepeat", bool("repeat", default = false)),
+			Fun("popButtonRepeat"),
+
+			// Parameters stacks (shared)
+			Fun("getFontSize", "float"),
+
+			// Focus, Activation
+			Fun("setItemDefaultFocus"),
+			Fun("setKeyboardFocusHere", int("offset")),
+
+			// Windows Scrolling
+			Fun("setScrollX", float("scrollX")),
+			Fun("setScrollY", float("scrollY")),
+			Fun("setScrollHere", float("centerYRatio")),
+			Fun("setScrollFromPosY", float("posY"), float("centerYRatio")),
+			Fun("getScrollX", "float"),
+			Fun("getScrollY", "float"),
+			Fun("getScrollMaxX", "float"),
+			Fun("getScrollMaxY", "float")
 	)
 }

@@ -4,12 +4,12 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
-fun p(name: String, type: String, default: String? = null) = SimpleParam(name, type, default)
-fun bool(name: String, default: String? = null) = SimpleParam(name, "boolean", default)
-fun int(name: String, default: String? = null) = SimpleParam(name, "int", default)
-fun float(name: String, default: String? = null) = SimpleParam(name, "float", default)
+fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
+fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
+fun int(name: String, default: Any? = null) = SimpleParam(name, "int", default)
+fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
-fun string(name: String) = StringParam(name)
+fun string(name: String, default: String? = null) = StringParam(name, default)
 
 /**
  * @property name String function name
@@ -33,18 +33,18 @@ sealed class Param {
 	abstract fun `c++`(): String
 	abstract fun `c++Expr`(): String
 	open fun surrounding(): Pair<String, String>? = null
-	open fun default(): String? = null
+	/** null refers to no default value. */
+	open val default: Any? get() = null
 }
 
-data class SimpleParam(val name: String, val type: String, val default: String?) : Param() {
+data class SimpleParam(val name: String, val type: String, override val default: Any?) : Param() {
 	override fun java() = "$type $name"
 	override fun javaExpr() = name
 	override fun `c++`() = "j$type $name"
 	override fun `c++Expr`() = name
-	override fun default() = default
 }
 
-data class StringParam(val name: String) : Param() {
+data class StringParam(val name: String, override val default: String?) : Param() {
 	override fun java() = "byte[] $name"
 	override fun javaExpr() = name
 	override fun `c++`() = "jbyteArray _$name"
