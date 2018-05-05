@@ -85,25 +85,6 @@ void Java_org_ice1000_jimgui_JImGui_textColored(JNIEnv *env, jclass, jlong color
 	__JNI__FUNCTION__CLEAN__
 }
 
-jboolean Java_org_ice1000_jimgui_JImGui_button___3B(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	auto res = ImGui::Button(reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
-}
-
-jboolean Java_org_ice1000_jimgui_JImGui_button___3BFF(
-		JNIEnv *env, jclass, jbyteArray _text, jfloat width, jfloat height) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	auto res = ImGui::Button(reinterpret_cast<const char *>(text), ImVec2(width, height));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
-}
-
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
