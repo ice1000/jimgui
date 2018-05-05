@@ -49,6 +49,10 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		return io;
 	}
 
+	public void pushID(@NotNull String stringId) {
+		pushID(getBytes(stringId));
+	}
+
 	@Contract(pure = true)
 	public boolean isDisposed() {
 		return io == null;
@@ -57,6 +61,22 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	/** @return shouldn't be closed, will close automatically */
 	public @NotNull JImVec4 getBackground() {
 		return background;
+	}
+
+	public void begin(@NotNull String name, int flags) {
+		begin(getBytes(name), flags);
+	}
+
+	public boolean beginChild(@NotNull String id, float width, float height, boolean border) {
+		return beginChild(getID(id), width, height, border);
+	}
+
+	public boolean beginChild(@NotNull String id, float width, float height) {
+		return beginChild(getID(id), width, height, false);
+	}
+
+	public boolean beginChild(@NotNull String id) {
+		return beginChild(getID(id), 0, 0);
 	}
 
 	/** @param background shouldn't be closed, will close automatically */
@@ -86,5 +106,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void textColored(long colorPtr, byte[] text);
+	private static native void begin(byte[] name, int flags);
+	private static native void pushID(byte[] stringID);
 	//endregion
 }

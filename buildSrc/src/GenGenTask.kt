@@ -109,6 +109,21 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getFrameHeight", "float"),
 			Fun("getFrameHeightWithSpacing", "float"),
 
+			// ID stack/scopes
+			Fun("popID"),
+			Fun("pushID", int("intID")),
+			Fun("getID", "int", string("stringID")),
+
+			// Windows
+			/*Fun("begin", "boolean"),*/ // this is hand-written
+			Fun("end"),
+			Fun("beginChild", "boolean",
+					int("id"),
+					size("0,0"),
+					bool("border", default = false),
+					int("flags", default = 0)),
+			Fun("endChild"),
+
 			// Widgets: Text
 			Fun("text", string("text")),
 			Fun("bulletText", string("text")),
