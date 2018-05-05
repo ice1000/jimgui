@@ -16,6 +16,13 @@ public class Sandbox {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
 		JImGuiUtil.runPer(15, imGui -> {
+			if (imGui.beginMainMenuBar()) {
+				if (imGui.beginMenu("Main", true)) {
+					imGui.text("Hi!");
+					imGui.endMenu();
+				}
+				imGui.endMainMenuBar();
+			}
 			if (imGui.button("Click me!")) count.getAndIncrement();
 			imGui.setBackground(JImVec4.fromAWT(java.awt.Color.BLUE));
 			imGui.sameLine();
