@@ -8,7 +8,7 @@ fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
 fun int(name: String, default: Any? = null) = SimpleParam(name, "int", default)
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
-fun vec2(nameX: String, nameY: String) = ImVec2(nameX, nameY)
+fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2(nameX, nameY, default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
 
 /**
@@ -52,7 +52,12 @@ data class StringParam(val name: String, override val default: String?) : Param(
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
 
-data class ImVec2(val nameX: String, val nameY: String) : Param() {
+/**
+ * @property nameX String
+ * @property nameY String
+ * @property default Any? don't use ATM
+ */
+data class ImVec2(val nameX: String, val nameY: String, override val default: Any?) : Param() {
 	override fun java() = "float $nameX, float $nameY"
 	override fun javaExpr() = "$nameX, $nameY"
 	override fun `c++`() = "jfloat $nameX, jfloat $nameY"

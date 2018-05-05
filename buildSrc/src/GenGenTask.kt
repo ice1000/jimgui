@@ -121,9 +121,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("textWrapped", string("text")),
 
 			// Widgets: Main
-//			Fun("button", "boolean", string("text")),
+			Fun("button", "boolean", string("text"), vec2("width", "height")),
 			Fun("smallButton", "boolean", string("text")),
+			Fun("invisibleButton", "boolean", string("text"), vec2("width", "height")),
 			Fun("arrowButton", "boolean", string("text"), int("direction")),
+			Fun("radioButton", "boolean", string("text"), bool("active")),
 			Fun("bullet"),
 
 			// Tooltips

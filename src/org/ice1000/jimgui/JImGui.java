@@ -36,16 +36,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		textColored(color.nativeObjectPtr, getBytes(text));
 	}
 
-	public boolean button(@NotNull String text) {
-		return button(getBytes(text));
-	}
-
 	public boolean arrowButton(@NotNull String text, @NotNull JImDir direction) {
 		return arrowButton(getBytes(text), direction.intValue);
 	}
 
-	public boolean button(@NotNull String text, float width, float height) {
-		return button(getBytes(text), width, height);
+	public boolean button(@NotNull String text) {
+		return button(getBytes(text), 0, 0);
 	}
 
 	public @Nullable JImGuiIO tryGetIO() {
@@ -94,7 +90,5 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void textColored(long colorPtr, byte[] text);
-	private static native boolean button(byte[] text);
-	private static native boolean button(byte[] text, float width, float height);
 	//endregion
 }
