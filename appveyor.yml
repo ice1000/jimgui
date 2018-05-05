@@ -27,6 +27,15 @@ install:
   - cmake --version
 
   ############################################################################
+  # Install wget
+  ############################################################################
+  - set WGET_URL="https://eternallybored.org/misc/wget/releases/wget-1.19.4-win64.zip"
+  - appveyor DownloadFile %WGET_URL% -FileName wget.zip
+  - 7z x wget.zip -oC:\projects\deps > nul
+  - set PATH=C:\projects\deps\wget;%PATH%
+  - wget --version
+
+  ############################################################################
   # Setup the path to Clang-cl
   ############################################################################
   - set PATH="C:\Program Files\LLVM\bin";%PATH%
