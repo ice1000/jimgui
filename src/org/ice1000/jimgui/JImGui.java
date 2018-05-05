@@ -20,7 +20,15 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private @Nullable JImGuiIO io;
 
 	public JImGui() {
-		nativeObjectPtr = allocateNativeObjects();
+		this(1280, 720);
+	}
+
+	public JImGui(int width, int height) {
+		this(width, height, "ImGui window created by JImGui");
+	}
+
+	public JImGui(int width, int height, @NotNull String title) {
+		nativeObjectPtr = allocateNativeObjects(width, height, getBytes(title));
 		io = new JImGuiIO();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
@@ -101,7 +109,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	public native void initNewFrame();
 
 	//region Private native interfaces
-	private static native long allocateNativeObjects();
+	private static native long allocateNativeObjects(int width, int height, byte[] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);

@@ -18,10 +18,13 @@
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 static void glfw_error_callback(int error, const char *description) {
-	fprintf(stderr, "Error %d: %s\n", error, description);
+	fprintf(stderr, "ImGui Error %d: %s\n", error, description);
 }
 
-auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) -> jlong {
+auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
+		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, title);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit())
 		return 1;
@@ -31,9 +34,12 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) -> j
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-	GLFWwindow *window = glfwCreateWindow(1280, 720, "ImGui GLFW+OpenGL2 example", nullptr, nullptr);
+	GLFWwindow *window = glfwCreateWindow(
+			width, height,
+			reinterpret_cast<const char *> (title), nullptr, nullptr);
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1); // Enable vsync
+	// Enable vsync
+	glfwSwapInterval(1);
 	gl3wInit();
 
 	// Setup Dear ImGui binding
@@ -41,9 +47,12 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *, jclass) -> j
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+	// Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfwGL3_Init(window, true);
-	return reinterpret_cast<jlong>(window);
+	__release(Byte, title);
+	__JNI__FUNCTION__CLEAN__
+	return reinterpret_cast<jlong> (window);
 }
 
 void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
