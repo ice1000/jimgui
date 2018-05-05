@@ -42,6 +42,7 @@ install:
   - clang-cl -v
 
 build_script:
+  - cd C:\projects\jimgui\
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
   - gradlew genBindings javah --info
