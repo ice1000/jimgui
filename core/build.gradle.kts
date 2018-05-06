@@ -1,8 +1,5 @@
 import org.ice1000.gradle.*
 
-group = "org.ice1000.jimgui"
-version = "v0.1"
-
 plugins { java }
 
 val isCI: Boolean by rootProject.extra
