@@ -12,13 +12,17 @@ java.sourceSets {
 	"test" {
 		java.setSrcDirs(listOf("test"))
 		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("test")) }
-		resources.setSrcDirs(emptyList<Any>())
+		resources.setSrcDirs(listOf("testRes"))
 	}
 }
 
-repositories { jcenter() }
+repositories {
+	jcenter()
+	maven("https://dl.bintray.com/ice1000/Lice")
+}
 
 dependencies {
 	compile(project(":core"))
 	compile(kotlin("stdlib-jdk8"))
+	testCompile("org.lice:lice:3.3.2")
 }
