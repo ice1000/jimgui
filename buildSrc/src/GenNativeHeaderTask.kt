@@ -10,7 +10,6 @@ import org.gradle.api.tasks.Exec
 open class GenNativeHeaderTask : Exec() {
 	private val target
 		get() = project
-				.rootProject
 				.projectDir
 				.resolve("jni")
 				.resolve("javah")
