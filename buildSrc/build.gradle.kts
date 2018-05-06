@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
-group = "org.ice1000.jimgui"
+group = "org.ice1000.gradle"
 version = "v0.1"
 
 plugins {
@@ -24,7 +24,6 @@ java.sourceSets {
 repositories {
 	mavenCentral()
 	jcenter()
-	maven("https://jitpack.io")
 }
 
 dependencies {

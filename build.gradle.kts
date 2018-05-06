@@ -43,7 +43,8 @@ val javah = task<GenNativeHeaderTask>("javah") {
 
 val clearGenerated = task<Delete>("clearGenerated") {
 	group = clean.group
-	delete("gen", "jni/generated.cpp")
+	delete(projectDir.resolve("gen"),
+			projectDir.resolve("jni").resolve("generated.cpp"))
 }
 
 classes.dependsOn(genBindings)
