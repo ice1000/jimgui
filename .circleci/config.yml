@@ -64,6 +64,9 @@ jobs:
       - store_artifacts:
           path: core/build/libs
 
+      - store_artifacts:
+          path: kotlin-dsl/build/libs
+
       - run:
           name: Run tests
           command: bash gradlew test
