@@ -26,6 +26,18 @@ inline fun JImGui.menu(label: String, block: JImGuiBlock) {
 	}
 }
 
+inline fun JImGui.tooltip(block: JImGuiBlock) {
+	beginTooltip()
+	block()
+	endTooltip()
+}
+
+inline fun JImGui.group(block: JImGuiBlock) {
+	beginGroup()
+	block()
+	endGroup()
+}
+
 inline fun JImGui.treeNode(label: String, block: JImGuiBlock) {
 	if (treeNode(label)) {
 		block()
@@ -50,7 +62,7 @@ inline fun JImGui.child(
 		width: Float = 0f,
 		height: Float = 0f,
 		border: Boolean = false,
-		flags: Int = 0,
+		flags: Flags = 0,
 		block: JImGuiBlock) {
 	if (beginChild(id, width, height, border, flags)) {
 		block()
