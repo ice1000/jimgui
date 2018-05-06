@@ -3,8 +3,6 @@
 
 package org.ice1000.jimgui.dsl
 
-import org.ice1000.jimgui.JImGui
-
 /**
  * Copied [org.ice1000.jimgui.util.JImGuiUtil.runPer(long, java.util.function.Consumer<org.ice1000.jimgui.JImGui>)]
  * to be inlined.
@@ -13,8 +11,8 @@ import org.ice1000.jimgui.JImGui
  * @param block [@kotlin.ExtensionFunctionType] Function1<JImGui, Unit>
  * @see org.ice1000.jimgui.util.JImGuiUtil.runPer(long, java.util.function.Consumer<org.ice1000.jimgui.JImGui>)
  */
-inline fun runPer(millis: Long, block: JImGui.() -> Unit) {
-	JImGui().use { imGui ->
+inline fun runPer(millis: Long, block: JImGuiContext.() -> Unit) {
+	JImGuiContext().use { imGui ->
 		var latestRefresh = System.currentTimeMillis()
 		while (!imGui.windowShouldClose()) {
 			val currentTimeMillis = System.currentTimeMillis()
@@ -36,8 +34,8 @@ inline fun runPer(millis: Long, block: JImGui.() -> Unit) {
  * @param block [@kotlin.ExtensionFunctionType] Function1<JImGui, Unit>
  * @see org.ice1000.jimgui.util.JImGuiUtil.runPer(java.util.function.LongSupplier, java.util.function.Consumer<org.ice1000.jimgui.JImGui>)
  */
-inline fun runPer(millisSupplier: () -> Long, block: JImGui.() -> Unit) {
-	JImGui().use { imGui ->
+inline fun runPer(millisSupplier: () -> Long, block: JImGuiContext.() -> Unit) {
+	JImGuiContext().use { imGui ->
 		var latestRefresh = System.currentTimeMillis()
 		var millis = millisSupplier()
 		while (!imGui.windowShouldClose()) {
@@ -61,8 +59,8 @@ inline fun runPer(millisSupplier: () -> Long, block: JImGui.() -> Unit) {
  * @param block [@kotlin.ExtensionFunctionType] Function1<JImGui, Unit>
  * @see org.ice1000.jimgui.util.JImGuiUtil.runWithin
  */
-inline fun runWithin(millis: Long, block: JImGui.() -> Unit) {
-	JImGui().use { imGui ->
+inline fun runWithin(millis: Long, block: JImGuiContext.() -> Unit) {
+	JImGuiContext().use { imGui ->
 		var i = 0
 		while (!imGui.windowShouldClose() && i++ < millis) {
 			imGui.initNewFrame()
@@ -79,8 +77,8 @@ inline fun runWithin(millis: Long, block: JImGui.() -> Unit) {
  * @param block [@kotlin.ExtensionFunctionType] Function1<JImGui, Unit>
  * @see org.ice1000.jimgui.util.JImGuiUtil.run
  */
-fun run(block: JImGui.() -> Unit) {
-	JImGui().use { imGui ->
+fun run(block: JImGuiContext.() -> Unit) {
+	JImGuiContext().use { imGui ->
 		while (!imGui.windowShouldClose()) {
 			imGui.initNewFrame()
 			block(imGui)

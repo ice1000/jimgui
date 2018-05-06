@@ -3,49 +3,47 @@
 
 package org.ice1000.jimgui.dsl
 
-import org.ice1000.jimgui.JImGui
-
-inline fun JImGui.mainMenuBar(block: JImGuiBlock) {
+inline fun JImGuiContext.mainMenuBar(block: JImGuiBlock) {
 	if (beginMainMenuBar()) {
 		block()
 		endMainMenuBar()
 	}
 }
 
-inline fun JImGui.menuBar(block: JImGuiBlock) {
+inline fun JImGuiContext.menuBar(block: JImGuiBlock) {
 	if (beginMenuBar()) {
 		block()
 		endMenuBar()
 	}
 }
 
-inline fun JImGui.menu(label: String, block: JImGuiBlock) {
-	if (beginMenu(label)) {
+inline fun JImGuiContext.menu(label: String, enabled: Boolean = true, block: JImGuiBlock) {
+	if (beginMenu(label, enabled)) {
 		block()
 		endMenu()
 	}
 }
 
-inline fun JImGui.tooltip(block: JImGuiBlock) {
+inline fun JImGuiContext.tooltip(block: JImGuiBlock) {
 	beginTooltip()
 	block()
 	endTooltip()
 }
 
-inline fun JImGui.group(block: JImGuiBlock) {
+inline fun JImGuiContext.group(block: JImGuiBlock) {
 	beginGroup()
 	block()
 	endGroup()
 }
 
-inline fun JImGui.treeNode(label: String, block: JImGuiBlock) {
+inline fun JImGuiContext.treeNode(label: String, block: JImGuiBlock) {
 	if (treeNode(label)) {
 		block()
 		treePop()
 	}
 }
 
-inline fun JImGui.child(
+inline fun JImGuiContext.child(
 		strId: StrID,
 		width: Float = 0f,
 		height: Float = 0f,
@@ -57,7 +55,7 @@ inline fun JImGui.child(
 	}
 }
 
-inline fun JImGui.child(
+inline fun JImGuiContext.child(
 		id: IntID,
 		width: Float = 0f,
 		height: Float = 0f,
