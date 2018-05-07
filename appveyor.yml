@@ -17,7 +17,7 @@ install:
   ############################################################################
   # Install PkgConfig
   ############################################################################
-  - mkdirs C:\projects\deps
+  - mkdir C:\projects\deps
   - cd C:\projects\deps
   - set PKG_CONFIG_URL="http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip"
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
