@@ -13,11 +13,12 @@ fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(default: Any? = null) = vec2("posX", "posY", default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
-val cond = SimpleParam("cond", "int", "JImGuiCond.Always", "@MagicConstant(valuesFromClass = JImCond.class)")
+val cond = SimpleParam("cond", "int", "JImCond.Always", "@MagicConstant(valuesFromClass = JImCond.class)")
 val label = string("label")
 val text = string("text")
-fun flags(from: String? = null, default: String? = null) = int("flags", default = default
-		?: 0, annotation = from?.let { "@MagicConstant(flagsFromClass = $it.class)" })
+fun flags(from: String? = null, default: String? = null) = int("flags",
+		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
+		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
 
 /**
  * @property name String function name

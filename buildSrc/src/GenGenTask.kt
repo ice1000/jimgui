@@ -110,8 +110,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
 			Fun("isWindowCollapsed", "boolean"),
-			Fun("isWindowFocused", "boolean", flags()),
-			Fun("isWindowHovered", "boolean", flags()),
+			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "ChildWindows")),
+			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "Default")),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
 			Fun("getContentRegionAvailWidth", "float"),
@@ -176,7 +176,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("beginCombo", "boolean",
 					label,
 					string("previewValue"),
-					flags()),
+					flags(from = "Combo", default = "PopupAlignLeft")),
 			Fun("endCombo"),
 
 			// Widgets: Trees
