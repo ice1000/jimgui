@@ -6,14 +6,18 @@ import org.intellij.lang.annotations.Language
 
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
-fun int(name: String, default: Any? = null, annotation: String = "") = SimpleParam(name, "int", default, annotation)
-fun cond() = SimpleParam("cond", "int", "JImGuiCond.Always", "@MagicConstant(flagsFromClass = JImGuiCond.class)")
+fun int(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
 fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(default: Any? = null) = vec2("posX", "posY", default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
+val cond = SimpleParam("cond", "int", "JImGuiCond.Always", "@MagicConstant(valuesFromClass = JImCond.class)")
+val label = string("label")
+val text = string("text")
+fun flags(from: String? = null, default: String? = null) = int("flags", default = default
+		?: 0, annotation = from?.let { "@MagicConstant(flagsFromClass = $it.class)" })
 
 /**
  * @property name String function name

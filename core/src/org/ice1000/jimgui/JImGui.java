@@ -1,6 +1,5 @@
 package org.ice1000.jimgui;
 
-import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,14 +1,11 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImDir;
-import org.ice1000.jimgui.JImGuiCond;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.util.JImGuiUtil;
-import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sandbox {
