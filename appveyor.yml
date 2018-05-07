@@ -10,7 +10,6 @@ install:
   - ps: vcpkg --triplet x64-windows install glfw3
 
   - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
-  - C:\msys64\usr\bin\pacman -Suu --noconfirm
   - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-pkg-config
 
   - refreshenv
@@ -20,7 +19,8 @@ cache:
 #
 
 build_script:
-  - SET PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
+  - set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
+  - set PKG_CONFIG_EXECUTABLE=%PKG_CONFIG_PATH%\bin\pkg-config.exe
   - cd C:\projects\jimgui\
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%

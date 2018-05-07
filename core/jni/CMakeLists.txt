@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 11)
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(PkgConfig REQUIRED)
+find_package(PkgConfig QUIET)
 find_package(glfw3 REQUIRED)
 
 pkg_search_module(GLFW REQUIRED glfw3)
