@@ -83,15 +83,6 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	glfwSwapBuffers(window);
 }
 
-void Java_org_ice1000_jimgui_JImGui_textColored(JNIEnv *env, jclass, jlong colorPtr, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text);
-	auto color = *reinterpret_cast<ImVec4 *> (colorPtr);
-	ImGui::TextColored(color, reinterpret_cast<const char *>(text));
-	__release(Byte, text);
-	__JNI__FUNCTION__CLEAN__
-}
-
 void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name, jint flags) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, name)

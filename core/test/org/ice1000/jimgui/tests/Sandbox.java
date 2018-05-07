@@ -40,12 +40,12 @@ public class Sandbox {
 			try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
 			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
 			     MutableJImVec4 green = JImVec4.fromJFX(javafx.scene.paint.Color.GREEN)) {
-				imGui.text(red, "Woa!");
+				imGui.textColored(red, "Woa!");
 				imGui.separator();
-				imGui.text(green, "Woa!");
+				imGui.textColored(green, "Woa!");
 				imGui.spacing();
 				imGui.bullet();
-				imGui.text(yellow, "Woa!");
+				imGui.textColored(yellow, "Woa!");
 				imGui.arrowButton("Woa!", JImDir.ImGuiDir_Down);
 			}
 		});
