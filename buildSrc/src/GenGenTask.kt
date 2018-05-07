@@ -151,7 +151,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// ID stack/scopes
 			Fun("popID"),
 			Fun("pushID", int("intID")),
+			Fun("pushID0", string("stringIDBegin"), string("stringIDEnd")),
+			Fun("pushID1", string("stringID")),
 			Fun("getID", "int", string("stringID")),
+			Fun("getID0", "int", string("stringIDBegin"), string("stringIDEnd")),
 
 			// Windows
 			/*Fun("begin", "boolean"),*/ // this is hand-written

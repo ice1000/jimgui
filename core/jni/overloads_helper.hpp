@@ -10,6 +10,8 @@
 namespace ImGui {
 		auto ListBoxHeader0(const char *label, int items_count, int height_in_items) -> bool;
 		auto PushID0(const char *str_id_begin, const char *str_id_end) -> void;
+		auto GetID0(const char *str_id_begin, const char *str_id_end) -> ImGuiID;
+		auto PushID1(const char *str_id) -> void;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H
