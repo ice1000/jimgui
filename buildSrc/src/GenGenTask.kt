@@ -114,7 +114,15 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isWindowCollapsed", "boolean"),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
+			Fun("setWindowPos", pos(), int("cond", default = 0)),
 			Fun("setWindowSize", size(), int("cond", default = 0)),
+			Fun("setWindowCollapsed", bool("collapsed"), int("cond", default = 0)),
+			Fun("setWindowFocus"),
+			Fun("setWindowFontScale", float("scale")),
+			Fun("setWindowPos", string("name"), pos(), int("cond")),
+			Fun("setWindowSize", string("name"), size(), int("cond")),
+			Fun("setWindowCollapsed", string("name"), bool("collapsed"), int("cond")),
+			Fun("setWindowFocus", string("name")),
 
 			// Inputs
 			Fun("isMousePosValid", "boolean"),
@@ -135,7 +143,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("endChild"),
 
 			// Widgets: Text
-			Fun("text", string("text")),
+			// Fun("text", string("text")),
 			Fun("bulletText", string("text")),
 			Fun("labelText", string("label"), string("text")),
 			Fun("textDisabled", string("text")),

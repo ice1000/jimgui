@@ -110,6 +110,14 @@ void Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _stri
 	__JNI__FUNCTION__CLEAN__
 }
 
+void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text)
+	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
+	__release(Byte, text)
+	__JNI__FUNCTION__CLEAN__
+}
+
 jfloat Java_org_ice1000_jimgui_JImGui_getMousePosX(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().x;
 }
