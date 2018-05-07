@@ -9,8 +9,6 @@
 #include <GLFW/glfw3.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
-#include <org_ice1000_jimgui_JImVec4.h>
-#include <org_ice1000_jimgui_MutableJImVec4.h>
 
 #include "basics.hpp"
 
@@ -124,51 +122,6 @@ jfloat Java_org_ice1000_jimgui_JImGui_getMousePosX(JNIEnv *, jobject) {
 
 jfloat Java_org_ice1000_jimgui_JImGui_getMousePosY(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().y;
-}
-
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
-	return reinterpret_cast<jlong>(new ImVec4());
-}
-
-void Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	delete reinterpret_cast<ImVec4 *> (nativeObjectPtr);
-}
-
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__FFFF(
-		JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) {
-	return reinterpret_cast<jlong>(new ImVec4(x, y, z, w));
-}
-
-jfloat Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x;
-}
-
-jfloat Java_org_ice1000_jimgui_JImVec4_getY(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y;
-}
-
-jfloat Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z;
-}
-
-jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w;
-}
-
-void Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x = newValue;
-}
-
-void Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y = newValue;
-}
-
-void Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z = newValue;
-}
-
-void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }
 
 #pragma clang diagnostic pop

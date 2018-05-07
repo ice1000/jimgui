@@ -31,12 +31,13 @@ link_directories(imgui impl)
 
 add_library(jimgui SHARED
 		imgui
-#		imgui/imgui.cpp
-#		imgui/imgui_draw.cpp
+		imgui/imgui.cpp
+		imgui/imgui_draw.cpp
 		${IMGUI_IMPL}
 		javah
 		generated_imgui.cpp
 		generated_imgui_io.cpp
-		jimgui.cpp)
+		jimgui.cpp
+		trivial_impl.cpp)
 
 target_link_libraries(jimgui ${GLFW_STATIC_LIBRARIES})

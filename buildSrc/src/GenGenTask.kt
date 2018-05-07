@@ -251,7 +251,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getFontSize", "float"),
 			Fun("popFont"),
 			Fun("popStyleColor", int("count", default = 1)),
-			Fun("pushStyleVar", int("styleVar"), vec2("val0", "val1")),
 			Fun("popStyleVar", int("count", default = 1)),
 
 			// Focus, Activation

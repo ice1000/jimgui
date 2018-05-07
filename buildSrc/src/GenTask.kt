@@ -92,9 +92,6 @@ public class $className {
 //endregion
 
 	//region Trivial helpers
-	fun List<Param>.java() = joinToString { it.java() }
-
-	fun List<Param>.javaExpr() = joinToString { it.javaExpr() }
 	fun List<Param>.`c++`() = joinToString { it.`c++`() }
 	fun List<Param>.`c++`(builder: StringBuilder) = joinTo(builder) { it.`c++`() }
 	fun List<Param>.`c++Expr`() = joinToString { it.`c++Expr`() }
