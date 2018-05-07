@@ -17,27 +17,27 @@ public final class JImStyleVar<T> {
 		this.nativeValue = nativeValue;
 	}
 
-	public static final @NotNull JImStyleVar<Float> Alpha;
-	public static final @NotNull JImStyleVar<Void> WindowPadding;
-	public static final @NotNull JImStyleVar<Float> WindowRounding;
-	public static final @NotNull JImStyleVar<Float> WindowBorderSize;
-	public static final @NotNull JImStyleVar<Void> WindowMinSize;
-	public static final @NotNull JImStyleVar<Void> WindowTitleAlign;
-	public static final @NotNull JImStyleVar<Float> ChildRounding;
-	public static final @NotNull JImStyleVar<Float> ChildBorderSize;
-	public static final @NotNull JImStyleVar<Float> PopupRounding;
-	public static final @NotNull JImStyleVar<Float> PopupBorderSize;
-	public static final @NotNull JImStyleVar<Void> FramePadding;
-	public static final @NotNull JImStyleVar<Float> FrameRounding;
-	public static final @NotNull JImStyleVar<Float> FrameBorderSize;
-	public static final @NotNull JImStyleVar<Void> ItemSpacing;
-	public static final @NotNull JImStyleVar<Void> ItemInnerSpacing;
-	public static final @NotNull JImStyleVar<Float> IndentSpacing;
-	public static final @NotNull JImStyleVar<Float> ScrollbarSize;
-	public static final @NotNull JImStyleVar<Float> ScrollbarRounding;
-	public static final @NotNull JImStyleVar<Float> GrabMinSize;
-	public static final @NotNull JImStyleVar<Float> GrabRounding;
-	public static final @NotNull JImStyleVar<Void> ButtonTextAlign;
+	public static final @NotNull JImStyleVar<@NotNull Float> Alpha;
+	public static final @NotNull JImStyleVar<@NotNull Void> WindowPadding;
+	public static final @NotNull JImStyleVar<@NotNull Float> WindowRounding;
+	public static final @NotNull JImStyleVar<@NotNull Float> WindowBorderSize;
+	public static final @NotNull JImStyleVar<@NotNull Void> WindowMinSize;
+	public static final @NotNull JImStyleVar<@NotNull Void> WindowTitleAlign;
+	public static final @NotNull JImStyleVar<@NotNull Float> ChildRounding;
+	public static final @NotNull JImStyleVar<@NotNull Float> ChildBorderSize;
+	public static final @NotNull JImStyleVar<@NotNull Float> PopupRounding;
+	public static final @NotNull JImStyleVar<@NotNull Float> PopupBorderSize;
+	public static final @NotNull JImStyleVar<@NotNull Void> FramePadding;
+	public static final @NotNull JImStyleVar<@NotNull Float> FrameRounding;
+	public static final @NotNull JImStyleVar<@NotNull Float> FrameBorderSize;
+	public static final @NotNull JImStyleVar<@NotNull Void> ItemSpacing;
+	public static final @NotNull JImStyleVar<@NotNull Void> ItemInnerSpacing;
+	public static final @NotNull JImStyleVar<@NotNull Float> IndentSpacing;
+	public static final @NotNull JImStyleVar<@NotNull Float> ScrollbarSize;
+	public static final @NotNull JImStyleVar<@NotNull Float> ScrollbarRounding;
+	public static final @NotNull JImStyleVar<@NotNull Float> GrabMinSize;
+	public static final @NotNull JImStyleVar<@NotNull Float> GrabRounding;
+	public static final @NotNull JImStyleVar<@NotNull Void> ButtonTextAlign;
 	public static final int COUNT;
 
 	//region Trivial copy-pasted codes

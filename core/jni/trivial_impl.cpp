@@ -9,6 +9,8 @@
 #include <org_ice1000_jimgui_JImStyleVar.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().x;
 }
@@ -149,3 +151,5 @@ jint Java_org_ice1000_jimgui_JImStyleVar_getButtonTextAlign(JNIEnv *, jclass) {
 jint Java_org_ice1000_jimgui_JImStyleVar_getCOUNT(JNIEnv *, jclass) {
 	return ImGuiStyleVar_COUNT;
 }
+
+#pragma clang diagnostic pop

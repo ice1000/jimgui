@@ -98,6 +98,14 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		text(getBytes(text));
 	}
 
+	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Float> styleVar, float value) {
+		pushStyleVarFloat(styleVar.nativeValue, value);
+	}
+
+	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
+		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
+	}
+
 	public boolean beginChild(@NotNull String id, float width, float height, boolean border) {
 		return beginChild(getID(id), width, height, border);
 	}

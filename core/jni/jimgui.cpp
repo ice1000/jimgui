@@ -116,4 +116,12 @@ void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) 
 	__JNI__FUNCTION__CLEAN__
 }
 
+void Java_org_ice1000_jimgui_JImGui_pushStyleVarFloat(JNIEnv *, jclass, jint styleVar, jfloat value) {
+	ImGui::PushStyleVar(styleVar, value);
+}
+
+void Java_org_ice1000_jimgui_JImGui_pushStyleVarImVec2(JNIEnv *, jclass, jint styleVar, jfloat valueX, jfloat valueY) {
+	ImGui::PushStyleVar(styleVar, ImVec2(valueX, valueY));
+}
+
 #pragma clang diagnostic pop
