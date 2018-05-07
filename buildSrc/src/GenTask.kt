@@ -101,6 +101,9 @@ public class $className {
 	fun ret(type: String?, expr: String = "", orElse: String = expr) = type?.let { "return static_cast<j$type> ($expr);" } ?: "$orElse;"
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
+	fun isStatic(params: List<Param>) =
+			params.any { it is StringParam || it is ImVec4Param }
+
 	val eol: String = System.lineSeparator()
 	//endregion
 

@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -77,10 +78,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		return background;
 	}
 	//endregion
-
-	public boolean arrowButton(@NotNull String text, @NotNull JImDir direction) {
-		return arrowButton(getBytes(text), direction.intValue);
-	}
 
 	public void pushID(@NotNull String stringId) {
 		pushID(getBytes(stringId));

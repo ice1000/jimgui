@@ -4,13 +4,10 @@ package org.ice1000.jimgui;
  * @author ice1000
  * @since v0.1
  */
-public enum JImDir {
-	ImGuiDir_None(-1), ImGuiDir_Left(0), ImGuiDir_Right(1), ImGuiDir_Up(2), ImGuiDir_Down(3),;
-
-	/** package-private by design */
-	int intValue;
-
-	JImDir(int intValue) {
-		this.intValue = intValue;
-	}
+public class JImDir {
+	public static final int None = -1;
+	public static final int Left = 0;
+	public static final int Right = 1;
+	public static final int Up = 2;
+	public static final int Down = 3;
 }

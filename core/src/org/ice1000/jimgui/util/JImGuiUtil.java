@@ -46,7 +46,7 @@ public class JImGuiUtil {
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
-				Thread.sleep(deltaTime);
+				Thread.sleep(deltaTime / 2);
 				if (deltaTime > millis) {
 					imGui.initNewFrame();
 					runnable.accept(imGui);
@@ -66,7 +66,7 @@ public class JImGuiUtil {
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
-				Thread.sleep(deltaTime);
+				Thread.sleep(deltaTime / 2);
 				if (deltaTime > millis) {
 					imGui.initNewFrame();
 					runnable.accept(imGui);

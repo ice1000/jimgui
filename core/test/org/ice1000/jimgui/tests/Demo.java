@@ -9,16 +9,18 @@ import java.nio.file.Paths;
 
 public class Demo {
 	public static void main(String... args) {
-		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
-		JniLoader.load();
+		// if you're using jimgui as a jar library, use `JniLoader.load()` instead.
+		JImGuiTest.useAlternativeJeniLib();
+		final String windowName = "Debug";
 		JImGuiUtil.runPer(15, imGui -> {
+			imGui.begin(windowName);
 			showUserGuide(imGui);
 			showExampleAppMainMenuBar(imGui);
-			if (imGui.button("200x200")) imGui.setWindowSize(200, 200);
+			if (imGui.button("200x200")) imGui.setWindowSize(windowName, 200, 200);
 			imGui.sameLine();
-			if (imGui.button("500x500")) imGui.setWindowSize(500, 500);
+			if (imGui.button("500x500")) imGui.setWindowSize(windowName, 500, 500);
 			imGui.sameLine();
-			if (imGui.button("800x200")) imGui.setWindowSize(800, 200);
+			if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
 			imGui.separator();
 			if (imGui.isMousePosValid())
@@ -32,6 +34,7 @@ public class Demo {
 				}
 				imGui.treePop();
 			}
+			imGui.end();
 		});
 	}
 
@@ -80,7 +83,6 @@ public class Demo {
 		imGui.menuItem("Checked");
 		imGui.menuItem("Quit", "Alt+F4");
 	}
-
 
 	private static void showUserGuide(@NotNull JImGui imGui) {
 		imGui.bulletText("Double-click on title bar to collapse window.");

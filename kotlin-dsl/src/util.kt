@@ -17,7 +17,7 @@ inline fun runPer(millis: Long, block: JImGuiContext.() -> Unit) {
 		while (!imGui.windowShouldClose()) {
 			val currentTimeMillis = System.currentTimeMillis()
 			val deltaTime = currentTimeMillis - latestRefresh
-			Thread.sleep(deltaTime)
+			Thread.sleep(deltaTime / 2)
 			if (deltaTime > millis) {
 				imGui.initNewFrame()
 				block(imGui)
@@ -43,7 +43,7 @@ inline fun runPer(millisSupplier: () -> Long, block: JImGuiContext.() -> Unit) {
 		while (!imGui.windowShouldClose()) {
 			val currentTimeMillis = System.currentTimeMillis()
 			val deltaTime = currentTimeMillis - latestRefresh
-			Thread.sleep(deltaTime)
+			Thread.sleep(deltaTime / 2)
 			if (deltaTime > millis) {
 				imGui.initNewFrame()
 				block(imGui)

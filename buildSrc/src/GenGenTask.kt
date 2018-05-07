@@ -7,7 +7,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			if (params.any { it is StringParam || it is ImVec4Param }) {
+			if (isStatic(params)) {
 				javaCode.append("\tpublic final ")
 						.append(type(type))
 						.append(' ')
@@ -74,7 +74,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
 			val initParams = params.mapNotNull { it.surrounding() }
-			if (initParams.isNotEmpty()) {
+			if (isStatic(params)) {
 				`c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
 						init = initParams.joinToString(" ", prefix = "__JNI__FUNCTION__INIT__ ") { it.first },
 						deinit = initParams.joinToString(" ", postfix = " __JNI__FUNCTION__CLEAN__") { it.second })
@@ -117,21 +117,17 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getContentRegionAvailWidth", "float"),
 			Fun("getWindowContentRegionWidth", "float"),
 
-			Fun("setNextWindowPos", pos(), int("cond", default = 0)),
-			Fun("setNextWindowSize", size(), int("cond", default = 0)),
+			Fun("setNextWindowPos", pos(), cond()),
+			Fun("setNextWindowSize", size(), cond()),
 			Fun("setNextWindowSizeConstraints", size("Min"), size("Max")),
 			Fun("setNextWindowContentSize", size()),
-			Fun("setNextWindowCollapsed", bool("collapsed"), int("cond", default = 0)),
+			Fun("setNextWindowCollapsed", bool("collapsed"), cond()),
 			Fun("setNextWindowFocus"),
 			Fun("setNextWindowBgAlpha", float("alpha")),
-			Fun("setWindowPos", pos(), int("cond", default = 0)),
-			Fun("setWindowSize", size(), int("cond", default = 0)),
-			Fun("setWindowCollapsed", bool("collapsed"), int("cond", default = 0)),
-			Fun("setWindowFocus"),
 			Fun("setWindowFontScale", float("scale")),
-			Fun("setWindowPos", string("name"), pos(), int("cond")),
-			Fun("setWindowSize", string("name"), size(), int("cond")),
-			Fun("setWindowCollapsed", string("name"), bool("collapsed"), int("cond")),
+			Fun("setWindowPos", string("name"), pos(), cond()),
+			Fun("setWindowSize", string("name"), size(), cond()),
+			Fun("setWindowCollapsed", string("name"), bool("collapsed"), cond()),
 			Fun("setWindowFocus", string("name")),
 
 			// Inputs
@@ -166,7 +162,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("invisibleButton", "boolean",
 					string("text"),
 					size(default = "0,0")),
-			Fun("arrowButton", "boolean", string("text"), int("direction")),
+			Fun("arrowButton", "boolean",
+					string("text"),
+					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDir.class)")),
 			Fun("radioButton", "boolean", string("text"), bool("active")),
 			Fun("bullet"),
 			Fun("progressBar",

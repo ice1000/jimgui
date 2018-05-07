@@ -6,7 +6,8 @@ import org.intellij.lang.annotations.Language
 
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
-fun int(name: String, default: Any? = null) = SimpleParam(name, "int", default)
+fun int(name: String, default: Any? = null, annotation: String = "") = SimpleParam(name, "int", default, annotation)
+fun cond() = SimpleParam("cond", "int", "JImGuiCond.Always", "@MagicConstant(flagsFromClass = JImGuiCond.class)")
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
 fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
@@ -41,8 +42,12 @@ sealed class Param {
 	open val default: Any? get() = null
 }
 
-data class SimpleParam(val name: String, val type: String, override val default: Any?) : Param() {
-	override fun java() = "$type $name"
+data class SimpleParam(
+		val name: String,
+		val type: String,
+		override val default: Any?,
+		val annotation: String = "") : Param() {
+	override fun java() = "$annotation$type $name"
 	override fun javaExpr() = name
 	override fun `c++`() = "j$type $name"
 	override fun `c++Expr`() = name
@@ -81,6 +86,7 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 @Language("JAVA", suffix = "class A {}")
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
+import org.intellij.lang.annotations.*;
 import org.jetbrains.annotations.*;
 import static org.ice1000.jimgui.util.JImGuiUtil.*;
 
@@ -101,10 +107,19 @@ const val CXX_PREFIX = """///
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 #include <imgui.h>
-#include "basics.hpp""""
+#include "basics.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif
+"""
 
 @Language("C++")
-const val CXX_SUFFIX = "#pragma clang diagnostic pop"
+const val CXX_SUFFIX = """
+#pragma clang diagnostic pop
+#ifdef __cplusplus
+}
+#endif
+"""
 
 @Language("C++", suffix = "(){}")
 const val JNI_FUNC_PREFIX = "JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_"
