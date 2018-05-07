@@ -1,0 +1,54 @@
+;;
+;; Created by ice1000 on 2018-05-07
+;;
+
+;; comments
+(def fib n
+	(if (in? (list 1 2) n)
+		1
+		(+ (fib (- n 1)) (fib (- n 2)))))
+
+;; travel through a range
+(for-each i (.. 1 10) (print i " "))
+
+(|>
+	(println "DIO! The World!"))
+
+((if (in? (list 1 2 3) 6)
+	+
+	-) 1 2 3)
+
+(list->array (distinct (union
+	(split "It was me, DIO!", " ")
+	(list "Hello" "World")
+	(array->list (array "DIO!" "The" "World")))))
+
+; define a call-by-name function
+(defexpr fold ls init op
+	(for-each index-var ls
+		(-> init (op init index-var))))
+fold
+; invoke the function defined above
+(fold (.. 1 5) 0 +)
+
+; passing a call-by-value lambda to a call-by-value lambda
+((lambda op (op 3 4))
+	(lambda a b (+ (* a a) (* b b))))
+
+;; command line output
+(print "String literals", )
+
+;; unresolved reference
+(println unresolved-reference)
+
+;; omega-combinator
+((lambda x (x x)) (lambda x (x x)))
+
+((lambda l
+	(l "qaq" "qaq" "qaq"))
+	(lambda a b c (|>
+		(print a)
+		(print (str-con " " b))
+		(print c))))
+
+

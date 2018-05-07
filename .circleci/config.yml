@@ -40,28 +40,14 @@ jobs:
           key: v1-
 
       - run:
-          name: Generate native library headers
-          command: bash gradlew genBinding javah
-
-      - run:
-          name: Build native library
-          command: |
-            mkdir -p res/native
-            cd jni
-            mkdir -p cmake-build-debug
-            bash pre.sh
-            cd cmake-build-debug
-            cmake ..
-            make
-            cp *.so ../../res/native
-            cd ../..
-
-      - run:
-          name: Build jar
-          command: bash gradlew jar
+          name: Build all projects
+          command: bash gradlew assemble
 
       - store_artifacts:
-          path: build/libs
+          path: core/build/libs
+
+      - store_artifacts:
+          path: kotlin-dsl/build/libs
 
       - run:
           name: Run tests

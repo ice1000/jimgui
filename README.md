@@ -13,7 +13,7 @@ See [this java file](test/org/ice1000/jimgui/tests/Demo.java).
 
 # Build
 
-To compile a jar library, run:
+To compile a processResources library, run:
 
 ```
 $ bash gradlew genBindings javah
@@ -21,7 +21,7 @@ $ cmake jni
 $ make
 $ mkdir -p res/native
 $ mv *.so res/native
-$ bash gradlew jar
+$ bash gradlew processResources
 ```
 
 To run tests, run:

@@ -1,34 +1,23 @@
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
-group = "org.ice1000.jimgui"
+group = "org.ice1000.gradle"
 version = "v0.1"
 
-plugins {
-	java
-	kotlin("jvm") version "1.2.41"
-}
+plugins { kotlin("jvm") version "1.2.41" }
 
 java.sourceSets {
 	"main" {
 		java.setSrcDirs(listOf("src"))
 		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("src")) }
-		resources.setSrcDirs(listOf("res"))
+		resources.setSrcDirs(emptyList<Any>())
 	}
 
 	"test" {
-		java.setSrcDirs(listOf("test"))
-		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("test")) }
+		java.setSrcDirs(emptyList<Any>())
+		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(emptyList<Any>()) }
+		resources.setSrcDirs(emptyList<Any>())
 	}
 }
 
-repositories {
-	mavenCentral()
-	jcenter()
-	maven("https://jitpack.io")
-}
-
-dependencies {
-	compile(group = "org.jetbrains", name = "annotations", version = "16.0.1")
-	compile(kotlin("stdlib-jdk8"))
-	testCompile(group = "junit", name = "junit", version = "4.12")
-}
+repositories { jcenter() }
+dependencies { compile(kotlin("stdlib-jdk8")) }

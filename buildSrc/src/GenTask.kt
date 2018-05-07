@@ -3,13 +3,12 @@ package org.ice1000.gradle
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
-import java.io.File
 
 @Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
 		val className: String,
 		private val `c++FileSuffix`: String
-) : DefaultTask() {
+) : DefaultTask(), Runnable {
 	init {
 		group = "code generation"
 	}
@@ -35,9 +34,20 @@ public class $className {
 
 
 	@TaskAction
-	fun run() {
-		val targetJavaFile = File("gen/org/ice1000/jimgui/$className.java")
-		val `targetC++File` = File("jni/generated_$`c++FileSuffix`.cpp")
+	override fun run() {
+		val targetJavaFile = project
+				.projectDir
+				.resolve("gen")
+				.resolve("org")
+				.resolve("ice1000")
+				.resolve("jimgui")
+				.resolve("$className.java")
+				.absoluteFile
+		val `targetC++File` = project
+				.projectDir
+				.resolve("jni")
+				.resolve("generated_$`c++FileSuffix`.cpp")
+				.absoluteFile
 		targetJavaFile.parentFile.mkdirs()
 		`targetC++File`.parentFile.mkdirs()
 		val javaCode = StringBuilder(prefixJava)

@@ -1,1 +1,1 @@
-rootProject.name = "jimgui"
+include("core", "kotlin-dsl")
