@@ -20,6 +20,7 @@ cache:
 #
 
 build_script:
+  - SET PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
   - cd C:\projects\jimgui\
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
