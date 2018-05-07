@@ -12,7 +12,7 @@ install:
   - ps: Get-Command sh.exe -All | Remove-Item
 
   - ps: cd C:\Tools\vcpkg
-  - ps: vcpkg --triplet x64-windows install glbinding glfw3
+  - ps: vcpkg --triplet x64-windows install glfw3
 
   ############################################################################
   # Install PkgConfig
