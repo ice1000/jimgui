@@ -3,6 +3,7 @@ package org.ice1000.gradle
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
+import kotlin.math.exp
 
 @Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
@@ -91,16 +92,18 @@ public class $className {
 //endregion
 
 	//region Trivial helpers
-	fun List<Param>.java() = joinToString { it.java() }
-
-	fun List<Param>.javaExpr() = joinToString { it.javaExpr() }
 	fun List<Param>.`c++`() = joinToString { it.`c++`() }
 	fun List<Param>.`c++`(builder: StringBuilder) = joinTo(builder) { it.`c++`() }
 	fun List<Param>.`c++Expr`() = joinToString { it.`c++Expr`() }
 	fun comma(params: List<Param>) = if (params.isNotEmpty()) ", " else ""
+	fun boolean(type: String?) = if (type == "boolean") " ? JNI_TRUE : JNI_FALSE" else ""
 	fun type(type: String?) = type ?: "void"
-	fun ret(type: String?, suffix: String = "") = type?.let { "return $suffix" }.orEmpty()
+	fun ret(type: String?, expr: String = "", orElse: String = expr) = type?.let { "return static_cast<j$type> ($expr);" } ?: "$orElse;"
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
+	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
+	fun isStatic(params: List<Param>) =
+			params.any { it is StringParam || it is ImVec4Param }
+
 	val eol: String = System.lineSeparator()
 	//endregion
 

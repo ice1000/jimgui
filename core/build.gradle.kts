@@ -92,7 +92,7 @@ compileJava.options.compilerArgs =
 compileJava.dependsOn(genImguiIO)
 compileJava.dependsOn(genImgui)
 clean.dependsOn(clearGenerated)
-clean.dependsOn(clearDownloaded)
+// clean.dependsOn(clearDownloaded)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui)
@@ -103,7 +103,7 @@ processResources.dependsOn(make)
 java.sourceSets {
 	"main" {
 		java.setSrcDirs(listOf("src", "gen"))
-		resources.setSrcDirs(listOf("res"))
+		resources.setSrcDirs(listOf(res))
 	}
 
 	"test" {

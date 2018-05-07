@@ -7,7 +7,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			if (params.any { it is StringParam }) {
+			if (isStatic(params)) {
 				javaCode.append("\tpublic final ")
 						.append(type(type))
 						.append(' ')
@@ -15,13 +15,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append('(')
 				params.forEachIndexed { index, param ->
 					if (index != 0) javaCode.append(",")
-					if (param is StringParam) javaCode.append("@NotNull String ")
-							.append(param.name)
-					else javaCode.append(param.java())
+					javaCode.append(param.javaDefault())
 				}
+				javaCode.append("){")
+				if (type != null) javaCode.append("return ")
 				javaCode
-						.append("){")
-						.append(ret(type))
 						.append(name)
 						.append('(')
 				params.joinTo(javaCode) { it.javaExpr() }
@@ -51,7 +49,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 				val newParams = params.dropLast(index + 1)
 				newParams.joinTo(javaCode) { it.javaDefault() }
 				javaCode.append("){")
-						.append(ret(type))
+				if (type != null) javaCode.append("return ")
+				javaCode
 						.append(name)
 						.append('(')
 				newParams.joinTo(javaCode) { it.javaExpr() }
@@ -66,17 +65,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} {$eol${ret(type)}$`c++Expr`; }"
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" }
-					?: "void"} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res;")} }"
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
 
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
 			val initParams = params.mapNotNull { it.surrounding() }
-			if (initParams.isNotEmpty()) {
+			if (isStatic(params)) {
 				`c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
 						init = initParams.joinToString(" ", prefix = "__JNI__FUNCTION__INIT__ ") { it.first },
 						deinit = initParams.joinToString(" ", postfix = " __JNI__FUNCTION__CLEAN__") { it.second })
@@ -112,62 +110,118 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
 			Fun("isWindowCollapsed", "boolean"),
+			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "ChildWindows")),
+			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "Default")),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
-			Fun("setWindowSize", size(), int("cond", default = 0)),
+			Fun("getContentRegionAvailWidth", "float"),
+			Fun("getWindowContentRegionWidth", "float"),
+
+			Fun("setNextWindowPos", pos(), cond),
+			Fun("setNextWindowSize", size(), cond),
+			Fun("setNextWindowSizeConstraints", size("Min"), size("Max")),
+			Fun("setNextWindowContentSize", size()),
+			Fun("setNextWindowCollapsed", bool("collapsed"), cond),
+			Fun("setNextWindowFocus"),
+			Fun("setNextWindowBgAlpha", float("alpha")),
+			Fun("setWindowFontScale", float("scale")),
+			Fun("setWindowPos", string("name"), pos(), cond),
+			Fun("setWindowSize", string("name"), size(), cond),
+			Fun("setWindowCollapsed", string("name"), bool("collapsed"), cond),
+			Fun("setWindowFocus", string("name")),
 
 			// Inputs
+			// Inputs
+			Fun("getKeyIndex", "int", int("imguiKey")),
+			Fun("isKeyDown", "boolean", int("userKeyIndex")),
+			Fun("isKeyPressed", "boolean", int("userKeyIndex"), bool("repeat", default = true)),
+			Fun("isKeyReleased", "boolean", int("userKeyIndex")),
+			Fun("getKeyPressedAmount", "int", int("keyIndex"), float("repeatDelay"), float("rate")),
+			Fun("isMouseDown", "boolean", int("button")),
+			Fun("isAnyMouseDown", "boolean"),
+			Fun("isMouseClicked", "boolean", int("button"), bool("repeat", default = false)),
+			Fun("isMouseDoubleClicked", "boolean", int("button")),
+			Fun("isMouseReleased", "boolean", int("button")),
+			Fun("isMouseDragging", "boolean", int("button"), float("lockThreshold", default = -1)),
+			Fun("isMouseHoveringRect", "boolean", size("RMin"), size("RMax"), bool("clip", default = true)),
 			Fun("isMousePosValid", "boolean"),
+			Fun("captureKeyboardFromApp", bool("capture", default = true)),
+			Fun("captureMouseFromApp", bool("capture", default = true)),
 
 			// ID stack/scopes
 			Fun("popID"),
 			Fun("pushID", int("intID")),
+			Fun("pushID0", string("stringIDBegin"), string("stringIDEnd")),
+			Fun("pushID1", string("stringID")),
 			Fun("getID", "int", string("stringID")),
+			Fun("getID0", "int", string("stringIDBegin"), string("stringIDEnd")),
 
 			// Windows
 			/*Fun("begin", "boolean"),*/ // this is hand-written
 			Fun("end"),
 			Fun("beginChild", "boolean",
 					int("id"),
-					size("0,0"),
+					size(default = "0,0"),
 					bool("border", default = false),
-					int("flags", default = 0)),
+					flags(from = "Window", default = "NoTitleBar")),
 			Fun("endChild"),
 
 			// Widgets: Text
-			Fun("text", string("text")),
-			Fun("bulletText", string("text")),
-			Fun("labelText", string("label"), string("text")),
-			Fun("textDisabled", string("text")),
-			Fun("textWrapped", string("text")),
+			// Fun("text", text),
+			Fun("textColored", vec4("color"), text),
+			Fun("bulletText", text),
+			Fun("labelText", label, text),
+			Fun("textDisabled", text),
+			Fun("textWrapped", text),
 
 			// Widgets: Main
-			Fun("button", "boolean", string("text"), size("0,0")),
-			Fun("smallButton", "boolean", string("text")),
+			Fun("button", "boolean", text, size(default = "0,0")),
+			Fun("smallButton", "boolean", text),
 			Fun("invisibleButton", "boolean",
-					string("text"),
-					size("0,0")),
-			Fun("arrowButton", "boolean", string("text"), int("direction")),
-			Fun("radioButton", "boolean", string("text"), bool("active")),
+					text,
+					size(default = "0,0")),
+			Fun("arrowButton", "boolean",
+					text,
+					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDir.class)")),
+			Fun("radioButton", "boolean", text, bool("active")),
 			Fun("bullet"),
 			Fun("progressBar",
 					float("fraction"),
-					size("-1,0"),
+					size(default = "-1,0"),
 					string("overlay", default = "(byte[])null")),
 
+			// Widgets: Combo Box
+			Fun("beginCombo", "boolean",
+					label,
+					string("previewValue"),
+					flags(from = "Combo", default = "PopupAlignLeft")),
+			Fun("endCombo"),
+
 			// Widgets: Trees
-			Fun("treeNode", "boolean", string("label")),
+			Fun("treeNode", "boolean", label),
+			Fun("treeNodeEx", "boolean", label, flags(from = "TreeNode", default = "Selected")),
 			Fun("treePush", string("stringID")),
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
-			Fun("collapsingHeader", "boolean",
+			Fun("collapsingHeader", "boolean", label, flags(from = "TreeNode", default = "Selected")),
+
+			// Widgets: Selectable / Lists
+			Fun("selectable", "boolean",
 					string("label"),
-					int("flags", default = 0)),
+					bool("selected", default = false),
+					flags(), // TODO
+					size(default = "0,0")),
+			Fun("listBoxHeader", "boolean", string("label"), size()),
+			Fun("listBoxHeader0", "boolean",
+					string("label"),
+					int("itemsCount"),
+					int("heightInItems", default = -1)),
+			Fun("listBoxFooter"),
 
 			// Tooltips
-			Fun("setTooltip", string("text")),
+			Fun("setTooltip", text),
 			Fun("beginTooltip"),
 			Fun("endTooltip"),
 
@@ -177,11 +231,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("beginMenuBar", "boolean"),
 			Fun("endMenuBar"),
 			Fun("beginMenu", "boolean",
-					string("label"),
+					label,
 					bool("enabled", default = true)),
 			Fun("endMenu"),
 			Fun("menuItem", "boolean",
-					string("label"),
+					label,
 					string("shortcut", default = "(byte[])null"),
 					bool("selected", default = false),
 					bool("enabled", default = true)),
@@ -207,12 +261,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("logToClipboard", int("maxDepth", default = -1)),
 			Fun("logFinish"),
 			Fun("logButtons"),
-			Fun("logText", string("text")),
+			Fun("logText", text),
 
 			// Clipping
 			Fun("pushClipRect",
-					vec2("clipRectMinWidth", "clipRectMinHeight"),
-					vec2("clipRectMaxWidth", "clipRectMaxHeight"),
+					size("ClipRectMin"),
+					size("ClipRectMax"),
 					bool("intersectWithCurrentClipRect")),
 			Fun("popClipRect"),
 
@@ -229,10 +283,26 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Parameters stacks (shared)
 			Fun("getFontSize", "float"),
+			Fun("popFont"),
+			Fun("pushStyleColor", int("index"), vec4("color")),
+			Fun("popStyleColor", int("count", default = 1)),
+			Fun("popStyleVar", int("count", default = 1)),
 
 			// Focus, Activation
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
+
+			// Utilities
+			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "Default")),
+			Fun("isItemActive", "boolean"),
+			Fun("isItemFocused", "boolean"),
+			Fun("isItemClicked", "boolean", int("mouseButton", default = 0)),
+			Fun("isItemVisible", "boolean"),
+			Fun("isAnyItemHovered", "boolean"),
+			Fun("isAnyItemActive", "boolean"),
+			Fun("isAnyItemFocused", "boolean"),
+			Fun("setItemAllowOverlap"),
+			Fun("isRectVisible", "boolean", size()),
 
 			// Windows Scrolling
 			Fun("setScrollX", float("scrollX")),

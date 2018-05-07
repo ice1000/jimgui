@@ -3,6 +3,7 @@ package org.ice1000.jimgui.tests;
 import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.TestOnly;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -14,10 +15,11 @@ import static org.junit.Assume.assumeFalse;
 
 public class JImGuiTest {
 	@BeforeClass
+	@TestOnly
 	public static void useAlternativeJeniLib() {
 		assumeFalse("true".equals(System.getenv("CI")));
 		assumeFalse("true".equals(System.getProperty("java.awt.headless")));
-		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
+		JniLoader.jniLibraryPath = Paths.get("core","jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
 		JniLoader.load();
 	}
 

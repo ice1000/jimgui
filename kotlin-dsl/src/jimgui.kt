@@ -3,6 +3,8 @@
 
 package org.ice1000.jimgui.dsl
 
+import org.ice1000.jimgui.JImStyleVar
+
 inline fun JImGuiContext.mainMenuBar(block: JImGuiBlock) {
 	if (beginMainMenuBar()) {
 		block()
@@ -66,4 +68,16 @@ inline fun JImGuiContext.child(
 		block()
 		endChild()
 	}
+}
+
+inline fun JImGuiContext.withStyle(styleVar: JImStyleVar<Float>, value: Float, block: JImGuiBlock) {
+	pushStyleVar(styleVar, value)
+	block()
+	popStyleVar()
+}
+
+inline fun JImGuiContext.withStyle(styleVar: JImStyleVar<Void>, valueA: Float, valueB: Float, block: JImGuiBlock) {
+	pushStyleVar(styleVar, valueA, valueB)
+	block()
+	popStyleVar()
 }

@@ -41,7 +41,7 @@ jobs:
 
       - run:
           name: Build all projects
-          command: bash gradlew assemble
+          command: bash gradlew assemble --info
 
       - store_artifacts:
           path: core/build/libs
@@ -51,7 +51,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: bash gradlew test
+          command: bash gradlew test --info
 
       - run:
           name: Save test results

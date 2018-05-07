@@ -1,9 +1,6 @@
 package org.ice1000.jimgui.util;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /**
  * @author ice1000
@@ -11,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("WeakerAccess")
 public final class JniLoader {
 	private static boolean isLoaded = false;
+	@TestOnly
 	public static @Nullable String jniLibraryPath;
 	public static @NotNull String jniLibraryPathInJar = "/native/" + libraryName("libjimgui");
 
