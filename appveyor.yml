@@ -11,7 +11,7 @@ install:
   - ps: Get-Command sh.exe -All | Remove-Item
 
   - ps: cd C:\Tools\vcpkg
-  - ps: vcpkg --triplet x64-windows install glfw3 pkg-config
+  - ps: vcpkg --triplet x64-windows install glfw3 pkgconfig
 
   - refreshenv
 
