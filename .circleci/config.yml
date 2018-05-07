@@ -44,20 +44,6 @@ jobs:
           command: bash gradlew :core:genBinding :core:javah
 
       - run:
-          name: Build native library
-          command: |
-            cd core
-            mkdir -p res/native
-            cd jni
-            mkdir -p cmake-build-debug
-            bash pre.sh
-            cd cmake-build-debug
-            cmake ..
-            make
-            cp *.so ../../res/native
-            cd ../../..
-
-      - run:
           name: Build jar
           command: bash gradlew jar
 
