@@ -6,25 +6,27 @@ install:
   # CMake refuses to generate MinGW Makefiles if sh.exe is in the Path
   - ps: Get-Command sh.exe -All | Remove-Item
 
-  - ps: cd C:\Tools\vcpkg
-  - ps: vcpkg --triplet x64-windows install glfw3
+  - cd C:\Tools\vcpkg
+  - if "%platform%" equ "x64" vcpkg install glew:x64-windows-static
+  - if "%platform%" equ "x64" vcpkg install glfw3:x64-windows-static
+  - if "%platform%" equ "Win32" vcpkg install glew:x86-windows-static
+  - if "%platform%" equ "Win32" vcpkg install glfw3:x86-windows-static
 
   - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
   - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-pkg-config
 
   - refreshenv
 
-cache:
-  - C:\Users\appveyor\.gradle
-#
-
-build_script:
   - set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
   - set PKG_CONFIG_EXECUTABLE=%PKG_CONFIG_PATH%\bin\pkg-config.exe
   - cd C:\projects\jimgui\
+  - %echo on
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
   - gradlew assemble --info
+
+cache:
+  - C:\Users\appveyor\.gradle
 #
 
 test_script:
