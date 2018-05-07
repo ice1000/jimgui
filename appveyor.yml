@@ -4,22 +4,20 @@ environment:
   CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
   CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
-  PATH: C:\projects\deps\glfw-3.2.1;C:\projects\deps\pkg-config\bin\;%PATH%
+  PATH: C:\projects\deps\pkg-config\bin\;%PATH%
 #
 
 install:
   # CMake refuses to generate MinGW Makefiles if sh.exe is in the Path
   - ps: Get-Command sh.exe -All | Remove-Item
 
-  ############################################################################
-  # All external dependencies are installed in C:\projects\deps
-  ############################################################################
-  - mkdir C:\projects\deps
-  - cd C:\projects\deps
+  - ps: cd C:\Tools\vcpkg
+  - ps: vcpkg --triplet x64-windows install glbinding glfw3
 
   ############################################################################
   # Install PkgConfig
   ############################################################################
+  - cd C:\projects\deps
   - set PKG_CONFIG_URL="http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/pkg-config_0.26-1_win32.zip"
   - appveyor DownloadFile %PKG_CONFIG_URL% -FileName pkg-config_win32.zip
   - 7z x -y pkg-config_win32.zip -opkg-config
