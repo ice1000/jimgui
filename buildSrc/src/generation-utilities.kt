@@ -8,7 +8,8 @@ fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
 fun int(name: String, default: Any? = null) = SimpleParam(name, "int", default)
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
-fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2(nameX, nameY, default)
+fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
+fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(default: Any? = null) = vec2("posX", "posY", default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
@@ -47,13 +48,22 @@ data class SimpleParam(val name: String, val type: String, override val default:
 	override fun `c++Expr`() = name
 }
 
-data class StringParam(val name: String, override val default: String?) : Param() {
+data class StringParam(val name: String, override val default: Any?) : Param() {
 	override fun java() = "byte[] $name"
 	override fun javaDefault() = "@NotNull String $name"
 	override fun javaExpr() = "getBytes($name)"
 	override fun `c++`() = "jbyteArray _$name"
-	override fun `c++Expr`() = "reinterpret_cast<const char *>($name)"
+	override fun `c++Expr`() = "reinterpret_cast<const char *> ($name)"
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
+}
+
+data class ImVec4Param(val name: String, override val default: Any?) : Param() {
+	override fun java() = "long $name"
+	override fun javaDefault() = "@NotNull JImVec4 $name"
+	override fun javaExpr() = "$name.nativeObjectPtr"
+	override fun `c++`() = "jlong $name"
+	override fun `c++Expr`() = "*reinterpret_cast<const ImVec4 *> ($name)"
+
 }
 
 /**
@@ -61,7 +71,7 @@ data class StringParam(val name: String, override val default: String?) : Param(
  * @property nameY String
  * @property default Any? don't use ATM
  */
-data class ImVec2(val nameX: String, val nameY: String, override val default: Any?) : Param() {
+data class ImVec2Param(val nameX: String, val nameY: String, override val default: Any?) : Param() {
 	override fun java() = "float $nameX, float $nameY"
 	override fun javaExpr() = "$nameX, $nameY"
 	override fun `c++`() = "jfloat $nameX, jfloat $nameY"

@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
  * @author ice1000
  * @since v0.1
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public final class JImStyleVar<T> {
 	/**
 	 * package-private by design

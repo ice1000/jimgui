@@ -7,7 +7,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	override fun java(javaCode: StringBuilder) {
 		trivialMethods.forEach outer@{ (name, type, params) ->
-			if (params.any { it is StringParam }) {
+			if (params.any { it is StringParam || it is ImVec4Param }) {
 				javaCode.append("\tpublic final ")
 						.append(type(type))
 						.append(' ')
@@ -15,9 +15,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append('(')
 				params.forEachIndexed { index, param ->
 					if (index != 0) javaCode.append(",")
-					if (param is StringParam) javaCode.append("@NotNull String ")
-							.append(param.name)
-					else javaCode.append(param.java())
+					javaCode.append(param.javaDefault())
 				}
 				javaCode.append("){")
 				if (type != null) javaCode.append("return ")
@@ -156,6 +154,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Widgets: Text
 			// Fun("text", string("text")),
+			Fun("textColored", vec4("color"), string("text")),
 			Fun("bulletText", string("text")),
 			Fun("labelText", string("label"), string("text")),
 			Fun("textDisabled", string("text")),
@@ -177,6 +176,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", string("label")),
+			Fun("treeNodeEx", "boolean", string("label"), int("flags", default = 0)),
 			Fun("treePush", string("stringID")),
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
@@ -250,6 +250,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Parameters stacks (shared)
 			Fun("getFontSize", "float"),
 			Fun("popFont"),
+			Fun("pushStyleColor", int("index"), vec4("color")),
 			Fun("popStyleColor", int("count", default = 1)),
 			Fun("popStyleVar", int("count", default = 1)),
 

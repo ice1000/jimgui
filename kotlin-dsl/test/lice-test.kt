@@ -67,7 +67,7 @@ fun main(args: Array<String>) {
 				if (attributeSet != codeColors[i] || isEol) {
 					val token = sourceCode.substring(tokenStart, i)
 					if (attributeSet != null)
-						text(attributeSet, token)
+						textColored(attributeSet, token)
 					else text(token)
 					if (isEol) {
 					} else sameLine()

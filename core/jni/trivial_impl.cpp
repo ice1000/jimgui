@@ -29,7 +29,7 @@ void Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, j
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__FFFF(
 		JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) {
-	return reinterpret_cast<jlong>(new ImVec4(x, y, z, w));
+	return reinterpret_cast<jlong> (new ImVec4(x, y, z, w));
 }
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) {
