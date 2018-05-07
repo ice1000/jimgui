@@ -34,24 +34,11 @@ build_script:
   - cd C:\projects\jimgui\
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
-  - gradlew genBindings javah --info
-  - mkdir jni\cmake-build-debug
-  - mkdir res
-  - mkdir res\native
-  - cd jni
-
-  - pre
-  - cd cmake-build-debug
-  - cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - MinGW Makefiles" \
-          -DPKG_CONFIG_EXECUTABLE="C:\pkg-config\bin\pkg-config.exe" \
-          -Dglfw3_DIR="C:\Program Files (x86)\GLFW\lib\cmake\glfw3" \
-         ..
-  - mingw32-make.exe
-  - copy *.dll ..\..\res\native\
-  - cd ..\..
-  - gradlew jar --info
-  - gradlew test --info
+  - gradlew assemble --info
 #
+
+test_script:
+  - gradlew test --info
 
 before_build:
   - set Path=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;%Path%
