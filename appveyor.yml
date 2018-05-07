@@ -11,7 +11,7 @@ install:
 
   - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
   - C:\msys64\usr\bin\pacman -Suu --noconfirm
-  - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-gcc pkg-config
+  - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-pkg-config
 
   - refreshenv
 
