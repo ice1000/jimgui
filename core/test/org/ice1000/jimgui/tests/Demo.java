@@ -22,7 +22,7 @@ public class Demo {
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
 			imGui.separator();
 			if (imGui.isMousePosValid())
-				imGui.text("Mouse Position: (" + imGui.getMousePosX() + ", " + imGui.getMousePosY() + ")");
+				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
 			else imGui.text("Mouse Position: <invalid>");
 			if (imGui.treeNode("This is a tree node")) {
 				imGui.text("Which?");

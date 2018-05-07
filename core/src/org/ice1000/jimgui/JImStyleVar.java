@@ -13,7 +13,7 @@ public final class JImStyleVar<T> {
 	 */
 	int nativeValue;
 
-	public JImStyleVar(int nativeValue) {
+	private JImStyleVar(int nativeValue) {
 		this.nativeValue = nativeValue;
 	}
 
@@ -40,6 +40,7 @@ public final class JImStyleVar<T> {
 	public static final @NotNull JImStyleVar<Void> ButtonTextAlign;
 	public static final int COUNT;
 
+	//region Trivial copy-pasted codes
 	private static native int getAlpha();
 	private static native int getWindowPadding();
 	private static native int getWindowRounding();
@@ -87,4 +88,5 @@ public final class JImStyleVar<T> {
 		ButtonTextAlign = new JImStyleVar<>(getButtonTextAlign());
 		COUNT = getCOUNT();
 	}
+	//endregion
 }

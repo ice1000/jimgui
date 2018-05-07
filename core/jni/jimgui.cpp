@@ -116,12 +116,4 @@ void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) 
 	__JNI__FUNCTION__CLEAN__
 }
 
-jfloat Java_org_ice1000_jimgui_JImGui_getMousePosX(JNIEnv *, jobject) {
-	return ImGui::GetMousePos().x;
-}
-
-jfloat Java_org_ice1000_jimgui_JImGui_getMousePosY(JNIEnv *, jobject) {
-	return ImGui::GetMousePos().y;
-}
-
 #pragma clang diagnostic pop

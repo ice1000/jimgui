@@ -7,6 +7,15 @@
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 #include <org_ice1000_jimgui_JImStyleVar.h>
+#include <org_ice1000_jimgui_JImGuiIO.h>
+
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
+	return ImGui::GetMousePos().x;
+}
+
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosY(JNIEnv *, jobject) {
+	return ImGui::GetMousePos().y;
+}
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
