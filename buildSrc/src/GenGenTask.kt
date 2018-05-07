@@ -204,6 +204,19 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
 			Fun("collapsingHeader", "boolean", label, flags(from = "TreeNode", default = "Selected")),
 
+			// Widgets: Selectable / Lists
+			Fun("selectable", "boolean",
+					string("label"),
+					bool("selected", default = false),
+					flags(), // TODO
+					size(default = "0,0")),
+			Fun("listBoxHeader", "boolean", string("label"), size()),
+			Fun("listBoxHeader0", "boolean",
+					string("label"),
+					int("itemsCount"),
+					int("heightInItems", default = -1)),
+			Fun("listBoxFooter"),
+
 			// Tooltips
 			Fun("setTooltip", text),
 			Fun("beginTooltip"),

@@ -113,6 +113,7 @@ const val CXX_PREFIX = """///
 
 #include <imgui.h>
 #include "basics.hpp"
+#include "overloads_helper.hpp"
 #ifdef __cplusplus
 extern "C" {
 #endif

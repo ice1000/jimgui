@@ -69,6 +69,8 @@ fun main(args: Array<String>) {
 					if (attributeSet != null)
 						textColored(attributeSet, token)
 					else text(token)
+					if (attributeSet === keywords && isItemHovered)
+						setTooltip("Keyword: $token")
 					if (isEol) {
 					} else sameLine()
 					tokenStart = if (isEol) i + eolLen else i
