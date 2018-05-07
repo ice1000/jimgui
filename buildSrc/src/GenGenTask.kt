@@ -181,13 +181,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", label),
-			Fun("treeNodeEx", "boolean", label, flags()),
+			Fun("treeNodeEx", "boolean", label, flags(from = "TreeNode", default = "Selected")),
 			Fun("treePush", string("stringID")),
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
-			Fun("collapsingHeader", "boolean", label, flags()),
+			Fun("collapsingHeader", "boolean", label, flags(from = "TreeNode", default = "Selected")),
 
 			// Tooltips
 			Fun("setTooltip", text),
