@@ -21,8 +21,8 @@ public class JImGuiUtil {
 	 */
 	public static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
-			int i = 0;
-			while (!imGui.windowShouldClose() && i++ < millis) {
+			long end = System.currentTimeMillis() + millis;
+			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				imGui.initNewFrame();
 				runnable.accept(imGui);
 				imGui.render();
@@ -45,13 +45,17 @@ public class JImGuiUtil {
 			long latestRefresh = System.currentTimeMillis();
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
-				if (currentTimeMillis - latestRefresh > millis) {
+				long deltaTime = currentTimeMillis - latestRefresh;
+				Thread.sleep(deltaTime);
+				if (deltaTime > millis) {
 					imGui.initNewFrame();
 					runnable.accept(imGui);
 					imGui.render();
 					latestRefresh = currentTimeMillis;
 				}
 			}
+		} catch (@NotNull InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -61,7 +65,9 @@ public class JImGuiUtil {
 			long millis = millisSupplier.getAsLong();
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
-				if (currentTimeMillis - latestRefresh > millis) {
+				long deltaTime = currentTimeMillis - latestRefresh;
+				Thread.sleep(deltaTime);
+				if (deltaTime > millis) {
 					imGui.initNewFrame();
 					runnable.accept(imGui);
 					imGui.render();
@@ -69,6 +75,8 @@ public class JImGuiUtil {
 					millis = millisSupplier.getAsLong();
 				}
 			}
+		} catch (@NotNull InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
