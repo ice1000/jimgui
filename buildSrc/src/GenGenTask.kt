@@ -249,8 +249,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Clipping
 			Fun("pushClipRect",
-					vec2("clipRectMinWidth", "clipRectMinHeight"),
-					vec2("clipRectMaxWidth", "clipRectMaxHeight"),
+					size("ClipRectMin"),
+					size("ClipRectMax"),
 					bool("intersectWithCurrentClipRect")),
 			Fun("popClipRect"),
 
