@@ -145,7 +145,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					int("id"),
 					size(default = "0,0"),
 					bool("border", default = false),
-					flags()),
+					flags(from = "Window", default = "NoTitleBar")),
 			Fun("endChild"),
 
 			// Widgets: Text

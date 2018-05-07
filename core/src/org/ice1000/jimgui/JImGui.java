@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -100,6 +101,10 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 
 	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
+	}
+
+	public boolean beginChild(@NotNull String id, float width, float height, boolean border, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
+		return beginChild(getID(id), width, height, border, flags);
 	}
 
 	public boolean beginChild(@NotNull String id, float width, float height, boolean border) {
