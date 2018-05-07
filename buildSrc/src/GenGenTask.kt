@@ -19,9 +19,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 							.append(param.name)
 					else javaCode.append(param.java())
 				}
+				javaCode.append("){")
+				if (type != null) javaCode.append("return ")
 				javaCode
-						.append("){")
-						.append(ret(type))
 						.append(name)
 						.append('(')
 				params.joinTo(javaCode) { it.javaExpr() }
@@ -51,7 +51,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 				val newParams = params.dropLast(index + 1)
 				newParams.joinTo(javaCode) { it.javaDefault() }
 				javaCode.append("){")
-						.append(ret(type))
+				if (type != null) javaCode.append("return ")
+				javaCode
 						.append(name)
 						.append('(')
 				newParams.joinTo(javaCode) { it.javaExpr() }
@@ -66,12 +67,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" } ?: "void"} {$eol${ret(type)}$`c++Expr`; }"
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
-			comma(params)}${params.`c++`()}) -> ${type?.let { "j$it" }
-					?: "void"} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res;")} }"
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
 
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
@@ -112,8 +112,20 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
 			Fun("isWindowCollapsed", "boolean"),
+			Fun("isWindowFocused", "boolean", int("flags", default = 0)),
+			Fun("isWindowHovered", "boolean", int("flags", default = 0)),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
+			Fun("getContentRegionAvailWidth", "float"),
+			Fun("getWindowContentRegionWidth", "float"),
+
+			Fun("setNextWindowPos", pos(), int("cond", default = 0)),
+			Fun("setNextWindowSize", size(), int("cond", default = 0)),
+			Fun("setNextWindowSizeConstraints", size("Min"), size("Max")),
+			Fun("setNextWindowContentSize", size()),
+			Fun("setNextWindowCollapsed", bool("collapsed"), int("cond", default = 0)),
+			Fun("setNextWindowFocus"),
+			Fun("setNextWindowBgAlpha", float("alpha")),
 			Fun("setWindowPos", pos(), int("cond", default = 0)),
 			Fun("setWindowSize", size(), int("cond", default = 0)),
 			Fun("setWindowCollapsed", bool("collapsed"), int("cond", default = 0)),
@@ -137,7 +149,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("end"),
 			Fun("beginChild", "boolean",
 					int("id"),
-					size("0,0"),
+					size(default = "0,0"),
 					bool("border", default = false),
 					int("flags", default = 0)),
 			Fun("endChild"),
@@ -150,17 +162,17 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("textWrapped", string("text")),
 
 			// Widgets: Main
-			Fun("button", "boolean", string("text"), size("0,0")),
+			Fun("button", "boolean", string("text"), size(default = "0,0")),
 			Fun("smallButton", "boolean", string("text")),
 			Fun("invisibleButton", "boolean",
 					string("text"),
-					size("0,0")),
+					size(default = "0,0")),
 			Fun("arrowButton", "boolean", string("text"), int("direction")),
 			Fun("radioButton", "boolean", string("text"), bool("active")),
 			Fun("bullet"),
 			Fun("progressBar",
 					float("fraction"),
-					size("-1,0"),
+					size(default = "-1,0"),
 					string("overlay", default = "(byte[])null")),
 
 			// Widgets: Trees
@@ -237,6 +249,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Parameters stacks (shared)
 			Fun("getFontSize", "float"),
+			Fun("popFont"),
+			Fun("popStyleColor", int("count", default = 1)),
+			Fun("pushStyleVar", int("styleVar"), vec2("val0", "val1")),
+			Fun("popStyleVar", int("count", default = 1)),
 
 			// Focus, Activation
 			Fun("setItemDefaultFocus"),

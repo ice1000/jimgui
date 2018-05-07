@@ -9,7 +9,7 @@ fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", defa
 fun int(name: String, default: Any? = null) = SimpleParam(name, "int", default)
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2(nameX, nameY, default)
-fun size(default: Any? = null) = vec2("width", "height", default)
+fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(default: Any? = null) = vec2("posX", "posY", default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
 
