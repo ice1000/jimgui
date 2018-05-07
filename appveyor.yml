@@ -7,10 +7,7 @@ install:
   - ps: Get-Command sh.exe -All | Remove-Item
 
   - cd C:\Tools\vcpkg
-  - if "%platform%" equ "x64" vcpkg install glew:x64-windows-static
-  - if "%platform%" equ "x64" vcpkg install glfw3:x64-windows-static
-  - if "%platform%" equ "Win32" vcpkg install glew:x86-windows-static
-  - if "%platform%" equ "Win32" vcpkg install glfw3:x86-windows-static
+  - vcpkg install glfw3:x64-windows-static
 
   - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
   - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-pkg-config
