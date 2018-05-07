@@ -7,7 +7,7 @@ install:
   - ps: Get-Command sh.exe -All | Remove-Item
 
   - ps: cd C:\Tools\vcpkg
-  - ps: vcpkg --triplet x64-windows install glfw3 pkgconfig
+  - ps: vcpkg --triplet x64-windows install glfw3
 
   - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
   - C:\msys64\usr\bin\pacman -Suu --noconfirm
