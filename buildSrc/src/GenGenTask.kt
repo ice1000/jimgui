@@ -131,7 +131,22 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setWindowFocus", string("name")),
 
 			// Inputs
+			// Inputs
+			Fun("getKeyIndex", "int", int("imguiKey")),
+			Fun("isKeyDown", "boolean", int("userKeyIndex")),
+			Fun("isKeyPressed", "boolean", int("userKeyIndex"), bool("repeat", default = true)),
+			Fun("isKeyReleased", "boolean", int("userKeyIndex")),
+			Fun("getKeyPressedAmount", "int", int("keyIndex"), float("repeatDelay"), float("rate")),
+			Fun("isMouseDown", "boolean", int("button")),
+			Fun("isAnyMouseDown", "boolean"),
+			Fun("isMouseClicked", "boolean", int("button"), bool("repeat", default = false)),
+			Fun("isMouseDoubleClicked", "boolean", int("button")),
+			Fun("isMouseReleased", "boolean", int("button")),
+			Fun("isMouseDragging", "boolean", int("button"), float("lockThreshold", default = -1)),
+			Fun("isMouseHoveringRect", "boolean", size("RMin"), size("RMax"), bool("clip", default = true)),
 			Fun("isMousePosValid", "boolean"),
+			Fun("captureKeyboardFromApp", bool("capture", default = true)),
+			Fun("captureMouseFromApp", bool("capture", default = true)),
 
 			// ID stack/scopes
 			Fun("popID"),
