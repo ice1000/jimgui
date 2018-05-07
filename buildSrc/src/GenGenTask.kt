@@ -276,6 +276,18 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
 
+			// Utilities
+			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "Default")),
+			Fun("isItemActive", "boolean"),
+			Fun("isItemFocused", "boolean"),
+			Fun("isItemClicked", "boolean", int("mouseButton", default = 0)),
+			Fun("isItemVisible", "boolean"),
+			Fun("isAnyItemHovered", "boolean"),
+			Fun("isAnyItemActive", "boolean"),
+			Fun("isAnyItemFocused", "boolean"),
+			Fun("setItemAllowOverlap"),
+			Fun("isRectVisible", "boolean", size()),
+
 			// Windows Scrolling
 			Fun("setScrollX", float("scrollX")),
 			Fun("setScrollY", float("scrollY")),
