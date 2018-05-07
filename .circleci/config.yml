@@ -40,12 +40,8 @@ jobs:
           key: v1-
 
       - run:
-          name: Generate native library headers
-          command: bash gradlew :core:genBinding :core:javah
-
-      - run:
-          name: Build jar
-          command: bash gradlew jar
+          name: Build all projects
+          command: bash gradlew assemble
 
       - store_artifacts:
           path: core/build/libs
