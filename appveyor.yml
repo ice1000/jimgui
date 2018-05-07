@@ -20,7 +20,7 @@ install:
   - set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
   - set PKG_CONFIG_EXECUTABLE=%PKG_CONFIG_PATH%\bin\pkg-config.exe
   - cd C:\projects\jimgui\
-  - %echo on
+  - echo on
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
   - gradlew assemble --info
