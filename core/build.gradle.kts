@@ -72,7 +72,7 @@ val cmake = task<Exec>("cmake") {
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	commandLine("make")
+	commandLine("make", "-f", "Makefile")
 	doLast {
 		`cmake-build-debug`
 				.listFiles { f: File -> f.extension == "so" }
