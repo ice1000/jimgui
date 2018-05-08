@@ -67,7 +67,7 @@ val cmake = task<Exec>("cmake") {
 	workingDir(`cmake-build-debug`)
 	if (Os.isFamily(Os.FAMILY_WINDOWS))
 		commandLine("cmake", "-DCMAKE_BUILD_TYPE=", "-G", "CodeBlocks - MinGW Makefiles", `cmake-build-debug`.parent)
-	else commandLine("cmake", `cmake-build-debug`)
+	else commandLine("cmake", `cmake-build-debug`.parent)
 	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
