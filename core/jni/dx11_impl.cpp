@@ -37,22 +37,25 @@ static IDXGISwapChain *g_pSwapChain = NULL;
 static ID3D11RenderTargetView *g_mainRenderTargetView = NULL;
 static auto WINDOW_ID = "JIMGUI_WINDOW";
 
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 struct NativeObject {
-		HWND hwnd;
-		MSG msg;
-		WNDCLASSEX wc;
-		NativeObject(const char *title) : wc(
-				{
-						sizeof(WNDCLASSEX),
-						CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-						_T(WINDOW_ID), NULL
-				}) {
-			RegisterClassEx(&wc);
-			ZeroMemory(&msg, sizeof(msg));
-			hwnd = CreateWindow(
-					_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-					100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
-		};
+	HWND hwnd;
+	MSG msg;
+	WNDCLASSEX wc;
+
+	NativeObject(jint width, jint height, const char *title) : wc(
+			{
+					sizeof(WNDCLASSEX),
+					CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+					_T(WINDOW_ID), NULL
+			}) {
+		RegisterClassEx(&wc);
+		ZeroMemory(&msg, sizeof(msg));
+		hwnd = CreateWindow(
+				_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
+				100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
+	};
 };
 
 void CreateRenderTarget() {
@@ -151,7 +154,7 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	__get(Byte, title);
 
 	// Create application window
-	auto object = new NativeObject(static_cast<const jbyte *> (title));
+	auto object = new NativeObject(width, height, static_cast<const char *> (title));
 
 	// Initialize Direct3D
 	if (CreateDeviceD3D(object->hwnd) < 0) {
