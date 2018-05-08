@@ -4,6 +4,7 @@ import org.ice1000.jimgui.JImDir;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.util.JImGuiUtil;
+import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Sandbox {
 	public static void main(@NotNull String... args) {
-		JImGuiTest.useAlternativeJeniLib();
+		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
 		AtomicReference<String> ini = new AtomicReference<>("");
 		JImGuiUtil.runPer(1, imGui -> {

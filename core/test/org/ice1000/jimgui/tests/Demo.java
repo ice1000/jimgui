@@ -5,12 +5,10 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.file.Paths;
-
 public class Demo {
 	public static void main(String... args) {
 		// if you're using jimgui as a jar library, use `JniLoader.load()` instead.
-		JImGuiTest.useAlternativeJeniLib();
+		JniLoader.load();
 		final String windowName = "Debug";
 		JImGuiUtil.runPer(15, imGui -> {
 			imGui.begin(windowName);

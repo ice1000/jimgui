@@ -6,8 +6,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.nio.file.Paths;
-
 import static org.junit.Assert.assertEquals;
 
 public class JImVec4Test {
@@ -20,7 +18,7 @@ public class JImVec4Test {
 
 	@BeforeClass
 	public static void loadJni() {
-		JImGuiTest.useAlternativeJeniLib();
+		JniLoader.load();
 		randX = (float) Math.random();
 		randY = (float) Math.random();
 		randZ = (float) Math.random();

@@ -8,9 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
-import java.nio.file.Paths;
 
-import static org.ice1000.jimgui.util.JniLoader.libraryName;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
 
@@ -20,11 +18,6 @@ public class JImGuiTest {
 	public static void useAlternativeJeniLibAndCheckHeadless() {
 		assumeFalse("true".equals(System.getenv("CI")));
 		assumeFalse("true".equals(System.getProperty("java.awt.headless")));
-		useAlternativeJeniLib();
-	}
-
-	public static void useAlternativeJeniLib() {
-		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", libraryName("jimgui")).toAbsolutePath().toString();
 		JniLoader.load();
 	}
 
