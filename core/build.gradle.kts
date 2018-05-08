@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.ice1000.gradle.*
 
 plugins {
@@ -71,7 +72,8 @@ val cmake = task<Exec>("cmake") {
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	commandLine("make")
+	if (Os.isFamily(Os.FAMILY_WINDOWS)) commandLine("mingw32-make")
+	else commandLine("make")
 	doLast {
 		`cmake-build-debug`
 				.listFiles { f: File -> f.extension == "so" }
