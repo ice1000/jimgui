@@ -1,6 +1,6 @@
-//
-// Created by ice1000 on 18-4-30.
-//
+///
+/// Created by ice1000 on 18-4-30.
+///
 
 #include <imgui.h>
 #include <imgui_impl_glfw_gl3.h>
@@ -41,14 +41,14 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	gl3wInit();
 
 	// Setup Dear ImGui binding
-	// IMGUI_CHECKVERSION();
+	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfwGL3_Init(window, true);
-	__release(Byte, title);
+	__abort(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (window);
 }
@@ -61,11 +61,11 @@ void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jl
 	glfwTerminate();
 }
 
-jboolean Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) {
+auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
 	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
 }
 
-void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jobject) {
+void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL3_NewFrame();
 }
@@ -81,38 +81,6 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(window);
-}
-
-void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name, jint flags) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, name)
-	ImGui::Begin(reinterpret_cast<const char *>(name), nullptr, flags);
-	__release(Byte, name)
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _stringID) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, stringID)
-	ImGui::PushID(reinterpret_cast<const char *>(stringID));
-	__release(Byte, stringID)
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text)
-	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
-	__release(Byte, text)
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_pushStyleVarFloat(JNIEnv *, jclass, jint styleVar, jfloat value) {
-	ImGui::PushStyleVar(styleVar, value);
-}
-
-void Java_org_ice1000_jimgui_JImGui_pushStyleVarImVec2(JNIEnv *, jclass, jint styleVar, jfloat valueX, jfloat valueY) {
-	ImGui::PushStyleVar(styleVar, ImVec2(valueX, valueY));
 }
 
 #pragma clang diagnostic pop

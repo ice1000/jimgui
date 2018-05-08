@@ -33,6 +33,10 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 
 	public JImGui(int width, int height, @NotNull String title) {
 		nativeObjectPtr = allocateNativeObjects(width, height, getBytes(title));
+		if (nativeObjectPtr == 0) {
+			System.err.println("Unknown error has happened during initialization!");
+			System.exit(1);
+		}
 		io = new JImGuiIO();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
@@ -127,11 +131,22 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
-	public native void initNewFrame();
+	public void initNewFrame() {
+		initNewFrame(nativeObjectPtr);
+	}
+
+	public void loadIniSettingsFromMemory(@NotNull String data) {
+		loadIniSettingsFromMemory(getBytes(data));
+	}
+
+	public @NotNull String saveIniSettingsToMemory() {
+		return new String(saveIniSettingsToMemory0());
+	}
 
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, byte[] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
+	private static native void initNewFrame(long nativeObjectPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void begin(byte[] name, int flags);
@@ -139,5 +154,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native void pushStyleVarFloat(int styleVar, float value);
 	private static native void pushStyleVarImVec2(int styleVar, float valueX, float valueY);
 	private static native void text(byte[] text);
+	private static native void loadIniSettingsFromMemory(byte[] data);
+	private static native byte[] saveIniSettingsToMemory0();
 	//endregion
 }

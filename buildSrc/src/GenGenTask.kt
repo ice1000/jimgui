@@ -61,23 +61,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		}
 	}
 
-	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
-
-	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
-			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
-
-	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
-			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
-
 	override fun `c++`(cppCode: StringBuilder) {
 		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
 			val initParams = params.mapNotNull { it.surrounding() }
 			if (isStatic(params)) {
 				`c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
-						init = initParams.joinToString(" ", prefix = "__JNI__FUNCTION__INIT__ ") { it.first },
-						deinit = initParams.joinToString(" ", postfix = " __JNI__FUNCTION__CLEAN__") { it.second })
+						init = initParams.joinToString(" ", prefix = JNI_FUNCTION_INIT) { it.first },
+						deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
 			} else `c++SimpleMethod`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
 		}
 	}
@@ -291,6 +281,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Focus, Activation
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
+
+			// Settings/.Ini Utilities
+			Fun("loadIniSettingsFromDisk", string("iniFileName")),
+			Fun("saveIniSettingsToDisk", string("iniFileName")),
 
 			// Utilities
 			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "Default")),

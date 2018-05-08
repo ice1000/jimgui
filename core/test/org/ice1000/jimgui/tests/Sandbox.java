@@ -7,11 +7,13 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Sandbox {
 	public static void main(@NotNull String... args) {
 		JImGuiTest.useAlternativeJeniLib();
 		AtomicInteger count = new AtomicInteger();
+		AtomicReference<String> ini = new AtomicReference<>("");
 		JImGuiUtil.runPer(1, imGui -> {
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
@@ -33,6 +35,12 @@ public class Sandbox {
 			imGui.labelText("Boy\u2642next\u26a8door", "就是邻\u26a2家男\u26a3孩");
 			imGui.smallButton("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.newLine();
+			imGui.newLine();
+			if (imGui.getIO().isWantSaveIniSettings()) {
+				ini.set(imGui.saveIniSettingsToMemory());
+				imGui.getIO().setWantSaveIniSettings(false);
+			}
+			imGui.text(ini.get());
 			imGui.newLine();
 			try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
 			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);

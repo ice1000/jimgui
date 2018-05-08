@@ -12,6 +12,8 @@ val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"]!!
 val processResources = tasks["processResources"]!!
+val `compileC++` = task("compileC++") { group = compileJava.group }
+val downloadAll = task("downloadAll") { group = "download" }
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
 val genImgui = task<GenGenTask>("genImgui")
@@ -27,6 +29,7 @@ val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
 val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
 
 val downloadImgui = task<Download>("downloadImgui") {
+	group = downloadAll.group
 	src("$imguiGitHub/imgui.cpp")
 	src("$imguiGitHub/imgui.h")
 	src("$imguiGitHub/imgui_draw.cpp")
@@ -40,14 +43,18 @@ val downloadImgui = task<Download>("downloadImgui") {
 }
 
 val downloadImpl = task<Download>("downloadImpl") {
+	group = downloadAll.group
 	src("$imguiGitHub/examples/opengl3_example/imgui_impl_glfw_gl3.h")
 	src("$imguiGitHub/examples/opengl3_example/imgui_impl_glfw_gl3.cpp")
+	src("$imguiGitHub/examples/directx11_example/imgui_impl_dx11.h")
+	src("$imguiGitHub/examples/directx11_example/imgui_impl_dx11.cpp")
 	src("$covGitHub/src/gl3w.c")
 	dest(implDir)
 	overwrite(false)
 }
 
 val downloadImplGL = task<Download>("downloadImplGL") {
+	group = downloadAll.group
 	src("$covGitHub/include/GL/gl3w.h")
 	src("$covGitHub/include/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
@@ -55,12 +62,14 @@ val downloadImplGL = task<Download>("downloadImplGL") {
 }
 
 val cmake = task<Exec>("cmake") {
-	`cmake-build-debug`.mkdirs()
+	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
 	commandLine("cmake", `cmake-build-debug`.parent)
+	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
 val make = task<Exec>("make") {
+	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
 	commandLine("make")
 	doLast {
@@ -79,6 +88,7 @@ val clearCMake = task<Exec>("clearCMake") {
 	group = clean.group
 	workingDir(`cmake-build-debug`)
 	commandLine("cmake", "clean")
+	commandLine("make", "clean")
 }
 
 val clearDownloaded = task<Delete>("clearDownloaded") {
@@ -92,13 +102,15 @@ compileJava.options.compilerArgs =
 compileJava.dependsOn(genImguiIO)
 compileJava.dependsOn(genImgui)
 clean.dependsOn(clearGenerated)
+clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
+`compileC++`.dependsOn(make)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui)
 cmake.dependsOn(downloadImpl)
 cmake.dependsOn(downloadImplGL)
-processResources.dependsOn(make)
+processResources.dependsOn(`compileC++`)
 
 java.sourceSets {
 	"main" {
