@@ -72,8 +72,7 @@ val cmake = task<Exec>("cmake") {
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	if (Os.isFamily(Os.FAMILY_WINDOWS)) commandLine("mingw32-make")
-	else commandLine("make")
+	commandLine("make")
 	doLast {
 		`cmake-build-debug`
 				.listFiles { f: File -> f.extension == "so" }
