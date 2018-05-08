@@ -78,18 +78,32 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 				if (params.isNotEmpty()) cppCode.append(",")
 				cppCode.append(params.`c++`())
 						.append(")->")
-				if (type != null) cppCode.append('j').append(type)
-				else cppCode.append("void")
+				val isVoid = type == null
+				if (isVoid) cppCode.append("void")
+				else cppCode.append('j').append(type)
 				cppCode.appendln('{')
-						.append(ret(type, "ImGui::${"${name.capitalizeFirst()}(${params.`c++Expr`()})"}${boolean(type)}"))
-						.appendln('}')
+				if (isVoid) cppCode.append("ImGui::")
+						.append(name.capitalizeFirst())
+						.append('(')
+						.append(params.`c++Expr`())
+						.append(')')
+						.append(boolean(type))
+				else {
+					cppCode.append("return static_cast<j")
+							.append(type)
+							.append(">(")
+							.append("ImGui::")
+							.append(name.capitalizeFirst())
+							.append('(')
+							.append(params.`c++Expr`())
+							.append(')')
+							.append(boolean(type))
+							.append(");")
+				}
+				cppCode.appendln('}')
 			}
 		}
 	}
-
-	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
-			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
 
 	private val trivialMethods = listOf(
 			// Cursor / Layout
