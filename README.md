@@ -1,8 +1,8 @@
 # jimgui
 
-Windows Build | Linux Build
-:------------:|:-----------:
-[![CircleCI][0]][1]|[![Build status][2]][3]
+Linux Build | Windows Build
+:----------:|:-------------:
+[![CCI][0]][1]|[![AV][2]][3]
 
   [0]: https://circleci.com/gh/ice1000/jimgui.svg?style=svg
   [1]: https://circleci.com/gh/ice1000/jimgui

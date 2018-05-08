@@ -82,29 +82,26 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 				if (isVoid) cppCode.append("void")
 				else cppCode.append('j').append(type)
 				cppCode.appendln('{')
-				if (isVoid) cppCode.append("ImGui::")
-						.append(name.capitalizeFirst())
-						.append('(')
-						.append(params.`c++Expr`())
-						.append(')')
-						.append(boolean(type))
-						.append(';')
-				else {
-					cppCode.append("return static_cast<j")
-							.append(type)
-							.append(">(")
-							.append("ImGui::")
-							.append(name.capitalizeFirst())
-							.append('(')
-							.append(params.`c++Expr`())
-							.append(')')
-							.append(boolean(type))
-							.append(");")
-				}
+				if (isVoid) cppCode.`c++Expr`(name, params, type).append(';')
+				else cppCode.append("return static_cast<j")
+						.append(type)
+						.append(">(")
+						.`c++Expr`(name, params, type)
+						.append(");")
 				cppCode.appendln('}')
 			}
 		}
 	}
+
+	private fun StringBuilder.`c++Expr`(
+			name: String,
+			params: List<Param>,
+			type: String?) = append("ImGui::")
+			.append(name.capitalizeFirst())
+			.append('(')
+			.append(params.`c++Expr`())
+			.append(')')
+			.append(boolean(type))
 
 	private val trivialMethods = listOf(
 			// Cursor / Layout
