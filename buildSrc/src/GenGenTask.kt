@@ -62,15 +62,34 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		trivialMethods.joinLinesTo(cppCode) { (name, type, params) ->
+		trivialMethods.forEach { (name, type, params) ->
 			val initParams = params.mapNotNull { it.surrounding() }
 			if (isStatic(params)) {
-				`c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
+				val f = `c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
 						init = initParams.joinToString(" ", prefix = JNI_FUNCTION_INIT) { it.first },
 						deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
-			} else `c++SimpleMethod`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})")
+				cppCode.appendln(f)
+			} else {
+				cppCode.append(JNI_FUNC_PREFIX)
+						.append(className)
+						.append('_')
+						.append(name)
+						.append("(JNIEnv *env, jobject")
+				if (params.isNotEmpty()) cppCode.append(",")
+				cppCode.append(params.`c++`())
+						.append(")->")
+				if (type != null) cppCode.append('j').append(type)
+				else cppCode.append("void")
+				cppCode.appendln('{')
+						.append(ret(type, "ImGui::${"${name.capitalizeFirst()}(${params.`c++Expr`()})"}${boolean(type)}"))
+						.appendln('}')
+			}
 		}
 	}
+
+	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
 
 	private val trivialMethods = listOf(
 			// Cursor / Layout

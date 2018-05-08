@@ -90,10 +90,6 @@ public class $className {
 	fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
 			"private static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
 
-	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
-			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
-
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
 			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
