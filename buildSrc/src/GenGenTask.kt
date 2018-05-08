@@ -88,6 +88,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append(params.`c++Expr`())
 						.append(')')
 						.append(boolean(type))
+						.append(';')
 				else {
 					cppCode.append("return static_cast<j")
 							.append(type)
