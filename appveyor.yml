@@ -3,10 +3,6 @@ branches:
     - appveyor
 
 environment:
-  CXX: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
-  CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
-  CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
-  CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
   JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 #
 
@@ -15,14 +11,14 @@ build_script:
   - ps: Get-Command sh.exe -All | Remove-Item
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
-  - gradlew assemble --info
+  - gradlew assemble --info --stacktrace
 
 cache:
   - C:\Users\appveyor\.gradle
 #
 
 test_script:
-  - gradlew test --info
+  - gradlew test --info --stacktrace
 
 before_build:
   - set Path=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;%Path%
