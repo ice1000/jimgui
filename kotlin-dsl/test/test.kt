@@ -2,6 +2,7 @@ package test
 
 import org.ice1000.jimgui.dsl.*
 import org.ice1000.jimgui.util.JniLoader
+import org.ice1000.jimgui.util.JniLoader.libraryName
 import java.nio.file.Paths
 
 fun main(args: Array<String>) {
@@ -52,6 +53,6 @@ fun main(args: Array<String>) {
 }
 
 fun jni() {
-	JniLoader.jniLibraryPath = Paths.get("core", "jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString()
+	JniLoader.jniLibraryPath = Paths.get("core", "jni", "cmake-build-debug", libraryName("libjimgui")).toAbsolutePath().toString()
 	JniLoader.load()
 }

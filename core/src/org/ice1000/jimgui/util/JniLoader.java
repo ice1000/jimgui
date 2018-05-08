@@ -14,12 +14,12 @@ public final class JniLoader {
 
 	@NotNull
 	@Contract(pure = true)
-	private static String libraryName(@NonNls @NotNull String libName) {
+	public static String libraryName(@NonNls @NotNull String libName) {
 		String ___ = System.getProperty("os.name");
 		String fileName;
-		if (___.contains("Linux")) fileName = libName + ".so";
-		else if (___.contains("Windows")) fileName = libName + ".dll";
-		else /* if (___.contains("OSX")) */ fileName = libName + ".dylib";
+		if (___.contains("Mac")) fileName = libName + ".dylib";
+		else if (___.startsWith("Windows")) fileName = libName + ".dll";
+		else /* if (___.startsWith("Linux")) */ fileName = libName + ".so";
 		return fileName;
 	}
 

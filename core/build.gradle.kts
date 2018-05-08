@@ -71,13 +71,14 @@ val cmake = task<Exec>("cmake") {
 	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
+val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
 	commandLine("make", "-f", "Makefile")
 	doLast {
 		`cmake-build-debug`
-				.listFiles { f: File -> f.extension == "so" }
+				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
 				.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
 	}
 }

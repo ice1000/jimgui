@@ -20,8 +20,7 @@ public class JImVec4Test {
 
 	@BeforeClass
 	public static void loadJni() {
-		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
-		JniLoader.load();
+		JImGuiTest.useAlternativeJeniLib();
 		randX = (float) Math.random();
 		randY = (float) Math.random();
 		randZ = (float) Math.random();
