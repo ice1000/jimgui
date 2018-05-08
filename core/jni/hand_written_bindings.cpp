@@ -9,6 +9,7 @@
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 #include <org_ice1000_jimgui_JImStyleVar.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
+#include <org_ice1000_jimgui_JImGui.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"

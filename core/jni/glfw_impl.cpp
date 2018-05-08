@@ -1,6 +1,6 @@
-//
-// Created by ice1000 on 18-4-30.
-//
+///
+/// Created by ice1000 on 18-4-30.
+///
 
 #include <imgui.h>
 #include <imgui_impl_glfw_gl3.h>
@@ -41,14 +41,14 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	gl3wInit();
 
 	// Setup Dear ImGui binding
-	// IMGUI_CHECKVERSION();
+	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfwGL3_Init(window, true);
-	__release(Byte, title);
+	__abort(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (window);
 }
@@ -65,7 +65,7 @@ auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong na
 	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
 }
 
-void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jobject) {
+void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL3_NewFrame();
 }
