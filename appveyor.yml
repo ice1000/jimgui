@@ -1,23 +1,18 @@
+branches:
+  only:
+    - appveyor
+  CXX: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
+  CC:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
+  CMAKE_CXX_COMPILER: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\g++.exe
+  CMAKE_CC_COMPILER:  C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin\gcc.exe
+
 environment:
   JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 #
 
-install:
+build_script:
   # CMake refuses to generate MinGW Makefiles if sh.exe is in the Path
   - ps: Get-Command sh.exe -All | Remove-Item
-
-  - cd C:\Tools\vcpkg
-  - vcpkg install glfw3:x64-windows-static
-
-  - C:\msys64\usr\bin\pacman -Syyuu --noconfirm
-  - C:\msys64\usr\bin\pacman -S --noconfirm --needed mingw-w64-x86_64-pkg-config
-
-  - refreshenv
-
-  - set PKG_CONFIG_PATH=C:\msys64\mingw64\lib\pkgconfig
-  - set PKG_CONFIG_EXECUTABLE=%PKG_CONFIG_PATH%\bin\pkg-config.exe
-  - cd C:\projects\jimgui\
-  - echo on
   - echo %CMAKE_CC_COMPILER%
   - echo %CMAKE_CXX_COMPILER%
   - gradlew assemble --info
