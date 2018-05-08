@@ -24,10 +24,28 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	override fun `c++`(cppCode: StringBuilder) {
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, "ImGui::GetIO().$name") }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, "ImGui::GetIO().$it") }
+		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, `c++Expr`(it)) }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name") }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, "ImGui::GetIO().$it") }
+		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
+		stringMembers.joinLinesTo(cppCode) {
+			val param = string(name = "newValue", default = "null")
+			val (init, deinit) = param.surrounding()
+			`c++StringedFunction`(
+					name = "set$it",
+					params = listOf(param),
+					type = null,
+					`c++Expr` = `c++Expr`(it) + " = reinterpret_cast<const char *> (newValue)",
+					init = "$JNI_FUNCTION_INIT $init",
+					deinit = "$JNI_FUNCTION_CLEAN $deinit")
+		}
 	}
+
+	private fun `c++Expr`(it: String) = "ImGui::GetIO().$it"
+
+	private val stringMembers = listOf(
+			"IniFilename",
+			"LogFilename"
+	)
 
 	private val booleanMembers = listOf(
 			"FontAllowUserScaling",
@@ -42,6 +60,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			"WantCaptureKeyboard",
 			"WantTextInput",
 			"WantSetMousePos",
+			"WantSaveIniSettings",
 			"NavActive",
 			"NavVisible")
 

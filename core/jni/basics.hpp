@@ -28,6 +28,10 @@ auto _ ## name = env->New ## type ## Array(len);
 #define __set(type, name, len) \
 env->Set ## type ## ArrayRegion(_ ## name, 0, len, name);
 
+#define __init(type, name, len) \
+auto _ ## name = env->New ## type ## Array(len); \
+env->Set ## type ## ArrayRegion(_ ## name, 0, len, name);
+
 #define __len(name) \
 env->GetArrayLength(_ ## name)
 

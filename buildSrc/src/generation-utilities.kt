@@ -102,6 +102,9 @@ import static org.ice1000.jimgui.util.JImGuiUtil.*;
 @SuppressWarnings("ALL")
 """
 
+const val JNI_FUNCTION_INIT = "__JNI__FUNCTION__INIT__ "
+const val JNI_FUNCTION_CLEAN = " __JNI__FUNCTION__CLEAN__"
+
 @Language("C++")
 const val CXX_PREFIX = """///
 /// author: ice1000

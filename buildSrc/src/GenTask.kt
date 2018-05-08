@@ -89,6 +89,14 @@ public class $className {
 
 	fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
 			"private static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
+
+	fun `c++SimpleMethod`(name: String, params: List<Param>, type: String?, `c++Expr`: String) =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jobject${
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol${ret(type, "$`c++Expr`${boolean(type)}")} }"
+
+	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
+			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
 //endregion
 
 	//region Trivial helpers
@@ -101,10 +109,11 @@ public class $className {
 	fun ret(type: String?, expr: String = "", orElse: String = expr) = type?.let { "return static_cast<j$type> ($expr);" } ?: "$orElse;"
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
+	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
+	fun String.decapitalizeFirst() = "${first().toLowerCase()}${drop(1)}"
 	fun isStatic(params: List<Param>) =
 			params.any { it is StringParam || it is ImVec4Param }
 
 	val eol: String = System.lineSeparator()
 	//endregion
-
 }

@@ -61,7 +61,7 @@ void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jl
 	glfwTerminate();
 }
 
-jboolean Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) {
+auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
 	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
 }
 
@@ -125,14 +125,13 @@ void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclas
 	__JNI__FUNCTION__CLEAN__
 }
 
-jbyteArray Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass) {
+auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::SaveIniSettingsToMemory();
 	auto len = static_cast<jsize> (strlen(ini_data));
 	auto *data = reinterpret_cast<const jbyte *> (ini_data);
-	__new(Byte, data, len);
-	__set(Byte, data, len);
-	delete[] data;
+	__init(Byte, data, len);
+	delete[] ini_data;
 	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
