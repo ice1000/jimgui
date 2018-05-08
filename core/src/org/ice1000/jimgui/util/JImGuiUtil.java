@@ -59,6 +59,26 @@ public class JImGuiUtil {
 		}
 	}
 
+	public static void runWithinPer(long limit, long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
+		try (JImGui imGui = new JImGui()) {
+			long latestRefresh = System.currentTimeMillis();
+			long end = System.currentTimeMillis() + limit;
+			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
+				long currentTimeMillis = System.currentTimeMillis();
+				long deltaTime = currentTimeMillis - latestRefresh;
+				Thread.sleep(deltaTime / 2);
+				if (deltaTime > millis) {
+					imGui.initNewFrame();
+					runnable.accept(imGui);
+					imGui.render();
+					latestRefresh = currentTimeMillis;
+				}
+			}
+		} catch (@NotNull InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void runPer(@NotNull LongSupplier millisSupplier, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();

@@ -2,7 +2,6 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGuiIO;
 import org.ice1000.jimgui.util.JImGuiUtil;
-import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +15,7 @@ public class JImGuiIOTest {
 
 	@Test
 	public void testBinding() {
-		JImGuiUtil.runWithin(8000, imGui -> {
+		JImGuiUtil.runWithinPer(8000, 16, imGui -> {
 			JImGuiIO io = imGui.getIO();
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {

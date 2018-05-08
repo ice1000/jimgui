@@ -201,7 +201,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("selectable", "boolean",
 					string("label"),
 					bool("selected", default = false),
-					flags(), // TODO
+					flags(from = "Selectable", default = "DontClosePopups"),
 					size(default = "0,0")),
 			Fun("listBoxHeader", "boolean", string("label"), size()),
 			Fun("listBoxHeader0", "boolean",
