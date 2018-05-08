@@ -5,12 +5,12 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
 
 public class JImGuiIOTest {
 	@BeforeClass
 	public static void setup() {
-		useAlternativeJeniLibAndCheckHeadless();
+		useAlternativeJniLibAndCheckHeadless();
 	}
 
 	@Test

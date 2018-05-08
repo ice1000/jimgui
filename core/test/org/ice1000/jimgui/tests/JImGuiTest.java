@@ -15,9 +15,10 @@ import static org.junit.Assume.assumeFalse;
 public class JImGuiTest {
 	@BeforeClass
 	@TestOnly
-	public static void useAlternativeJeniLibAndCheckHeadless() {
-		assumeFalse("true".equals(System.getenv("CI")));
-		assumeFalse("true".equals(System.getProperty("java.awt.headless")));
+	public static void useAlternativeJniLibAndCheckHeadless() {
+		assumeFalse("true".equalsIgnoreCase(System.getenv("CI")));
+		assumeFalse("true".equalsIgnoreCase(System.getenv("APPVEYOR")));
+		assumeFalse("true".equalsIgnoreCase(System.getProperty("java.awt.headless")));
 		JniLoader.load();
 	}
 
