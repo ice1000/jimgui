@@ -176,7 +176,7 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	ImGui_ImplDX11_Init(object->hwnd, g_pd3dDevice, g_pd3dDeviceContext);
 	__abort(Byte, title);
 	__JNI__FUNCTION__CLEAN__
-	return static_cast<jlong> (object);
+	return reinterpret_cast<jlong> (object);
 }
 
 auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {

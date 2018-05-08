@@ -2,13 +2,16 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGuiIO;
 import org.ice1000.jimgui.util.JImGuiUtil;
+import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
 
 public class JImGuiIOTest {
 	@BeforeClass
 	public static void setup() {
-		JImGuiTest.useAlternativeJeniLib();
+		useAlternativeJeniLibAndCheckHeadless();
 	}
 
 	@Test

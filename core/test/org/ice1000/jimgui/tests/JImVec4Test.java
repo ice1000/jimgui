@@ -1,13 +1,11 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImVec4;
-import org.ice1000.jimgui.util.JniLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.nio.file.Paths;
-
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
 import static org.junit.Assert.assertEquals;
 
 public class JImVec4Test {
@@ -20,8 +18,7 @@ public class JImVec4Test {
 
 	@BeforeClass
 	public static void loadJni() {
-		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString();
-		JniLoader.load();
+		useAlternativeJeniLibAndCheckHeadless();
 		randX = (float) Math.random();
 		randY = (float) Math.random();
 		randZ = (float) Math.random();
@@ -56,7 +53,9 @@ public class JImVec4Test {
 
 	@AfterClass
 	public static void deallocate() {
-		vec1.close();
-		vec2.close();
+		if (vec1 != null) {
+			vec1.close();
+			vec2.close();
+		}
 	}
 }

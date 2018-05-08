@@ -10,7 +10,9 @@ find_package(JNI REQUIRED)
 
 if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
+
 	set(IMGUI_IMPL impl/imgui_impl_dx11.cpp dx11_impl.cpp)
+	set(TARGET_LINK_LIBS d3dcompiler d3d11 d3dx11 dxguid)
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)
@@ -24,6 +26,8 @@ else ()
 
 	set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp impl/gl3w.c glfw_impl.cpp)
 	include_directories(${GLFW_INCLUDE_DIRS})
+
+	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
 endif ()
 
 if (JNI_FOUND)
@@ -46,4 +50,4 @@ add_library(jimgui SHARED
 		hand_written_bindings.cpp
 		overloads_helper.cpp)
 
-target_link_libraries(jimgui ${GLFW_STATIC_LIBRARIES})
+target_link_libraries(jimgui ${TARGET_LINK_LIBS})

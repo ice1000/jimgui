@@ -2,6 +2,7 @@ package test
 
 import org.ice1000.jimgui.JImVec4
 import org.ice1000.jimgui.dsl.*
+import org.ice1000.jimgui.util.JniLoader
 import org.lice.core.SymbolList
 import org.lice.model.*
 import org.lice.parse.Lexer
@@ -9,7 +10,7 @@ import org.lice.parse.Parser
 import java.awt.Color
 
 fun main(args: Array<String>) {
-	jni()
+	JniLoader.load()
 	val sourceCode = JImGuiContext::class.java
 			.getResource("/bizarre.lice").readText()
 	val sourceCodeLines = sourceCode.split(System.lineSeparator())

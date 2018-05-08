@@ -67,17 +67,18 @@ val cmake = task<Exec>("cmake") {
 	workingDir(`cmake-build-debug`)
 	if (Os.isFamily(Os.FAMILY_WINDOWS))
 		commandLine("cmake", "-DCMAKE_BUILD_TYPE=", "-G", "CodeBlocks - MinGW Makefiles", `cmake-build-debug`.parent)
-	else commandLine("cmake", `cmake-build-debug`)
+	else commandLine("cmake", `cmake-build-debug`.parent)
 	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
+val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
 	commandLine("make", "-f", "Makefile")
 	doLast {
 		`cmake-build-debug`
-				.listFiles { f: File -> f.extension == "so" }
+				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
 				.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
 	}
 }

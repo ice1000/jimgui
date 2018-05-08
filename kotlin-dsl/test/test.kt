@@ -2,10 +2,9 @@ package test
 
 import org.ice1000.jimgui.dsl.*
 import org.ice1000.jimgui.util.JniLoader
-import java.nio.file.Paths
 
 fun main(args: Array<String>) {
-	jni()
+	JniLoader.load()
 	runPer(15) {
 		"Window 2" {
 			menuBar {
@@ -49,9 +48,4 @@ fun main(args: Array<String>) {
 			}
 		}
 	}
-}
-
-fun jni() {
-	JniLoader.jniLibraryPath = Paths.get("core", "jni", "cmake-build-debug", "libjimgui.so").toAbsolutePath().toString()
-	JniLoader.load()
 }
