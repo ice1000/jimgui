@@ -292,6 +292,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
 
+			// Settings/.Ini Utilities
+			Fun("loadIniSettingsFromDisk", string("iniFileName")),
+			Fun("saveIniSettingsToDisk", string("iniFileName")),
+
 			// Utilities
 			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "Default")),
 			Fun("isItemActive", "boolean"),

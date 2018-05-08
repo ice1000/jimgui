@@ -87,7 +87,7 @@ void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name,
 	__JNI__FUNCTION__INIT__
 	__get(Byte, name)
 	ImGui::Begin(reinterpret_cast<const char *>(name), nullptr, flags);
-	__release(Byte, name)
+	__abort(Byte, name)
 	__JNI__FUNCTION__CLEAN__
 }
 
@@ -95,7 +95,7 @@ void Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _stri
 	__JNI__FUNCTION__INIT__
 	__get(Byte, stringID)
 	ImGui::PushID(reinterpret_cast<const char *>(stringID));
-	__release(Byte, stringID)
+	__abort(Byte, stringID)
 	__JNI__FUNCTION__CLEAN__
 }
 
@@ -103,7 +103,7 @@ void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) 
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text)
 	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
-	__release(Byte, text)
+	__abort(Byte, text)
 	__JNI__FUNCTION__CLEAN__
 }
 
@@ -113,6 +113,28 @@ void Java_org_ice1000_jimgui_JImGui_pushStyleVarFloat(JNIEnv *, jclass, jint sty
 
 void Java_org_ice1000_jimgui_JImGui_pushStyleVarImVec2(JNIEnv *, jclass, jint styleVar, jfloat valueX, jfloat valueY) {
 	ImGui::PushStyleVar(styleVar, ImVec2(valueX, valueY));
+}
+
+void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, data)
+	const auto *ini_data = reinterpret_cast<const char *>(data);
+	auto ini_size = static_cast<size_t>(__len(data));
+	ImGui::LoadIniSettingsFromMemory(ini_data, ini_size);
+	__abort(Byte, data)
+	__JNI__FUNCTION__CLEAN__
+}
+
+jbyteArray Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass) {
+	__JNI__FUNCTION__INIT__
+	auto ini_data = ImGui::SaveIniSettingsToMemory();
+	auto len = static_cast<jsize> (strlen(ini_data));
+	auto *data = reinterpret_cast<const jbyte *> (ini_data);
+	__new(Byte, data, len);
+	__set(Byte, data, len);
+	delete[] data;
+	__JNI__FUNCTION__CLEAN__
+	return _data;
 }
 
 #pragma clang diagnostic pop

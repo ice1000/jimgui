@@ -129,6 +129,14 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 
 	public native void initNewFrame();
 
+	public void loadIniSettingsFromMemory(@NotNull String data) {
+		loadIniSettingsFromMemory(getBytes(data));
+	}
+
+	public @NotNull String saveIniSettingsToMemory() {
+		return new String(saveIniSettingsToMemory0());
+	}
+
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, byte[] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
@@ -139,5 +147,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native void pushStyleVarFloat(int styleVar, float value);
 	private static native void pushStyleVarImVec2(int styleVar, float valueX, float valueY);
 	private static native void text(byte[] text);
+	private static native void loadIniSettingsFromMemory(byte[] data);
+	private static native byte[] saveIniSettingsToMemory0();
 	//endregion
 }
