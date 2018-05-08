@@ -79,6 +79,7 @@ val clearCMake = task<Exec>("clearCMake") {
 	group = clean.group
 	workingDir(`cmake-build-debug`)
 	commandLine("cmake", "clean")
+	commandLine("make", "clean")
 }
 
 val clearDownloaded = task<Delete>("clearDownloaded") {
@@ -92,6 +93,7 @@ compileJava.options.compilerArgs =
 compileJava.dependsOn(genImguiIO)
 compileJava.dependsOn(genImgui)
 clean.dependsOn(clearGenerated)
+clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)

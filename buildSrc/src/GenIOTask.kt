@@ -20,6 +20,17 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanGetter)
 		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveSetter(type, name) }
 		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
+		stringMembers.forEach {
+			javaCode
+					.append("\tprivate static native void set")
+					.append(it)
+					.appendln("(byte[]newValue);")
+					.append("\tpublic void set")
+					.append(it)
+					.append("(@NotNull String newValue){set")
+					.append(it)
+					.appendln("(getBytes(newValue));}")
+		}
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
@@ -28,15 +39,15 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name") }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
 		stringMembers.joinLinesTo(cppCode) {
-			val param = string(name = "newValue", default = "null")
+			val param = string(name = it.decapitalizeFirst(), default = "null")
 			val (init, deinit) = param.surrounding()
 			`c++StringedFunction`(
 					name = "set$it",
 					params = listOf(param),
 					type = null,
-					`c++Expr` = `c++Expr`(it) + " = reinterpret_cast<const char *> (newValue)",
+					`c++Expr` = `c++Expr`(it) + " = ${param.`c++Expr`()}",
 					init = "$JNI_FUNCTION_INIT $init",
-					deinit = "$JNI_FUNCTION_CLEAN $deinit")
+					deinit = "$deinit $JNI_FUNCTION_CLEAN")
 		}
 	}
 
