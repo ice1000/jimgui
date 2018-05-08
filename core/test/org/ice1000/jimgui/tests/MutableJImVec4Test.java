@@ -59,7 +59,9 @@ public class MutableJImVec4Test {
 
 	@AfterClass
 	public static void deallocate() {
-		vec.close();
-		vec2.close();
+		if (vec != null) {
+			vec.close();
+			vec2.close();
+		}
 	}
 }

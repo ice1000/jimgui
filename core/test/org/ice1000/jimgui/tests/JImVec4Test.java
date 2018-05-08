@@ -53,7 +53,9 @@ public class JImVec4Test {
 
 	@AfterClass
 	public static void deallocate() {
-		vec1.close();
-		vec2.close();
+		if (vec1 != null) {
+			vec1.close();
+			vec2.close();
+		}
 	}
 }
