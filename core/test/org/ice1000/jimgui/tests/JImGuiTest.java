@@ -24,7 +24,7 @@ public class JImGuiTest {
 	}
 
 	public static void useAlternativeJeniLib() {
-		JniLoader.jniLibraryPath = Paths.get("core","jni", "cmake-build-debug", libraryName("jimgui")).toAbsolutePath().toString();
+		JniLoader.jniLibraryPath = Paths.get("jni", "cmake-build-debug", libraryName("jimgui")).toAbsolutePath().toString();
 		JniLoader.load();
 	}
 
