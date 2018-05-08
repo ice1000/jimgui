@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class Demo {
 	public static void main(String... args) {
-		// if you're using jimgui as a jar library, use `JniLoader.load()` instead.
 		JniLoader.load();
 		final String windowName = "Debug";
 		JImGuiUtil.runPer(15, imGui -> {

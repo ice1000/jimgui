@@ -6,10 +6,12 @@ import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
+
 public class JImGuiIOTest {
 	@BeforeClass
 	public static void setup() {
-		JniLoader.load();
+		useAlternativeJeniLibAndCheckHeadless();
 	}
 
 	@Test

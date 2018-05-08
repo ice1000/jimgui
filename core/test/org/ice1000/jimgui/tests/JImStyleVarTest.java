@@ -2,13 +2,13 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImStyleVar;
 import org.ice1000.jimgui.util.JImGuiUtil;
-import org.ice1000.jimgui.util.JniLoader;
 
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
 import static org.junit.Assert.assertEquals;
 
 public class JImStyleVarTest {
 	public static void main(String... args) {
-		JniLoader.load();
+		useAlternativeJeniLibAndCheckHeadless();
 		JImGuiUtil.run(imGui -> {
 			imGui.pushStyleVar(JImStyleVar.WindowMinSize, 300, 300);
 			imGui.pushStyleVar(JImStyleVar.Alpha, 0.5f);

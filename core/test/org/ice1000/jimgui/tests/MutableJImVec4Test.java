@@ -1,11 +1,11 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.MutableJImVec4;
-import org.ice1000.jimgui.util.JniLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJeniLibAndCheckHeadless;
 import static org.junit.Assert.assertEquals;
 
 public class MutableJImVec4Test {
@@ -14,7 +14,7 @@ public class MutableJImVec4Test {
 
 	@BeforeClass
 	public static void loadJni() {
-		JniLoader.load();
+		useAlternativeJeniLibAndCheckHeadless();
 		vec = new MutableJImVec4();
 		vec2 = new MutableJImVec4(0, 0, 0, 0);
 	}
