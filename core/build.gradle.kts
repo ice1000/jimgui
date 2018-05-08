@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.ice1000.gradle.*
 
 plugins {
@@ -64,14 +65,16 @@ val downloadImplGL = task<Download>("downloadImplGL") {
 val cmake = task<Exec>("cmake") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	commandLine("cmake", `cmake-build-debug`.parent)
+	if (Os.isFamily(Os.FAMILY_WINDOWS))
+		commandLine("cmake", "-DCMAKE_BUILD_TYPE=", "-G", "CodeBlocks - MinGW Makefiles", `cmake-build-debug`.parent)
+	else commandLine("cmake", `cmake-build-debug`)
 	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	commandLine("make")
+	commandLine("make", "-f", "Makefile")
 	doLast {
 		`cmake-build-debug`
 				.listFiles { f: File -> f.extension == "so" }
