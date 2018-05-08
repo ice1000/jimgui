@@ -53,6 +53,6 @@ fun main(args: Array<String>) {
 }
 
 fun jni() {
-	JniLoader.jniLibraryPath = Paths.get("core", "jni", "cmake-build-debug", libraryName("libjimgui")).toAbsolutePath().toString()
+	JniLoader.jniLibraryPath = Paths.get("core", "jni", "cmake-build-debug", libraryName("jimgui")).toAbsolutePath().toString()
 	JniLoader.load()
 }
