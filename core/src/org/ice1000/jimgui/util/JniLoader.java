@@ -1,6 +1,8 @@
 package org.ice1000.jimgui.util;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author ice1000
@@ -8,8 +10,6 @@ import org.jetbrains.annotations.*;
 @SuppressWarnings("WeakerAccess")
 public final class JniLoader {
 	private static boolean isLoaded = false;
-	@TestOnly
-	public static @Nullable String jniLibraryPath;
 	public static @NotNull String jniLibraryPathInJar = "/native/" + System.mapLibraryName("jimgui");
 
 	@NotNull
@@ -26,7 +26,7 @@ public final class JniLoader {
 
 	public static void load() {
 		if (!isLoaded) {
-			NativeUtil.loadLibraryFromJar(jniLibraryPath != null ? jniLibraryPath : jniLibraryPathInJar);
+			NativeUtil.loadLibraryFromJar(jniLibraryPathInJar);
 			isLoaded = true;
 		}
 	}
