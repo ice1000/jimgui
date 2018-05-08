@@ -10,7 +10,9 @@ find_package(JNI REQUIRED)
 
 if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
+
 	set(IMGUI_IMPL impl/imgui_impl_dx11.cpp dx11_impl.cpp)
+	target_link_libraries(d3d11 d3dx11 dxguid)
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)
