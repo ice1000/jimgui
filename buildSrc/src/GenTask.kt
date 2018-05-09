@@ -117,10 +117,12 @@ public class $className {
 	}
 
 	fun genFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
+		if (comment != null) javaCode
+				.append("\t/**\n\t")
+				.appendln(comment)
+				.appendln("\t*/")
+
 		javaCode.append('\t')
-				.append("/**\n\t")
-				.append(comment)
-				.append("\n\t*/\n\t")
 				.append(visibility)
 		if (isStatic(params)) {
 			javaCode.append(" final ")
