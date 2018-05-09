@@ -76,7 +76,7 @@ val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
 	group = `compileC++`.group
 	workingDir(`cmake-build-debug`)
-	commandLine("make", "-f", "Makefile")
+	commandLine(if (Os.isFamily(Os.FAMILY_WINDOWS)) "mingw32-make" else "make", "-f", "Makefile")
 	doLast {
 		`cmake-build-debug`
 				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
