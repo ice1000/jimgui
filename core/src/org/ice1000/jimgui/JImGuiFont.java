@@ -7,4 +7,10 @@ package org.ice1000.jimgui;
 public class JImGuiFont extends JImGuiFontGen {
 	JImGuiFont() {
 	}
+
+	public native void setDisplayOffsetX(float newX);
+	public native void setDisplayOffsetY(float newY);
+	public native void setDisplayOffset(float newX, float newY);
+	public native float getDisplayOffsetX();
+	public native float getDisplayOffsetY();
 }

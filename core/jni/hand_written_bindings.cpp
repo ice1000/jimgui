@@ -10,10 +10,32 @@
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 #include <org_ice1000_jimgui_JImStyleVar.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
+#include <org_ice1000_jimgui_JImGuiFont.h>
 #include <org_ice1000_jimgui_JImGui.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
+void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffsetX(JNIEnv *, jobject, jfloat newValue) {
+	ImGui::GetFont()->DisplayOffset.x = newValue;
+}
+
+void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffsetY(JNIEnv *, jobject, jfloat newValue) {
+	ImGui::GetFont()->DisplayOffset.y = newValue;
+}
+
+void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
+	ImGui::GetFont()->DisplayOffset.x = newX;
+	ImGui::GetFont()->DisplayOffset.y = newY;
+}
+
+jfloat Java_org_ice1000_jimgui_JImGuiFont_getDisplayOffsetX(JNIEnv *, jobject) {
+	return ImGui::GetFont()->DisplayOffset.x;
+}
+
+jfloat Java_org_ice1000_jimgui_JImGuiFont_getDisplayOffsetY(JNIEnv *, jobject) {
+	return ImGui::GetFont()->DisplayOffset.y;
+}
 
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().x;
