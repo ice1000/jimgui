@@ -47,6 +47,7 @@ add_library(jimgui SHARED
 		javah
 		generated_imgui.cpp
 		generated_imgui_io.cpp
+		generated_imgui_font.cpp
 		hand_written_bindings.cpp
 		overloads_helper.cpp)
 

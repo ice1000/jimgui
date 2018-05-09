@@ -81,14 +81,14 @@ public class $className {
 			"""private static native $type get$name(long $ptrName);public $type get$name() { return get$name($ptrName); }"""
 
 	fun javaBooleanSetter(name: String) = javaPrimitiveSetter("boolean", name)
-	fun javaPrimitiveSetter(type: String, name: String) = "public native void set$name($type newValue);"
+	fun javaPrimitiveSetter(type: String, name: String) = "\tpublic native void set$name($type newValue);"
 
 	fun `c++BooleanSetter`(name: String, `c++Expr`: String) = `c++PrimitiveSetter`("boolean", name, `c++Expr`)
 	fun `c++PrimitiveSetter`(type: String, name: String, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr` = newValue; }"
 
 	fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
-			"private static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
+			"\tprivate static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${

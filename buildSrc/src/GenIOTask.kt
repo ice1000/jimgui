@@ -34,9 +34,9 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, "ImGui::GetIO().$name") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, `c++Expr`(name)) }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, `c++Expr`(it)) }
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, "ImGui::GetIO().$name") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, `c++Expr`(name)) }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
 		stringMembers.joinLinesTo(cppCode) {
 			val param = string(name = it.decapitalizeFirst(), default = "null")

@@ -24,5 +24,7 @@ before_build:
 
 artifacts:
   - path: 'core\build\libs\*.jar'
-    name: jimgui
+    name: jimgui-core
+  - path: 'kotlin-dsl\build\libs\*.jar'
+    name: jimgui-dsl
 #
