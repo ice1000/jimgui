@@ -15,8 +15,9 @@ public class JImGuiIOTest {
 
 	@Test
 	public void testBinding() {
-		JImGuiUtil.runWithinPer(8000, 16, imGui -> {
+		JImGuiUtil.runWithinPer(8000, 10, imGui -> {
 			JImGuiIO io = imGui.getIO();
+			imGui.getFont().setFontSize(40);
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {
 				imGui.text("[Ctrl]");
@@ -34,6 +35,8 @@ public class JImGuiIOTest {
 				imGui.text("[Shift]");
 				imGui.sameLine();
 			}
+			imGui.newLine();
+			imGui.text(String.valueOf(imGui.getFont().getFontSize()));
 		});
 	}
 }

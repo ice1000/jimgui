@@ -51,6 +51,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		}
 	}
 
+	override val `c++Prefix`: String get() = "ImGui::GetIO()."
 	private fun `c++Expr`(it: String) = "ImGui::GetIO().$it"
 
 	private val stringMembers = listOf(

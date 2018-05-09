@@ -5,107 +5,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		description = "Generate binding for ImGui"
 	}
 
-	override fun java(javaCode: StringBuilder) {
-		trivialMethods.forEach outer@{ (name, type, params, visibility) ->
-			javaCode.append('\t')
-					.append(visibility)
-			if (isStatic(params)) {
-				javaCode.append(" final ")
-						.append(type(type))
-						.append(' ')
-						.append(name)
-						.append('(')
-				params.forEachIndexed { index, param ->
-					if (index != 0) javaCode.append(",")
-					javaCode.append(param.javaDefault())
-				}
-				javaCode.append("){")
-				if (type != null) javaCode.append("return ")
-				javaCode
-						.append(name)
-						.append('(')
-				params.joinTo(javaCode) { it.javaExpr() }
-				javaCode
-						.append(");}")
-						.append(eol)
-						.append("\tprotected static native ")
-			} else javaCode
-					.append(" final native ")
-			javaCode.append(type(type))
-					.append(' ')
-					.append(name)
-					.append('(')
-			params.joinTo(javaCode) { it.java() }
-			javaCode.append(");").append(eol)
-			val defaults = ArrayList<String>(params.size)
-			params.asReversed().forEachIndexed inner@{ index, param ->
-				val default = param.default?.toString() ?: kotlin.run {
-					defaults += param.javaExpr()
-					return@inner
-				}
-				defaults += default
-				javaCode.append("\tpublic ")
-						.append(type(type))
-						.append(' ')
-						.append(name)
-						.append('(')
-				val newParams = params.dropLast(index + 1)
-				newParams.joinTo(javaCode) { it.javaDefault() }
-				javaCode.append("){")
-				if (type != null) javaCode.append("return ")
-				javaCode
-						.append(name)
-						.append('(')
-				newParams.joinTo(javaCode) { it.javaExpr() }
-				if (newParams.isNotEmpty()) javaCode.append(',')
-				defaults.asReversed().joinTo(javaCode)
-				javaCode.append(");}").append(eol)
-			}
-		}
-	}
+	override fun java(javaCode: StringBuilder) =
+			trivialMethods.forEach outer@{ (name, type, params, visibility) -> genFun(javaCode, visibility, params, type, name) }
 
-	override fun `c++`(cppCode: StringBuilder) {
-		trivialMethods.forEach { (name, type, params) ->
-			val initParams = params.mapNotNull { it.surrounding() }
-			if (isStatic(params)) {
-				val f = `c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
-						init = initParams.joinToString(" ", prefix = JNI_FUNCTION_INIT) { it.first },
-						deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
-				cppCode.appendln(f)
-			} else {
-				cppCode.append(JNI_FUNC_PREFIX)
-						.append(className)
-						.append('_')
-						.append(name)
-						.append("(JNIEnv *env, jobject")
-				if (params.isNotEmpty()) cppCode.append(",")
-				cppCode.append(params.`c++`())
-						.append(")->")
-				val isVoid = type == null
-				if (isVoid) cppCode.append("void")
-				else cppCode.append('j').append(type)
-				cppCode.appendln('{')
-				if (isVoid) cppCode.`c++Expr`(name, params, type).append(';')
-				else cppCode.append("return static_cast<j")
-						.append(type)
-						.append(">(")
-						.`c++Expr`(name, params, type)
-						.append(");")
-				cppCode.appendln('}')
-			}
-		}
-	}
+	override fun `c++`(cppCode: StringBuilder) =
+			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 
-	private fun StringBuilder.`c++Expr`(
-			name: String,
-			params: List<Param>,
-			type: String?) = append("ImGui::")
-			.append(name.capitalizeFirst())
-			.append('(')
-			.append(params.`c++Expr`())
-			.append(')')
-			.append(boolean(type))
-
+	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
 			// Styles
 			Fun("styleColorsDark"),
