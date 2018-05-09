@@ -25,7 +25,11 @@ fun flags(from: String? = null, default: String? = null) = int("flags",
  * @property type String? null -> void
  * @property param List<out Param>
  */
-data class Fun(val name: String, val type: String?, val param: List<Param>, var visibility: String = "public", var comment: String? = null) {
+data class Fun(val name: String,
+               val type: String?,
+               val param: List<Param>,
+               var visibility: String = "public",
+               var document: String? = null) {
 	constructor(name: String, type: String?, vararg param: Param) :
 			this(name, type, param.toList())
 
@@ -35,15 +39,15 @@ data class Fun(val name: String, val type: String?, val param: List<Param>, var 
 	constructor(name: String, param: List<Param>) :
 			this(name, null, param)
 
-	constructor(name: String, type: String?, vararg param: Param, comment: String) :
-			this(name, type, param.toList(), comment = comment)
+	constructor(name: String, type: String?, vararg param: Param, document: String) :
+			this(name, type, param.toList(), document = document)
 
 	companion object {
 		fun protected(name: String, vararg param: Param) = Fun(name, *param).apply { visibility = "protected" }
 	}
 }
 
-infix fun Fun.withComment(comment: String) = Fun(name, type, * param.toTypedArray())
+infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
 
 sealed class Param {
 	abstract fun java(): String

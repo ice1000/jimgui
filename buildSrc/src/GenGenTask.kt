@@ -14,7 +14,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
 			// Styles
-			Fun("styleColorsDark") withComment "new, recommended style (default)",        //like this
+			Fun("styleColorsDark") withDoc "new, recommended style (default)",        //like this
 			Fun("styleColorsClassic"),
 			Fun("styleColorsLight"),
 
