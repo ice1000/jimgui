@@ -19,3 +19,15 @@ auto ImGui::PushID1(const char *str_id) -> void {
 auto ImGui::GetID0(const char *str_id_begin, const char *str_id_end) -> ImGuiID {
 	return GetID(str_id_begin, str_id_end);
 }
+
+auto ImGui::PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void {
+	ImGui::PushStyleVar(idx, val);
+}
+
+auto ImGui::PushStyleVarFloat(ImGuiStyleVar idx, float val) -> void {
+	ImGui::PushStyleVar(idx, val);
+}
+
+auto ImGui::BeginChild0(const char *str_id, const ImVec2 &size, bool border, ImGuiWindowFlags flags) -> bool {
+	return BeginChild(str_id, size, border, flags);
+}

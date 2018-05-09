@@ -91,14 +91,6 @@ void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) 
 	__JNI__FUNCTION__CLEAN__
 }
 
-void Java_org_ice1000_jimgui_JImGui_pushStyleVarFloat(JNIEnv *, jclass, jint styleVar, jfloat value) {
-	ImGui::PushStyleVar(styleVar, value);
-}
-
-void Java_org_ice1000_jimgui_JImGui_pushStyleVarImVec2(JNIEnv *, jclass, jint styleVar, jfloat valueX, jfloat valueY) {
-	ImGui::PushStyleVar(styleVar, ImVec2(valueX, valueY));
-}
-
 void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, data)
@@ -120,34 +112,34 @@ auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass
 	return _data;
 }
 
-#define JImStyleVarFunctionDefinition(variableName) \
+#define JImStyleVarAccessor(variableName) \
 jint Java_org_ice1000_jimgui_JImStyleVar_get ## variableName(JNIEnv *, jclass) { \
   return ImGuiStyleVar_ ## variableName; \
 }
 
-JImStyleVarFunctionDefinition(Alpha)
-JImStyleVarFunctionDefinition(WindowPadding)
-JImStyleVarFunctionDefinition(WindowRounding)
-JImStyleVarFunctionDefinition(WindowBorderSize)
-JImStyleVarFunctionDefinition(WindowMinSize)
-JImStyleVarFunctionDefinition(WindowTitleAlign)
-JImStyleVarFunctionDefinition(ChildRounding)
-JImStyleVarFunctionDefinition(ChildBorderSize)
-JImStyleVarFunctionDefinition(PopupRounding)
-JImStyleVarFunctionDefinition(PopupBorderSize)
-JImStyleVarFunctionDefinition(FramePadding)
-JImStyleVarFunctionDefinition(FrameRounding)
-JImStyleVarFunctionDefinition(FrameBorderSize)
-JImStyleVarFunctionDefinition(ItemSpacing)
-JImStyleVarFunctionDefinition(ItemInnerSpacing)
-JImStyleVarFunctionDefinition(IndentSpacing)
-JImStyleVarFunctionDefinition(ScrollbarSize)
-JImStyleVarFunctionDefinition(ScrollbarRounding)
-JImStyleVarFunctionDefinition(GrabMinSize)
-JImStyleVarFunctionDefinition(GrabRounding)
-JImStyleVarFunctionDefinition(ButtonTextAlign)
-JImStyleVarFunctionDefinition(COUNT)
+JImStyleVarAccessor(Alpha)
+JImStyleVarAccessor(WindowPadding)
+JImStyleVarAccessor(WindowRounding)
+JImStyleVarAccessor(WindowBorderSize)
+JImStyleVarAccessor(WindowMinSize)
+JImStyleVarAccessor(WindowTitleAlign)
+JImStyleVarAccessor(ChildRounding)
+JImStyleVarAccessor(ChildBorderSize)
+JImStyleVarAccessor(PopupRounding)
+JImStyleVarAccessor(PopupBorderSize)
+JImStyleVarAccessor(FramePadding)
+JImStyleVarAccessor(FrameRounding)
+JImStyleVarAccessor(FrameBorderSize)
+JImStyleVarAccessor(ItemSpacing)
+JImStyleVarAccessor(ItemInnerSpacing)
+JImStyleVarAccessor(IndentSpacing)
+JImStyleVarAccessor(ScrollbarSize)
+JImStyleVarAccessor(ScrollbarRounding)
+JImStyleVarAccessor(GrabMinSize)
+JImStyleVarAccessor(GrabRounding)
+JImStyleVarAccessor(ButtonTextAlign)
+JImStyleVarAccessor(COUNT)
 
-#undef JImStyleVarFunctionDefinition
+#undef JImStyleVarAccessor
 
 #pragma clang diagnostic pop

@@ -83,10 +83,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	}
 	//endregion
 
-	public void pushID(@NotNull String stringId) {
-		pushID(getBytes(stringId));
-	}
-
 	public void begin(@NotNull String name, int flags) {
 		begin(getBytes(name), flags);
 	}
@@ -96,7 +92,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	}
 
 	public void text(@NotNull String text) {
-		text(getBytes(text));
+		textUnformatted(getBytes(text));
 	}
 
 	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Float> styleVar, float value) {
@@ -105,22 +101,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 
 	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
-	}
-
-	public boolean beginChild(@NotNull String id, float width, float height, boolean border, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
-		return beginChild(getID(id), width, height, border, flags);
-	}
-
-	public boolean beginChild(@NotNull String id, float width, float height, boolean border) {
-		return beginChild(getID(id), width, height, border);
-	}
-
-	public boolean beginChild(@NotNull String id, float width, float height) {
-		return beginChild(getID(id), width, height, false);
-	}
-
-	public boolean beginChild(@NotNull String id) {
-		return beginChild(getID(id), 0, 0);
 	}
 
 	public boolean windowShouldClose() {
@@ -150,10 +130,6 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void begin(byte[] name, int flags);
-	private static native void pushID(byte[] stringID);
-	private static native void pushStyleVarFloat(int styleVar, float value);
-	private static native void pushStyleVarImVec2(int styleVar, float valueX, float valueY);
-	private static native void text(byte[] text);
 	private static native void loadIniSettingsFromMemory(byte[] data);
 	private static native byte[] saveIniSettingsToMemory0();
 	//endregion

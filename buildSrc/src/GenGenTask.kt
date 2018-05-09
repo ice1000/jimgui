@@ -6,9 +6,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	}
 
 	override fun java(javaCode: StringBuilder) {
-		trivialMethods.forEach outer@{ (name, type, params) ->
+		trivialMethods.forEach outer@{ (name, type, params, visibility) ->
+			javaCode.append('\t')
+					.append(visibility)
 			if (isStatic(params)) {
-				javaCode.append("\tpublic final ")
+				javaCode.append(" final ")
 						.append(type(type))
 						.append(' ')
 						.append(name)
@@ -27,7 +29,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 						.append(");}")
 						.append(eol)
 						.append("\tprotected static native ")
-			} else javaCode.append("\tpublic final native ")
+			} else javaCode
+					.append(" final native ")
 			javaCode.append(type(type))
 					.append(' ')
 					.append(name)
@@ -152,7 +155,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setWindowFocus", string("name")),
 
 			// Inputs
-			// Inputs
 			Fun("getKeyIndex", "int", int("imguiKey")),
 			Fun("isKeyDown", "boolean", int("userKeyIndex")),
 			Fun("isKeyPressed", "boolean", int("userKeyIndex"), bool("repeat", default = true)),
@@ -185,10 +187,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					size(default = "0,0"),
 					bool("border", default = false),
 					flags(from = "Window", default = "NoTitleBar")),
+			Fun("beginChild0", "boolean",
+					string("stringID"),
+					size(default = "0,0"),
+					bool("border", default = false),
+					flags(from = "Window", default = "NoTitleBar")),
 			Fun("endChild"),
 
 			// Widgets: Text
 			// Fun("text", text),
+			Fun.protected("textUnformatted", text),
 			Fun("textColored", vec4("color"), text),
 			Fun("bulletText", text),
 			Fun("labelText", label, text),
@@ -307,6 +315,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("popFont"),
 			Fun("pushStyleColor", int("index"), vec4("color")),
 			Fun("popStyleColor", int("count", default = 1)),
+			Fun.protected("pushStyleVarImVec2",
+					int("styleVar"),
+					vec2("valueX", "valueY")),
+			Fun.protected("pushStyleVarFloat",
+					int("styleVar"),
+					float("value")),
 			Fun("popStyleVar", int("count", default = 1)),
 
 			// Focus, Activation

@@ -25,7 +25,7 @@ fun flags(from: String? = null, default: String? = null) = int("flags",
  * @property type String? null -> void
  * @property param List<out Param>
  */
-data class Fun(val name: String, val type: String?, val param: List<Param>) {
+data class Fun(val name: String, val type: String?, val param: List<Param>, var visibility: String = "public") {
 	constructor(name: String, type: String?, vararg param: Param) :
 			this(name, type, param.toList())
 
@@ -34,6 +34,10 @@ data class Fun(val name: String, val type: String?, val param: List<Param>) {
 
 	constructor(name: String, param: List<Param>) :
 			this(name, null, param)
+
+	companion object {
+		fun protected(name: String, vararg param: Param) = Fun(name, *param).apply { visibility = "protected" }
+	}
 }
 
 sealed class Param {

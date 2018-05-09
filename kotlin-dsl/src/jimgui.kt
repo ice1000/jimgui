@@ -51,7 +51,7 @@ inline fun JImGuiContext.child(
 		height: Float = 0f,
 		border: Boolean = false,
 		block: JImGuiBlock) {
-	if (beginChild(strId, width, height, border)) {
+	if (beginChild0(strId, width, height, border)) {
 		block()
 		endChild()
 	}
