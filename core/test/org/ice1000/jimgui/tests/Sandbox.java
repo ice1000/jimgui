@@ -16,6 +16,7 @@ public class Sandbox {
 		AtomicInteger count = new AtomicInteger();
 		AtomicReference<String> ini = new AtomicReference<>("");
 		JImGuiUtil.runPer(1, imGui -> {
+			imGui.getFont().setFallbackChar('*');
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
 					imGui.menuItem("Copy", "Ctrl+C");

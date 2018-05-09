@@ -47,6 +47,14 @@ jbyteArray Java_org_ice1000_jimgui_JImGuiFont_getDebugName0(JNIEnv *env, jclass)
 	return _data;
 }
 
+jint Java_org_ice1000_jimgui_JImGuiFont_getFontAtlasFlags(JNIEnv *, jobject) {
+	return ImGui::GetFont()->ContainerAtlas->Flags;
+}
+
+void Java_org_ice1000_jimgui_JImGuiFont_setFontAtlasFlags(JNIEnv *, jobject, jint newValue) {
+	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
+}
+
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().x;
 }

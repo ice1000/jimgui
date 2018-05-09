@@ -21,10 +21,18 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 
 First you need to make sure you have these software installed:
 
-+ `cmake`
-+ `make`
-+ `pkg-config`
-+ `libglfw3-dev`
++ For Linux
+    + `cmake`
+    + `make`
+    + `pkg-config`
+    + `libglfw3-dev`
++ For Windows
+    + `cmake`
+    + `ming32-make`
+    + `d3d11`
+    + `d3dx11`
+    + `d3dcompiler`
+    + `dxguid`
 
 To compile a jar library, run:
 

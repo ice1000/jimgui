@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,6 +14,15 @@ public class JImGuiFont extends JImGuiFontGen {
 	public @NotNull String getDebugName() {
 		return new String(getDebugName0());
 	}
+
+	public void setFallbackChar(char wChar) {
+		setFallbackChar((short) wChar);
+	}
+
+	public native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
+	int getFontAtlasFlags();
+	public native void setFontAtlasFlags(
+			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
 
 	public native void setDisplayOffsetX(float newX);
 	public native void setDisplayOffsetY(float newY);
