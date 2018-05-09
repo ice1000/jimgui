@@ -37,6 +37,7 @@ public class JImGuiIOTest {
 			}
 			imGui.newLine();
 			imGui.text(String.valueOf(imGui.getFont().getFontSize()));
+			imGui.text(imGui.getFont().getDebugName());
 		});
 	}
 }

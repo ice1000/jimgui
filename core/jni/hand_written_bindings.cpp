@@ -37,6 +37,16 @@ jfloat Java_org_ice1000_jimgui_JImGuiFont_getDisplayOffsetY(JNIEnv *, jobject) {
 	return ImGui::GetFont()->DisplayOffset.y;
 }
 
+jbyteArray Java_org_ice1000_jimgui_JImGuiFont_getDebugName0(JNIEnv *env, jclass) {
+	__JNI__FUNCTION__INIT__
+	auto debugName = ImGui::GetFont()->GetDebugName();
+	auto len = static_cast<jsize> (strlen(debugName));
+	auto *data = reinterpret_cast<const jbyte *> (debugName);
+	__init(Byte, data, len);
+	__JNI__FUNCTION__CLEAN__
+	return _data;
+}
+
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().x;
 }

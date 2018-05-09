@@ -36,6 +36,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	private val booleanMembers = listOf("DirtyLookupTables")
 	private val functions = listOf(
 			Fun("clearOutputData"),
+			Fun("setFallbackChar", p("wChar", "short")),
 			Fun("isLoaded", "boolean"),
 			Fun("buildLookupTable"))
 
