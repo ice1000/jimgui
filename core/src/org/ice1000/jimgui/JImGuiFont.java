@@ -16,7 +16,7 @@ public class JImGuiFont extends JImGuiFontGen {
 	}
 
 	public void setFallbackChar(char wChar) {
-		setFallbackChar((short) wChar);
+        setFallbackChar(wChar);
 	}
 
 	public native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)

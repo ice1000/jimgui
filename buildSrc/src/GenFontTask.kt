@@ -21,7 +21,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanGetter)
 		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveSetter(type, name) }
 		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
-		functions.forEach { (name, type, params, visibility) -> genFun(javaCode, visibility, params, type, name) }
+		functions.forEach { genFun(javaCode, it) }
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {

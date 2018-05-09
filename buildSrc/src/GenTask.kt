@@ -112,8 +112,15 @@ public class $className {
 	fun isStatic(params: List<Param>) =
 			params.any { it is StringParam || it is ImVec4Param }
 
-	fun genFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String) {
+	fun genFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
+		genFun(javaCode, visibility, params, type, name, comment)
+	}
+
+	fun genFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
 		javaCode.append('\t')
+				.append("/**\n\t")
+				.append(comment)
+				.append("\n\t*/\n\t")
 				.append(visibility)
 		if (isStatic(params)) {
 			javaCode.append(" final ")
