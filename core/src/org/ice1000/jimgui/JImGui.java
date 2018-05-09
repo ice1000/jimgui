@@ -21,6 +21,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
+	private @Nullable JImGuiFont font;
 
 	//region Native-unrelated
 	public JImGui() {
@@ -38,6 +39,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 			System.exit(1);
 		}
 		io = new JImGuiIO();
+		font = new JImGuiFont();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
@@ -68,6 +70,15 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	public @NotNull JImGuiIO getIO() {
 		if (null == io) alreadyDisposed();
 		return io;
+	}
+
+	public @Nullable JImGuiFont findFont() {
+		return font;
+	}
+
+	public @NotNull JImGuiFont getFont() {
+		if (null == font) alreadyDisposed();
+		return font;
 	}
 
 	@Contract(pure = true)

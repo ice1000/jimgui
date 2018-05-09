@@ -18,6 +18,7 @@ val downloadAll = task("downloadAll") { group = "download" }
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
 val genImgui = task<GenGenTask>("genImgui")
+val genImguiFont = task<GenFontTask>("genImguiFont")
 
 val jniDir = projectDir.resolve("jni").absoluteFile!!
 val imguiDir = jniDir.resolve("imgui")
@@ -104,6 +105,7 @@ compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
 compileJava.dependsOn(genImguiIO)
+compileJava.dependsOn(genImguiFont)
 compileJava.dependsOn(genImgui)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
