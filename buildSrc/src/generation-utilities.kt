@@ -68,7 +68,7 @@ data class StringParam(val name: String, override val default: Any?) : Param() {
 	override fun javaExpr() = "getBytes($name)"
 	override fun `c++`() = "jbyteArray _$name"
 	override fun `c++Expr`() = "reinterpret_cast<const char *> ($name)"
-	override fun surrounding() = "__get(Byte, $name)" to "__abort(Byte, $name)"
+	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
 
 data class ImVec4Param(val name: String, override val default: Any?) : Param() {
