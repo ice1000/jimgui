@@ -75,22 +75,6 @@ void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name,
 	__JNI__FUNCTION__CLEAN__
 }
 
-void Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _stringID) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, stringID)
-	ImGui::PushID(reinterpret_cast<const char *>(stringID));
-	__abort(Byte, stringID)
-	__JNI__FUNCTION__CLEAN__
-}
-
-void Java_org_ice1000_jimgui_JImGui_text(JNIEnv *env, jclass, jbyteArray _text) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, text)
-	ImGui::TextUnformatted(reinterpret_cast<const char *>(text));
-	__abort(Byte, text)
-	__JNI__FUNCTION__CLEAN__
-}
-
 void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, data)

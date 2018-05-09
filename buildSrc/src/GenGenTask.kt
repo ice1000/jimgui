@@ -107,6 +107,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			.append(boolean(type))
 
 	private val trivialMethods = listOf(
+			// Styles
+			Fun("styleColorsDark"),
+			Fun("styleColorsClassic"),
+			Fun("styleColorsLight"),
+
 			// Cursor / Layout
 			Fun("separator"),
 			Fun("sameLine",
