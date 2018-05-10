@@ -48,7 +48,7 @@ data class Fun(val name: String,
 }
 
 /** Property */
-data class PPT(val type: String, val name: String, val annotation: String = "")
+data class PPT(val type: String, val name: String, val annotation: String = "", val isArray: Boolean = false)
 
 infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
 

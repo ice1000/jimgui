@@ -18,34 +18,23 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 
 	override fun java(javaCode: StringBuilder) {
 		primitiveMembers.forEach { (type, name) ->
-			javaCode
-					.javadoc(name)
-					.append('\t')
-					.appendln(javaPrimitiveGetter(type, name))
-					.javadoc(name)
-					.appendln("\tpublic native void set$name(${""}$type newValue);")
+			javaCode.javadoc(name).append("\tpublic native ").append(type).append(" get").append(name).appendln("();")
+					.javadoc(name).append("\tpublic native void set").append(name).append("(").append(type).appendln(" newValue);")
 		}
 		booleanMembers.forEach {
-			javaCode
-					.javadoc(it)
-					.append('\t')
-					.append("public native boolean is")
-					.append(it)
-					.appendln("();")
-					.javadoc(it)
-					.appendln("\tpublic native void set$it(${""}${"boolean"} newValue);")
+			javaCode.javadoc(it).append("\tpublic native boolean is").append(it).appendln("();")
+					.javadoc(it).append("\tpublic native void set").append(it).appendln("(boolean newValue);")
 		}
 		functions.forEach { genFun(javaCode, it) }
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, `c++Expr`(it)) }
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, `c++Expr`(name)) }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
+		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name) }
 		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 	}
 
-	private fun `c++Expr`(it: String) = "ImGui::GetFont()->$it"
+	override val `c++Expr` = "ImGui::GetFont()->"
 	private val booleanMembers = listOf("DirtyLookupTables")
 	private val functions = listOf(
 			Fun("clearOutputData"),

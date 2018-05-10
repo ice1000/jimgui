@@ -4,6 +4,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	companion object {
 		lateinit var parser: ImGuiHeaderParser
 	}
+
 	init {
 		description = "Generate binding for ImGui"
 	}
@@ -16,6 +17,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		}
 	}
 
+	override val `c++Expr` = "ImGui::"
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 

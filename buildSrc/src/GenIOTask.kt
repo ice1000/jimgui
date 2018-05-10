@@ -17,13 +17,17 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	override fun java(javaCode: StringBuilder) {
 		functions.forEach { genFun(javaCode, it) }
-		primitiveMembers.forEach { (type, name, annotation) ->
+		primitiveMembers.forEach { (type, name, annotation, isArray) ->
 			javaCode
 					.javadoc(name)
-					.append('\t')
-					.appendln(javaPrimitiveGetter(type, name, annotation))
-					.javadoc(name)
-					.appendln("\tpublic native void set$name($annotation$type newValue);")
+					.append("\tpublic native ").append(annotation).append(type)
+			if (isArray) javaCode.append(' ').append(name.decapitalize().replace("$", "")).append("At").appendln("(int index);")
+			else javaCode.append(" get").append(name).appendln("();")
+			javaCode.javadoc(name)
+					.append("\tpublic native void ")
+			if (isArray) javaCode.append(name.decapitalize().replace("$", "")).append("(int index,")
+			else javaCode.append("set").append(name).append('(')
+			javaCode.append(annotation).append(type).appendln(" newValue);")
 		}
 		booleanMembers.forEach {
 			javaCode
@@ -47,9 +51,11 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, `c++Expr`(name)) }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, `c++Expr`(it)) }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray) ->
+			if (isArray) `c++PrimitiveArrayAccessor`(type, name)
+			else `c++PrimitiveAccessor`(type, name)
+		}
+		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
 		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 		stringMembers.joinLinesTo(cppCode) {
 			val param = string(name = it.decapitalize(), default = "null")
@@ -58,20 +64,23 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 					name = "set$it",
 					params = listOf(param),
 					type = null,
-					`c++Expr` = `c++Expr`(it) + " = ${param.`c++Expr`()}",
+					`c++Expr` = "$`c++Expr`$it = ${param.`c++Expr`()}",
 					init = "$JNI_FUNCTION_INIT $init",
 					deinit = "$deinit $JNI_FUNCTION_CLEAN")
 		}
 	}
 
 	override val `c++Prefix`: String get() = "ImGui::GetIO()."
-	private fun `c++Expr`(it: String) = "ImGui::GetIO().$it"
+	override val `c++Expr` = "ImGui::GetIO()."
 
-	private val functions = listOf(Fun("addInputCharacter", p("character", "short")))
+	private val functions = listOf(
+			Fun("addInputCharactersUTF8", string("characters")),
+			Fun("clearInputCharacters"),
+			Fun("addInputCharacter", p("character", "short")))
+
 	private val stringMembers = listOf(
 			"IniFilename",
-			"LogFilename"
-	)
+			"LogFilename")
 
 	private val booleanMembers = listOf(
 			"FontAllowUserScaling",
@@ -91,6 +100,8 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			"NavVisible")
 
 	private val primitiveMembers = listOf(
+			PPT("short", "InputCharacter$", isArray = true),
+			PPT("float", "NavInput$", isArray = true),
 			PPT("int", "MetricsRenderVertices"),
 			PPT("int", "MetricsRenderIndices"),
 			PPT("int", "MetricsActiveWindows"),
