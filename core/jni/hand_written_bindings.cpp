@@ -70,7 +70,7 @@ jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jobject
 	jsize len;
 	for (int i = 0;; ++i) {
 		if (not inputShorts[i]) {
-			len = i + 1;
+			len = i;
 			break;
 		} else inputStr[i] = static_cast<jbyte> (inputShorts[i]);
 	}

@@ -1,8 +1,8 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.flags.JImDirection;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
+import org.ice1000.jimgui.flags.JImDirection;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
@@ -11,11 +11,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Sandbox {
-	public static void main(@NotNull String... args) {
+	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
 		AtomicReference<String> ini = new AtomicReference<>("");
-		JImGuiUtil.runPer(1, imGui -> {
+		JImGuiUtil.runPer(15, imGui -> {
 			imGui.getFont().setFallbackChar('*');
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
@@ -32,6 +32,8 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
+			String inputString = imGui.getIO().getInputString();
+			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
 			if (imGui.button("Click me!")) count.getAndIncrement();
 			imGui.setBackground(JImVec4.fromAWT(java.awt.Color.BLUE));
 			imGui.sameLine();
