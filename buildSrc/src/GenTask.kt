@@ -155,6 +155,10 @@ public class $className {
 				return@inner
 			}
 			defaults += default
+			if (!comment.isNullOrBlank()) javaCode
+					.append("\t/** ")
+					.append(comment)
+					.appendln(" */")
 			javaCode.append("\tpublic ")
 					.append(type(type))
 					.append(' ')
