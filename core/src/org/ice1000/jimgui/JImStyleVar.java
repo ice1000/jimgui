@@ -1,7 +1,8 @@
 package org.ice1000.jimgui;
 
 /**
- * @param <T> Corresponding style var type, {@link Float} or ImVec2(Use {@link Void} to represent)
+ * @param <T> Corresponding style var type,
+ *            {@link Float} or ImVec2(Use {@link Void} to represent)
  * @author ice1000
  * @since v0.1
  */

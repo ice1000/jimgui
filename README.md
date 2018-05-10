@@ -19,11 +19,15 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 
 # Progress
 
-+ `ImGui` namespace function/javadoc generation
-+ `ImGuiIO` properties getter/setter/javadoc generation
-+ `ImGuiFont` properties getter/setter/javadoc generation
-+ `ImGui*Flags` copy-pasted bindings
-+ `ImStyleVar` keys using generic parameter as type constraint (type safe!)
++ [X] `ImGui` namespace function/javadoc generation
++ [X] `ImGuiIO` properties getter/setter/javadoc generation
++ [X] `ImGuiFont` properties getter/setter/javadoc generation
++ [X] `ImGui*Flags` copy-pasted constant/javadoc
++ [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
++ [X] Linux native library with glfw3 + opengl3 implementation, hosted on CircleCI
++ [X] Windows7+ native library with directX11 implementation, hosted on AppVeyor
++ [ ] WindowsXP native library with directX9 implementation, hosted on ?
++ [ ] MacOS native library with ? implementation, hosted on ?
 
 # Build
 
