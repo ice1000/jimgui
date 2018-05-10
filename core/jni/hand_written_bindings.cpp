@@ -55,19 +55,23 @@ void Java_org_ice1000_jimgui_JImGuiFont_setFontAtlasFlags(JNIEnv *, jobject, jin
 	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
 }
 
-#define JImIOMouseAccessor(property) \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject) { \
-	return ImGui::GetIO().Mouse ## property .x; \
+#define JImIOAccessor(Property) \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## X(JNIEnv *, jobject) { \
+	return ImGui::GetIO().Property.x; \
 } \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject) { \
-	return ImGui::GetIO().Mouse ## property .y; \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## Y(JNIEnv *, jobject) { \
+	return ImGui::GetIO().Property.y; \
 }
 
-JImIOMouseAccessor(Pos)
-JImIOMouseAccessor(Delta)
-JImIOMouseAccessor(PosPrev)
+JImIOAccessor(DisplayFramebufferScale)
+JImIOAccessor(DisplayVisibleMin)
+JImIOAccessor(DisplayVisibleMax)
+JImIOAccessor(DisplaySize)
+JImIOAccessor(MousePos)
+JImIOAccessor(MouseDelta)
+JImIOAccessor(MousePosPrev)
 
-#undef JImIOMouseAccessor
+#undef JImIOAccessor
 
 #define JImIOMouseArrayAccessor(property) \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \

@@ -1,5 +1,6 @@
 package org.ice1000.jimgui.tests;
 
+import org.ice1000.jimgui.JImGuiIO;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.flags.JImDirection;
@@ -33,15 +34,18 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
-			String inputString = imGui.getIO().getInputString();
+			JImGuiIO io = imGui.getIO();
+			String inputString = io.getInputString();
 			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
-			if (imGui.getIO().mouseClickedAt(JImMouseIndexes.Left)) imGui.text("Left is down.");
-			if (imGui.getIO().mouseClickedAt(JImMouseIndexes.Right)) imGui.text("Right is down.");
+			if (io.mouseClickedAt(JImMouseIndexes.Left)) imGui.text("Left is down.");
+			if (io.mouseClickedAt(JImMouseIndexes.Right)) imGui.text("Right is down.");
+			imGui.text("MousePos: [" + io.getMousePosX() + ", " + io.getMousePosY() + "]");
+			imGui.text("MouseDelta: [" + io.getMouseDeltaX() + ", " + io.getMouseDeltaY() + "]");
 			if (imGui.button("Click me!")) count.getAndIncrement();
 			imGui.setBackground(JImVec4.fromAWT(java.awt.Color.BLUE));
 			imGui.sameLine();
 			imGui.text("Click count: " + count);
-			imGui.bulletText("fps: " + imGui.getIO().getFramerate());
+			imGui.bulletText("fps: " + io.getFramerate());
 			imGui.text("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.textWrapped("Boy\u2642next\u26a8door deep dark fantasy oh yes sir billy harrington van darkholm");
 			imGui.textDisabled("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
@@ -49,9 +53,9 @@ public class Sandbox {
 			imGui.smallButton("Boy\u2642next\u26a8door\n就是邻\u26a2家男\u26a3孩");
 			imGui.newLine();
 			imGui.newLine();
-			if (imGui.getIO().isWantSaveIniSettings()) {
+			if (io.isWantSaveIniSettings()) {
 				ini.set(imGui.saveIniSettingsToMemory());
-				imGui.getIO().setWantSaveIniSettings(false);
+				io.setWantSaveIniSettings(false);
 			}
 			imGui.text(ini.get());
 			imGui.newLine();
