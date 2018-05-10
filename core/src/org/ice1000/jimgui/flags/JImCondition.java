@@ -8,7 +8,7 @@ package org.ice1000.jimgui.flags;
  */
 public interface JImCondition {
 	/** Set the variable */
-	int Always = 1 << 0;
+	int Always = 1;
 	int Once = 1 << 1;
 	int FirstUseEver = 1 << 2;
 	int Appearing = 1 << 3;

@@ -5,6 +5,6 @@ package org.ice1000.jimgui.flags;
  * @since v0.1
  */
 public interface JImFontAtlasFlags {
-	int NoPowerOfTwoHeight = 1 << 0;
+	int NoPowerOfTwoHeight = 1;
 	int NoMouseCursors = 1 << 1;
 }

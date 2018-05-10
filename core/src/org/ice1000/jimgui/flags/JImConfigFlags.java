@@ -11,7 +11,7 @@ public interface JImConfigFlags {
 	 * Master keyboard navigation enable flag.
 	 * initNewFrame() will automatically fill getIO().NavInputs[] based on getIO().KeysDown[].
 	 */
-	int NavEnableKeyboard = 1 << 0;
+	int NavEnableKeyboard = 1;
 	/**
 	 * Master gamepad navigation enable flag. This is mostly to instruct your imgui back-end to fill getIO().NavInputs[].
 	 * Back-end also needs to set {@link JImBackendFlags#HasGamepad}.

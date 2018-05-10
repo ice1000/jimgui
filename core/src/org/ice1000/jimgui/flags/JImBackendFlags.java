@@ -6,7 +6,7 @@ package org.ice1000.jimgui.flags;
  */
 public interface JImBackendFlags {
 	/** Back-end supports and has a connected gamepad. */
-	int HasGamepad = 1 << 0;
+	int HasGamepad = 1;
 	/** Back-end supports reading GetMouseCursor() to change the OS cursor shape. */
 	int HasMouseCursors = 1 << 1;
 	/**

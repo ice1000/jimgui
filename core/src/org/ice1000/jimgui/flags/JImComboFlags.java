@@ -8,7 +8,7 @@ package org.ice1000.jimgui.flags;
  */
 public interface JImComboFlags {
 	/** Align the popup toward the left by default */
-	int PopupAlignLeft = 1 << 0;
+	int PopupAlignLeft = 1;
 	/**
 	 * Max ~4 items visible.
 	 * Tip: If you want your combo popup to be a specific size you can use SetNextWindowSizeConstraints()

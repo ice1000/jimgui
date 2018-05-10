@@ -8,7 +8,7 @@ import org.ice1000.jimgui.JImGuiGen;
  */
 public interface JImTreeNodeFlags {
 	/** Draw as selected */
-	int Selected = 1 << 0;
+	int Selected = 1;
 	/** Full colored frame (e.g. for {@link JImTreeNodeFlags#CollapsingHeader}) */
 	int Framed = 1 << 1;
 	/** Hit testing to allow subsequent widgets to overlap this one */

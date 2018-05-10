@@ -15,7 +15,7 @@ public interface JImHoveredFlags {
 	 */
 	int Default = 0;
 	/** IsWindowHovered() only: Return true if any children of the window is hovered */
-	int ChildWindows = 1 << 0;
+	int ChildWindows = 1;
 	/** isWindowHovered() only: Test from root window (top most parent of the current hierarchy) */
 	int RootWindow = 1 << 1;
 	/** isWindowHovered() only: Return true if any window is hovered */
