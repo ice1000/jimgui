@@ -59,6 +59,7 @@ data class PPT(
 data class BPPT(
 		val name: String,
 		val isArray: Boolean = false,
+		val annotation: String = "",
 		val jvmName: String = name.decapitalize().replace("$", ""))
 
 infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
