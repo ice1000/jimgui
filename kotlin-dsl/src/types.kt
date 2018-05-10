@@ -7,3 +7,4 @@ typealias JImGuiBlock = JImGuiContext.() -> Unit
 typealias StrID = String
 typealias IntID = Int
 typealias Flags = Int
+typealias ImWChar = Short

@@ -16,21 +16,21 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
+		functions.forEach { genFun(javaCode, it) }
 		primitiveMembers.forEach { (type, name, annotation) ->
 			javaCode
 					.javadoc(name)
 					.append('\t')
 					.appendln(javaPrimitiveGetter(type, name, annotation))
 					.javadoc(name)
-					.appendln(javaPrimitiveSetter(type, name, annotation))
+					.appendln("\tpublic native void set$name($annotation$type newValue);")
 		}
 		booleanMembers.forEach {
 			javaCode
 					.javadoc(it)
-					.append('\t')
-					.appendln(javaBooleanGetter(it))
+					.append("\tpublic native boolean is").append(it).appendln("();")
 					.javadoc(it)
-					.appendln(javaBooleanSetter(it))
+					.append("\tpublic native void set").append(it).appendln("(boolean newValue);")
 		}
 		stringMembers.forEach {
 			javaCode
@@ -47,10 +47,10 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveGetter`(type, name, `c++Expr`(name)) }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, `c++Expr`(name)) }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanGetter`(it, `c++Expr`(it)) }
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, `c++Expr`(name)) }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
+		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 		stringMembers.joinLinesTo(cppCode) {
 			val param = string(name = it.decapitalize(), default = "null")
 			val (init, deinit) = param.surrounding()
@@ -67,6 +67,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val `c++Prefix`: String get() = "ImGui::GetIO()."
 	private fun `c++Expr`(it: String) = "ImGui::GetIO().$it"
 
+	private val functions = listOf(Fun("addInputCharacter", p("character", "short")))
 	private val stringMembers = listOf(
 			"IniFilename",
 			"LogFilename"

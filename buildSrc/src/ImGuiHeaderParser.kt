@@ -18,9 +18,13 @@ class ImGuiHeaderParser(imguiHeader: File) {
 					.filter { it.indexOf("//") > 0 }
 					.map {
 						val docStartIndex = it.indexOf("//")
-						val name = (if (it.indexOf('(') in 0..docStartIndex)
-							it.substring(0, it.indexOf('('))
-						else it.substring(0, it.indexOf(';'))).trimEnd()
+						val parenthesesStartIndex = it.indexOf('(')
+						val bracketsStartIndex = it.indexOf('[')
+						val name = when {
+							bracketsStartIndex in 0..docStartIndex -> it.substring(0, bracketsStartIndex)
+							parenthesesStartIndex in 0..docStartIndex -> it.substring(0, parenthesesStartIndex)
+							else -> it.substring(0, it.indexOf(';'))
+						}.trimEnd()
 						val javadoc = it.substring(docStartIndex).trim(' ', '/', '\n', '\r', '\t')
 								.replace('/', '|')
 						if (' ' in name)

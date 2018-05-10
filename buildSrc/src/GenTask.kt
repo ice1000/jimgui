@@ -64,29 +64,31 @@ public class $className {
 
 	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
 
-	//region Getter and setter
+	//region Accessors
 	fun javaPrimitiveGetter(type: String, name: String, annotation: String = "") = "public native $annotation$type get$name();"
-
-	fun javaBooleanGetter(name: String) = "public native boolean is$name();"
-
-	fun `c++PrimitiveGetter`(type: String, name: String, `c++Expr`: String) =
-			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`); }"
 
 	fun `c++BooleanGetter`(name: String, `c++Expr`: String) =
 			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_is$name(JNIEnv *, jobject) -> jboolean { return static_cast<jboolean> ($`c++Expr` ? JNI_TRUE : JNI_FALSE); }"
 
-	fun javaPrimitiveMemberGetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
-			"""private static native $type get$name(long $ptrName);public $type get$name() { return get$name($ptrName); }"""
+	fun `c++BooleanSetter`(name: String, `c++Expr`: String) = "JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, jboolean newValue) -> void { $`c++Expr` = newValue; }"
+	fun `c++PrimitiveAccessor`(type: String, name: String, `c++Expr`: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr` = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`); }"""
 
-	fun javaBooleanSetter(name: String) = javaPrimitiveSetter("boolean", name)
-	fun javaPrimitiveSetter(type: String, name: String, annotation: String = "") = "\tpublic native void set$name($annotation$type newValue);"
-
-	fun `c++BooleanSetter`(name: String, `c++Expr`: String) = `c++PrimitiveSetter`("boolean", name, `c++Expr`)
-	fun `c++PrimitiveSetter`(type: String, name: String, `c++Expr`: String) =
-			"JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr` = newValue; }"
-
-	fun javaPrimitiveMemberSetter(type: String, name: String, ptrName: String = "nativeObjectPtr") =
-			"\tprivate static native void set$name(long $ptrName, $type newValue);public final void set$name($type newValue) { return set$name($ptrName, newValue); }"
+	fun `c++BooleanArrayAccessor`(name: String, `c++Expr`: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
+	$`c++Expr`[static_cast<size_t> (index)] = newValue;
+}
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject, jint index) -> jboolean {
+	return static_cast<jboolean> ($`c++Expr`[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
+}"""
+	fun `c++PrimitiveArrayAccessor`(type: String, name: String, `c++Expr`: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, jint index, j$type newValue) -> void {
+	$`c++Expr`[static_cast<size_t> (index)] = newValue;
+}
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject, jint index) -> j$type {
+	return static_cast<j$type> ($`c++Expr`[static_cast<size_t> (index)]);
+}"""
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
 			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
