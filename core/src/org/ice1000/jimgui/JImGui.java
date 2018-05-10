@@ -125,6 +125,11 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
 	}
 
+	/**
+	 * the condition of the main loop
+	 *
+	 * @return should end the main loop or not
+	 */
 	public boolean windowShouldClose() {
 		return windowShouldClose(nativeObjectPtr);
 	}

@@ -12,7 +12,7 @@ class ImGuiHeaderParser(imguiHeader: File) {
 		imguiHeader.bufferedReader().use {
 			it.lineSequence()
 					.dropWhile { it != "namespace ImGui" }
-					.map { it.trim() }
+					.map { it.trimStart() }
 					.filter { it.startsWith("IMGUI_API") }
 					.map { it.removePrefix("IMGUI_API ") }
 					.filter { it.indexOf('(') > 0 }
