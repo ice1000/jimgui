@@ -65,7 +65,7 @@ public class $className {
 	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
 
 	//region Getter and setter
-	fun javaPrimitiveGetter(type: String, name: String) = "public native $type get$name();"
+	fun javaPrimitiveGetter(type: String, name: String, annotation: String = "") = "public native $annotation$type get$name();"
 
 	fun javaBooleanGetter(name: String) = "public native boolean is$name();"
 
@@ -79,7 +79,7 @@ public class $className {
 			"""private static native $type get$name(long $ptrName);public $type get$name() { return get$name($ptrName); }"""
 
 	fun javaBooleanSetter(name: String) = javaPrimitiveSetter("boolean", name)
-	fun javaPrimitiveSetter(type: String, name: String) = "\tpublic native void set$name($type newValue);"
+	fun javaPrimitiveSetter(type: String, name: String, annotation: String = "") = "\tpublic native void set$name($annotation$type newValue);"
 
 	fun `c++BooleanSetter`(name: String, `c++Expr`: String) = `c++PrimitiveSetter`("boolean", name, `c++Expr`)
 	fun `c++PrimitiveSetter`(type: String, name: String, `c++Expr`: String) =

@@ -16,13 +16,13 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
-		primitiveMembers.forEach { (type, name) ->
+		primitiveMembers.forEach { (type, name, annotation) ->
 			javaCode
 					.javadoc(name)
 					.append('\t')
-					.appendln(javaPrimitiveGetter(type, name))
+					.appendln(javaPrimitiveGetter(type, name, annotation))
 					.javadoc(name)
-					.appendln(javaPrimitiveSetter(type, name))
+					.appendln(javaPrimitiveSetter(type, name, annotation))
 		}
 		booleanMembers.forEach {
 			javaCode
@@ -90,16 +90,18 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			"NavVisible")
 
 	private val primitiveMembers = listOf(
-			"int" to "MetricsRenderVertices",
-			"int" to "MetricsRenderIndices",
-			"int" to "MetricsActiveWindows",
-			"float" to "MouseDoubleClickTime",
-			"float" to "MouseDoubleClickMaxDist",
-			"float" to "KeyRepeatDelay",
-			"float" to "KeyRepeatRate",
-			"float" to "FontGlobalScale",
-			"float" to "MouseWheel",
-			"float" to "MouseWheelH",
-			"float" to "Framerate",
-			"float" to "IniSavingRate")
+			PPT("int", "MetricsRenderVertices"),
+			PPT("int", "MetricsRenderIndices"),
+			PPT("int", "MetricsActiveWindows"),
+			PPT("int", "ConfigFlags", "@MagicConstant(flagsFromClass = )"),
+			PPT("int", "BackendFlags"),
+			PPT("float", "MouseDoubleClickTime"),
+			PPT("float", "MouseDoubleClickMaxDist"),
+			PPT("float", "KeyRepeatDelay"),
+			PPT("float", "KeyRepeatRate"),
+			PPT("float", "FontGlobalScale"),
+			PPT("float", "MouseWheel"),
+			PPT("float", "MouseWheelH"),
+			PPT("float", "Framerate"),
+			PPT("float", "IniSavingRate"))
 }

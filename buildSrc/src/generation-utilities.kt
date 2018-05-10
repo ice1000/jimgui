@@ -47,6 +47,9 @@ data class Fun(val name: String,
 	}
 }
 
+/** Property */
+data class PPT(val type: String, val name: String, val annotation: String = "")
+
 infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
 
 sealed class Param {
@@ -109,8 +112,10 @@ fun StringBuilder.javadoc(name: String): StringBuilder {
 @Language("JAVA", suffix = "class A {}")
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.flags.*;
 import org.intellij.lang.annotations.*;
 import org.jetbrains.annotations.*;
+
 import static org.ice1000.jimgui.util.JImGuiUtil.*;
 
 /**

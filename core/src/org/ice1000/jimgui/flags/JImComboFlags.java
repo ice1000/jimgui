@@ -1,4 +1,4 @@
-package org.ice1000.jimgui;
+package org.ice1000.jimgui.flags;
 
 /**
  * @author ice1000

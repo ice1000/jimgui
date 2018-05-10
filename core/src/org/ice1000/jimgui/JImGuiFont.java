@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.flags.JImFontAtlasFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
