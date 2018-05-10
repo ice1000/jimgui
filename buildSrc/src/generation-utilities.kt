@@ -13,7 +13,7 @@ fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(default: Any? = null) = vec2("posX", "posY", default)
 fun string(name: String, default: String? = null) = StringParam(name, default)
-val cond = SimpleParam("cond", "int", "JImCond.Always", "@MagicConstant(valuesFromClass = JImCond.class)")
+val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
 val label = string("label")
 val text = string("text")
 fun flags(from: String? = null, default: String? = null) = int("flags",

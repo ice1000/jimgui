@@ -130,7 +130,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					size(default = "0,0")),
 			Fun("arrowButton", "boolean",
 					text,
-					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDir.class)")),
+					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDirection.class)")),
 			Fun("radioButton", "boolean", text, bool("active")),
 			Fun("bullet"),
 			Fun("progressBar",
@@ -152,7 +152,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
-			Fun("setNextTreeNodeOpen", bool("isOpen"), int("condition", default = 0)),
+			Fun("setNextTreeNodeOpen", bool("isOpen"), cond),
 			Fun("collapsingHeader", "boolean", label, flags(from = "TreeNode", default = "Selected")),
 
 			// Widgets: Selectable / Lists

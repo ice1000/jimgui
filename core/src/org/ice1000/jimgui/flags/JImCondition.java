@@ -1,10 +1,12 @@
-package org.ice1000.jimgui;
+package org.ice1000.jimgui.flags;
 
 /**
+ * Conditions
+ *
  * @author ice1000
  * @since v0.1
  */
-public interface JImCond {
+public interface JImCondition {
 	/** Set the variable */
 	int Always = 1 << 0;
 	int Once = 1 << 1;
