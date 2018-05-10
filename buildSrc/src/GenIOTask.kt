@@ -93,7 +93,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			PPT("int", "MetricsRenderVertices"),
 			PPT("int", "MetricsRenderIndices"),
 			PPT("int", "MetricsActiveWindows"),
-			PPT("int", "ConfigFlags", "@MagicConstant(flagsFromClass = )"),
+			PPT("int", "ConfigFlags", "@MagicConstant(flagsFromClass = JImConfigFlags.class)"),
 			PPT("int", "BackendFlags"),
 			PPT("float", "MouseDoubleClickTime"),
 			PPT("float", "MouseDoubleClickMaxDist"),
