@@ -3,7 +3,7 @@
 ///
 
 #include <imgui.h>
-#include <cstring>
+#include <string.h>
 #include "basics.hpp"
 
 #include <org_ice1000_jimgui_JImVec4.h>
