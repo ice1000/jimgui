@@ -51,6 +51,12 @@ set(ALL_LIBRARIES
 		hand_written_bindings.cpp
 		overloads_helper.cpp)
 
-add_library(jimgui SHARED ${ALL_LIBRARIES})
-
-target_link_libraries(jimgui ${TARGET_LINK_LIBS})
+if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+	message("64 bit architecture")
+	add_library(jimgui SHARED ${ALL_LIBRARIES})
+	target_link_libraries(jimgui ${TARGET_LINK_LIBS})
+else ()
+	message("32 bit architecture")
+	add_library(jimgui32 SHARED ${ALL_LIBRARIES})
+	target_link_libraries(jimgui32 ${TARGET_LINK_LIBS})
+endif ()

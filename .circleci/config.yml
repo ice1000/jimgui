@@ -23,7 +23,7 @@ jobs:
           name: Install clang, make, cmake, glfw3, pkg-config
           command: |
             sudo apt-get update
-            sudo apt-get install -y make cmake libglfw3-dev libglfw3-dev pkg-config gcc
+            sudo apt-get install -y make cmake libglfw3-dev libglfw3-dev pkg-config gcc g++
             gcc -v
 
       # Download and cache dependencies
