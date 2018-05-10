@@ -3,6 +3,7 @@ package org.ice1000.jimgui.tests;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.flags.JImDirection;
+import org.ice1000.jimgui.flags.JImMouseIndexes;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +35,8 @@ public class Sandbox {
 			}
 			String inputString = imGui.getIO().getInputString();
 			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
+			if (imGui.getIO().mouseClickedAt(JImMouseIndexes.Left)) imGui.text("Left is down.");
+			if (imGui.getIO().mouseClickedAt(JImMouseIndexes.Right)) imGui.text("Right is down.");
 			if (imGui.button("Click me!")) count.getAndIncrement();
 			imGui.setBackground(JImVec4.fromAWT(java.awt.Color.BLUE));
 			imGui.sameLine();
