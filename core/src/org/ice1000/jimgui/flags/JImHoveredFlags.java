@@ -1,7 +1,7 @@
 package org.ice1000.jimgui.flags;
 
 /**
- * Flags for JImGui.isItemHovered(), JImGui.isWindowHovered()
+ * Flags for {@link org.ice1000.jimgui.JImGuiGen#isItemHovered(int)}, {@link org.ice1000.jimgui.JImGuiGen#isWindowHovered(int)}
  *
  * @author ice1000
  * @apiNote If you are trying to check whether your mouse should be dispatched to imgui or to your app, you should use the 'io.WantCaptureMouse' boolean for that. Please read the FAQ!

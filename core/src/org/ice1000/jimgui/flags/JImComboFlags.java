@@ -1,7 +1,7 @@
 package org.ice1000.jimgui.flags;
 
 /**
- * Flags for JImGui.beginCombo()
+ * Flags for {@link org.ice1000.jimgui.JImGuiGen#beginCombo}
  *
  * @author ice1000
  * @since v0.1
@@ -9,7 +9,11 @@ package org.ice1000.jimgui.flags;
 public interface JImComboFlags {
 	/** Align the popup toward the left by default */
 	int PopupAlignLeft = 1 << 0;
-	/** Max ~4 items visible. Tip: If you want your combo popup to be a specific size you can use SetNextWindowSizeConstraints() prior to calling BeginCombo() */
+	/**
+	 * Max ~4 items visible.
+	 * Tip: If you want your combo popup to be a specific size you can use SetNextWindowSizeConstraints()
+	 * prior to calling {@link org.ice1000.jimgui.JImGui#beginCombo}
+	 */
 	int HeightSmall = 1 << 1;
 	/** Max ~8 items visible (default) */
 	int HeightRegular = 1 << 2;
