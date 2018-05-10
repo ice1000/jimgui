@@ -32,7 +32,6 @@ public class $className {
 	$className() { }
 """
 
-
 	@TaskAction
 	override fun run() {
 		val targetJavaFile = project
@@ -107,20 +106,17 @@ public class $className {
 
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
-	fun String.capitalizeFirst() = "${first().toUpperCase()}${drop(1)}"
-	fun String.decapitalizeFirst() = "${first().toLowerCase()}${drop(1)}"
-	fun isStatic(params: List<Param>) =
-			params.any { it is StringParam || it is ImVec4Param }
+	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param }
 
 	fun genFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
 		genFun(javaCode, visibility, params, type, name, comment)
 	}
 
 	fun genFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
-		if (comment != null) javaCode
-				.append("\t/**\n\t")
-				.appendln(comment)
-				.appendln("\t*/")
+		if (!comment.isNullOrBlank()) javaCode
+				.append("\t/** ")
+				.append(comment)
+				.appendln(" */")
 
 		javaCode.append('\t')
 				.append(visibility)
@@ -184,7 +180,7 @@ public class $className {
 			name: String,
 			params: List<Param>,
 			type: String?) = append(`c++Prefix`)
-			.append(name.capitalizeFirst())
+			.append(name.capitalize())
 			.append('(')
 			.append(params.`c++Expr`())
 			.append(')')
@@ -193,7 +189,7 @@ public class $className {
 	fun `genFunC++`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder) {
 		val initParams = params.mapNotNull { it.surrounding() }
 		if (isStatic(params)) {
-			val f = `c++StringedFunction`(name, params, type, "ImGui::${name.capitalizeFirst()}(${params.`c++Expr`()})",
+			val f = `c++StringedFunction`(name, params, type, "ImGui::${name.capitalize()}(${params.`c++Expr`()})",
 					init = initParams.joinToString(" ", prefix = JNI_FUNCTION_INIT) { it.first },
 					deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
 			cppCode.appendln(f)

@@ -39,7 +39,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveSetter`(type, name, `c++Expr`(name)) }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanSetter`(it, `c++Expr`(it)) }
 		stringMembers.joinLinesTo(cppCode) {
-			val param = string(name = it.decapitalizeFirst(), default = "null")
+			val param = string(name = it.decapitalize(), default = "null")
 			val (init, deinit) = param.surrounding()
 			`c++StringedFunction`(
 					name = "set$it",

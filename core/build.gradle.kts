@@ -16,16 +16,16 @@ val processResources = tasks["processResources"]!!
 val `compileC++` = task("compileC++") { group = compileJava.group }
 val downloadAll = task("downloadAll") { group = "download" }
 
-val genImguiIO = task<GenIOTask>("genImguiIO")
-val genImgui = task<GenGenTask>("genImgui")
-val genImguiFont = task<GenFontTask>("genImguiFont")
-
 val jniDir = projectDir.resolve("jni").absoluteFile!!
 val imguiDir = jniDir.resolve("imgui")
 val implDir = jniDir.resolve("impl")
 val `cmake-build-debug` = jniDir.resolve("cmake-build-debug")
 val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
+
+val genImguiIO = task<GenIOTask>("genImguiIO")
+val genImgui = task<GenGenTask>("genImgui")
+val genImguiFont = task<GenFontTask>("genImguiFont")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
 val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
@@ -104,18 +104,15 @@ val clearDownloaded = task<Delete>("clearDownloaded") {
 compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
-compileJava.dependsOn(genImguiIO)
-compileJava.dependsOn(genImguiFont)
-compileJava.dependsOn(genImgui)
+genImgui.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
+compileJava.dependsOn(genImguiIO, genImguiFont, genImgui)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
 `compileC++`.dependsOn(make)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)
-cmake.dependsOn(downloadImgui)
-cmake.dependsOn(downloadImpl)
-cmake.dependsOn(downloadImplGL)
+cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(`compileC++`)
 
 java.sourceSets {

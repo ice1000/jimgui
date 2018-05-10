@@ -11,10 +11,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 
+	private val parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+
 	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
 			// Styles
-			Fun("styleColorsDark") withDoc "new, recommended style (default)",        //like this
+			Fun("styleColorsDark"),
 			Fun("styleColorsClassic"),
 			Fun("styleColorsLight"),
 
@@ -264,4 +266,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollMaxX", "float"),
 			Fun("getScrollMaxY", "float")
 	)
+
+	init {
+		trivialMethods.forEach { it.document = parser.map[it.name] }
+	}
 }
