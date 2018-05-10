@@ -53,13 +53,4 @@ set(ALL_LIBRARIES
 
 add_library(jimgui SHARED ${ALL_LIBRARIES})
 
-if (WIN32)
-	add_library(jimgui32 SHARED ${ALL_LIBRARIES})
-	set_target_properties(jimgui32 PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32" LDFLAGS "-m32")
-endif ()
-
 target_link_libraries(jimgui ${TARGET_LINK_LIBS})
-
-if (WIN32)
-	target_link_libraries(jimgui32 ${TARGET_LINK_LIBS})
-endif ()
