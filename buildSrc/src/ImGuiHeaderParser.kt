@@ -19,7 +19,7 @@ class ImGuiHeaderParser(imguiHeader: File) {
 					.filter { it.indexOf("//") > 0 }
 					.map {
 						val name = it.substring(0, it.indexOf('('))
-						val javadoc = it.substring(it.indexOf("//") + 2)
+						val javadoc = it.substring(it.indexOf("//") + 2).trim()
 						if (' ' in name)
 							name.substring(name.lastIndexOf(' ')).trimStart().decapitalize() to javadoc
 						else

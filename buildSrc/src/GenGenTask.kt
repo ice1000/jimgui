@@ -5,13 +5,18 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		description = "Generate binding for ImGui"
 	}
 
-	override fun java(javaCode: StringBuilder) =
-			trivialMethods.forEach outer@{ genFun(javaCode, it) }
+	override fun java(javaCode: StringBuilder) {
+		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+		trivialMethods.forEach {
+			it.document = parser.map[it.name]
+			genFun(javaCode, it)
+		}
+	}
 
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 
-	private val parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+	private lateinit var parser: ImGuiHeaderParser
 
 	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
@@ -266,8 +271,4 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollMaxX", "float"),
 			Fun("getScrollMaxY", "float")
 	)
-
-	init {
-		trivialMethods.forEach { it.document = parser.map[it.name] }
-	}
 }

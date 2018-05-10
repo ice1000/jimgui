@@ -63,6 +63,11 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		throw new IllegalStateException("Window already disposed.");
 	}
 
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
+	 * @return same as {@link #getIO()}
+	 */
 	public @Nullable JImGuiIO findIO() {
 		return io;
 	}
@@ -72,6 +77,11 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		return io;
 	}
 
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
+	 * @return same as {@link #getFont()}
+	 */
 	public @Nullable JImGuiFont findFont() {
 		return font;
 	}
@@ -102,6 +112,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		begin(name, 0);
 	}
 
+	/** draw plain text */
 	public void text(@NotNull String text) {
 		textUnformatted(getBytes(text));
 	}
@@ -118,10 +129,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		return windowShouldClose(nativeObjectPtr);
 	}
 
+	/** Should be called after drawing all widgets */
 	public void render() {
 		render(nativeObjectPtr, background.nativeObjectPtr);
 	}
 
+	/** Should be called before drawing all widgets */
 	public void initNewFrame() {
 		initNewFrame(nativeObjectPtr);
 	}

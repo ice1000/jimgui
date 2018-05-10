@@ -104,7 +104,7 @@ val clearDownloaded = task<Delete>("clearDownloaded") {
 compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
-genImgui.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
+genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImgui)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
