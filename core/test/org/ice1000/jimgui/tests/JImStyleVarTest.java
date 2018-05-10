@@ -1,6 +1,6 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.JImStyleVar;
+import org.ice1000.jimgui.JImStyleVars;
 import org.ice1000.jimgui.util.JImGuiUtil;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
@@ -10,8 +10,8 @@ public class JImStyleVarTest {
 	public static void main(String... args) {
 		useAlternativeJniLibAndCheckHeadless();
 		JImGuiUtil.run(imGui -> {
-			imGui.pushStyleVar(JImStyleVar.WindowMinSize, 300, 300);
-			imGui.pushStyleVar(JImStyleVar.Alpha, 0.5f);
+			imGui.pushStyleVar(JImStyleVars.WindowMinSize, 300, 300);
+			imGui.pushStyleVar(JImStyleVars.Alpha, 0.5f);
 			imGui.begin("What =_=?");
 			if (imGui.button("I love Reiuji Utsuho forever QAQ")) imGui.text("Don't touch me there! >_<");
 			imGui.end();

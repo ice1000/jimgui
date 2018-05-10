@@ -17,17 +17,25 @@ This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-ba
 
 See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 
+# Progress
+
++ `ImGui` namespace function/javadoc generation
++ `ImGuiIO` properties getter/setter/javadoc generation
++ `ImGuiFont` properties getter/setter/javadoc generation
++ `ImGui*Flags` copy-pasted bindings
++ `ImStyleVar` keys using generic parameter as type constraint (type safe!)
+
 # Build
 
 First you need to make sure you have these software installed:
 
 + For Linux
-    + `cmake`
+    + `cmake` version \> 3.5
     + `make`
     + `pkg-config`
     + `libglfw3-dev`
-+ For Windows
-    + `cmake`
++ For Windows (\> 7)
+    + `cmake` version \> 3.5
     + `ming32-make`
     + `d3d11`
     + `d3dx11`

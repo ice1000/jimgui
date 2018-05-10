@@ -163,7 +163,6 @@ JImStyleVarAccessor(ScrollbarRounding)
 JImStyleVarAccessor(GrabMinSize)
 JImStyleVarAccessor(GrabRounding)
 JImStyleVarAccessor(ButtonTextAlign)
-JImStyleVarAccessor(COUNT)
 
 #undef JImStyleVarAccessor
 
