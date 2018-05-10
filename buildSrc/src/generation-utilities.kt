@@ -48,7 +48,18 @@ data class Fun(val name: String,
 }
 
 /** Property */
-data class PPT(val type: String, val name: String, val annotation: String = "", val isArray: Boolean = false)
+data class PPT(
+		val type: String,
+		val name: String,
+		val annotation: String = "",
+		val isArray: Boolean = false,
+		val jvmName: String = name.decapitalize().replace("$", ""))
+
+/** Boolean property */
+data class BPPT(
+		val name: String,
+		val isArray: Boolean = false,
+		val jvmName: String = name.decapitalize().replace("$", ""))
 
 infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
 

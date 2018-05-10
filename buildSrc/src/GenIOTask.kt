@@ -17,45 +17,40 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	override fun java(javaCode: StringBuilder) {
 		functions.forEach { genFun(javaCode, it) }
-		primitiveMembers.forEach { (type, name, annotation, isArray) ->
-			javaCode
-					.javadoc(name)
-					.append("\tpublic native ").append(annotation).append(type)
-			if (isArray) javaCode.append(' ').append(name.decapitalize().replace("$", "")).append("At").appendln("(int index);")
+		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName) ->
+			javaCode.javadoc(name).append("\tpublic native ").append(annotation).append(type)
+			if (isArray) javaCode.append(' ').append(jvmName).append("At").appendln("(int index);")
 			else javaCode.append(" get").append(name).appendln("();")
-			javaCode.javadoc(name)
-					.append("\tpublic native void ")
-			if (isArray) javaCode.append(name.decapitalize().replace("$", "")).append("(int index,")
+			javaCode.javadoc(name).append("\tpublic native void ")
+			if (isArray) javaCode.append(jvmName).append("(int index,")
 			else javaCode.append("set").append(name).append('(')
 			javaCode.append(annotation).append(type).appendln(" newValue);")
 		}
-		booleanMembers.forEach {
-			javaCode
-					.javadoc(it)
-					.append("\tpublic native boolean is").append(it).appendln("();")
-					.javadoc(it)
-					.append("\tpublic native void set").append(it).appendln("(boolean newValue);")
+		booleanMembers.forEach { (name, isArray, jvmName) ->
+			javaCode.javadoc(name).append("\tpublic native boolean ")
+			if (isArray) javaCode.append(jvmName).append("At").appendln("(int index);")
+			else javaCode.append("is").append(name).appendln("();")
+			javaCode.javadoc(name).append("\tpublic native void ")
+			if (isArray) javaCode.append(jvmName).appendln("(int index,boolean newValue);")
+			else javaCode.append("set").append(name).appendln("(boolean newValue);")
 		}
-		stringMembers.forEach {
-			javaCode
-					.append("\tprivate static native void set")
-					.append(it)
-					.appendln("(byte[]newValue);")
-					.javadoc(it)
-					.append("\tpublic void set")
-					.append(it)
-					.append("(@NotNull String newValue){set")
-					.append(it)
+		stringMembers.forEach { name ->
+			javaCode.append("\tprivate static native void set").append(name).appendln("(byte[]newValue);")
+					.javadoc(name)
+					.append("\tpublic void set").append(name).append("(@NotNull String newValue){set").append(name)
 					.appendln("(getBytes(newValue));}")
 		}
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray) ->
-			if (isArray) `c++PrimitiveArrayAccessor`(type, name)
+		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName) ->
+			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName)
 			else `c++PrimitiveAccessor`(type, name)
 		}
-		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
+		booleanMembers.joinLinesTo(cppCode) { (name, isArray, jvmName) ->
+			if (isArray) `c++BooleanArrayAccessor`(name, jvmName)
+			else `c++BooleanAccessor`(name)
+		}
 		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
 		stringMembers.joinLinesTo(cppCode) {
 			val param = string(name = it.decapitalize(), default = "null")
@@ -83,21 +78,26 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			"LogFilename")
 
 	private val booleanMembers = listOf(
-			"FontAllowUserScaling",
-			"OptMacOSXBehaviors",
-			"OptCursorBlink",
-			"MouseDrawCursor",
-			"KeyCtrl",
-			"KeyShift",
-			"KeyAlt",
-			"KeySuper",
-			"WantCaptureMouse",
-			"WantCaptureKeyboard",
-			"WantTextInput",
-			"WantSetMousePos",
-			"WantSaveIniSettings",
-			"NavActive",
-			"NavVisible")
+			BPPT("Key\$Down", isArray = true),
+			BPPT("MouseClicked", isArray = true),
+			BPPT("MouseDoubleClicked", isArray = true),
+			BPPT("MouseReleased", isArray = true),
+			BPPT("MouseDownOwned", isArray = true),
+			BPPT("FontAllowUserScaling"),
+			BPPT("OptMacOSXBehaviors"),
+			BPPT("OptCursorBlink"),
+			BPPT("MouseDrawCursor"),
+			BPPT("KeyCtrl"),
+			BPPT("KeyShift"),
+			BPPT("KeyAlt"),
+			BPPT("KeySuper"),
+			BPPT("WantCaptureMouse"),
+			BPPT("WantCaptureKeyboard"),
+			BPPT("WantTextInput"),
+			BPPT("WantSetMousePos"),
+			BPPT("WantSaveIniSettings"),
+			BPPT("NavActive"),
+			BPPT("NavVisible"))
 
 	private val primitiveMembers = listOf(
 			PPT("short", "InputCharacter$", isArray = true),

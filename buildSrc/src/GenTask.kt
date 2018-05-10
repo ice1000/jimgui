@@ -72,19 +72,19 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, j
 			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name = newValue; }
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
 
-	fun `c++BooleanArrayAccessor`(name: String) =
-			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${name.decapitalize().replace("$", "")}(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
+	fun `c++BooleanArrayAccessor`(name: String, jvmName: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$jvmName(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
 	$`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] = newValue;
 }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_is${name.decapitalize().replace("$", "")}(JNIEnv *, jobject, jint index) -> jboolean {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> jboolean {
 	return static_cast<jboolean> ($`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
 }"""
 
-	fun `c++PrimitiveArrayAccessor`(type: String, name: String) =
-			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${name.decapitalize().replace("$", "")}(JNIEnv *, jobject, jint index, j$type newValue) -> void {
+	fun `c++PrimitiveArrayAccessor`(type: String, name: String, jvmName: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$jvmName(JNIEnv *, jobject, jint index, j$type newValue) -> void {
 	$`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] = newValue;
 }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${name.decapitalize().replace("$", "")}At(JNIEnv *, jobject, jint index) -> j$type {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> j$type {
 	return static_cast<j$type> ($`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)]);
 }"""
 
