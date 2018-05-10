@@ -26,10 +26,10 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		}
 		booleanMembers.forEach {
 			javaCode
-					.javadoc(name)
+					.javadoc(it)
 					.append('\t')
 					.appendln(javaBooleanGetter(it))
-					.javadoc(name)
+					.javadoc(it)
 					.appendln(javaBooleanSetter(it))
 		}
 		stringMembers.forEach {
@@ -37,7 +37,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 					.append("\tprivate static native void set")
 					.append(it)
 					.appendln("(byte[]newValue);")
-					.javadoc(name)
+					.javadoc(it)
 					.append('\t')
 			javaCode.append("\tpublic void set")
 					.append(it)

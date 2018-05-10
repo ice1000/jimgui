@@ -28,7 +28,11 @@ class ImGuiHeaderParser(imguiHeader: File) {
 						else
 							name.decapitalize() to javadoc
 					}
-					.toMap(map)
+					.forEach { (name, javadoc) ->
+						val original = map[name]
+						if (original != null) map[name] = "$original\n\t$javadoc"
+						else map[name] = javadoc
+					}
 		}
 	}
 }
