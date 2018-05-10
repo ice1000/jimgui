@@ -63,6 +63,23 @@ jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosY(JNIEnv *, jobject) {
 	return ImGui::GetMousePos().y;
 }
 
+jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jobject) {
+	__JNI__FUNCTION__INIT__
+	auto *inputShorts = ImGui::GetIO().InputCharacters;
+	auto *inputStr = new jbyte[17];
+	jsize len;
+	for (int i = 0;; ++i) {
+		if (not inputShorts[i]) {
+			len = i + 1;
+			break;
+		} else inputStr[i] = static_cast<jbyte> (inputShorts[i]);
+	}
+	__init(Byte, inputStr, len);
+	__JNI__FUNCTION__CLEAN__
+	delete[] inputStr;
+	return _inputStr;
+}
+
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
@@ -143,25 +160,45 @@ jint Java_org_ice1000_jimgui_JImStyleVar_get ## variableName(JNIEnv *, jclass) {
 }
 
 JImStyleVarAccessor(Alpha)
+
 JImStyleVarAccessor(WindowPadding)
+
 JImStyleVarAccessor(WindowRounding)
+
 JImStyleVarAccessor(WindowBorderSize)
+
 JImStyleVarAccessor(WindowMinSize)
+
 JImStyleVarAccessor(WindowTitleAlign)
+
 JImStyleVarAccessor(ChildRounding)
+
 JImStyleVarAccessor(ChildBorderSize)
+
 JImStyleVarAccessor(PopupRounding)
+
 JImStyleVarAccessor(PopupBorderSize)
+
 JImStyleVarAccessor(FramePadding)
+
 JImStyleVarAccessor(FrameRounding)
+
 JImStyleVarAccessor(FrameBorderSize)
+
 JImStyleVarAccessor(ItemSpacing)
+
 JImStyleVarAccessor(ItemInnerSpacing)
+
 JImStyleVarAccessor(IndentSpacing)
+
 JImStyleVarAccessor(ScrollbarSize)
+
 JImStyleVarAccessor(ScrollbarRounding)
+
 JImStyleVarAccessor(GrabMinSize)
+
 JImStyleVarAccessor(GrabRounding)
+
 JImStyleVarAccessor(ButtonTextAlign)
 
 #undef JImStyleVarAccessor

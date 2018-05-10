@@ -8,7 +8,7 @@
 #define __JIMGUI_BASICS_HPP__
 
 #define __JNI__FUNCTION__INIT__ \
-jboolean *option = NULL;
+jboolean *option = nullptr;
 
 #define __JNI__FUNCTION__CLEAN__ \
 delete option;
