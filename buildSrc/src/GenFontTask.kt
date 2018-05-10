@@ -17,10 +17,22 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	override val `c++Prefix`: String get() = "ImGui::GetFont()->"
 
 	override fun java(javaCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveGetter(type, name) }
-		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanGetter)
-		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveSetter(type, name) }
-		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
+		primitiveMembers.forEach { (type, name) ->
+			javaCode
+					.javadoc(name)
+					.append('\t')
+					.appendln(javaPrimitiveGetter(type, name))
+					.javadoc(name)
+					.appendln(javaPrimitiveSetter(type, name))
+		}
+		booleanMembers.forEach {
+			javaCode
+					.javadoc(it)
+					.append('\t')
+					.appendln(javaBooleanGetter(it))
+					.javadoc(it)
+					.appendln(javaBooleanSetter(it))
+		}
 		functions.forEach { genFun(javaCode, it) }
 	}
 

@@ -38,18 +38,12 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 					.append(it)
 					.appendln("(byte[]newValue);")
 					.javadoc(it)
-					.append('\t')
-			javaCode.append("\tpublic void set")
+					.append("\tpublic void set")
 					.append(it)
 					.append("(@NotNull String newValue){set")
 					.append(it)
 					.appendln("(getBytes(newValue));}")
 		}
-	}
-
-	private fun StringBuilder.javadoc(name: String): StringBuilder {
-		GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
-		return this
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {

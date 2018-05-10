@@ -101,6 +101,11 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 	override fun `c++Expr`() = "ImVec2($nameX, $nameY)"
 }
 
+fun StringBuilder.javadoc(name: String): StringBuilder {
+	GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
+	return this
+}
+
 @Language("JAVA", suffix = "class A {}")
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
