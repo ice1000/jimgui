@@ -1,6 +1,9 @@
 package org.ice1000.gradle
 
 open class GenGenTask : GenTask("JImGuiGen", "imgui") {
+	companion object {
+		lateinit var parser: ImGuiHeaderParser
+	}
 	init {
 		description = "Generate binding for ImGui"
 	}
@@ -8,15 +11,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun java(javaCode: StringBuilder) {
 		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
 		trivialMethods.forEach {
-			it.document = parser.map[it.name]
+			it.document = parser.map[it.name.capitalize()]
 			genFun(javaCode, it)
 		}
 	}
 
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
-
-	private lateinit var parser: ImGuiHeaderParser
 
 	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(

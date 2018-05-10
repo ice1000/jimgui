@@ -13,15 +13,18 @@ class ImGuiHeaderParser(imguiHeader: File) {
 			it.lineSequence()
 					.dropWhile { it != "namespace ImGui" }
 					.map { it.trimStart() }
-					.filter { it.startsWith("IMGUI_API") }
 					.map { it.removePrefix("IMGUI_API ") }
-					.filter { it.indexOf('(') > 0 }
+					.filter { it.indexOf(';') > 0 }
 					.filter { it.indexOf("//") > 0 }
 					.map {
-						val name = it.substring(0, it.indexOf('('))
-						val javadoc = it.substring(it.indexOf("//") + 2).trim()
+						val docStartIndex = it.indexOf("//")
+						val name = (if (it.indexOf('(') in 0..docStartIndex)
+							it.substring(0, it.indexOf('('))
+						else it.substring(0, it.indexOf(';'))).trimEnd()
+						val javadoc = it.substring(docStartIndex).trim(' ', '/', '\n', '\r', '\t')
+								.replace('/', '|')
 						if (' ' in name)
-							name.substring(name.lastIndexOf(' ')).trimStart().decapitalize() to javadoc
+							name.substring(name.lastIndexOf(' ')).trimStart() to javadoc
 						else
 							name.decapitalize() to javadoc
 					}

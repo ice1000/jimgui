@@ -16,21 +16,40 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveGetter(type, name) }
-		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanGetter)
-		primitiveMembers.joinLinesTo(javaCode) { (type, name) -> javaPrimitiveSetter(type, name) }
-		booleanMembers.joinLinesTo(javaCode, transform = ::javaBooleanSetter)
+		primitiveMembers.forEach { (type, name) ->
+			javaCode
+					.javadoc(name)
+					.append('\t')
+					.appendln(javaPrimitiveGetter(type, name))
+					.javadoc(name)
+					.appendln(javaPrimitiveSetter(type, name))
+		}
+		booleanMembers.forEach {
+			javaCode
+					.javadoc(name)
+					.append('\t')
+					.appendln(javaBooleanGetter(it))
+					.javadoc(name)
+					.appendln(javaBooleanSetter(it))
+		}
 		stringMembers.forEach {
 			javaCode
 					.append("\tprivate static native void set")
 					.append(it)
 					.appendln("(byte[]newValue);")
-					.append("\tpublic void set")
+					.javadoc(name)
+					.append('\t')
+			javaCode.append("\tpublic void set")
 					.append(it)
 					.append("(@NotNull String newValue){set")
 					.append(it)
 					.appendln("(getBytes(newValue));}")
 		}
+	}
+
+	private fun StringBuilder.javadoc(name: String): StringBuilder {
+		GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
+		return this
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
