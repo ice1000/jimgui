@@ -1,5 +1,7 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.flags.JImMouseIndexes;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -9,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 public class JImGuiIO extends JImGuiIOGen {
 	public native float getMousePosX();
 	public native float getMousePosY();
+	public native float getMouseDeltaX();
+	public native float getMouseDeltaY();
+	public native float getMousePosPrevX();
+	public native float getMousePosPrevY();
+	public native float getMouseClickedPosX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
+	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public @NotNull String getInputString() {
 		return new String(getInputString0());
 	}

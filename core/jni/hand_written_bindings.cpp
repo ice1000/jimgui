@@ -55,13 +55,32 @@ void Java_org_ice1000_jimgui_JImGuiFont_setFontAtlasFlags(JNIEnv *, jobject, jin
 	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
 }
 
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosX(JNIEnv *, jobject) {
-	return ImGui::GetMousePos().x;
+#define JImIOMouseAccessor(property) \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject) { \
+	return ImGui::GetIO().Mouse ## property .x; \
+} \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject) { \
+	return ImGui::GetIO().Mouse ## property .y; \
 }
 
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMousePosY(JNIEnv *, jobject) {
-	return ImGui::GetMousePos().y;
+JImIOMouseAccessor(Pos)
+JImIOMouseAccessor(Delta)
+JImIOMouseAccessor(PosPrev)
+
+#undef JImIOMouseAccessor
+
+#define JImIOMouseArrayAccessor(property) \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \
+	return ImGui::GetIO().Mouse ## property [index].x; \
+} \
+jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) { \
+	return ImGui::GetIO().Mouse ## property [index].y; \
 }
+
+JImIOMouseArrayAccessor(ClickedPos)
+JImIOMouseArrayAccessor(DragMaxDistanceAbs)
+
+#undef JImIOMouseArrayAccessor
 
 jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jobject) {
 	__JNI__FUNCTION__INIT__
@@ -160,45 +179,25 @@ jint Java_org_ice1000_jimgui_JImStyleVar_get ## variableName(JNIEnv *, jclass) {
 }
 
 JImStyleVarAccessor(Alpha)
-
 JImStyleVarAccessor(WindowPadding)
-
 JImStyleVarAccessor(WindowRounding)
-
 JImStyleVarAccessor(WindowBorderSize)
-
 JImStyleVarAccessor(WindowMinSize)
-
 JImStyleVarAccessor(WindowTitleAlign)
-
 JImStyleVarAccessor(ChildRounding)
-
 JImStyleVarAccessor(ChildBorderSize)
-
 JImStyleVarAccessor(PopupRounding)
-
 JImStyleVarAccessor(PopupBorderSize)
-
 JImStyleVarAccessor(FramePadding)
-
 JImStyleVarAccessor(FrameRounding)
-
 JImStyleVarAccessor(FrameBorderSize)
-
 JImStyleVarAccessor(ItemSpacing)
-
 JImStyleVarAccessor(ItemInnerSpacing)
-
 JImStyleVarAccessor(IndentSpacing)
-
 JImStyleVarAccessor(ScrollbarSize)
-
 JImStyleVarAccessor(ScrollbarRounding)
-
 JImStyleVarAccessor(GrabMinSize)
-
 JImStyleVarAccessor(GrabRounding)
-
 JImStyleVarAccessor(ButtonTextAlign)
 
 #undef JImStyleVarAccessor
