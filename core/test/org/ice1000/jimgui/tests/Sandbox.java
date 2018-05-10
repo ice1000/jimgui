@@ -24,6 +24,12 @@ public class Sandbox {
 					imGui.menuItem("Open");
 					imGui.endMenu();
 				}
+				if (imGui.beginMenu("Styles")) {
+					if (imGui.menuItem("Dark")) imGui.styleColorsDark();
+					if (imGui.menuItem("Classic")) imGui.styleColorsClassic();
+					if (imGui.menuItem("Light")) imGui.styleColorsLight();
+					imGui.endMenu();
+				}
 				imGui.endMainMenuBar();
 			}
 			if (imGui.button("Click me!")) count.getAndIncrement();
