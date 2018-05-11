@@ -4,6 +4,7 @@ project(jimgui
 		LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-Wno-format-security")
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
