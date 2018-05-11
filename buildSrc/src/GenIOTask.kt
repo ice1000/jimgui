@@ -16,23 +16,12 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
-		functions.forEach { genFun(javaCode, it) }
+		functions.forEach { genJavaFun(javaCode, it) }
 		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName) ->
-			javaCode.javadoc(name).append("\tpublic native ").append(annotation).append(type)
-			if (isArray) javaCode.append(' ').append(jvmName).append("At(").append(annotation).appendln("int index);")
-			else javaCode.append(" get").append(name).appendln("();")
-			javaCode.javadoc(name).append("\tpublic native void ")
-			if (isArray) javaCode.append(jvmName).append('(').append(annotation).append("int index,")
-			else javaCode.append("set").append(name).append('(')
-			javaCode.append(annotation).append(type).appendln(" newValue);")
+			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName)
 		}
 		booleanMembers.forEach { (name, isArray, annotation, jvmName) ->
-			javaCode.javadoc(name).append("\tpublic native boolean ")
-			if (isArray) javaCode.append(jvmName).append("At").append('(').append(annotation).appendln("int index);")
-			else javaCode.append("is").append(name).appendln("();")
-			javaCode.javadoc(name).append("\tpublic native void ")
-			if (isArray) javaCode.append(jvmName).append('(').append(annotation).appendln("int index,boolean newValue);")
-			else javaCode.append("set").append(name).appendln("(boolean newValue);")
+			genJavaBooleanMember(javaCode, name, isArray, jvmName, annotation)
 		}
 		stringMembers.forEach { name ->
 			javaCode.append("\tprivate static native void set").append(name).appendln("(byte[]newValue);")
@@ -51,7 +40,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			if (isArray) `c++BooleanArrayAccessor`(name, jvmName)
 			else `c++BooleanAccessor`(name)
 		}
-		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 		stringMembers.joinLinesTo(cppCode) {
 			val param = string(name = it.decapitalize(), default = "null")
 			val (init, deinit) = param.surrounding()

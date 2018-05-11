@@ -25,13 +25,13 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 			javaCode.javadoc(it).append("\tpublic native boolean is").append(it).appendln("();")
 					.javadoc(it).append("\tpublic native void set").append(it).appendln("(boolean newValue);")
 		}
-		functions.forEach { genFun(javaCode, it) }
+		functions.forEach { genJavaFun(javaCode, it) }
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
 		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name) }
-		functions.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 	}
 
 	override val `c++Expr` = "ImGui::GetFont()->"

@@ -108,44 +108,27 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
 	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param }
 
-	fun genFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
-		genFun(javaCode, visibility, params, type, name, comment)
+	fun genJavaFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
+		genJavaFun(javaCode, visibility, params, type, name, comment)
 	}
 
-	fun genFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
-		if (!comment.isNullOrBlank()) javaCode
-				.append("\t/** ")
-				.append(comment)
-				.appendln(" */")
+	fun genJavaFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
+		if (!comment.isNullOrBlank()) javaCode.append("\t/** ").append(comment).appendln(" */")
 
-		javaCode.append('\t')
-				.append(visibility)
+		javaCode.append('\t').append(visibility)
 		if (isStatic(params)) {
-			javaCode.append(" final ")
-					.append(type(type))
-					.append(' ')
-					.append(name)
-					.append('(')
+			javaCode.append(" final ").append(type(type)).append(' ').append(name).append('(')
 			params.forEachIndexed { index, param ->
 				if (index != 0) javaCode.append(",")
 				javaCode.append(param.javaDefault())
 			}
 			javaCode.append("){")
 			if (type != null) javaCode.append("return ")
-			javaCode
-					.append(name)
-					.append('(')
+			javaCode.append(name).append('(')
 			params.joinTo(javaCode) { it.javaExpr() }
-			javaCode
-					.append(");}")
-					.append(eol)
-					.append("\tprotected static native ")
-		} else javaCode
-				.append(" final native ")
-		javaCode.append(type(type))
-				.append(' ')
-				.append(name)
-				.append('(')
+			javaCode.append(");}").append(eol).append("\tprotected static native ")
+		} else javaCode.append(" final native ")
+		javaCode.append(type(type)).append(' ').append(name).append('(')
 		params.joinTo(javaCode) { it.java() }
 		javaCode.append(");").append(eol)
 		val defaults = ArrayList<String>(params.size)
@@ -155,22 +138,13 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 				return@inner
 			}
 			defaults += default
-			if (!comment.isNullOrBlank()) javaCode
-					.append("\t/** ")
-					.append(comment)
-					.appendln(" */")
-			javaCode.append("\tpublic ")
-					.append(type(type))
-					.append(' ')
-					.append(name)
-					.append('(')
+			if (!comment.isNullOrBlank()) javaCode.append("\t/** ").append(comment).appendln(" */")
+			javaCode.append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
 			val newParams = params.dropLast(index + 1)
 			newParams.joinTo(javaCode) { it.javaDefault() }
 			javaCode.append("){")
 			if (type != null) javaCode.append("return ")
-			javaCode
-					.append(name)
-					.append('(')
+			javaCode.append(name).append('(')
 			newParams.joinTo(javaCode) { it.javaExpr() }
 			if (newParams.isNotEmpty()) javaCode.append(',')
 			defaults.asReversed().joinTo(javaCode)
@@ -180,17 +154,10 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 
 	abstract val `c++Prefix`: String
 
-	fun StringBuilder.`c++Expr`(
-			name: String,
-			params: List<Param>,
-			type: String?) = append(`c++Prefix`)
-			.append(name.capitalize())
-			.append('(')
-			.append(params.`c++Expr`())
-			.append(')')
-			.append(boolean(type))
+	fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
+			append(`c++Prefix`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
-	fun `genFunC++`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder) {
+	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder) {
 		val initParams = params.mapNotNull { it.surrounding() }
 		if (isStatic(params)) {
 			val f = `c++StringedFunction`(name, params, type, "$`c++Expr`${name.capitalize()}(${params.`c++Expr`()})",
@@ -198,26 +165,36 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 					deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
 			cppCode.appendln(f)
 		} else {
-			cppCode.append(JNI_FUNC_PREFIX)
-					.append(className)
-					.append('_')
-					.append(name)
-					.append("(JNIEnv *env, jobject")
+			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject")
 			if (params.isNotEmpty()) cppCode.append(",")
-			cppCode.append(params.`c++`())
-					.append(")->")
+			cppCode.append(params.`c++`()).append(")->")
 			val isVoid = type == null
 			if (isVoid) cppCode.append("void")
 			else cppCode.append('j').append(type)
 			cppCode.appendln('{')
 			if (isVoid) cppCode.`c++Expr`(name, params, type).append(';')
-			else cppCode.append("return static_cast<j")
-					.append(type)
-					.append(">(")
-					.`c++Expr`(name, params, type)
-					.append(");")
+			else cppCode.append("return static_cast<j").append(type).append(">(").`c++Expr`(name, params, type).append(");")
 			cppCode.appendln('}')
 		}
+	}
+
+	fun genJavaBooleanMember(javaCode: StringBuilder, name: String, isArray: Boolean, jvmName: String, annotation: String) {
+		javaCode.javadoc(name).append("\tpublic native boolean ")
+		if (isArray) javaCode.append(jvmName).append("At").append('(').append(annotation).appendln("int index);")
+		else javaCode.append("is").append(name).appendln("();")
+		javaCode.javadoc(name).append("\tpublic native void ")
+		if (isArray) javaCode.append(jvmName).append('(').append(annotation).appendln("int index,boolean newValue);")
+		else javaCode.append("set").append(name).appendln("(boolean newValue);")
+	}
+
+	fun genJavaPrimitiveMember(javaCode: StringBuilder, name: String, annotation: String, type: String, isArray: Boolean, jvmName: String) {
+		javaCode.javadoc(name).append("\tpublic native ").append(annotation).append(type)
+		if (isArray) javaCode.append(' ').append(jvmName).append("At(").append(annotation).appendln("int index);")
+		else javaCode.append(" get").append(name).appendln("();")
+		javaCode.javadoc(name).append("\tpublic native void ")
+		if (isArray) javaCode.append(jvmName).append('(').append(annotation).append("int index,")
+		else javaCode.append("set").append(name).append('(')
+		javaCode.append(annotation).append(type).appendln(" newValue);")
 	}
 
 	abstract val `c++Expr`: String

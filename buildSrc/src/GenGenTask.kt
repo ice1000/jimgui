@@ -13,13 +13,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
 		trivialMethods.forEach {
 			it.document = parser.map[it.name.capitalize()]
-			genFun(javaCode, it)
+			genJavaFun(javaCode, it)
 		}
 	}
 
 	override val `c++Expr` = "ImGui::"
 	override fun `c++`(cppCode: StringBuilder) =
-			trivialMethods.forEach { (name, type, params) -> `genFunC++`(params, name, type, cppCode) }
+			trivialMethods.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 
 	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
