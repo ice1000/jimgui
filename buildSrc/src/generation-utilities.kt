@@ -3,6 +3,7 @@
 package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
+import org.intellij.lang.annotations.MagicConstant
 
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
@@ -49,6 +50,7 @@ data class Fun(val name: String,
 
 /** Property */
 data class PPT(
+		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
 		val type: String,
 		val name: String,
 		val annotation: String = "",
@@ -77,6 +79,7 @@ sealed class Param {
 
 data class SimpleParam(
 		val name: String,
+		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
 		val type: String,
 		override val default: Any?,
 		val annotation: String = "") : Param() {

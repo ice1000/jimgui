@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.flags.JImWindowFlags;
+import org.intellij.lang.annotations.Language;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -16,9 +17,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  */
 @SuppressWarnings("WeakerAccess")
 public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
-	/**
-	 * package-private by design，
-	 */
+	/** package-private by design */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
@@ -69,10 +68,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	 *
 	 * @return same as {@link #getIO()}
 	 */
+	@Contract(pure = true)
 	public @Nullable JImGuiIO findIO() {
 		return io;
 	}
 
+	@Contract(pure = true)
 	public @NotNull JImGuiIO getIO() {
 		if (null == io) alreadyDisposed();
 		return io;
@@ -83,10 +84,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	 *
 	 * @return same as {@link #getFont()}
 	 */
+	@Contract(pure = true)
 	public @Nullable JImGuiFont findFont() {
 		return font;
 	}
 
+	@Contract(pure = true)
 	public @NotNull JImGuiFont getFont() {
 		if (null == font) alreadyDisposed();
 		return font;
@@ -100,6 +103,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	/**
 	 * @return shouldn't be closed, will close automatically
 	 */
+	@Contract(pure = true)
 	public @NotNull JImVec4 getBackground() {
 		return background;
 	}
@@ -118,11 +122,15 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 		textUnformatted(getBytes(text));
 	}
 
-	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Float> styleVar, float value) {
+	public void pushStyleVar(
+			@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar,
+			float value) {
 		pushStyleVarFloat(styleVar.nativeValue, value);
 	}
 
-	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
+	public void pushStyleVar(
+			@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar,
+			float valueX, float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
 	}
 
@@ -131,6 +139,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	 *
 	 * @return should end the main loop or not
 	 */
+	@Contract(pure = true)
 	public boolean windowShouldClose() {
 		return windowShouldClose(nativeObjectPtr);
 	}
