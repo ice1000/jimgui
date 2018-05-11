@@ -39,8 +39,6 @@ import java.nio.file.*;
  * @see <a href="https://github.com/adamheinrich/native-utils">https://github.com/adamheinrich/native-utils</a>
  */
 public final class NativeUtil {
-	/** The minimum length a prefix for a file has to have according to {@link File#createTempFile(String, String)}}. */
-	private static final int MIN_PREFIX_LENGTH = 3;
 	public static final String NATIVE_FOLDER_PATH_PREFIX = "nativeutils";
 
 	/** Temporary directory which will contain the DLLs. */
@@ -57,21 +55,12 @@ public final class NativeUtil {
 	 * exiting.
 	 * Method uses String as filename because the pathname is "abstract", not system-dependent.
 	 *
-	 * @param path The path of file inside JAR as absolute path (beginning with '/'), e.g. /package/File.ext
+	 * @param fullPath The path of file inside JAR as absolute path (beginning with '/'), e.g. /package/File.ext
 	 * @throws IllegalArgumentException If source file (param path) does not exist
 	 * @throws IllegalArgumentException If the path is not absolute or if the filename is shorter than three characters
 	 *                                  (restriction of {@link File#createTempFile(java.lang.String, java.lang.String)}).
 	 */
-	public static void loadLibraryFromJar(@NotNull String path) {
-		// Obtain filename from path
-		String[] parts = path.split("/");
-		String filename = (parts.length > 1) ? parts[parts.length - 1] : null;
-
-		// Check if the filename is okay
-		if (filename == null || filename.length() < MIN_PREFIX_LENGTH) {
-			throw new IllegalArgumentException("The filename has to be at least 3 characters long.");
-		}
-
+	public static void loadLibraryFromJar(@NotNull String fullPath, @NotNull String filename) {
 		// Prepare temporary file
 		if (temporaryDir == null) {
 			temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
@@ -79,8 +68,7 @@ public final class NativeUtil {
 		}
 
 		File temp = new File(temporaryDir, filename);
-
-		try (InputStream is = NativeUtil.class.getResourceAsStream(path)) {
+		try (InputStream is = NativeUtil.class.getResourceAsStream(fullPath)) {
 			Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException | NullPointerException e) {
 			System.err.println("Deleting since load failed... " + temp.delete());
@@ -88,6 +76,9 @@ public final class NativeUtil {
 
 		try {
 			System.load(temp.getAbsolutePath());
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println("Got unsatisfied link error, please check the native library " + filename);
+			throw new UnsupportedOperationException(e);
 		} finally {
 			if (isPosixCompliant()) {
 				// Assume POSIX compliant file system, can be deleted after loading

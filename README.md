@@ -49,11 +49,11 @@ First you need to make sure you have these software installed:
 To compile a jar library, run:
 
 ```
-$ bash gradlew assemble
+$ ./gradlew assemble
 ```
 
 To run tests, run:
 
 ```
-$ bash gradlew test
+$ ./gradlew test
 ```

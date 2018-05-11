@@ -35,7 +35,8 @@ public final class JniLoader {
 			else if ((linux || windows7 || windows8 || windows10) && x86) {
 				suffix = "32";
 			} else suffix = "";
-			NativeUtil.loadLibraryFromJar("/native/" + System.mapLibraryName("jimgui" + suffix));
+			String libraryName = System.mapLibraryName("jimgui" + suffix);
+			NativeUtil.loadLibraryFromJar("/native/" + libraryName, libraryName);
 			isLoaded = true;
 		}
 	}
