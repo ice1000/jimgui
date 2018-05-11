@@ -154,13 +154,13 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	}
 
 	//region Private native interfaces
-	private static native long allocateNativeObjects(int width, int height, @NotNull byte @NotNull [] title);
+	private static native long allocateNativeObjects(int width, int height, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
-	private static native void begin(@NotNull byte @NotNull [] name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags);
-	private static native void loadIniSettingsFromMemory(@NotNull byte @NotNull [] data);
-	private static native @NotNull byte @NotNull [] saveIniSettingsToMemory0();
+	private static native void begin(byte @NotNull [] name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags);
+	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
+	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	//endregion
 }

@@ -39,7 +39,7 @@ import java.nio.file.*;
  * @see <a href="https://github.com/adamheinrich/native-utils">https://github.com/adamheinrich/native-utils</a>
  */
 public final class NativeUtil {
-	public static final String NATIVE_FOLDER_PATH_PREFIX = "nativeutils";
+	public static final String NATIVE_FOLDER_PATH_PREFIX = "jimgui";
 
 	/** Temporary directory which will contain the DLLs. */
 	private static File temporaryDir;
