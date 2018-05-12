@@ -13,7 +13,7 @@ val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"]!!
 val processResources = tasks["processResources"]!!
-val `compileC++` = task("compileC++") { group = compileJava.group }
+val compileCxx = task("compileC++") { group = compileJava.group }
 val downloadAll = task("downloadAll") { group = "download" }
 
 val jniDir = projectDir.resolve("jni").absoluteFile!!
@@ -65,7 +65,7 @@ val downloadImplGL = task<Download>("downloadImplGL") {
 }
 
 val cmake = task<Exec>("cmake") {
-	group = `compileC++`.group
+	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
 	if (Os.isFamily(Os.FAMILY_WINDOWS))
 		commandLine("cmake", "-DCMAKE_BUILD_TYPE=", "-G", "CodeBlocks - MinGW Makefiles", `cmake-build-debug`.parent)
@@ -75,7 +75,7 @@ val cmake = task<Exec>("cmake") {
 
 val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
-	group = `compileC++`.group
+	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
 	commandLine(if (Os.isFamily(Os.FAMILY_WINDOWS)) "mingw32-make" else "make", "-f", "Makefile")
 	doLast {
@@ -110,11 +110,11 @@ compileJava.dependsOn(genImguiIO, genImguiFont, genImgui)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
-`compileC++`.dependsOn(make)
+compileCxx.dependsOn(make)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
-processResources.dependsOn(`compileC++`)
+processResources.dependsOn(compileCxx)
 
 java.sourceSets {
 	"main" {
