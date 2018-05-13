@@ -7,7 +7,7 @@ class JImGuiContext(
 		height: Int = 720,
 		title: String = "Window created by JImGui Kotlin DSL") : JImGui(width, height, title) {
 	inline operator fun String.invoke(block: JImGuiBlock) {
-		begin(this, 0)
+		begin(this)
 		block()
 		end()
 	}

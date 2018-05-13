@@ -3,6 +3,7 @@ package org.ice1000.jimgui.util;
 import org.ice1000.jimgui.JImGui;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
@@ -100,8 +101,8 @@ public class JImGuiUtil {
 		}
 	}
 
-	@Contract(pure = true)
-	public static @NotNull byte[] getBytes(@NotNull String text) {
-		return (text + '\0').getBytes(StandardCharsets.UTF_8);
+	@Contract(value = "!null -> !null; null -> null", pure = true)
+	public static @Nullable byte[] getBytes(@Nullable String text) {
+		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
 	}
 }

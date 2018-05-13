@@ -32,9 +32,13 @@ auto ImGui::BeginChild0(const char *str_id, const ImVec2 &size, bool border, ImG
 	return BeginChild(str_id, size, border, flags);
 }
 
+auto ImGui::MenuItem0(const char *label, const char *shortcut, bool *p_selected, bool enabled) -> bool {
+	return MenuItem(label, shortcut, p_selected, enabled);
+}
+
 #define ColorRelated(name) \
 auto ImGui::Color ## name(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool { \
-	return Color ## name(label, reinterpret_cast<float *> (&col), flags); \
+  return Color ## name(label, reinterpret_cast<float *> (&col), flags); \
 }
 
 ColorRelated(Edit3)

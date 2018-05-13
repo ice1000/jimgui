@@ -1,39 +1,94 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
+import org.ice1000.jimgui.NativeBool;
+import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
+import org.ice1000.jimgui.flag.JImCondition;
+import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 public class Demo {
+	private static final float DISTANCE = 10.0f;
+	private static int corner = 0;
+	private static boolean noTitlebar = false;
+	private static boolean noScrollbar = false;
+	private static boolean noMenu = false;
+	private static boolean noMove = false;
+	private static boolean noResize = false;
+	private static boolean noCollapse = false;
+	private static boolean noNav = false;
+
 	public static void main(String @NotNull ... args) {
 		JniLoader.load();
 		final String windowName = "Debug";
+		NativeBool showAppSimpleOverlay = new NativeBool();
+		NativeBool pOpen = new NativeBool();
+		DeallocatableObjectManager manager = new DeallocatableObjectManager(5);
+		manager.add(showAppSimpleOverlay);
+		manager.add(pOpen);
 		JImGuiUtil.runPer(15, imGui -> {
-			imGui.begin(windowName);
-			showUserGuide(imGui);
+			// Demonstrate the various window flags. Typically you would just use the default.
+			@MagicConstant(flagsFromClass = JImWindowFlags.class) int windowFlags = 0;
+			if (noTitlebar) windowFlags |= JImWindowFlags.NoTitleBar;
+			if (noScrollbar) windowFlags |= JImWindowFlags.NoScrollbar;
+			if (!noMenu) windowFlags |= JImWindowFlags.MenuBar;
+			if (noMove) windowFlags |= JImWindowFlags.NoMove;
+			if (noResize) windowFlags |= JImWindowFlags.NoResize;
+			if (noCollapse) windowFlags |= JImWindowFlags.NoCollapse;
+			if (noNav) windowFlags |= JImWindowFlags.NoNav;
+			imGui.setNextWindowSize(550, 680, JImCondition.FirstUseEver);
+			imGui.begin(windowName, pOpen, windowFlags);
+			//imGui.pushItemWidth(imGui.getWindowWidth() * 0.65f);    // 2/3 of the space for widget and 1/3 for labels
+			imGui.pushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
+			imGui.text("dear imgui says hello. (1.61 WIP)");
+			if (imGui.collapsingHeader("Help")) {
+				imGui.textWrapped("This window is being created by the ShowDemoWindow() function. Please refer to the code in imgui_demo.cpp for reference.\n\n");
+				imGui.text("USER GUIDE:");
+				showUserGuide(imGui);
+			}
 			showExampleAppMainMenuBar(imGui);
 			if (imGui.button("200x200")) imGui.setWindowSize(windowName, 200, 200);
 			imGui.sameLine();
 			if (imGui.button("500x500")) imGui.setWindowSize(windowName, 500, 500);
 			imGui.sameLine();
 			if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
-			showExampleAppFixedOverlay(imGui);
-			if (imGui.treeNode("This is a tree node")) {
-				imGui.text("Which?");
-				if (imGui.treeNode("This is a child node")) {
-					imGui.text("What?");
-					imGui.treePop();
+			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);
+			if (imGui.beginMenuBar()) {
+				if (imGui.beginMenu("Menu")) {
+					showExampleMenuFile(imGui);
+					imGui.endMenu();
 				}
-				imGui.treePop();
+				if (imGui.beginMenu("Examples")) {
+					imGui.menuItem0("Simple overlay", null, showAppSimpleOverlay);
+					imGui.endMenu();
+				}
+				imGui.endMenuBar();
 			}
 			imGui.end();
 		});
+		manager.deallocateAll();
 	}
 
-	private static void showExampleAppFixedOverlay(@NotNull JImGui imGui) {
+	private static void showExampleAppFixedOverlay(@NotNull JImGui imGui, @NotNull NativeBool openPtr) {
+		float windowPosX = (corner & 1) > 0 ? imGui.getIO().getDisplaySizeX() - DISTANCE : DISTANCE;
+		float windowPosY = (corner & 2) > 0 ? imGui.getIO().getDisplaySizeY() - DISTANCE : DISTANCE;
+		float windowPosPivotX = (corner & 1) > 0 ? 1.0f : 0.0f;
+		float windowPosPivotY = (corner & 2) > 0 ? 1.0f : 0.0f;
+		if (corner != -1)
+			imGui.setNextWindowPos(windowPosX, windowPosY, JImCondition.Always, windowPosPivotX, windowPosPivotY);
 		imGui.setNextWindowBgAlpha(.3f);
-		if (imGui.begin("Example: Fixed Overlay")) {
+		if (imGui.begin("Example: Fixed Overlay",
+				openPtr,
+				(corner != -1 ? JImWindowFlags.NoMove : 0) |
+						JImWindowFlags.NoTitleBar |
+						JImWindowFlags.NoResize |
+						JImWindowFlags.AlwaysAutoResize |
+						JImWindowFlags.NoSavedSettings |
+						JImWindowFlags.NoFocusOnAppearing |
+						JImWindowFlags.NoNav)) {
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
 			imGui.sameLine();
 			showHelpMarker(imGui, "This is another help.");
@@ -41,6 +96,15 @@ public class Demo {
 			if (imGui.isMousePosValid())
 				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
 			else imGui.text("Mouse Position: <invalid>");
+			if (imGui.beginPopupContextWindow()) {
+				if (imGui.menuItem("Custom", null, corner == -1)) corner = -1;
+				if (imGui.menuItem("Top-left", null, corner == 0)) corner = 0;
+				if (imGui.menuItem("Top-right", null, corner == 1)) corner = 1;
+				if (imGui.menuItem("Bottom-left", null, corner == 2)) corner = 2;
+				if (imGui.menuItem("Bottom-right", null, corner == 3)) corner = 3;
+				if (openPtr.accessValue() && imGui.menuItem("Close")) openPtr.modifyValue(false);
+				imGui.endPopup();
+			}
 			imGui.end();
 		}
 	}
@@ -65,7 +129,7 @@ public class Demo {
 	}
 
 	private static void showExampleMenuFile(@NotNull JImGui imGui) {
-		imGui.menuItem("(dummy menu)");
+		imGui.menuItem("(dummy menu)", null, false, false);
 		imGui.menuItem("New");
 		imGui.menuItem("Open", "Ctrl+O");
 		if (imGui.beginMenu("Open Recent")) {

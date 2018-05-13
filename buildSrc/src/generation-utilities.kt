@@ -5,18 +5,25 @@ package org.ice1000.gradle
 import org.intellij.lang.annotations.Language
 import org.intellij.lang.annotations.MagicConstant
 
+val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
+fun boolPtr(name: String, nullable: Boolean = false) = BoolPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
 fun int(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
 fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
-fun pos(default: Any? = null) = vec2("posX", "posY", default)
-fun string(name: String, default: String? = null) = StringParam(name, default)
+fun pos(name: String = "pos", default: Any? = null) = vec2("${name}X", "${name}Y", default)
+fun string(name: String, default: String? = null) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
 val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
 val label = string("label")
 val text = string("text")
+val windowFlags = flags(from = "Window", default = "NoTitleBar")
+val treeNodeFlags = flags(from = "TreeNode", default = "Selected")
+val pOpen = boolPtr("openPtr")
+val stringID = string("stringID")
+val nStringID = string("stringID", default = strNull)
 fun flags(from: String? = null, default: String? = null) = int("flag",
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
@@ -86,9 +93,11 @@ data class SimpleParam(val name: String,
 	override fun `c++Expr`() = name
 }
 
-data class StringParam(val name: String, override val default: Any?) : Param() {
+data class StringParam(val name: String,
+                       val annotation: String = "@NotNull",
+                       override val default: Any?) : Param() {
 	override fun java() = "byte[] $name"
-	override fun javaDefault() = "@NotNull String $name"
+	override fun javaDefault() = "$annotation String $name"
 	override fun javaExpr() = "getBytes($name)"
 	override fun `c++`() = "jbyteArray _$name"
 	override fun `c++Expr`() = "reinterpret_cast<const char *> ($name)"
@@ -103,9 +112,10 @@ data class ImVec4Param(val name: String, override val default: Any?) : Param() {
 	override fun `c++Expr`() = "*reinterpret_cast<ImVec4 *> ($name)"
 }
 
-data class BoolPtrParam(val name: String, override val default: Any?) : Param() {
+data class BoolPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
+	override val default: Any? get() = 0
 	override fun java() = "long $name"
-	override fun javaDefault() = "@NotNull NativeBool $name"
+	override fun javaDefault() = "$annotation NativeBool $name"
 	override fun javaExpr() = "$name.nativeObjectPtr"
 	override fun `c++`() = "jlong $name"
 	override fun `c++Expr`() = "reinterpret_cast<bool *> ($name)"
@@ -132,6 +142,7 @@ fun StringBuilder.javadoc(name: String): StringBuilder {
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.flag.*;
+import org.ice1000.jimgui.cpp.*;
 import org.intellij.lang.annotations.*;
 import org.jetbrains.annotations.*;
 

@@ -147,15 +147,6 @@ void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeO
 	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }
 
-jboolean Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name, jint flags) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, name)
-	auto ret = ImGui::Begin(reinterpret_cast<const char *>(name), nullptr, flags);
-	__abort(Byte, name)
-	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean> (ret ? JNI_TRUE : JNI_FALSE);
-}
-
 void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, data)

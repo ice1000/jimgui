@@ -61,7 +61,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getContentRegionAvailWidth", "float"),
 			Fun("getWindowContentRegionWidth", "float"),
 
-			Fun("setNextWindowPos", pos(), cond),
+			Fun("setNextWindowPos", pos(), cond, pos("windowPosPivot", default = "0,0")),
 			Fun("setNextWindowSize", size(), cond),
 			Fun("setNextWindowSizeConstraints", size("Min"), size("Max")),
 			Fun("setNextWindowContentSize", size()),
@@ -69,7 +69,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setNextWindowFocus"),
 			Fun("setNextWindowBgAlpha", float("alpha")),
 			Fun("setWindowFontScale", float("scale")),
-			Fun("setWindowPos", string("name"), pos(), cond),
+			Fun("setWindowPos", string("name"), pos("windowPos"), cond),
 			Fun("setWindowSize", string("name"), size(), cond),
 			Fun("setWindowCollapsed", string("name"), bool("collapsed"), cond),
 			Fun("setWindowFocus", string("name")),
@@ -95,23 +95,23 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("popID"),
 			Fun("pushID", int("intID")),
 			Fun("pushID0", string("stringIDBegin"), string("stringIDEnd")),
-			Fun("pushID1", string("stringID")),
-			Fun("getID", "int", string("stringID")),
+			Fun("pushID1", stringID),
+			Fun("getID", "int", stringID),
 			Fun("getID0", "int", string("stringIDBegin"), string("stringIDEnd")),
 
 			// Windows
-			/*Fun("begin", "boolean"),*/ // this is hand-written
+			Fun("begin", "boolean", string("name"), pOpen, windowFlags),
 			Fun("end"),
 			Fun("beginChild", "boolean",
 					int("id"),
 					size(default = "0,0"),
 					bool("border", default = false),
-					flags(from = "Window", default = "NoTitleBar")),
+					windowFlags),
 			Fun("beginChild0", "boolean",
-					string("stringID"),
+					stringID,
 					size(default = "0,0"),
 					bool("border", default = false),
-					flags(from = "Window", default = "NoTitleBar")),
+					windowFlags),
 			Fun("endChild"),
 
 			// Widgets: Text
@@ -137,7 +137,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("progressBar",
 					float("fraction"),
 					size(default = "-1,0"),
-					string("overlay", default = "(byte[])null")),
+					string("overlay", default = strNull)),
 
 			// Widgets: Combo Box
 			Fun("beginCombo", "boolean",
@@ -148,13 +148,13 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", label),
-			Fun("treeNodeEx", "boolean", label, flags(from = "TreeNode", default = "Selected")),
-			Fun("treePush", string("stringID")),
+			Fun("treeNodeEx", "boolean", label, treeNodeFlags),
+			Fun("treePush", stringID),
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("setNextTreeNodeOpen", bool("isOpen"), cond),
-			Fun("collapsingHeader", "boolean", label, flags(from = "TreeNode", default = "Selected")),
+			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
 
 			// Widgets: Selectable / Lists
 			Fun("selectable", "boolean",
@@ -185,14 +185,31 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("endMenu"),
 			Fun("menuItem", "boolean",
 					label,
-					string("shortcut", default = "(byte[])null"),
+					string("shortcut", default = strNull),
 					bool("selected", default = false),
 					bool("enabled", default = true)),
+			Fun("menuItem0", "boolean",
+					label,
+					string("shortcut", default = strNull),
+					boolPtr("selected", nullable = true),
+					bool("enabled", default = true)),
+
+			// Popups
+			Fun("openPopup", stringID),
+			Fun("beginPopup", "boolean", stringID, windowFlags),
+			Fun("beginPopupContextItem", "boolean", nStringID, int("mouseButton", default = 1)),
+			Fun("beginPopupContextWindow", "boolean", nStringID, int("mouseButton", default = 1)),
+			Fun("beginPopupContextVoid", "boolean", nStringID, int("mouseButton", default = 1)),
+			Fun("beginPopupModal", "boolean", string("name"), pOpen, windowFlags),
+			Fun("endPopup"),
+			Fun("openPopupOnItemClick", "boolean", nStringID, int("mouseButton", default = 1)),
+			Fun("isPopupOpen", "boolean", stringID),
+			Fun("closeCurrentPopup"),
 
 			// Columns
 			Fun("columns",
 					int("count", default = 1),
-					string("id", default = "(byte[])null"),
+					string("id", default = strNull),
 					bool("border", default = true)),
 			Fun("nextColumn"),
 			Fun("getColumnIndex", "int"),
@@ -206,7 +223,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("logToTTY", int("maxDepth", default = -1)),
 			Fun("logToFile",
 					int("maxDepth", default = -1),
-					string("fileName", default = "(byte[])null")),
+					string("fileName", default = strNull)),
 			Fun("logToClipboard", int("maxDepth", default = -1)),
 			Fun("logFinish"),
 			Fun("logButtons"),

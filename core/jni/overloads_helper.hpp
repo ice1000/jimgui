@@ -21,6 +21,7 @@ namespace ImGui {
 	auto ColorEdit4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto ColorPicker3(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto ColorPicker4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto MenuItem0(const char *label, const char *shortcut, bool *p_selected, bool enabled = true) -> bool;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H

@@ -5,7 +5,7 @@ import org.gradle.api.tasks.TaskAction
 open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 	@TaskAction
 	override fun run() {
-		val cppPackage = targetJavaFile.parentFile.resolve("cpp")
+		val cppPackage = targetJavaFile.parentFile
 		cppPackage.mkdirs()
 		listOf(
 				"Int" to "int",
@@ -21,7 +21,9 @@ open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 					.resolve("Native$it.java")
 					.apply { if (!exists()) createNewFile() }
 					.writeText("""
-package org.ice1000.jimgui.cpp;
+package org.ice1000.jimgui;
+
+import org.ice1000.jimgui.cpp.*;
 
 /**
  * @author ice1000
@@ -44,7 +46,12 @@ public class Native$it implements DeallocatableObject {
 		return accessValue(nativeObjectPtr);
 	}
 
+	public void modifyValue($java newValue) {
+		modifyValue(nativeObjectPtr, newValue);
+	}
+
 	private static native $java accessValue(long nativeObjectPtr);
+	private static native void modifyValue(long nativeObjectPtr, $java newValue);
 	private static native long allocateNativeObject();
 	private static native void deallocateNativeObject0(long nativeObjectPtr);
 }
