@@ -125,6 +125,8 @@ fun StringBuilder.javadoc(name: String): StringBuilder {
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.flag.*;
+import org.intellij.lang.annotations.*;
+import org.jetbrains.annotations.*;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.*;
 

@@ -50,7 +50,8 @@ set(ALL_LIBRARIES
 		generated_imgui_io.cpp
 		generated_imgui_font.cpp
 		hand_written_bindings.cpp
-		overloads_helper.cpp)
+		overloads_helper.cpp
+		cpp_interop.cpp)
 
 if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
 	message("64 bit architecture")

@@ -25,6 +25,7 @@ val res = projectDir.resolve("res")
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
 val genImgui = task<GenGenTask>("genImgui")
+val genNativeTypes = task<GenNativeTypesTask>("genNativeTypes")
 val genImguiStyleVar = task<GenStyleVarsTask>("genImguiStyleVar")
 val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
 val genImguiFont = task<GenFontTask>("genImguiFont")
@@ -108,7 +109,8 @@ compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
 genImgui.dependsOn(downloadImgui)
-compileJava.dependsOn(genImguiIO, genImguiFont, genImgui, genImguiStyleVar, genImguiStyleColor)
+compileJava.dependsOn(genImguiIO, genImguiFont, genImgui,
+		genNativeTypes, genImguiStyleVar, genImguiStyleColor)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
