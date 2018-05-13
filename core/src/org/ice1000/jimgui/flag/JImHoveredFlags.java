@@ -1,4 +1,4 @@
-package org.ice1000.jimgui.flags;
+package org.ice1000.jimgui.flag;
 
 /**
  * Flags for {@link org.ice1000.jimgui.JImGuiGen#isItemHovered(int)}, {@link org.ice1000.jimgui.JImGuiGen#isWindowHovered(int)}

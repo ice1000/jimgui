@@ -1,4 +1,4 @@
-package org.ice1000.jimgui.flags;
+package org.ice1000.jimgui.flag;
 
 /**
  * Flags for {@link org.ice1000.jimgui.JImGuiGen#beginCombo}

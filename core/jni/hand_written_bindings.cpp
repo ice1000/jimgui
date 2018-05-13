@@ -57,10 +57,10 @@ void Java_org_ice1000_jimgui_JImGuiFont_setFontAtlasFlags(JNIEnv *, jobject, jin
 
 #define JImIOAccessor(Property) \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## X(JNIEnv *, jobject) { \
-	return ImGui::GetIO().Property.x; \
+  return ImGui::GetIO().Property.x; \
 } \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## Y(JNIEnv *, jobject) { \
-	return ImGui::GetIO().Property.y; \
+  return ImGui::GetIO().Property.y; \
 }
 
 JImIOAccessor(DisplayFramebufferScale)
@@ -75,10 +75,10 @@ JImIOAccessor(MousePosPrev)
 
 #define JImIOMouseArrayAccessor(property) \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \
-	return ImGui::GetIO().Mouse ## property [index].x; \
+  return ImGui::GetIO().Mouse ## property [index].x; \
 } \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) { \
-	return ImGui::GetIO().Mouse ## property [index].y; \
+  return ImGui::GetIO().Mouse ## property [index].y; \
 }
 
 JImIOMouseArrayAccessor(ClickedPos)
@@ -148,12 +148,13 @@ void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeO
 	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
 }
 
-void Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name, jint flags) {
+jboolean Java_org_ice1000_jimgui_JImGui_begin(JNIEnv *env, jclass, jbyteArray _name, jint flags) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, name)
-	ImGui::Begin(reinterpret_cast<const char *>(name), nullptr, flags);
+	auto ret = ImGui::Begin(reinterpret_cast<const char *>(name), nullptr, flags);
 	__abort(Byte, name)
 	__JNI__FUNCTION__CLEAN__
+	return static_cast<jboolean> (ret ? JNI_TRUE : JNI_FALSE);
 }
 
 void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {

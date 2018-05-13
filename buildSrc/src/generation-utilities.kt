@@ -17,7 +17,7 @@ fun string(name: String, default: String? = null) = StringParam(name, default)
 val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
 val label = string("label")
 val text = string("text")
-fun flags(from: String? = null, default: String? = null) = int("flags",
+fun flags(from: String? = null, default: String? = null) = int("flag",
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
 
@@ -124,9 +124,7 @@ fun StringBuilder.javadoc(name: String): StringBuilder {
 @Language("JAVA", suffix = "class A {}")
 const val CLASS_PREFIX = """package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flags.*;
-import org.intellij.lang.annotations.*;
-import org.jetbrains.annotations.*;
+import org.ice1000.jimgui.flag.*;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.*;
 

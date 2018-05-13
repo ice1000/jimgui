@@ -18,13 +18,7 @@ public class Demo {
 			if (imGui.button("500x500")) imGui.setWindowSize(windowName, 500, 500);
 			imGui.sameLine();
 			if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
-			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
-			imGui.sameLine();
-			showHelpMarker(imGui, "This is a help.");
-			imGui.separator();
-			if (imGui.isMousePosValid())
-				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
-			else imGui.text("Mouse Position: <invalid>");
+			showExampleAppFixedOverlay(imGui);
 			if (imGui.treeNode("This is a tree node")) {
 				imGui.text("Which?");
 				if (imGui.treeNode("This is a child node")) {
@@ -35,6 +29,20 @@ public class Demo {
 			}
 			imGui.end();
 		});
+	}
+
+	private static void showExampleAppFixedOverlay(@NotNull JImGui imGui) {
+		imGui.setNextWindowBgAlpha(.3f);
+		if (imGui.begin("Example: Fixed Overlay")) {
+			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
+			imGui.sameLine();
+			showHelpMarker(imGui, "This is a help.");
+			imGui.separator();
+			if (imGui.isMousePosValid())
+				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
+			else imGui.text("Mouse Position: <invalid>");
+			imGui.end();
+		}
 	}
 
 	private static void showExampleAppMainMenuBar(@NotNull JImGui imGui) {

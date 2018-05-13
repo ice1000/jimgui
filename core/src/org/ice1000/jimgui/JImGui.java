@@ -1,6 +1,6 @@
 package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flags.JImWindowFlags;
+import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -108,12 +108,12 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	}
 	//endregion
 
-	public void begin(@NotNull String name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
-		begin(getBytes(name), flags);
+	public boolean begin(@NotNull String name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
+		return begin(getBytes(name), flags);
 	}
 
-	public void begin(@NotNull String name) {
-		begin(name, 0);
+	public boolean begin(@NotNull String name) {
+		return begin(name, 0);
 	}
 
 	/** draw plain text */
@@ -176,7 +176,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
-	private static native void begin(byte @NotNull [] name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags);
+	private static native boolean begin(byte @NotNull [] name, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags);
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	//endregion

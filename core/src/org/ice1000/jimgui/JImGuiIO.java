@@ -1,6 +1,6 @@
 package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flags.JImMouseIndexes;
+import org.ice1000.jimgui.flag.JImMouseIndexes;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
