@@ -1,9 +1,6 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.JImGuiIO;
-import org.ice1000.jimgui.JImStyleColors;
-import org.ice1000.jimgui.JImVec4;
-import org.ice1000.jimgui.MutableJImVec4;
+import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.JImDirection;
 import org.ice1000.jimgui.flag.JImMouseIndexes;
 import org.ice1000.jimgui.util.JImGuiUtil;
@@ -21,7 +18,8 @@ public class Sandbox {
 		AtomicReference<String> ini = new AtomicReference<>("");
 		long start = System.currentTimeMillis();
 		JImGuiUtil.runWithinPer(8000, 10, imGui -> {
-			imGui.getFont().setFallbackChar('*');
+			JImFont font = imGui.getFont();
+			font.setFallbackChar('*');
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
 					imGui.menuItem("Copy", "Ctrl+C");
@@ -37,7 +35,7 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
-			float bizarreValue = (System.currentTimeMillis() - start) / 200f;
+			float bizarreValue = (System.currentTimeMillis() - start) / 400f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
 			MutableJImVec4 background = JImVec4.fromAWT(Color.BLUE);
 			imGui.colorEdit4("Background", background);
@@ -61,9 +59,9 @@ public class Sandbox {
 				imGui.sameLine();
 			}
 			imGui.newLine();
-			imGui.getFont().setFontSize(bizarreValue);
-			imGui.text(String.valueOf(imGui.getFont().getFontSize()));
-			imGui.text(imGui.getFont().getDebugName());
+			font.setFontSize(bizarreValue + 13);
+			imGui.text(String.valueOf(font.getFontSize()));
+			imGui.text(font.getDebugName());
 			String inputString = io.getInputString();
 			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
 			if (io.mouseClickedAt(JImMouseIndexes.Left)) imGui.text("Left is down.");
