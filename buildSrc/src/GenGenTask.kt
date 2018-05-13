@@ -243,6 +243,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					float("value")),
 			Fun("popStyleVar", int("count", default = 1)),
 
+			// Widgets: Color Editor/Picker
+			Fun("colorEdit3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorEdit4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorButton", "boolean",
+					string("descriptionID"),
+					vec4("color"),
+					flags(from = "ColorEdit", default = "Nothing"),
+					size(default = "0,0")),
+			Fun("setColorEditOptions", flags()),
+
 			// Focus, Activation
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
