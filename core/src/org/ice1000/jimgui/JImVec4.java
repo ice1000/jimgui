@@ -15,7 +15,7 @@ public class JImVec4 implements DeallocatableObject {
 	long nativeObjectPtr;
 
 	public JImVec4() {
-		nativeObjectPtr = allocateNativeObjects();
+		nativeObjectPtr = allocateNativeObjects0();
 	}
 
 	/** package-private by design */
@@ -48,11 +48,11 @@ public class JImVec4 implements DeallocatableObject {
 	}
 
 	/** @return see {@link JImVec4#nativeObjectPtr} */
-	private static native long allocateNativeObjects();
+	private static native long allocateNativeObjects0();
 
 	/** Should only be called once. */
 	@Override
-	public void deallocateNativeObject() {
+	public final void deallocateNativeObject() {
 		deallocateNativeObjects(nativeObjectPtr);
 	}
 

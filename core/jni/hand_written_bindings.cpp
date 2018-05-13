@@ -73,7 +73,7 @@ jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jobject
 	return _inputStr;
 }
 
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__(JNIEnv *, jclass) {
+jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
 
@@ -81,7 +81,7 @@ void Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, j
 	delete reinterpret_cast<ImVec4 *> (nativeObjectPtr);
 }
 
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects__FFFF(
+jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
 		JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) {
 	return reinterpret_cast<jlong> (new ImVec4(x, y, z, w));
 }
