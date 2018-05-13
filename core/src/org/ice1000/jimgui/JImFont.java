@@ -47,7 +47,6 @@ public class JImFont extends JImGuiFontGen {
 		return getFontAtlasFlags(nativeObjectPtr);
 	}
 
-
 	public void setFontAtlasFlags(
 			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags) {
 		setFontAtlasFlags(nativeObjectPtr, flags);

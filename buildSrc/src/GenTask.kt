@@ -92,8 +92,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	}
 
 	fun genJavaObjectiveXYAccessor(javaCode: StringBuilder, name: String, type: String) {
-		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}X")
-		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}Y")
+		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}X", name)
+		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}Y", name)
 	}
 
 	fun `c++XYAccessor`(name: String, type: String, additionalParamText: String = "") =
@@ -190,15 +190,15 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 		javaCode.append(annotation).append(type).appendln(" newValue);")
 	}
 
-	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder, type: String, name: String, ptrName: String = "nativeObjectPtr") {
-		javaCode.append("private native void set").append(name).append("(long ")
+	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder, type: String, name: String, `c++Name`: String, ptrName: String = "nativeObjectPtr") {
+		javaCode.append("\tprivate native void set").append(name).append("(long ")
 				.append(ptrName).append(',').append(type).appendln(" newValue);")
-				.javadoc(name)
+				.javadoc(`c++Name`)
 				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue){set")
 				.append(name).append('(').append(ptrName).appendln(", newValue); }")
-				.append("private native ").append(type).append(" get")
+				.append("\tprivate native ").append(type).append(" get")
 				.append(name).append("(long ").append(ptrName).appendln(");")
-				.javadoc(name)
+				.javadoc(`c++Name`)
 				.append("\tpublic ").append(type).append(" get").append(name)
 				.append("(){return get").append(name).append('(').append(ptrName).appendln(");}")
 	}
