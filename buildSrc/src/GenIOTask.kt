@@ -32,12 +32,12 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName) ->
-			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName)
+		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName, `c++Name`) ->
+			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName, `c++Name`)
 			else `c++PrimitiveAccessor`(type, name)
 		}
-		booleanMembers.joinLinesTo(cppCode) { (name, isArray, _, jvmName) ->
-			if (isArray) `c++BooleanArrayAccessor`(name, jvmName)
+		booleanMembers.joinLinesTo(cppCode) { (name, isArray, _, jvmName, `c++Name`) ->
+			if (isArray) `c++BooleanArrayAccessor`(name, jvmName, `c++Name`)
 			else `c++BooleanAccessor`(name)
 		}
 		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
@@ -54,7 +54,6 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		}
 	}
 
-	override val `c++Prefix`: String get() = "ImGui::GetIO()."
 	override val `c++Expr` = "ImGui::GetIO()."
 
 	private val functions = listOf(
@@ -62,9 +61,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			Fun("clearInputCharacters"),
 			Fun("addInputCharacter", p("character", "short")))
 
-	private val stringMembers = listOf(
-			"IniFilename",
-			"LogFilename")
+	private val stringMembers = listOf("IniFilename", "LogFilename")
 
 	private val booleanMembers = listOf(
 			BPPT("Key\$Down", isArray = true),

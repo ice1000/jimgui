@@ -14,12 +14,11 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 
 	@Language("JAVA")
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getFont(); }"
-	override val `c++Prefix`: String get() = "ImGui::GetFont()->"
 
 	override fun java(javaCode: StringBuilder) {
 		primitiveMembers.forEach { (type, name) ->
 			javaCode.javadoc(name).append("\tpublic native ").append(type).append(" get").append(name).appendln("();")
-					.javadoc(name).append("\tpublic native void set").append(name).append("(").append(type).appendln(" newValue);")
+					.javadoc(name).append("\tpublic native void set").append(name).append('(').append(type).appendln(" newValue);")
 		}
 		booleanMembers.forEach {
 			javaCode.javadoc(it).append("\tpublic native boolean is").append(it).appendln("();")

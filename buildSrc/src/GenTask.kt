@@ -72,20 +72,20 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, j
 			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name = newValue; }
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
 
-	fun `c++BooleanArrayAccessor`(name: String, jvmName: String) =
+	fun `c++BooleanArrayAccessor`(name: String, jvmName: String, `c++Name`: String) =
 			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$jvmName(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
-	$`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] = newValue;
+	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> jboolean {
-	return static_cast<jboolean> ($`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
+	return static_cast<jboolean> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
 }"""
 
-	fun `c++PrimitiveArrayAccessor`(type: String, name: String, jvmName: String) =
+	fun `c++PrimitiveArrayAccessor`(type: String, name: String, jvmName: String, `c++Name`: String) =
 			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$jvmName(JNIEnv *, jobject, jint index, j$type newValue) -> void {
-	$`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)] = newValue;
+	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> j$type {
-	return static_cast<j$type> ($`c++Expr`${name.replace('$', 's')}[static_cast<size_t> (index)]);
+	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
 }"""
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
@@ -152,10 +152,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 		}
 	}
 
-	abstract val `c++Prefix`: String
-
 	fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
-			append(`c++Prefix`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
+			append(`c++Expr`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
 	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder) {
 		val initParams = params.mapNotNull { it.surrounding() }

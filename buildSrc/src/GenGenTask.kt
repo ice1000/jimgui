@@ -21,7 +21,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 
-	override val `c++Prefix`: String get() = "ImGui::"
 	private val trivialMethods = listOf(
 			// Styles
 			Fun("styleColorsDark"),
