@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Closeable;
@@ -11,7 +12,7 @@ import java.io.Closeable;
  * @see MutableJImVec4 which is mutable
  * @since v0.1
  */
-public class JImVec4 implements Closeable, AutoCloseable {
+public class JImVec4 implements DeallocatableObject {
 	/** package-private by design */
 	long nativeObjectPtr;
 
@@ -48,7 +49,7 @@ public class JImVec4 implements Closeable, AutoCloseable {
 
 	/** Should only be called once. */
 	@Override
-	public void close() {
+	public void deallocateNativeObject() {
 		deallocateNativeObjects(nativeObjectPtr);
 	}
 

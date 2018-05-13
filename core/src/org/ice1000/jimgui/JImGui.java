@@ -1,12 +1,11 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.io.Closeable;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
@@ -15,7 +14,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @since v0.1
  */
 @SuppressWarnings("WeakerAccess")
-public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
+public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/** package-private by design */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
@@ -43,7 +42,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	}
 
 	@Override
-	public void close() {
+	public void deallocateNativeObject() {
 		background.close();
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
@@ -125,9 +124,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	 * @param styleVar should be a value from {@link JImStyleVars}
 	 * @param value    the value to set
 	 */
-	public void pushStyleVar(
-			@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar,
-			float value) {
+	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar, float value) {
 		pushStyleVarFloat(styleVar.nativeValue, value);
 	}
 
@@ -136,9 +133,7 @@ public class JImGui extends JImGuiGen implements AutoCloseable, Closeable {
 	 * @param valueX   the first value of ImVec2 to set
 	 * @param valueY   the second value of ImVec2 to set
 	 */
-	public void pushStyleVar(
-			@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar,
-			float valueX, float valueY) {
+	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
 	}
 

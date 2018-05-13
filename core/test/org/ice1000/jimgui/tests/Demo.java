@@ -36,7 +36,7 @@ public class Demo {
 		if (imGui.begin("Example: Fixed Overlay")) {
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
 			imGui.sameLine();
-			showHelpMarker(imGui, "This is a help.");
+			showHelpMarker(imGui, "This is another help.");
 			imGui.separator();
 			if (imGui.isMousePosValid())
 				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
