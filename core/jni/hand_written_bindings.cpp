@@ -40,16 +40,6 @@ jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jl
 	return _data;
 }
 
-jint Java_org_ice1000_jimgui_JImFont_getFontAtlasFlags(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
-	return font->ContainerAtlas->Flags;
-}
-
-void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jclass, jlong nativeObjectPtr, jint newValue) {
-	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
-	font->ContainerAtlas->Flags = newValue;
-}
-
 jlong Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
 	return reinterpret_cast<jlong> (font->ContainerAtlas);

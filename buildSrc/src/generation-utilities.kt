@@ -9,6 +9,8 @@ val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
 fun boolPtr(name: String, nullable: Boolean = false) = BoolPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
+fun floatPtr(name: String, nullable: Boolean = false) = FloatPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
+fun intPtr(name: String, nullable: Boolean = false) = IntPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
 fun int(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
@@ -114,6 +116,22 @@ data class ImVec4Param(val name: String, override val default: Any?) : Param() {
 	override fun `c++Expr`() = "*reinterpret_cast<ImVec4 *> ($name)"
 }
 
+data class FloatPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
+	override fun java() = "long $name"
+	override fun javaDefault() = "$annotation NativeFloat $name"
+	override fun javaExpr() = "$name.nativeObjectPtr"
+	override fun `c++`() = "jlong $name"
+	override fun `c++Expr`() = "reinterpret_cast<float *> ($name)"
+}
+
+data class IntPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
+	override fun java() = "long $name"
+	override fun javaDefault() = "$annotation NativeInt $name"
+	override fun javaExpr() = "$name.nativeObjectPtr"
+	override fun `c++`() = "jlong $name"
+	override fun `c++Expr`() = "reinterpret_cast<int *> ($name)"
+}
+
 data class BoolPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
 	override val default: Any? get() = 0
 	override fun java() = "long $name"
@@ -147,6 +165,7 @@ import org.ice1000.jimgui.flag.*;
 import org.ice1000.jimgui.cpp.*;
 import org.intellij.lang.annotations.*;
 import org.jetbrains.annotations.*;
+import java.nio.charset.StandardCharsets;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.*;
 

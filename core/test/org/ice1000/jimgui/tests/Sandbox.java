@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.*;
+import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
 import org.ice1000.jimgui.flag.JImDirection;
 import org.ice1000.jimgui.flag.JImFontAtlasFlags;
 import org.ice1000.jimgui.flag.JImMouseIndexes;
@@ -17,8 +18,13 @@ public class Sandbox {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
 		AtomicReference<String> ini = new AtomicReference<>("");
+		NativeFloat aFloat = new NativeFloat();
+		NativeFloat aFloat2 = new NativeFloat();
 		long start = System.currentTimeMillis();
-		JImGuiUtil.runWithinPer(8000, 10, imGui -> {
+		DeallocatableObjectManager manager = new DeallocatableObjectManager();
+		manager.add(aFloat);
+		manager.add(aFloat2);
+		JImGuiUtil.runWithinPer(9000, 10, imGui -> {
 			JImFont font = imGui.getFont();
 			font.setFallbackChar('*');
 			if (imGui.beginMainMenuBar()) {
@@ -36,7 +42,11 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
-			float bizarreValue = (System.currentTimeMillis() - start) / 400f;
+			imGui.dragFloat("Wtf", aFloat);
+			imGui.text("Float = " + aFloat.accessValue());
+			imGui.dragFloatRange2("Wtf", aFloat, aFloat2);
+			imGui.text("Float2 = " + aFloat2.accessValue());
+			float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
 			MutableJImVec4 background = JImVec4.fromAWT(Color.BLUE);
 			imGui.colorEdit4("Background", background);
@@ -101,5 +111,6 @@ public class Sandbox {
 				imGui.arrowButton("Woa!", JImDirection.Down);
 			}
 		});
+		manager.deallocateAll();
 	}
 }

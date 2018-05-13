@@ -152,6 +152,37 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					flags(from = "Combo", default = "PopupAlignLeft")),
 			Fun("endCombo"),
 
+			// Widgets: Drags
+			Fun("dragFloat", "boolean", label,
+					floatPtr("value"),
+					float("valueSpeed", default = 1),
+					float("valueMin", default = 0),
+					float("valueMax", default = 0),
+					string("format", default = "\"%.3f\\0\".getBytes(StandardCharsets.UTF_8)"),
+					float("power", default = 1)),
+			Fun("dragFloatRange2", "boolean", label,
+					floatPtr("valueCurrentMin"),
+					floatPtr("valueCurrentMax"),
+					float("valueSpeed", default = 1),
+					float("valueMin", default = 0),
+					float("valueMax", default = 0),
+					string("format", default = "\"%.3f\\0\".getBytes(StandardCharsets.UTF_8)"),
+					string("formatMax", default = strNull),
+					float("power", default = 1)),
+			Fun("dragInt", "boolean", label,
+					intPtr("value"),
+					float("valueSpeed", default = 1),
+					int("valueMin", default = 0),
+					int("valueMax", default = 0),
+					string("format", default = "\"%d\\0\".getBytes(StandardCharsets.UTF_8)")),
+			Fun("dragIntRange2", "boolean", label,
+					intPtr("valueCurrentMin"),
+					intPtr("valueCurrentMax"),
+					float("valueSpeed", default = 1),
+					int("valueMin", default = 0),
+					int("valueMax", default = 0),
+					string("format", default = "\"%d\\0\".getBytes(StandardCharsets.UTF_8)")),
+
 			// Widgets: Trees
 			Fun("treeNode", "boolean", label),
 			Fun("treeNodeEx", "boolean", label, treeNodeFlags),
@@ -161,6 +192,18 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("setNextTreeNodeOpen", bool("isOpen"), cond),
 			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
+
+			// Widgets: Color Editor/Picker
+			Fun("colorEdit3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorEdit4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorButton", "boolean",
+					string("descriptionID"),
+					vec4("color"),
+					flags(from = "ColorEdit", default = "Nothing"),
+					size(default = "0,0")),
+			Fun("colorPicker3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorPicker4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("setColorEditOptions", flags()),
 
 			// Widgets: Selectable / Lists
 			Fun("selectable", "boolean",
@@ -266,18 +309,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					float("value")),
 			Fun("popStyleVar", int("count", default = 1)),
 
-			// Widgets: Color Editor/Picker
-			Fun("colorEdit3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorEdit4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorButton", "boolean",
-					string("descriptionID"),
-					vec4("color"),
-					flags(from = "ColorEdit", default = "Nothing"),
-					size(default = "0,0")),
-			Fun("colorPicker3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorPicker4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("setColorEditOptions", flags()),
-
 			// Focus, Activation
 			Fun("setItemDefaultFocus"),
 			Fun("setKeyboardFocusHere", int("offset")),
@@ -309,3 +340,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollMaxY", "float")
 	)
 }
+
+// Channels
+//Fun("channelsSplit", int("channelsCount")),
+//Fun("channelsMerge"),
+//Fun("channelsSetCurrent", int("channelsIndex"))
