@@ -34,5 +34,5 @@ public class JImGuiIO extends JImGuiIOGen {
 		addInputCharacter((short) character);
 	}
 
-	private native byte[] getInputString0();
+	private native byte @NotNull [] getInputString0();
 }

@@ -178,20 +178,20 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 		}
 	}
 
-	fun genJavaBooleanMember(javaCode: StringBuilder, name: String, isArray: Boolean, jvmName: String, annotation: String) {
-		javaCode.javadoc(name).append("\tpublic native boolean ")
+	fun genJavaBooleanMember(javaCode: StringBuilder, name: String, isArray: Boolean, jvmName: String, annotation: String, `c++Name`: String) {
+		javaCode.javadoc(`c++Name`).append("\tpublic native boolean ")
 		if (isArray) javaCode.append(jvmName).append("At").append('(').append(annotation).appendln("int index);")
 		else javaCode.append("is").append(name).appendln("();")
-		javaCode.javadoc(name).append("\tpublic native void ")
+		javaCode.javadoc(`c++Name`).append("\tpublic native void ")
 		if (isArray) javaCode.append(jvmName).append('(').append(annotation).appendln("int index,boolean newValue);")
 		else javaCode.append("set").append(name).appendln("(boolean newValue);")
 	}
 
-	fun genJavaPrimitiveMember(javaCode: StringBuilder, name: String, annotation: String, type: String, isArray: Boolean, jvmName: String) {
-		javaCode.javadoc(name).append("\tpublic native ").append(annotation).append(type)
+	fun genJavaPrimitiveMember(javaCode: StringBuilder, name: String, annotation: String, type: String, isArray: Boolean, jvmName: String, `c++Name`: String) {
+		javaCode.javadoc(`c++Name`).append("\tpublic native ").append(annotation).append(type)
 		if (isArray) javaCode.append(' ').append(jvmName).append("At(").append(annotation).appendln("int index);")
 		else javaCode.append(" get").append(name).appendln("();")
-		javaCode.javadoc(name).append("\tpublic native void ")
+		javaCode.javadoc(`c++Name`).append("\tpublic native void ")
 		if (isArray) javaCode.append(jvmName).append('(').append(annotation).append("int index,")
 		else javaCode.append("set").append(name).append('(')
 		javaCode.append(annotation).append(type).appendln(" newValue);")

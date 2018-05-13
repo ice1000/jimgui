@@ -17,11 +17,11 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	override fun java(javaCode: StringBuilder) {
 		functions.forEach { genJavaFun(javaCode, it) }
-		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName) ->
-			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName)
+		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName, `c++Name`) ->
+			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName, `c++Name`)
 		}
-		booleanMembers.forEach { (name, isArray, annotation, jvmName) ->
-			genJavaBooleanMember(javaCode, name, isArray, jvmName, annotation)
+		booleanMembers.forEach { (name, isArray, annotation, jvmName, `c++Name`) ->
+			genJavaBooleanMember(javaCode, name, isArray, jvmName, annotation, `c++Name`)
 		}
 		stringMembers.forEach { name ->
 			javaCode.append("\tprivate static native void set").append(name).appendln("(byte[]newValue);")

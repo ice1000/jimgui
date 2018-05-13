@@ -55,16 +55,16 @@ data class PPT(
 		val name: String,
 		val annotation: String = "",
 		val isArray: Boolean = false,
-		val jvmName: String = name.decapitalize().replace("$", ""))
+		val jvmName: String = name.decapitalize().replace("$", ""),
+		val `c++Name`: String = name.replace('$', 's'))
 
 /** Boolean property */
 data class BPPT(
 		val name: String,
 		val isArray: Boolean = false,
 		val annotation: String = "",
-		val jvmName: String = name.decapitalize().replace("$", ""))
-
-infix fun Fun.withDoc(javadoc: String) = apply { document = javadoc }
+		val jvmName: String = name.decapitalize().replace("$", ""),
+		val `c++Name`: String = name.replace('$', 's'))
 
 sealed class Param {
 	abstract fun java(): String
