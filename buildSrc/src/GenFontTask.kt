@@ -16,6 +16,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getFont(); }"
 
 	override fun java(javaCode: StringBuilder) {
+		imVec2Members.forEach { genJavaXYAccessor(javaCode, it, "float") }
 		primitiveMembers.forEach { (type, name) ->
 			javaCode.javadoc(name).append("\tpublic native ").append(type).append(" get").append(name).appendln("();")
 					.javadoc(name).append("\tpublic native void set").append(name).append('(').append(type).appendln(" newValue);")
@@ -28,6 +29,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
+		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float") }
 		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name) }
 		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
@@ -35,6 +37,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 
 	override val `c++Expr` = "ImGui::GetFont()->"
 	private val booleanMembers = listOf("DirtyLookupTables")
+	private val imVec2Members = listOf("DisplayOffset")
 	private val functions = listOf(
 			Fun("clearOutputData"),
 			Fun("setFallbackChar", p("wChar", "short")),

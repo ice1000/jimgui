@@ -26,10 +26,6 @@ public class JImFont extends JImGuiFontGen {
 	public native void setFontAtlasFlags(
 			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
 
-	public native void setDisplayOffsetX(float newX);
-	public native void setDisplayOffsetY(float newY);
 	public native void setDisplayOffset(float newX, float newY);
-	public native float getDisplayOffsetX();
-	public native float getDisplayOffsetY();
 	private static native byte[] getDebugName0();
 }

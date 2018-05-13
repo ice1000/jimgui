@@ -86,6 +86,19 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
 	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is BoolPtrParam }
 
+	fun genJavaXYAccessor(javaCode: StringBuilder, name: String, type: String) {
+		javaCode.javadoc(name)
+		genJavaPrimitiveMember(javaCode, "${name}X", "", type, false, "", name)
+		javaCode.javadoc(name)
+		genJavaPrimitiveMember(javaCode, "${name}Y", "", type, false, "", name)
+	}
+
+	fun `c++XYAccessor`(name: String, type: String) =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}X(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}X(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}Y(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }"""
+
 	fun genJavaFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
 		genJavaFun(javaCode, visibility, params, type, name, comment)
 	}

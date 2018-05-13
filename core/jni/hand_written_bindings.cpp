@@ -20,25 +20,9 @@ jlong Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) {
 	return reinterpret_cast<jlong> (&ImGui::GetStyle().Colors[index]);
 }
 
-void Java_org_ice1000_jimgui_JImFont_setDisplayOffsetX(JNIEnv *, jobject, jfloat newValue) {
-	ImGui::GetFont()->DisplayOffset.x = newValue;
-}
-
-void Java_org_ice1000_jimgui_JImFont_setDisplayOffsetY(JNIEnv *, jobject, jfloat newValue) {
-	ImGui::GetFont()->DisplayOffset.y = newValue;
-}
-
 void Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
 	ImGui::GetFont()->DisplayOffset.x = newX;
 	ImGui::GetFont()->DisplayOffset.y = newY;
-}
-
-jfloat Java_org_ice1000_jimgui_JImFont_getDisplayOffsetX(JNIEnv *, jobject) {
-	return ImGui::GetFont()->DisplayOffset.x;
-}
-
-jfloat Java_org_ice1000_jimgui_JImFont_getDisplayOffsetY(JNIEnv *, jobject) {
-	return ImGui::GetFont()->DisplayOffset.y;
 }
 
 jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass) {
