@@ -49,22 +49,20 @@ data class Fun(val name: String,
 }
 
 /** Property */
-data class PPT(
-		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
-		val type: String,
-		val name: String,
-		val annotation: String = "",
-		val isArray: Boolean = false,
-		val jvmName: String = name.decapitalize().replace("$", ""),
-		val `c++Name`: String = name.replace('$', 's'))
+data class PPT(@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
+               val type: String,
+               val name: String,
+               val annotation: String = "",
+               val isArray: Boolean = false,
+               val jvmName: String = name.decapitalize().replace("$", ""),
+               val `c++Name`: String = name.replace('$', 's'))
 
 /** Boolean property */
-data class BPPT(
-		val name: String,
-		val isArray: Boolean = false,
-		val annotation: String = "",
-		val jvmName: String = name.decapitalize().replace("$", ""),
-		val `c++Name`: String = name.replace('$', 's'))
+data class BPPT(val name: String,
+                val isArray: Boolean = false,
+                val annotation: String = "",
+                val jvmName: String = name.decapitalize().replace("$", ""),
+                val `c++Name`: String = name.replace('$', 's'))
 
 sealed class Param {
 	abstract fun java(): String
@@ -77,12 +75,11 @@ sealed class Param {
 	open val default: Any? get() = null
 }
 
-data class SimpleParam(
-		val name: String,
-		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
-		val type: String,
-		override val default: Any?,
-		val annotation: String = "") : Param() {
+data class SimpleParam(val name: String,
+                       @MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
+                       val type: String,
+                       override val default: Any?,
+                       val annotation: String = "") : Param() {
 	override fun java() = "$annotation$type $name"
 	override fun javaExpr() = name
 	override fun `c++`() = "j$type $name"

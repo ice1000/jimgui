@@ -233,7 +233,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Parameters stacks (shared)
 			Fun("getFontSize", "float"),
 			Fun("popFont"),
-			Fun("pushStyleColor", int("index"), vec4("color")),
+			Fun("pushStyleColor", int("index", annotation = "@MagicConstant(valuesFromClass = JImStyleColors.class)"), vec4("color")),
 			Fun("popStyleColor", int("count", default = 1)),
 			Fun.protected("pushStyleVarImVec2",
 					int("styleVar"),
