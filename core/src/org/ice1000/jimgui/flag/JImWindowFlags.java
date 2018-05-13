@@ -5,6 +5,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImWindowFlags {
+	int Nothing = 0;
 	/** Disable title-bar */
 	int NoTitleBar = 1;
 	/** Disable user resizing with the lower-right grip */

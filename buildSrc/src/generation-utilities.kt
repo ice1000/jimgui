@@ -19,7 +19,7 @@ fun string(name: String, default: String? = null) = StringParam(name, if (defaul
 val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
 val label = string("label")
 val text = string("text")
-val windowFlags = flags(from = "Window", default = "NoTitleBar")
+val windowFlags = flags(from = "Window", default = "Nothing")
 val treeNodeFlags = flags(from = "TreeNode", default = "Selected")
 val pOpen = boolPtr("openPtr")
 val stringID = string("stringID")

@@ -26,14 +26,13 @@ public class Demo {
 		NativeBool noNav = new NativeBool();
 		NativeBool showAppSimpleOverlay = new NativeBool();
 		NativeBool showAppMainMenuBar = new NativeBool();
-		NativeBool show_app_console = new NativeBool();
 		NativeBool show_app_log = new NativeBool();
 		NativeBool show_app_layout = new NativeBool();
 		NativeBool show_app_property_editor = new NativeBool();
 		NativeBool show_app_long_text = new NativeBool();
 		NativeBool show_app_auto_resize = new NativeBool();
 		NativeBool show_app_constrained_resize = new NativeBool();
-		NativeBool show_app_window_titles = new NativeBool();
+		NativeBool showAppWindowTitles = new NativeBool();
 		NativeBool show_app_custom_rendering = new NativeBool();
 		NativeBool showAppStyleEditor = new NativeBool();
 		NativeBool showAppMetrics = new NativeBool();
@@ -42,14 +41,13 @@ public class Demo {
 		DeallocatableObjectManager manager = new DeallocatableObjectManager(5);
 		manager.add(showAppSimpleOverlay);
 		manager.add(showAppMainMenuBar);
-		manager.add(show_app_console);
 		manager.add(show_app_log);
 		manager.add(show_app_layout);
 		manager.add(show_app_property_editor);
 		manager.add(show_app_long_text);
 		manager.add(show_app_auto_resize);
 		manager.add(show_app_constrained_resize);
-		manager.add(show_app_window_titles);
+		manager.add(showAppWindowTitles);
 		manager.add(show_app_custom_rendering);
 		manager.add(showAppStyleEditor);
 		manager.add(showAppMetrics);
@@ -111,7 +109,8 @@ public class Demo {
 					imGui.treePop();
 				}
 				if (imGui.treeNode("Capture/Logging")) {
-					imGui.textWrapped("The logging API redirects all text output so you can easily capture the content of a window or a block. Tree nodes can be automatically expanded. You can also call ImGui::LogText() to output directly to the log without a visual output.");
+					imGui.textWrapped(
+							"The logging API redirects all text output so you can easily capture the content of a window or a block. Tree nodes can be automatically expanded. You can also call ImGui::LogText() to output directly to the log without a visual output.");
 					imGui.logButtons();
 					imGui.treePop();
 				}
@@ -119,6 +118,7 @@ public class Demo {
 
 			if (showAppMainMenuBar.accessValue()) showExampleAppMainMenuBar(imGui);
 			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);
+			if (showAppWindowTitles.accessValue()) showExampleAppWindowTitles(imGui);
 			if (imGui.beginMenuBar()) {
 				if (imGui.beginMenu("Menu")) {
 					showExampleMenuFile(imGui);
@@ -126,7 +126,6 @@ public class Demo {
 				}
 				if (imGui.beginMenu("Examples")) {
 					imGui.menuItem0("Main menu bar", null, showAppMainMenuBar);
-					imGui.menuItem0("Console", null, show_app_console);
 					imGui.menuItem0("Log", null, show_app_log);
 					imGui.menuItem0("Simple layout", null, show_app_layout);
 					imGui.menuItem0("Property editor", null, show_app_property_editor);
@@ -134,7 +133,7 @@ public class Demo {
 					imGui.menuItem0("Auto-resizing window", null, show_app_auto_resize);
 					imGui.menuItem0("Constrained-resizing window", null, show_app_constrained_resize);
 					imGui.menuItem0("Simple overlay", null, showAppSimpleOverlay);
-					imGui.menuItem0("Manipulating window titles", null, show_app_window_titles);
+					imGui.menuItem0("Manipulating window titles", null, showAppWindowTitles);
 					imGui.menuItem0("Custom rendering", null, show_app_custom_rendering);
 					imGui.endMenu();
 				}
@@ -213,6 +212,31 @@ public class Demo {
 			}
 			imGui.endMainMenuBar();
 		}
+	}
+
+	private static void showExampleAppWindowTitles(@NotNull JImGui imGui) {
+		// By default, Windows are uniquely identified by their title.
+		// You can use the "##" and "###" markers to manipulate the display/ID.
+
+		// Using "##" to display same title but have unique identifier.
+		imGui.setNextWindowPos(100, 100, JImCondition.FirstUseEver);
+		imGui.begin("Same title as another window##1");
+		imGui.text("This is window 1.\nMy title is the same as window 2, but my identifier is unique.");
+		imGui.end();
+
+		imGui.setNextWindowPos(100, 200, JImCondition.FirstUseEver);
+		imGui.begin("Same title as another window##2");
+		imGui.text("This is window 2.\nMy title is the same as window 1, but my identifier is unique.");
+		imGui.end();
+
+		imGui.setNextWindowPos(100, 300, JImCondition.FirstUseEver);
+		long millis = System.currentTimeMillis();
+		// Using "###" to display a changing title but keep a static identifier "Animated title"
+		imGui.begin("Animated title " +
+				"|/-\\".charAt((int) (millis / 0.25f) & 3) +
+				" " + millis + "###Animated title");
+		imGui.text("This window has a changing title.");
+		imGui.end();
 	}
 
 	private static void showExampleMenuFile(@NotNull JImGui imGui) {
