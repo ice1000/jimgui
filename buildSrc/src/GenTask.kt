@@ -1,20 +1,16 @@
 package org.ice1000.gradle
 
-import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
 
 @Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
-		val className: String,
+		className: String,
 		private val `c++FileSuffix`: String
-) : DefaultTask(), Runnable {
+) : GenJavaTask(className), Runnable {
 	init {
 		group = "code generation"
 	}
-
-	@Language("Text")
-	open val userCode = ""
 
 	private val `prefixC++`
 		@Language("C++")
@@ -22,26 +18,8 @@ abstract class GenTask(
 #include <org_ice1000_jimgui_$className.h>
 """
 
-	private val prefixJava
-		@Language("JAVA", suffix = "}")
-		get() = """$CLASS_PREFIX
-public class $className {
-	$userCode
-
-	/** package-private by design */
-	$className() { }
-"""
-
 	@TaskAction
 	override fun run() {
-		val targetJavaFile = project
-				.projectDir
-				.resolve("gen")
-				.resolve("org")
-				.resolve("ice1000")
-				.resolve("jimgui")
-				.resolve("$className.java")
-				.absoluteFile
 		val `targetC++File` = project
 				.projectDir
 				.resolve("jni")
@@ -196,7 +174,5 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	}
 
 	abstract val `c++Expr`: String
-
-	val eol: String = System.lineSeparator()
 	//endregion
 }

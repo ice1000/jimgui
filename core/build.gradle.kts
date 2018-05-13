@@ -25,6 +25,8 @@ val res = projectDir.resolve("res")
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
 val genImgui = task<GenGenTask>("genImgui")
+val genImguiStyleVar = task<GenStyleVarsTask>("genImguiStyleVar")
+val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
 val genImguiFont = task<GenFontTask>("genImguiFont")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
@@ -106,7 +108,7 @@ compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
 genImgui.dependsOn(downloadImgui)
-compileJava.dependsOn(genImguiIO, genImguiFont, genImgui)
+compileJava.dependsOn(genImguiIO, genImguiFont, genImgui, genImguiStyleVar, genImguiStyleColor)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)

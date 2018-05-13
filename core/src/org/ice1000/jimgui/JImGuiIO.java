@@ -26,7 +26,7 @@ public class JImGuiIO extends JImGuiIOGen {
 	public native float getMouseClickedPosX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseDragMaxDistanceAbsX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
-	public native float getMouseDragMaxDistanceAbsClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
+	public native float getMouseDragMaxDistanceAbsY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public @NotNull String getInputString() {
 		return new String(getInputString0());
 	}
