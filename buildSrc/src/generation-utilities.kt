@@ -17,7 +17,7 @@ fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$n
 fun pos(name: String = "pos", default: Any? = null) = vec2("${name}X", "${name}Y", default)
 fun string(name: String, default: String? = null) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
 val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
-val nativeObjectPtr = p("nativeObjectPtr", "long")
+val nativeObjectPtr = p("nativeObjectPtr", "long", default = "this.nativeObjectPtr")
 val label = string("label")
 val text = string("text")
 val windowFlags = flags(from = "Window", default = "Nothing")

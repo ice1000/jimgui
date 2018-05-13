@@ -29,6 +29,7 @@ val genNativeTypes = task<GenNativeTypesTask>("genNativeTypes")
 val genImguiStyleVar = task<GenStyleVarsTask>("genImguiStyleVar")
 val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
 val genImguiFont = task<GenFontTask>("genImguiFont")
+val genImguiFontAtlas = task<GenFontAtlasTask>("genImguiFontAtlas")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
@@ -111,7 +112,7 @@ compileJava.options.compilerArgs =
 
 genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui,
-		genNativeTypes, genImguiStyleVar, genImguiStyleColor)
+		genNativeTypes, genImguiStyleVar, genImguiStyleColor, genImguiFontAtlas)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)

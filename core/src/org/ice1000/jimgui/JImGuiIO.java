@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * @author ice1000
  * @since v0.1
  */
-public class JImGuiIO extends JImGuiIOGen {
+public final class JImGuiIO extends JImGuiIOGen {
 	/** package-private by design */
 	JImGuiIO() {
 	}

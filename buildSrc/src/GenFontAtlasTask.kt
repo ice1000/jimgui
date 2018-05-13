@@ -7,22 +7,17 @@ import org.intellij.lang.annotations.Language
 /**
  * @author ice1000
  */
-open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
+open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") {
 	init {
-		description = "Generate binding for ImGui::GetFont"
+		description = "Generate binding for ImGui::GetFont().ContainerAtlas"
 	}
 
 	@Language("JAVA", prefix = "class A{", suffix = "}")
-	override val userCode = """@Contract(pure = true)
-	public static @NotNull JImFont getInstance(@NotNull JImGui owner) {
-		return owner.getFont();
-	}
-
-	/** package-private by design */
+	override val userCode = """/** package-private by design */
 	protected long nativeObjectPtr;
 
 	/** package-private by design */
-	JImGuiFontGen(long nativeObjectPtr) {
+	JImGuiFontAtlasGen(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 """
@@ -37,35 +32,27 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 					.append("\tpublic void set").append(name).append('(').append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
 					.append("\tprivate native void set").append(name).append("(long nativeObjectPtr, ").append(type).appendln(" newValue);")
 		}
-		booleanMembers.forEach {
-			javaCode.javadoc(it).append("\tpublic native boolean is").append(it).appendln("(long nativeObjectPtr);")
-					.javadoc(it).append("\tpublic native void set").append(it).appendln("(long nativeObjectPtr, boolean newValue);")
-		}
 		functions.forEach { genJavaFun(javaCode, it) }
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
 		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", ", jlong nativeObjectPtr") }
-		booleanMembers.joinLinesTo(cppCode) { `c++BooleanAccessor`(it, ", jlong nativeObjectPtr") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
 		functions.forEach { (name, type, params) -> `genC++Fun`(params.drop(1), name, type, cppCode, ", jlong nativeObjectPtr") }
 	}
 
-	override val `c++Expr` = "reinterpret_cast<ImFont *> (nativeObjectPtr)->"
-	private val booleanMembers = listOf("DirtyLookupTables")
-	private val imVec2Members = listOf("DisplayOffset")
+	override val `c++Expr` = "reinterpret_cast<ImFontAtlas *> (nativeObjectPtr)->"
+	private val imVec2Members = listOf("TexUvScale", "TexUvWhitePixel")
 	private val functions = listOf(
-			Fun.protected("clearOutputData", nativeObjectPtr),
-			Fun.protected("setFallbackChar", nativeObjectPtr, p("wChar", "short")),
-			Fun.protected("isLoaded", "boolean", nativeObjectPtr),
-			Fun.protected("buildLookupTable", nativeObjectPtr))
+			Fun.protected("clearInputData", nativeObjectPtr),
+			Fun.protected("clearTexData", nativeObjectPtr),
+			Fun.protected("clearFonts", nativeObjectPtr),
+			Fun.protected("clear", nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
-			"float" to "FontSize",
-			"float" to "Scale",
-			"float" to "FallbackAdvanceX",
-			"short" to "ConfigDataCount",
-			"float" to "Ascent",
-			"float" to "Descent",
-			"int" to "MetricsTotalSurface")
+			"int" to "TexWidth",
+			"int" to "TexHeight",
+			"int" to "TexDesiredWidth",
+			"int" to "TexGlyphPadding"
+	)
 }

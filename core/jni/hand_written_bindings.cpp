@@ -50,6 +50,11 @@ void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jclass, jlong n
 	font->ContainerAtlas->Flags = newValue;
 }
 
+jlong Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	return reinterpret_cast<jlong> (font->ContainerAtlas);
+}
+
 #define JImIOMouseArrayAccessor(property) \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \
   return ImGui::GetIO().Mouse ## property [index].x; \

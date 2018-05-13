@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * @author ice1000
  * @since v0.1
  */
-public class JImFont extends JImGuiFontGen {
+public final class JImFont extends JImGuiFontGen {
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,6 +52,10 @@ public class JImFont extends JImGuiFontGen {
 		setFontAtlasFlags(nativeObjectPtr, flags);
 	}
 
+	public @NotNull JImFontAtlas getContainerAtlas() {
+		return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
+	}
+
 	public native void setDisplayOffset(float newX, float newY);
 
 	private static native void setFontAtlasFlags(
@@ -60,4 +64,5 @@ public class JImFont extends JImGuiFontGen {
 	private static native byte[] getDebugName0(long nativeObjectPtr);
 	private static native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
 	int getFontAtlasFlags(long nativeObjectPtr);
+	private static native long getContainerFontAtlas(long nativeObjectPtr);
 }
