@@ -44,11 +44,14 @@ open class GenStyleVarsTask : GenEnumTask<Pair<String, String>>("JImStyleVars") 
 }
 
 open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
-	override val list = listOf("Alpha", "WindowPadding", "WindowRounding",
-			"WindowBorderSize", "WindowMinSize", "WindowTitleAlign", "ChildRounding", "ChildBorderSize",
-			"PopupRounding", "PopupBorderSize", "FramePadding", "FrameRounding", "FrameBorderSize",
-			"ItemSpacing", "ItemInnerSpacing", "IndentSpacing", "ScrollbarSize", "ScrollbarRounding",
-			"GrabMinSize", "GrabRounding", "ButtonTextAlign")
+	override val list = listOf(
+			"Text", "TextDisabled", "WindowBg", "ChildBg", "PopupBg", "Border", "BorderShadow", "FrameBg", "FrameBgHovered",
+			"FrameBgActive", "TitleBg", "TitleBgActive", "TitleBgCollapsed", "MenuBarBg", "ScrollbarBg", "ScrollbarGrab",
+			"ScrollbarGrabHovered", "ScrollbarGrabActive", "CheckMark", "SliderGrab", "SliderGrabActive", "Button",
+			"ButtonHovered", "ButtonActive", "Header", "HeaderHovered", "HeaderActive", "Separator", "SeparatorHovered",
+			"SeparatorActive", "ResizeGrip", "ResizeGripHovered", "ResizeGripActive", "PlotLines", "PlotLinesHovered",
+			"PlotHistogram", "PlotHistogramHovered", "TextSelectedBg", "ModalWindowDarkening", "DragDropTarget",
+			"NavHighlight", "NavWindowingHighlight")
 
 	override fun StringBuilder.genStatement(index: Int, element: String) {
 		append("int ")

@@ -124,9 +124,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("endChild"),
 
 			// Widgets: Text
-			// Fun("text", text),
-			Fun.protected("textUnformatted", text),
-			Fun("textColored", vec4("color"), text),
 			Fun("bulletText", text),
 			Fun("labelText", label, text),
 			Fun("textDisabled", text),

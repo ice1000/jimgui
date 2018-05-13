@@ -83,4 +83,13 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 	glfwSwapBuffers(window);
 }
 
+void Java_org_ice1000_jimgui_JImGui_textUnformatted(JNIEnv *env, jclass, jbyteArray _text) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, text)
+	const auto *textBegin = reinterpret_cast<const char *> (text);
+	ImGui::TextUnformatted(textBegin, textBegin + __len(text));
+	__release(Byte, text)
+	__JNI__FUNCTION__CLEAN__
+}
+
 #pragma clang diagnostic pop

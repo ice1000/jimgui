@@ -6,6 +6,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.charset.StandardCharsets;
+
 import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
 /**
@@ -108,7 +110,13 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	/** draw plain text */
 	public void text(@NotNull String text) {
-		textUnformatted(getBytes(text));
+		textUnformatted(text.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public void textColored(@NotNull JImVec4 color, @NotNull String text) {
+		pushStyleColor(JImStyleColors.Text, color);
+		text(text);
+		popStyleColor();
 	}
 
 	/**
@@ -163,6 +171,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
+	private static native void textUnformatted(byte @NotNull [] text);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	//endregion
 }
