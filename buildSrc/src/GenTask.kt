@@ -84,14 +84,14 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
-	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param }
+	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is BoolPtrParam }
 
 	fun genJavaFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
 		genJavaFun(javaCode, visibility, params, type, name, comment)
 	}
 
 	fun genJavaFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
-		if (!comment.isNullOrBlank()) javaCode.append("\t/** ").append(comment).appendln(" */")
+		javaCode.javadoc(name)
 
 		javaCode.append('\t').append(visibility)
 		if (isStatic(params)) {

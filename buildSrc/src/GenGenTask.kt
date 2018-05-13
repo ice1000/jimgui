@@ -12,7 +12,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun java(javaCode: StringBuilder) {
 		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
 		trivialMethods.forEach {
-			it.document = parser.map[it.name.capitalize()]
+			it.document = it.document ?: parser.map[it.name.capitalize()]
 			genJavaFun(javaCode, it)
 		}
 	}
@@ -50,6 +50,15 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getTextLineHeightWithSpacing", "float"),
 			Fun("getFrameHeight", "float"),
 			Fun("getFrameHeightWithSpacing", "float"),
+
+			// Demo, Debug, Information
+			Fun("showUserGuide"),
+			Fun("showDemoWindow", pOpen),
+			Fun("showMetricsWindow", pOpen),
+			Fun("showFontSelector", label),
+			Fun("showStyleSelector", label),
+			Fun("showStyleEditor"),
+			/*Fun("showStyleEditor", "boolean", label),*/
 
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
@@ -132,6 +141,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("arrowButton", "boolean",
 					text,
 					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDirection.class)")),
+			Fun("checkbox", "boolean", label, boolPtr("v")),
 			Fun("radioButton", "boolean", text, bool("active")),
 			Fun("bullet"),
 			Fun("progressBar",

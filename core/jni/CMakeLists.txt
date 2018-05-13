@@ -44,6 +44,7 @@ set(ALL_LIBRARIES
 		imgui
 		imgui/imgui.cpp
 		imgui/imgui_draw.cpp
+		imgui/imgui_demo.cpp
 		${IMGUI_IMPL}
 		javah
 		generated_imgui.cpp

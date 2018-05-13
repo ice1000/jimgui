@@ -13,48 +13,111 @@ import org.jetbrains.annotations.NotNull;
 public class Demo {
 	private static final float DISTANCE = 10.0f;
 	private static int corner = 0;
-	private static boolean noTitlebar = false;
-	private static boolean noScrollbar = false;
-	private static boolean noMenu = false;
-	private static boolean noMove = false;
-	private static boolean noResize = false;
-	private static boolean noCollapse = false;
-	private static boolean noNav = false;
 
 	public static void main(String @NotNull ... args) {
 		JniLoader.load();
 		final String windowName = "Debug";
+		NativeBool noTitlebar = new NativeBool();
+		NativeBool noScrollbar = new NativeBool();
+		NativeBool noMenu = new NativeBool();
+		NativeBool noMove = new NativeBool();
+		NativeBool noResize = new NativeBool();
+		NativeBool noCollapse = new NativeBool();
+		NativeBool noNav = new NativeBool();
 		NativeBool showAppSimpleOverlay = new NativeBool();
+		NativeBool showAppMainMenuBar = new NativeBool();
+		NativeBool show_app_console = new NativeBool();
+		NativeBool show_app_log = new NativeBool();
+		NativeBool show_app_layout = new NativeBool();
+		NativeBool show_app_property_editor = new NativeBool();
+		NativeBool show_app_long_text = new NativeBool();
+		NativeBool show_app_auto_resize = new NativeBool();
+		NativeBool show_app_constrained_resize = new NativeBool();
+		NativeBool show_app_window_titles = new NativeBool();
+		NativeBool show_app_custom_rendering = new NativeBool();
+		NativeBool showAppStyleEditor = new NativeBool();
+		NativeBool showAppMetrics = new NativeBool();
+		NativeBool showAppAbout = new NativeBool();
 		NativeBool pOpen = new NativeBool();
 		DeallocatableObjectManager manager = new DeallocatableObjectManager(5);
 		manager.add(showAppSimpleOverlay);
+		manager.add(showAppMainMenuBar);
+		manager.add(show_app_console);
+		manager.add(show_app_log);
+		manager.add(show_app_layout);
+		manager.add(show_app_property_editor);
+		manager.add(show_app_long_text);
+		manager.add(show_app_auto_resize);
+		manager.add(show_app_constrained_resize);
+		manager.add(show_app_window_titles);
+		manager.add(show_app_custom_rendering);
+		manager.add(showAppStyleEditor);
+		manager.add(showAppMetrics);
+		manager.add(showAppAbout);
 		manager.add(pOpen);
 		JImGuiUtil.runPer(15, imGui -> {
+			if (showAppMetrics.accessValue()) imGui.showMetricsWindow(showAppMetrics);
+			if (showAppStyleEditor.accessValue()) {
+				imGui.begin("Style Editor", showAppStyleEditor);
+				imGui.showStyleEditor();
+				imGui.end();
+			}
+			if (showAppAbout.accessValue()) {
+				imGui.begin("About Dear ImGui", showAppAbout, JImWindowFlags.AlwaysAutoResize);
+				imGui.separator();
+				imGui.text("By Omar Cornut and all dear imgui contributors.");
+				imGui.text("Dear ImGui is licensed under the MIT License, see LICENSE for more information.");
+				imGui.end();
+			}
+
 			// Demonstrate the various window flags. Typically you would just use the default.
 			@MagicConstant(flagsFromClass = JImWindowFlags.class) int windowFlags = 0;
-			if (noTitlebar) windowFlags |= JImWindowFlags.NoTitleBar;
-			if (noScrollbar) windowFlags |= JImWindowFlags.NoScrollbar;
-			if (!noMenu) windowFlags |= JImWindowFlags.MenuBar;
-			if (noMove) windowFlags |= JImWindowFlags.NoMove;
-			if (noResize) windowFlags |= JImWindowFlags.NoResize;
-			if (noCollapse) windowFlags |= JImWindowFlags.NoCollapse;
-			if (noNav) windowFlags |= JImWindowFlags.NoNav;
+			if (noTitlebar.accessValue()) windowFlags |= JImWindowFlags.NoTitleBar;
+			if (noScrollbar.accessValue()) windowFlags |= JImWindowFlags.NoScrollbar;
+			if (!noMenu.accessValue()) windowFlags |= JImWindowFlags.MenuBar;
+			if (noMove.accessValue()) windowFlags |= JImWindowFlags.NoMove;
+			if (noResize.accessValue()) windowFlags |= JImWindowFlags.NoResize;
+			if (noCollapse.accessValue()) windowFlags |= JImWindowFlags.NoCollapse;
+			if (noNav.accessValue()) windowFlags |= JImWindowFlags.NoNav;
 			imGui.setNextWindowSize(550, 680, JImCondition.FirstUseEver);
 			imGui.begin(windowName, pOpen, windowFlags);
+
 			//imGui.pushItemWidth(imGui.getWindowWidth() * 0.65f);    // 2/3 of the space for widget and 1/3 for labels
 			imGui.pushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
+
 			imGui.text("dear imgui says hello. (1.61 WIP)");
+
 			if (imGui.collapsingHeader("Help")) {
-				imGui.textWrapped("This window is being created by the ShowDemoWindow() function. Please refer to the code in imgui_demo.cpp for reference.\n\n");
+				imGui.textWrapped(
+						"This window is being created by the ShowDemoWindow() function. Please refer to the code in imgui_demo.cpp for reference.\n\n");
 				imGui.text("USER GUIDE:");
 				showUserGuide(imGui);
 			}
-			showExampleAppMainMenuBar(imGui);
-			if (imGui.button("200x200")) imGui.setWindowSize(windowName, 200, 200);
-			imGui.sameLine();
-			if (imGui.button("500x500")) imGui.setWindowSize(windowName, 500, 500);
-			imGui.sameLine();
-			if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
+			if (imGui.collapsingHeader("Window options")) {
+				imGui.checkbox("No titlebar", noTitlebar);
+				imGui.sameLine(150);
+				imGui.checkbox("No scrollbar", noScrollbar);
+				imGui.sameLine(300);
+				imGui.checkbox("No menu", noMenu);
+				imGui.checkbox("No move", noMove);
+				imGui.sameLine(150);
+				imGui.checkbox("No resize", noResize);
+				imGui.sameLine(300);
+				imGui.checkbox("No collapse", noCollapse);
+				imGui.sameLine(150);
+				imGui.checkbox("No nav", noNav);
+				if (imGui.treeNode("Style")) {
+					imGui.showStyleEditor();
+					imGui.treePop();
+				}
+				if (imGui.treeNode("Capture/Logging")) {
+					imGui.textWrapped("The logging API redirects all text output so you can easily capture the content of a window or a block. Tree nodes can be automatically expanded. You can also call ImGui::LogText() to output directly to the log without a visual output.");
+					imGui.logButtons();
+					imGui.treePop();
+				}
+			}
+
+			if (showAppMainMenuBar.accessValue()) showExampleAppMainMenuBar(imGui);
 			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);
 			if (imGui.beginMenuBar()) {
 				if (imGui.beginMenu("Menu")) {
@@ -62,7 +125,23 @@ public class Demo {
 					imGui.endMenu();
 				}
 				if (imGui.beginMenu("Examples")) {
+					imGui.menuItem0("Main menu bar", null, showAppMainMenuBar);
+					imGui.menuItem0("Console", null, show_app_console);
+					imGui.menuItem0("Log", null, show_app_log);
+					imGui.menuItem0("Simple layout", null, show_app_layout);
+					imGui.menuItem0("Property editor", null, show_app_property_editor);
+					imGui.menuItem0("Long text display", null, show_app_long_text);
+					imGui.menuItem0("Auto-resizing window", null, show_app_auto_resize);
+					imGui.menuItem0("Constrained-resizing window", null, show_app_constrained_resize);
 					imGui.menuItem0("Simple overlay", null, showAppSimpleOverlay);
+					imGui.menuItem0("Manipulating window titles", null, show_app_window_titles);
+					imGui.menuItem0("Custom rendering", null, show_app_custom_rendering);
+					imGui.endMenu();
+				}
+				if (imGui.beginMenu("Help")) {
+					imGui.menuItem0("Metrics", null, showAppMetrics);
+					imGui.menuItem0("Style Editor", null, showAppStyleEditor);
+					imGui.menuItem0("About Dear Imgui", null, showAppAbout);
 					imGui.endMenu();
 				}
 				imGui.endMenuBar();
@@ -107,6 +186,14 @@ public class Demo {
 			}
 			imGui.end();
 		}
+	}
+
+	private static void wtf(@NotNull JImGui imGui, @NotNull String windowName) {
+		if (imGui.button("200x200")) imGui.setWindowSize(windowName, 200, 200);
+		imGui.sameLine();
+		if (imGui.button("500x500")) imGui.setWindowSize(windowName, 500, 500);
+		imGui.sameLine();
+		if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
 	}
 
 	private static void showExampleAppMainMenuBar(@NotNull JImGui imGui) {
