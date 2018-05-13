@@ -9,7 +9,7 @@
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
-#include <org_ice1000_jimgui_JImGuiFont.h>
+#include <org_ice1000_jimgui_JImFont.h>
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImStyle.h>
 
@@ -20,28 +20,28 @@ jlong Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) {
 	return reinterpret_cast<jlong> (&ImGui::GetStyle().Colors[index]);
 }
 
-void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffsetX(JNIEnv *, jobject, jfloat newValue) {
+void Java_org_ice1000_jimgui_JImFont_setDisplayOffsetX(JNIEnv *, jobject, jfloat newValue) {
 	ImGui::GetFont()->DisplayOffset.x = newValue;
 }
 
-void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffsetY(JNIEnv *, jobject, jfloat newValue) {
+void Java_org_ice1000_jimgui_JImFont_setDisplayOffsetY(JNIEnv *, jobject, jfloat newValue) {
 	ImGui::GetFont()->DisplayOffset.y = newValue;
 }
 
-void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
+void Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
 	ImGui::GetFont()->DisplayOffset.x = newX;
 	ImGui::GetFont()->DisplayOffset.y = newY;
 }
 
-jfloat Java_org_ice1000_jimgui_JImGuiFont_getDisplayOffsetX(JNIEnv *, jobject) {
+jfloat Java_org_ice1000_jimgui_JImFont_getDisplayOffsetX(JNIEnv *, jobject) {
 	return ImGui::GetFont()->DisplayOffset.x;
 }
 
-jfloat Java_org_ice1000_jimgui_JImGuiFont_getDisplayOffsetY(JNIEnv *, jobject) {
+jfloat Java_org_ice1000_jimgui_JImFont_getDisplayOffsetY(JNIEnv *, jobject) {
 	return ImGui::GetFont()->DisplayOffset.y;
 }
 
-jbyteArray Java_org_ice1000_jimgui_JImGuiFont_getDebugName0(JNIEnv *env, jclass) {
+jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass) {
 	__JNI__FUNCTION__INIT__
 	auto debugName = ImGui::GetFont()->GetDebugName();
 	auto len = static_cast<jsize> (strlen(debugName));
@@ -51,11 +51,11 @@ jbyteArray Java_org_ice1000_jimgui_JImGuiFont_getDebugName0(JNIEnv *env, jclass)
 	return _data;
 }
 
-jint Java_org_ice1000_jimgui_JImGuiFont_getFontAtlasFlags(JNIEnv *, jobject) {
+jint Java_org_ice1000_jimgui_JImFont_getFontAtlasFlags(JNIEnv *, jobject) {
 	return ImGui::GetFont()->ContainerAtlas->Flags;
 }
 
-void Java_org_ice1000_jimgui_JImGuiFont_setFontAtlasFlags(JNIEnv *, jobject, jint newValue) {
+void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jobject, jint newValue) {
 	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
 }
 
