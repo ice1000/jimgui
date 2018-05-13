@@ -87,9 +87,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is BoolPtrParam }
 
 	fun genJavaXYAccessor(javaCode: StringBuilder, name: String, type: String) {
-		javaCode.javadoc(name)
 		genJavaPrimitiveMember(javaCode, "${name}X", "", type, false, "", name)
-		javaCode.javadoc(name)
 		genJavaPrimitiveMember(javaCode, "${name}Y", "", type, false, "", name)
 	}
 

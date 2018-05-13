@@ -23,6 +23,7 @@ public class JImFont extends JImGuiFontGen {
 
 	public native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
 	int getFontAtlasFlags();
+
 	public native void setFontAtlasFlags(
 			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
 
