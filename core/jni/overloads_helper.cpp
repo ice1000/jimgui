@@ -33,9 +33,9 @@ auto ImGui::BeginChild0(const char *str_id, const ImVec2 &size, bool border, ImG
 }
 
 auto ImGui::ColorEdit3(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool {
-	return ColorEdit3(label, reinterpret_cast<float[]> (&col), flags);
+	return ColorEdit3(label, reinterpret_cast<float *> (&col), flags);
 }
 
 auto ImGui::ColorEdit4(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool {
-	return ColorEdit4(label, reinterpret_cast<float[]> (&col), flags);
+	return ColorEdit4(label, reinterpret_cast<float *> (&col), flags);
 }
