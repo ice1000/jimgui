@@ -19,6 +19,8 @@ namespace ImGui {
 			bool border = false, ImGuiWindowFlags flags = 0) -> bool;
 	auto ColorEdit3(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto ColorEdit4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker3(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H

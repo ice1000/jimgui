@@ -32,10 +32,14 @@ auto ImGui::BeginChild0(const char *str_id, const ImVec2 &size, bool border, ImG
 	return BeginChild(str_id, size, border, flags);
 }
 
-auto ImGui::ColorEdit3(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool {
-	return ColorEdit3(label, reinterpret_cast<float *> (&col), flags);
+#define ColorRelated(name) \
+auto ImGui::Color ## name(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool { \
+	return Color ## name(label, reinterpret_cast<float *> (&col), flags); \
 }
 
-auto ImGui::ColorEdit4(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool {
-	return ColorEdit4(label, reinterpret_cast<float *> (&col), flags);
-}
+ColorRelated(Edit3)
+ColorRelated(Edit4)
+ColorRelated(Picker3)
+ColorRelated(Picker4)
+
+#undef ColorRelated

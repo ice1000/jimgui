@@ -251,6 +251,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					vec4("color"),
 					flags(from = "ColorEdit", default = "Nothing"),
 					size(default = "0,0")),
+			Fun("colorPicker3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorPicker4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
 			Fun("setColorEditOptions", flags()),
 
 			// Focus, Activation

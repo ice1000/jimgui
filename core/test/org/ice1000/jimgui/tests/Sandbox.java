@@ -1,7 +1,6 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGuiIO;
-import org.ice1000.jimgui.JImStyleVars;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.flags.JImDirection;
@@ -10,6 +9,7 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -35,6 +35,9 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
+			MutableJImVec4 background = JImVec4.fromAWT(Color.BLUE);
+			imGui.colorEdit4("Background", background);
+			imGui.setBackground(background);
 			JImGuiIO io = imGui.getIO();
 			String inputString = io.getInputString();
 			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
@@ -43,7 +46,6 @@ public class Sandbox {
 			imGui.text("MousePos: [" + io.getMousePosX() + ", " + io.getMousePosY() + "]");
 			imGui.text("MouseDelta: [" + io.getMouseDeltaX() + ", " + io.getMouseDeltaY() + "]");
 			if (imGui.button("Click me!")) count.getAndIncrement();
-			imGui.setBackground(JImVec4.fromAWT(java.awt.Color.BLUE));
 			imGui.sameLine();
 			imGui.text("Click count: " + count);
 			imGui.bulletText("fps: " + io.getFramerate());

@@ -6,7 +6,7 @@ import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
 public class Demo {
-	public static void main(String... args) {
+	public static void main(String @NotNull ... args) {
 		JniLoader.load();
 		final String windowName = "Debug";
 		JImGuiUtil.runPer(15, imGui -> {
@@ -19,6 +19,8 @@ public class Demo {
 			imGui.sameLine();
 			if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
 			imGui.text("Simple overlay\nin the corner of the screen.\n(right-click to change position)");
+			imGui.sameLine();
+			showHelpMarker(imGui, "This is a help.");
 			imGui.separator();
 			if (imGui.isMousePosValid())
 				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
@@ -100,5 +102,16 @@ public class Demo {
 		imGui.bulletText("ESCAPE to revert.");
 		imGui.bulletText("You can apply arithmetic operators +,*,/ on numerical values.\nUse +- to subtract.");
 		imGui.unindent();
+	}
+
+	private static void showHelpMarker(@NotNull JImGui imGui, @NotNull String description) {
+		imGui.textDisabled("(?)");
+		if (imGui.isItemHovered()) {
+			imGui.beginTooltip();
+			imGui.pushTextWrapPos(imGui.getFontSize() * 35.0f);
+			imGui.text(description);
+			imGui.popTextWrapPos();
+			imGui.endTooltip();
+		}
 	}
 }
