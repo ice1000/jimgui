@@ -4,7 +4,7 @@ project(jimgui
 		LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "-Wno-format-security")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
@@ -14,6 +14,7 @@ if (WIN32)
 
 	set(IMGUI_IMPL impl/imgui_impl_dx11.cpp dx11_impl.cpp)
 	set(TARGET_LINK_LIBS d3dcompiler d3d11 d3dx11 dxguid)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)
