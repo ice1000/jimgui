@@ -1,7 +1,5 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.JImGuiIO;
-import org.ice1000.jimgui.util.JImGuiUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,29 +13,6 @@ public class JImGuiIOTest {
 
 	@Test
 	public void testBinding() {
-		JImGuiUtil.runWithinPer(8000, 10, imGui -> {
-			JImGuiIO io = imGui.getIO();
-			imGui.getFont().setFontSize(40);
-			imGui.text("framerate: " + io.getFramerate());
-			if (io.isKeyCtrl()) {
-				imGui.text("[Ctrl]");
-				imGui.sameLine();
-			}
-			if (io.isKeyAlt()) {
-				imGui.text("[Alt]");
-				imGui.sameLine();
-			}
-			if (io.isKeySuper()) {
-				imGui.text("[Super]");
-				imGui.sameLine();
-			}
-			if (io.isKeyShift()) {
-				imGui.text("[Shift]");
-				imGui.sameLine();
-			}
-			imGui.newLine();
-			imGui.text(String.valueOf(imGui.getFont().getFontSize()));
-			imGui.text(imGui.getFont().getDebugName());
-		});
+		Sandbox.main();
 	}
 }

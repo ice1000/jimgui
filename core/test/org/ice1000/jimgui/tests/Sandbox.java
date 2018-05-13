@@ -19,7 +19,8 @@ public class Sandbox {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
 		AtomicReference<String> ini = new AtomicReference<>("");
-		JImGuiUtil.runPer(15, imGui -> {
+		long start = System.currentTimeMillis();
+		JImGuiUtil.runWithinPer(8000, 10, imGui -> {
 			imGui.getFont().setFallbackChar('*');
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
@@ -36,10 +37,33 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
+			float bizarreValue = (System.currentTimeMillis() - start) / 200f;
+			imGui.getStyle().setWindowBorderSize(bizarreValue);
 			MutableJImVec4 background = JImVec4.fromAWT(Color.BLUE);
 			imGui.colorEdit4("Background", background);
 			imGui.setBackground(background);
 			JImGuiIO io = imGui.getIO();
+			imGui.text("framerate: " + io.getFramerate());
+			if (io.isKeyCtrl()) {
+				imGui.text("[Ctrl]");
+				imGui.sameLine();
+			}
+			if (io.isKeyAlt()) {
+				imGui.text("[Alt]");
+				imGui.sameLine();
+			}
+			if (io.isKeySuper()) {
+				imGui.text("[Super]");
+				imGui.sameLine();
+			}
+			if (io.isKeyShift()) {
+				imGui.text("[Shift]");
+				imGui.sameLine();
+			}
+			imGui.newLine();
+			imGui.getFont().setFontSize(bizarreValue);
+			imGui.text(String.valueOf(imGui.getFont().getFontSize()));
+			imGui.text(imGui.getFont().getDebugName());
 			String inputString = io.getInputString();
 			imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
 			if (io.mouseClickedAt(JImMouseIndexes.Left)) imGui.text("Left is down.");
