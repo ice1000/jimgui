@@ -15,16 +15,15 @@ open class GenJavaTask(val className: String) : DefaultTask() {
 			.absoluteFile
 
 	@Language("Text")
-	open val userCode = ""
+	open val userCode = """/** package-private by design */
+	$className() { }
+"""
 
 	protected val prefixJava
 		@Language("JAVA", suffix = "}")
 		get() = """$CLASS_PREFIX
 public class $className {
 	$userCode
-
-	/** package-private by design */
-	$className() { }
 """
 
 	protected val prefixInterfacedJava

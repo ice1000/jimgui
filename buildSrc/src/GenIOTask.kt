@@ -12,8 +12,15 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 		description = "Generate binding for ImGui::GetIO"
 	}
 
-	@Language("JAVA")
-	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
+	@Language("JAVA", prefix = "class A{", suffix = "}")
+	override val userCode = """@Contract(pure = true)
+	public static @NotNull JImGuiIOGen getInstance(@NotNull JImGui owner) {
+		return owner.getIO();
+	}
+
+	/** package-private by design */
+	JImGuiIOGen() { }
+"""
 
 	override fun java(javaCode: StringBuilder) {
 		imVec2Members.forEach { genJavaXYAccessor(javaCode, it, "float") }

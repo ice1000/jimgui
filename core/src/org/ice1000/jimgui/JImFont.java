@@ -9,24 +9,56 @@ import org.jetbrains.annotations.NotNull;
  * @since v0.1
  */
 public class JImFont extends JImGuiFontGen {
-	/** package-private by design */
-	JImFont() {
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @param nativeObjectPtr native ImFont*
+	 */
+	JImFont(long nativeObjectPtr) {
+		super(nativeObjectPtr);
 	}
 
 	public @NotNull String getDebugName() {
-		return new String(getDebugName0());
+		return new String(getDebugName0(nativeObjectPtr));
 	}
 
 	public void setFallbackChar(char wChar) {
 		setFallbackChar((short) wChar);
 	}
 
-	public native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
-	int getFontAtlasFlags();
+	public void setFallbackChar(short wChar) {
+		setFallbackChar(nativeObjectPtr, wChar);
+	}
 
-	public native void setFontAtlasFlags(
-			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
+	public boolean isLoaded() {
+		return isLoaded(nativeObjectPtr);
+	}
+
+	public void buildLookupTable() {
+		buildLookupTable(nativeObjectPtr);
+	}
+
+	public void clearOutputData() {
+		clearOutputData(nativeObjectPtr);
+	}
+
+	public @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
+	int getFontAtlasFlags() {
+		return getFontAtlasFlags(nativeObjectPtr);
+	}
+
+
+	public void setFontAtlasFlags(
+			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags) {
+		setFontAtlasFlags(nativeObjectPtr, flags);
+	}
 
 	public native void setDisplayOffset(float newX, float newY);
-	private static native byte[] getDebugName0();
+
+	private static native void setFontAtlasFlags(
+			long nativeObjectPtr,
+			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
+	private static native byte[] getDebugName0(long nativeObjectPtr);
+	private static native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
+	int getFontAtlasFlags(long nativeObjectPtr);
 }

@@ -21,7 +21,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
 	private @Nullable JImStyle style;
-	private @Nullable JImFont font;
 
 	//region Native-unrelated
 	public JImGui() {
@@ -40,7 +39,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		}
 		io = new JImGuiIO();
 		style = new JImStyle();
-		font = new JImFont();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
@@ -50,7 +48,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
 		style = null;
-		font = null;
 	}
 
 	/**
@@ -89,11 +86,13 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 */
 	@Contract(pure = true)
 	public @Nullable JImFont findFont() {
-		return font;
+		long fontNativeObjectPtr = getFontNativeObjectPtr();
+		return fontNativeObjectPtr == 0 ? null : new JImFont(fontNativeObjectPtr);
 	}
 
 	@Contract(pure = true)
 	public @NotNull JImFont getFont() {
+		JImFont font = findFont();
 		if (null == font) alreadyDisposed();
 		return font;
 	}
@@ -195,6 +194,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native long allocateNativeObjects(int width, int height, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
+	private static native long getFontNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);

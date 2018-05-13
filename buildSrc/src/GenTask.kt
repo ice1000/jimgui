@@ -42,13 +42,13 @@ abstract class GenTask(
 
 	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
 
-	fun `c++BooleanAccessor`(name: String) =
-			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_is$name(JNIEnv *, jobject) -> jboolean { return static_cast<jboolean> ($`c++Expr`$name ? JNI_TRUE : JNI_FALSE); }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, jboolean newValue) -> void { $`c++Expr`$name = newValue; }"""
+	fun `c++BooleanAccessor`(name: String, additionalParamText: String = "") =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_is$name(JNIEnv *, jobject $additionalParamText) -> jboolean { return static_cast<jboolean> ($`c++Expr`$name ? JNI_TRUE : JNI_FALSE); }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject $additionalParamText, jboolean newValue) -> void { $`c++Expr`$name = newValue; }"""
 
-	fun `c++PrimitiveAccessor`(type: String, name: String) =
-			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name = newValue; }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
+	fun `c++PrimitiveAccessor`(type: String, name: String, additionalParamText: String = "") =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set$name(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get$name(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
 
 	fun `c++BooleanArrayAccessor`(name: String, jvmName: String, `c++Name`: String) =
 			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_$jvmName(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
@@ -66,8 +66,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
 }"""
 
-	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "") =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass${
+	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "", additionalParamText: String = "") =
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass $additionalParamText ${
 			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
 //endregion
 
@@ -91,11 +91,16 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 		genJavaPrimitiveMember(javaCode, "${name}Y", "", type, false, "", name)
 	}
 
-	fun `c++XYAccessor`(name: String, type: String) =
-			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}X(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}X(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}Y(JNIEnv *, jobject, j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *, jobject) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }"""
+	fun genJavaObjectiveXYAccessor(javaCode: StringBuilder, name: String, type: String) {
+		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}X")
+		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}Y")
+	}
+
+	fun `c++XYAccessor`(name: String, type: String, additionalParamText: String = "") =
+			"""JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}X(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}X(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_set${name}Y(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }"""
 
 	fun genJavaFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
 		genJavaFun(javaCode, visibility, params, type, name, comment)
@@ -144,15 +149,16 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 	fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
 			append(`c++Expr`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
-	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder) {
+	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder, additionalParamText: String = "") {
 		val initParams = params.mapNotNull { it.surrounding() }
 		if (isStatic(params)) {
 			val f = `c++StringedFunction`(name, params, type, "$`c++Expr`${name.capitalize()}(${params.`c++Expr`()})",
 					init = initParams.joinToString(" ", prefix = JNI_FUNCTION_INIT) { it.first },
-					deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second })
+					deinit = initParams.joinToString(" ", postfix = JNI_FUNCTION_CLEAN) { it.second },
+					additionalParamText = additionalParamText)
 			cppCode.appendln(f)
 		} else {
-			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject")
+			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject").append(additionalParamText)
 			if (params.isNotEmpty()) cppCode.append(",")
 			cppCode.append(params.`c++`()).append(")->")
 			val isVoid = type == null
@@ -182,6 +188,19 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 		if (isArray) javaCode.append(jvmName).append('(').append(annotation).append("int index,")
 		else javaCode.append("set").append(name).append('(')
 		javaCode.append(annotation).append(type).appendln(" newValue);")
+	}
+
+	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder, type: String, name: String, ptrName: String = "nativeObjectPtr") {
+		javaCode.append("private native void set").append(name).append("(long ")
+				.append(ptrName).append(',').append(type).appendln(" newValue);")
+				.javadoc(name)
+				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue){set")
+				.append(name).append('(').append(ptrName).appendln(", newValue); }")
+				.append("private native ").append(type).append(" get")
+				.append(name).append("(long ").append(ptrName).appendln(");")
+				.javadoc(name)
+				.append("\tpublic ").append(type).append(" get").append(name)
+				.append("(){return get").append(name).append('(').append(ptrName).appendln(");}")
 	}
 
 	abstract val `c++Expr`: String

@@ -25,9 +25,10 @@ void Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat 
 	ImGui::GetFont()->DisplayOffset.y = newY;
 }
 
-jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass) {
+jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) {
 	__JNI__FUNCTION__INIT__
-	auto debugName = ImGui::GetFont()->GetDebugName();
+	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	auto debugName = font->GetDebugName();
 	auto len = static_cast<jsize> (strlen(debugName));
 	auto *data = reinterpret_cast<const jbyte *> (debugName);
 	__init(Byte, data, len);
@@ -35,12 +36,14 @@ jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass) {
 	return _data;
 }
 
-jint Java_org_ice1000_jimgui_JImFont_getFontAtlasFlags(JNIEnv *, jobject) {
-	return ImGui::GetFont()->ContainerAtlas->Flags;
+jint Java_org_ice1000_jimgui_JImFont_getFontAtlasFlags(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	return font->ContainerAtlas->Flags;
 }
 
-void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jobject, jint newValue) {
-	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
+void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jclass, jlong nativeObjectPtr, jint newValue) {
+	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	font->ContainerAtlas->Flags = newValue;
 }
 
 #define JImIOMouseArrayAccessor(property) \

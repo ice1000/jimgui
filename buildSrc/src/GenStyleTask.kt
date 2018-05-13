@@ -29,7 +29,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 
 	override fun `c++`(cppCode: StringBuilder) {
 		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float") }
-		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
+		booleanMembers.joinLinesTo(cppCode) { name -> `c++BooleanAccessor`(name) }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName, `c++Name`) ->
 			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName, `c++Name`)
 			else `c++PrimitiveAccessor`(type, name)
