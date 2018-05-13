@@ -2,6 +2,7 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.JImDirection;
+import org.ice1000.jimgui.flag.JImFontAtlasFlags;
 import org.ice1000.jimgui.flag.JImMouseIndexes;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
@@ -60,6 +61,8 @@ public class Sandbox {
 			}
 			imGui.newLine();
 			font.setFontSize(bizarreValue + 13);
+			JImFontAtlas containerAtlas = font.getContainerAtlas();
+			containerAtlas.setFlags(containerAtlas.getFlags() | JImFontAtlasFlags.NoMouseCursors);
 			imGui.text(String.valueOf(font.getFontSize()));
 			imGui.text(font.getDebugName());
 			String inputString = io.getInputString();

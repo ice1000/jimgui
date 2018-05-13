@@ -79,7 +79,9 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 	fun comma(params: List<Param>) = if (params.isNotEmpty()) ", " else ""
 	fun boolean(type: String?) = if (type == "boolean") " ? JNI_TRUE : JNI_FALSE" else ""
 	fun type(type: String?) = type ?: "void"
-	fun ret(type: String?, expr: String = "", orElse: String = expr) = type?.let { "return static_cast<j$type> ($expr);" }
+	fun ret(type: String?, expr: String = "", orElse: String = expr) = type?.let {
+		if (type == "long") "return reinterpret_cast<j$type> ($expr);" else "return static_cast<j$type> ($expr);"
+	}
 			?: "$orElse;"
 
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
@@ -107,7 +109,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 	}
 
 	fun genJavaFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
-		javaCode.javadoc(name)
+		javaCode.javadoc(name.capitalize())
 
 		javaCode.append('\t').append(visibility)
 		if (isStatic(params)) {
@@ -129,7 +131,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 		params.asReversed().forEachIndexed inner@{ index, param ->
 			val default = param.default?.toString() ?: kotlin.run {
 				defaults += param.javaExpr()
-				return@inner
+				return
 			}
 			defaults += default
 			if (!comment.isNullOrBlank()) javaCode.append("\t/** ").append(comment).appendln(" */")

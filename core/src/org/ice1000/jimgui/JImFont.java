@@ -1,7 +1,5 @@
 package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flag.JImFontAtlasFlags;
-import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -30,39 +28,12 @@ public final class JImFont extends JImGuiFontGen {
 		setFallbackChar(nativeObjectPtr, wChar);
 	}
 
-	public boolean isLoaded() {
-		return isLoaded(nativeObjectPtr);
-	}
-
-	public void buildLookupTable() {
-		buildLookupTable(nativeObjectPtr);
-	}
-
-	public void clearOutputData() {
-		clearOutputData(nativeObjectPtr);
-	}
-
-	public @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
-	int getFontAtlasFlags() {
-		return getFontAtlasFlags(nativeObjectPtr);
-	}
-
-	public void setFontAtlasFlags(
-			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags) {
-		setFontAtlasFlags(nativeObjectPtr, flags);
-	}
-
 	public @NotNull JImFontAtlas getContainerAtlas() {
 		return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
 	}
 
 	public native void setDisplayOffset(float newX, float newY);
 
-	private static native void setFontAtlasFlags(
-			long nativeObjectPtr,
-			@MagicConstant(flagsFromClass = JImFontAtlasFlags.class) int flags);
 	private static native byte[] getDebugName0(long nativeObjectPtr);
-	private static native @MagicConstant(flagsFromClass = JImFontAtlasFlags.class)
-	int getFontAtlasFlags(long nativeObjectPtr);
 	private static native long getContainerFontAtlas(long nativeObjectPtr);
 }
