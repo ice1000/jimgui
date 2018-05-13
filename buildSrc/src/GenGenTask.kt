@@ -126,7 +126,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Widgets: Text
 			Fun("bulletText", text),
 			Fun("labelText", label, text),
-			Fun("textDisabled", text),
 			Fun("textWrapped", text),
 
 			// Widgets: Main

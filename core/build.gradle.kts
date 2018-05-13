@@ -29,6 +29,7 @@ val genNativeTypes = task<GenNativeTypesTask>("genNativeTypes")
 val genImguiStyleVar = task<GenStyleVarsTask>("genImguiStyleVar")
 val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
 val genImguiFont = task<GenFontTask>("genImguiFont")
+val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
 val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
@@ -109,7 +110,7 @@ compileJava.options.compilerArgs =
 		listOf("-h", javahDir.toString())
 
 genImgui.dependsOn(downloadImgui)
-compileJava.dependsOn(genImguiIO, genImguiFont, genImgui,
+compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui,
 		genNativeTypes, genImguiStyleVar, genImguiStyleColor)
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)

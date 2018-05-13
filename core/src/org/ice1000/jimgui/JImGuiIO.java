@@ -9,6 +9,10 @@ import org.jetbrains.annotations.NotNull;
  * @since v0.1
  */
 public class JImGuiIO extends JImGuiIOGen {
+	/** package-private by design */
+	JImGuiIO() {
+	}
+
 	public native float getMousePosX();
 	public native float getMousePosY();
 	public native float getMouseDeltaX();

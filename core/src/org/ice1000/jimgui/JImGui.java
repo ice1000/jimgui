@@ -20,7 +20,8 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
-	private @Nullable JImGuiFont font;
+	private @Nullable JImStyle style;
+	private @Nullable JImFont font;
 
 	//region Native-unrelated
 	public JImGui() {
@@ -38,7 +39,8 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 			System.exit(1);
 		}
 		io = new JImGuiIO();
-		font = new JImGuiFont();
+		style = new JImStyle();
+		font = new JImFont();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
@@ -47,6 +49,8 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		background.close();
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
+		style = null;
+		font = null;
 	}
 
 	/**
@@ -84,14 +88,30 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @return same as {@link #getFont()}
 	 */
 	@Contract(pure = true)
-	public @Nullable JImGuiFont findFont() {
+	public @Nullable JImFont findFont() {
 		return font;
 	}
 
 	@Contract(pure = true)
-	public @NotNull JImGuiFont getFont() {
+	public @NotNull JImFont getFont() {
 		if (null == font) alreadyDisposed();
 		return font;
+	}
+
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
+	 * @return same as {@link #getStyle()}
+	 */
+	@Contract(pure = true)
+	public @Nullable JImStyle findStyle() {
+		return style;
+	}
+
+	@Contract(pure = true)
+	public @NotNull JImStyle getStyle() {
+		if (null == style) alreadyDisposed();
+		return style;
 	}
 
 	@Contract(pure = true)
@@ -115,6 +135,13 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public void textColored(@NotNull JImVec4 color, @NotNull String text) {
 		pushStyleColor(JImStyleColors.Text, color);
+		text(text);
+		popStyleColor();
+	}
+
+	public void textDisabled(@NotNull String text) {
+		if (style == null) alreadyDisposed();
+		pushStyleColor(JImStyleColors.Text, style.getColor(JImStyleColors.TextDisabled));
 		text(text);
 		popStyleColor();
 	}

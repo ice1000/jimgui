@@ -3,8 +3,6 @@ package org.ice1000.jimgui;
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Closeable;
-
 /**
  * Off-stack Vector, read only
  *
@@ -18,6 +16,11 @@ public class JImVec4 implements DeallocatableObject {
 
 	public JImVec4() {
 		nativeObjectPtr = allocateNativeObjects();
+	}
+
+	/** package-private by design */
+	JImVec4(long nativeObjectPtr) {
+		this.nativeObjectPtr = nativeObjectPtr;
 	}
 
 	public JImVec4(float x, float y, float z, float w) {

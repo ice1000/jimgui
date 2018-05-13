@@ -11,9 +11,14 @@
 #include <org_ice1000_jimgui_JImGuiIO.h>
 #include <org_ice1000_jimgui_JImGuiFont.h>
 #include <org_ice1000_jimgui_JImGui.h>
+#include <org_ice1000_jimgui_JImStyle.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
+jlong Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) {
+	return reinterpret_cast<jlong> (&ImGui::GetStyle().Colors[index]);
+}
 
 void Java_org_ice1000_jimgui_JImGuiFont_setDisplayOffsetX(JNIEnv *, jobject, jfloat newValue) {
 	ImGui::GetFont()->DisplayOffset.x = newValue;

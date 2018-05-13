@@ -8,8 +8,9 @@ import org.jetbrains.annotations.NotNull;
  * @author ice1000
  * @since v0.1
  */
-public class JImGuiFont extends JImGuiFontGen {
-	JImGuiFont() {
+public class JImFont extends JImGuiFontGen {
+	/** package-private by design */
+	JImFont() {
 	}
 
 	public @NotNull String getDebugName() {

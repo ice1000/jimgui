@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGuiIO;
+import org.ice1000.jimgui.JImStyleColors;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.flag.JImDirection;
@@ -66,6 +67,7 @@ public class Sandbox {
 			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
 			     MutableJImVec4 green = JImVec4.fromJFX(javafx.scene.paint.Color.GREEN)) {
 				imGui.textColored(red, "Woa!");
+				imGui.textColored(imGui.getStyle().getColor(JImStyleColors.TextSelectedBg), "Woa!");
 				imGui.separator();
 				imGui.textColored(green, "Woa!");
 				imGui.spacing();
