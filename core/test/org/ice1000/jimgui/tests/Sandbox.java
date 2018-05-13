@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGuiIO;
+import org.ice1000.jimgui.JImStyleVars;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.flags.JImDirection;

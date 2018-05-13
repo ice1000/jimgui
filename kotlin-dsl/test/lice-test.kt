@@ -1,5 +1,6 @@
 package test
 
+import org.ice1000.jimgui.JImStyleVars
 import org.ice1000.jimgui.JImVec4
 import org.ice1000.jimgui.dsl.*
 import org.ice1000.jimgui.util.JniLoader
@@ -60,6 +61,7 @@ fun main(args: Array<String>) {
 	runPer(15) {
 		"Lice AST" { displayAST(liceAST, this) }
 		"Source Code" {
+			pushStyleVar(JImStyleVars.ItemSpacing, 0f, 2f)
 			var tokenStart = 0
 			var attributeSet = codeColors[0]
 			codeColors[0] = null
@@ -78,6 +80,7 @@ fun main(args: Array<String>) {
 					attributeSet = codeColors[i]
 				}
 			}
+			popStyleVar()
 		}
 	}
 	keywords.close()
