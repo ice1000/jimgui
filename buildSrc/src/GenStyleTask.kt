@@ -16,6 +16,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	//override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }"
 
 	override fun java(javaCode: StringBuilder) {
+		imVec2Members.forEach { genJavaXYAccessor(javaCode, it, "float") }
 		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName, `c++Name`) ->
 			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName, `c++Name`)
 		}
@@ -27,6 +28,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
+		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float") }
 		booleanMembers.joinLinesTo(cppCode, transform = ::`c++BooleanAccessor`)
 		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName, `c++Name`) ->
 			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName, `c++Name`)
@@ -56,4 +58,17 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 			PPT("float", "GrabRounding"),
 			PPT("float", "MouseCursorScale"),
 			PPT("float", "CurveTessellationTol"))
+
+	private val imVec2Members = listOf(
+			"WindowPadding",
+			"WindowMinSize",
+			"WindowTitleAlign",
+			"FramePadding",
+			"ItemSpacing",
+			"ItemInnerSpacing",
+			"TouchExtraPadding",
+			"ButtonTextAlign",
+			"DisplayWindowPadding",
+			"DisplaySafeAreaPadding"
+	)
 }

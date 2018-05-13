@@ -13,20 +13,6 @@ public class JImGuiIO extends JImGuiIOGen {
 	JImGuiIO() {
 	}
 
-	public native float getMousePosX();
-	public native float getMousePosY();
-	public native float getMouseDeltaX();
-	public native float getMouseDeltaY();
-	public native float getMousePosPrevX();
-	public native float getMousePosPrevY();
-	public native float getDisplayFramebufferScaleX();
-	public native float getDisplayFramebufferScaleY();
-	public native float getDisplayVisibleMinX();
-	public native float getDisplayVisibleMinY();
-	public native float getDisplayVisibleMaxX();
-	public native float getDisplayVisibleMaxY();
-	public native float getDisplaySizeX();
-	public native float getDisplaySizeY();
 	public native float getMouseClickedPosX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseDragMaxDistanceAbsX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);

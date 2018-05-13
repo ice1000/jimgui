@@ -43,24 +43,6 @@ void Java_org_ice1000_jimgui_JImFont_setFontAtlasFlags(JNIEnv *, jobject, jint n
 	ImGui::GetFont()->ContainerAtlas->Flags = newValue;
 }
 
-#define JImIOAccessor(Property) \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## X(JNIEnv *, jobject) { \
-  return ImGui::GetIO().Property.x; \
-} \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_get ## Property ## Y(JNIEnv *, jobject) { \
-  return ImGui::GetIO().Property.y; \
-}
-
-JImIOAccessor(DisplayFramebufferScale)
-JImIOAccessor(DisplayVisibleMin)
-JImIOAccessor(DisplayVisibleMax)
-JImIOAccessor(DisplaySize)
-JImIOAccessor(MousePos)
-JImIOAccessor(MouseDelta)
-JImIOAccessor(MousePosPrev)
-
-#undef JImIOAccessor
-
 #define JImIOMouseArrayAccessor(property) \
 jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \
   return ImGui::GetIO().Mouse ## property [index].x; \

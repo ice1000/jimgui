@@ -16,6 +16,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getIO(); }"
 
 	override fun java(javaCode: StringBuilder) {
+		imVec2Members.forEach { genJavaXYAccessor(javaCode, it, "float") }
 		functions.forEach { genJavaFun(javaCode, it) }
 		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName, `c++Name`) ->
 			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName, `c++Name`)
@@ -32,6 +33,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
+		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName, `c++Name`) ->
 			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName, `c++Name`)
 			else `c++PrimitiveAccessor`(type, name)
@@ -110,4 +112,14 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			PPT("float", "MouseWheelH"),
 			PPT("float", "Framerate"),
 			PPT("float", "IniSavingRate"))
+
+	private val imVec2Members = listOf(
+			"DisplayFramebufferScale",
+			"DisplayVisibleMin",
+			"DisplayVisibleMax",
+			"DisplaySize",
+			"MousePos",
+			"MouseDelta",
+			"MousePosPrev"
+	)
 }
