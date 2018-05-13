@@ -100,8 +100,15 @@ data class ImVec4Param(val name: String, override val default: Any?) : Param() {
 	override fun javaDefault() = "@NotNull JImVec4 $name"
 	override fun javaExpr() = "$name.nativeObjectPtr"
 	override fun `c++`() = "jlong $name"
-	override fun `c++Expr`() = "*reinterpret_cast<const ImVec4 *> ($name)"
+	override fun `c++Expr`() = "*reinterpret_cast<ImVec4 *> ($name)"
+}
 
+data class BoolPtrParam(val name: String, override val default: Any?) : Param() {
+	override fun java() = "long $name"
+	override fun javaDefault() = "@NotNull NativeBool $name"
+	override fun javaExpr() = "$name.nativeObjectPtr"
+	override fun `c++`() = "jlong $name"
+	override fun `c++Expr`() = "reinterpret_cast<bool *> ($name)"
 }
 
 /**

@@ -8,7 +8,6 @@
 
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
-#include <org_ice1000_jimgui_JImStyleVar.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
 #include <org_ice1000_jimgui_JImGuiFont.h>
 #include <org_ice1000_jimgui_JImGui.h>
@@ -177,34 +176,5 @@ auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass
 	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
-
-#define JImStyleVarAccessor(variableName) \
-jint Java_org_ice1000_jimgui_JImStyleVar_get ## variableName(JNIEnv *, jclass) { \
-  return ImGuiStyleVar_ ## variableName; \
-}
-
-JImStyleVarAccessor(Alpha)
-JImStyleVarAccessor(WindowPadding)
-JImStyleVarAccessor(WindowRounding)
-JImStyleVarAccessor(WindowBorderSize)
-JImStyleVarAccessor(WindowMinSize)
-JImStyleVarAccessor(WindowTitleAlign)
-JImStyleVarAccessor(ChildRounding)
-JImStyleVarAccessor(ChildBorderSize)
-JImStyleVarAccessor(PopupRounding)
-JImStyleVarAccessor(PopupBorderSize)
-JImStyleVarAccessor(FramePadding)
-JImStyleVarAccessor(FrameRounding)
-JImStyleVarAccessor(FrameBorderSize)
-JImStyleVarAccessor(ItemSpacing)
-JImStyleVarAccessor(ItemInnerSpacing)
-JImStyleVarAccessor(IndentSpacing)
-JImStyleVarAccessor(ScrollbarSize)
-JImStyleVarAccessor(ScrollbarRounding)
-JImStyleVarAccessor(GrabMinSize)
-JImStyleVarAccessor(GrabRounding)
-JImStyleVarAccessor(ButtonTextAlign)
-
-#undef JImStyleVarAccessor
 
 #pragma clang diagnostic pop
