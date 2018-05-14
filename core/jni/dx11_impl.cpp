@@ -40,22 +40,22 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 struct NativeObject {
-	HWND hwnd;
-	MSG msg;
-	WNDCLASSEX wc;
+		HWND hwnd;
+		MSG msg;
+		WNDCLASSEX wc;
 
-	NativeObject(jint width, jint height, const char *title) : wc(
-			{
-					sizeof(WNDCLASSEX),
-					CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-					_T(WINDOW_ID), NULL
-			}) {
-		RegisterClassEx(&wc);
-		ZeroMemory(&msg, sizeof(msg));
-		hwnd = CreateWindow(
-				_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-				100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
-	};
+		NativeObject(jint width, jint height, Ptr<const char> title) : wc(
+				{
+						sizeof(WNDCLASSEX),
+						CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+						_T(WINDOW_ID), NULL
+				}) {
+			RegisterClassEx(&wc);
+			ZeroMemory(&msg, sizeof(msg));
+			hwnd = CreateWindow(
+					_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
+					100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
+		};
 };
 
 void CreateRenderTarget() {
@@ -154,7 +154,7 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	__get(Byte, title);
 
 	// Create application window
-	auto object = new NativeObject(width, height, reinterpret_cast<const char *> (title));
+	auto object = new NativeObject(width, height, reinterpret_cast<Ptr<const char>> (title));
 
 	// Initialize Direct3D
 	if (CreateDeviceD3D(object->hwnd) < 0) {
@@ -180,12 +180,12 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	auto object = reinterpret_cast<NativeObject *> (nativeObjectPtr);
+	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
 void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto object = reinterpret_cast<NativeObject *> (nativeObjectPtr);
+	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	while (object->msg.message != WM_QUIT and PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
 		TranslateMessage(&object->msg);
 		DispatchMessage(&object->msg);
@@ -194,7 +194,7 @@ void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeO
 }
 
 void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
-	auto clear_color = reinterpret_cast<ImVec4 *> (colorPtr);
+	auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
 // Rendering
 	g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
 	g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, (float *) clear_color);
@@ -206,7 +206,7 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorP
 }
 
 void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto object = reinterpret_cast<NativeObject *> (nativeObjectPtr);
+	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();
 

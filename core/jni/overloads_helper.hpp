@@ -6,22 +6,23 @@
 #define JIMGUI_GENERATED_HELPER_H
 
 #include <imgui.h>
+#include "basics.hpp"
 
 namespace ImGui {
-	auto ListBoxHeader0(const char *label, int items_count, int height_in_items) -> bool;
-	auto PushID0(const char *str_id_begin, const char *str_id_end) -> void;
-	auto GetID0(const char *str_id_begin, const char *str_id_end) -> ImGuiID;
-	auto PushID1(const char *str_id) -> void;
+	auto ListBoxHeader0(Ptr<const char> label, int items_count, int height_in_items) -> bool;
+	auto PushID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> void;
+	auto GetID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> ImGuiID;
+	auto PushID1(Ptr<const char> str_id) -> void;
 	auto PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void;
 	auto PushStyleVarFloat(ImGuiStyleVar idx, float val) -> void;
 	auto BeginChild0(
-			const char *str_id, const ImVec2 &size = ImVec2(0, 0),
+			Ptr<const char> str_id, const ImVec2 &size = ImVec2(0, 0),
 			bool border = false, ImGuiWindowFlags flags = 0) -> bool;
-	auto ColorEdit3(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorEdit4(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorPicker3(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorPicker4(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto MenuItem0(const char *label, const char *shortcut, bool *p_selected, bool enabled = true) -> bool;
+	auto ColorEdit3(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorEdit4(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker3(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker4(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto MenuItem0(Ptr<const char> label, Ptr<const char> shortcut, Ptr<bool> p_selected, bool enabled = true) -> bool;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H

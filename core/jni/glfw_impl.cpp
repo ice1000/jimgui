@@ -15,7 +15,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
-static void glfw_error_callback(int error, const char *description) {
+static void glfw_error_callback(int error, Ptr<const char> description) {
 	fprintf(stderr, "ImGui Error %d: %s\n", error, description);
 }
 
@@ -32,9 +32,9 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-	GLFWwindow *window = glfwCreateWindow(
+	Ptr<GLFWwindow> window = glfwCreateWindow(
 			width, height,
-			reinterpret_cast<const char *> (title), nullptr, nullptr);
+			reinterpret_cast<Ptr<const char>> (title), nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	// Enable vsync
 	glfwSwapInterval(1);
@@ -54,7 +54,7 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto *window = reinterpret_cast<GLFWwindow *>(nativeObjectPtr);
+	auto *window = reinterpret_cast<Ptr<GLFWwindow>>(nativeObjectPtr);
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
@@ -62,7 +62,7 @@ void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jl
 }
 
 auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<GLFWwindow *>(nativeObjectPtr)));
+	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<Ptr<GLFWwindow>>(nativeObjectPtr)));
 }
 
 void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
@@ -71,8 +71,8 @@ void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
 }
 
 void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
-	auto *window = reinterpret_cast<GLFWwindow *> (nativeObjectPtr);
-	auto *clear_color = reinterpret_cast<ImVec4 *> (colorPtr);
+	auto *window = reinterpret_cast<Ptr<GLFWwindow>> (nativeObjectPtr);
+	auto *clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
 	int display_w, display_h;
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);
@@ -86,7 +86,7 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectP
 void Java_org_ice1000_jimgui_JImGui_textUnformatted(JNIEnv *env, jclass, jbyteArray _text) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, text)
-	const auto *textBegin = reinterpret_cast<const char *> (text);
+	const auto *textBegin = reinterpret_cast<Ptr<const char>> (text);
 	ImGui::TextUnformatted(textBegin, textBegin + __len(text));
 	__release(Byte, text)
 	__JNI__FUNCTION__CLEAN__

@@ -7,6 +7,9 @@
 #ifndef __JIMGUI_BASICS_HPP__
 #define __JIMGUI_BASICS_HPP__
 
+template<typename T>
+using Ptr = T *;
+
 #define __JNI__FUNCTION__INIT__ \
 jboolean *option = nullptr;
 

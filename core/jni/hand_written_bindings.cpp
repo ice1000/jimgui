@@ -31,17 +31,17 @@ void Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat 
 
 jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) {
 	__JNI__FUNCTION__INIT__
-	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	auto *font = reinterpret_cast<Ptr<ImFont>> (nativeObjectPtr);
 	auto debugName = font->GetDebugName();
 	auto len = static_cast<jsize> (strlen(debugName));
-	auto *data = reinterpret_cast<const jbyte *> (debugName);
+	auto *data = reinterpret_cast<Ptr<const jbyte>> (debugName);
 	__init(Byte, data, len);
 	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
 
 jlong Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto *font = reinterpret_cast<ImFont *> (nativeObjectPtr);
+	auto *font = reinterpret_cast<Ptr<ImFont>> (nativeObjectPtr);
 	return reinterpret_cast<jlong> (font->ContainerAtlas);
 }
 
@@ -80,7 +80,7 @@ jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) {
 }
 
 void Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	delete reinterpret_cast<ImVec4 *> (nativeObjectPtr);
+	delete reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr);
 }
 
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
@@ -89,41 +89,41 @@ jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
 }
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x;
+	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->x;
 }
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getY(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y;
+	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->y;
 }
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z;
+	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->z;
 }
 
 jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	return reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w;
+	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->w;
 }
 
 void Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->x = newValue;
+	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->x = newValue;
 }
 
 void Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->y = newValue;
+	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->y = newValue;
 }
 
 void Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->z = newValue;
+	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->z = newValue;
 }
 
 void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	reinterpret_cast<ImVec4 *> (nativeObjectPtr)->w = newValue;
+	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->w = newValue;
 }
 
 void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, data)
-	const auto *ini_data = reinterpret_cast<const char *>(data);
+	const auto *ini_data = reinterpret_cast<Ptr<const char>>(data);
 	auto ini_size = static_cast<size_t>(__len(data));
 	ImGui::LoadIniSettingsFromMemory(ini_data, ini_size);
 	__abort(Byte, data)
@@ -134,7 +134,7 @@ auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass
 	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::SaveIniSettingsToMemory();
 	auto len = static_cast<jsize> (strlen(ini_data));
-	auto *data = reinterpret_cast<const jbyte *> (ini_data);
+	auto *data = reinterpret_cast<Ptr<const jbyte>> (ini_data);
 	__init(Byte, data, len);
 	delete[] ini_data;
 	__JNI__FUNCTION__CLEAN__
