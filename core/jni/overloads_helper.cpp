@@ -37,7 +37,7 @@ auto ImGui::MenuItem0(const char *label, const char *shortcut, bool *p_selected,
 }
 
 #define ColorRelated(name) \
-auto ImGui::Color ## name(const char *label, ImVec4 col, ImGuiColorEditFlags flags) -> bool { \
+auto ImGui::Color ## name(const char *label, ImVec4& col, ImGuiColorEditFlags flags) -> bool { \
   return Color ## name(label, reinterpret_cast<float *> (&col), flags); \
 }
 

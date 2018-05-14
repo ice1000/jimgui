@@ -17,10 +17,10 @@ namespace ImGui {
 	auto BeginChild0(
 			const char *str_id, const ImVec2 &size = ImVec2(0, 0),
 			bool border = false, ImGuiWindowFlags flags = 0) -> bool;
-	auto ColorEdit3(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorEdit4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorPicker3(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
-	auto ColorPicker4(const char *label, ImVec4 col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorEdit3(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorEdit4(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker3(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
+	auto ColorPicker4(const char *label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto MenuItem0(const char *label, const char *shortcut, bool *p_selected, bool enabled = true) -> bool;
 }
 

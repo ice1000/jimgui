@@ -194,15 +194,15 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
 
 			// Widgets: Color Editor/Picker
-			Fun("colorEdit3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorEdit4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorEdit3", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorEdit4", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
 			Fun("colorButton", "boolean",
 					string("descriptionID"),
 					vec4("color"),
 					flags(from = "ColorEdit", default = "Nothing"),
 					size(default = "0,0")),
-			Fun("colorPicker3", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorPicker4", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorPicker3", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorPicker4", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
 			Fun("setColorEditOptions", flags()),
 
 			// Widgets: Selectable / Lists

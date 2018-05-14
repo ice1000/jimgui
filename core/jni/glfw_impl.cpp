@@ -72,11 +72,11 @@ void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
 
 void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
 	auto *window = reinterpret_cast<GLFWwindow *> (nativeObjectPtr);
-	auto clear_color = *reinterpret_cast<ImVec4 *> (colorPtr);
+	auto *clear_color = reinterpret_cast<ImVec4 *> (colorPtr);
 	int display_w, display_h;
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);
-	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
 	glClear(GL_COLOR_BUFFER_BIT);
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());

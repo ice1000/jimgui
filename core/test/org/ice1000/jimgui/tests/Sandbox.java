@@ -57,7 +57,9 @@ public class Sandbox {
 			float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
 			@NotNull JImVec4 background = imGui.getBackground();
-			imGui.colorEdit4("Background", background);
+			System.out.print(background);
+			imGui.colorEdit3("Background", background);
+			System.out.println(background);
 			JImGuiIO io = imGui.getIO();
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {

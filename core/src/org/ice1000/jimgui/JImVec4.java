@@ -78,6 +78,16 @@ public class JImVec4 implements DeallocatableObject {
 				(float) color.getOpacity());
 	}
 
+	@Override
+	public String toString() {
+		return "ImVec4{" +
+				getX() + ',' +
+				getY() + ',' +
+				getZ() + ',' +
+				getW() +
+				'}';
+	}
+
 	private static native float getZ(final long nativeObjectPtr);
 	private static native float getY(final long nativeObjectPtr);
 	private static native float getX(final long nativeObjectPtr);
