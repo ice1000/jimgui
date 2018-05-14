@@ -28,6 +28,14 @@ public class Sandbox {
 		manager.add(aFloat2);
 		manager.add(anInt);
 		manager.add(anInt2);
+		System.out.println(aFloat.accessValue());
+		System.out.println(anInt.accessValue());
+		aFloat.modifyValue(666);
+		System.out.println(aFloat.accessValue());
+		System.out.println(anInt.accessValue());
+		anInt.modifyValue(666);
+		System.out.println(aFloat.accessValue());
+		System.out.println(anInt.accessValue());
 		JImGuiUtil.runWithinPer(9000, 10, imGui -> {
 			JImFont font = imGui.getFont();
 			font.setFallbackChar('*');
@@ -46,10 +54,10 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
-//			imGui.dragFloat("Wtf", aFloat);
-//			imGui.text("Float = " + aFloat.accessValue());
-//			imGui.dragFloatRange2("Wtf", aFloat, aFloat2);
-//			imGui.text("Float2 = " + aFloat2.accessValue());
+			imGui.dragFloat("Wtf", aFloat);
+			imGui.text("Float = " + aFloat.accessValue());
+			imGui.dragFloatRange2("Wtf", aFloat, aFloat2);
+			imGui.text("Float2 = " + aFloat2.accessValue());
 			imGui.dragInt("Wtf", anInt);
 			imGui.text("Int = " + anInt.accessValue());
 			imGui.dragIntRange2("Wtf", anInt, anInt2);
@@ -57,9 +65,9 @@ public class Sandbox {
 			float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
 			@NotNull JImVec4 background = imGui.getBackground();
-			System.out.print(background);
+			// System.out.print(background);
 			imGui.colorEdit3("Background", background);
-			System.out.println(background);
+			// System.out.println(background);
 			JImGuiIO io = imGui.getIO();
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {
