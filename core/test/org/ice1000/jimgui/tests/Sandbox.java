@@ -20,10 +20,14 @@ public class Sandbox {
 		AtomicReference<String> ini = new AtomicReference<>("");
 		NativeFloat aFloat = new NativeFloat();
 		NativeFloat aFloat2 = new NativeFloat();
+		NativeInt anInt = new NativeInt();
+		NativeInt anInt2 = new NativeInt();
 		long start = System.currentTimeMillis();
 		DeallocatableObjectManager manager = new DeallocatableObjectManager();
 		manager.add(aFloat);
 		manager.add(aFloat2);
+		manager.add(anInt);
+		manager.add(anInt2);
 		JImGuiUtil.runWithinPer(9000, 10, imGui -> {
 			JImFont font = imGui.getFont();
 			font.setFallbackChar('*');
@@ -42,15 +46,18 @@ public class Sandbox {
 				}
 				imGui.endMainMenuBar();
 			}
-			imGui.dragFloat("Wtf", aFloat);
-			imGui.text("Float = " + aFloat.accessValue());
-			imGui.dragFloatRange2("Wtf", aFloat, aFloat2);
-			imGui.text("Float2 = " + aFloat2.accessValue());
+//			imGui.dragFloat("Wtf", aFloat);
+//			imGui.text("Float = " + aFloat.accessValue());
+//			imGui.dragFloatRange2("Wtf", aFloat, aFloat2);
+//			imGui.text("Float2 = " + aFloat2.accessValue());
+			imGui.dragInt("Wtf", anInt);
+			imGui.text("Int = " + anInt.accessValue());
+			imGui.dragIntRange2("Wtf", anInt, anInt2);
+			imGui.text("Int2 = " + anInt2.accessValue());
 			float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
-			MutableJImVec4 background = JImVec4.fromAWT(Color.BLUE);
+			@NotNull JImVec4 background = imGui.getBackground();
 			imGui.colorEdit4("Background", background);
-			imGui.setBackground(background);
 			JImGuiIO io = imGui.getIO();
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {
