@@ -37,7 +37,7 @@ if (JNI_FOUND)
 	message(STATUS "JNI_LIBRARIES=${JNI_LIBRARIES}")
 endif ()
 
-include_directories(${JNI_INCLUDE_DIRS} imgui javah impl)
+include_directories(${JNI_INCLUDE_DIRS} imgui javah impl config)
 
 link_directories(imgui impl)
 
