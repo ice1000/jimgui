@@ -11,9 +11,9 @@ build_script:
   - ps: Get-Command sh.exe -All | Remove-Item
   - gradlew assemble --info --stacktrace
 
-platform:
-  - x86
-  - x64
+#platform:
+#  - x86
+#  - x64
 
 cache:
   - C:\Users\appveyor\.gradle

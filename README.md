@@ -22,10 +22,13 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [X] `ImGui` namespace function/javadoc generation
 + [X] `ImGuiIO` properties getter/setter/javadoc generation
 + [X] `ImGuiFont` properties getter/setter/javadoc generation
++ [X] `ImGuiFontAtlas` properties getter/setter/javadoc generation
 + [X] `ImGui*Flags` copy-pasted constant/javadoc
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
   + [X] Generate functions with `MagicConstant` annotation
++ [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
++ [X] `ImVec4` wrapper with optional mutability
 + [X] Linux native library with glfw3 + opengl3 implementation, hosted on CircleCI
 + [X] Windows7+ native library with directX11 implementation, hosted on AppVeyor
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
