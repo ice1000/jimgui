@@ -30,6 +30,11 @@ public final class JImGuiIO extends JImGuiIOGen {
 		return new JImFontAtlas(getFonts0());
 	}
 
+	public @NotNull JImFont getFontDefault() {
+		return new JImFont(getFontDefault0());
+	}
+
 	private static native byte @NotNull [] getInputString0();
 	private static native long getFonts0();
+	private static native long getFontDefault0();
 }

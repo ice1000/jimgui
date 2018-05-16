@@ -79,6 +79,10 @@ jlong Java_org_ice1000_jimgui_JImGuiIO_getFonts0(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong> (ImGui::GetIO().Fonts);
 }
 
+jlong Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *, jclass) {
+	return reinterpret_cast<jlong> (ImGui::GetIO().FontDefault);
+}
+
 jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
