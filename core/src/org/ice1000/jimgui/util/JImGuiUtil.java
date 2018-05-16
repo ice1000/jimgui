@@ -56,7 +56,7 @@ public class JImGuiUtil {
 				}
 			}
 		} catch (@NotNull InterruptedException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class JImGuiUtil {
 				}
 			}
 		} catch (@NotNull InterruptedException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class JImGuiUtil {
 				}
 			}
 		} catch (@NotNull InterruptedException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
