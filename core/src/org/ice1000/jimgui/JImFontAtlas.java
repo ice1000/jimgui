@@ -21,6 +21,16 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	public @NotNull JImFont addFontFromFile(@NotNull String path) {
 		return addFontFromFile(path, 16);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return the font
+	 */
+	public @NotNull JImFont addDefaultFont() {
+		return new JImFont(addFontDefault(nativeObjectPtr));
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
