@@ -25,12 +25,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	override fun java(javaCode: StringBuilder) {
 		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
 		primitiveMembers.forEach { (type, name, annotation) ->
-			javaCode.javadoc(name)
-					.append("\tpublic ").append(annotation).append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
-					.append("\tprivate native ").append(annotation).append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
-					.javadoc(name)
-					.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
-					.append("\tprivate native void set").append(name).append("(long nativeObjectPtr, ").append(annotation).append(type).appendln(" newValue);")
+			javaCode.genJavaObjectiveMemberAccessor(name, annotation, type)
 		}
 		functions.forEach { genJavaFun(javaCode, it) }
 	}

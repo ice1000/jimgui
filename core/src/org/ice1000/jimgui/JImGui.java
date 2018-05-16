@@ -101,6 +101,42 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * Call this only if you expect a nullable result.
 	 *
+	 * @return same as {@link #getWindowDrawList()}
+	 */
+	@Contract(pure = true)
+	public @Nullable JImDrawList findWindowDrawList() {
+		long drawListNativeObjectPtr = getWindowDrawListNativeObjectPtr();
+		return drawListNativeObjectPtr == 0 ? null : new JImDrawList(drawListNativeObjectPtr);
+	}
+
+	@Contract(pure = true)
+	public @NotNull JImDrawList getWindowDrawList() {
+		@Nullable JImDrawList windowDrawList = findWindowDrawList();
+		if (null == windowDrawList) alreadyDisposed();
+		return windowDrawList;
+	}
+
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
+	 * @return same as {@link #getOverlayDrawList()}
+	 */
+	@Contract(pure = true)
+	public @Nullable JImDrawList findOverlayDrawList() {
+		long drawListNativeObjectPtr = getOverlayDrawListNativeObjectPtr();
+		return drawListNativeObjectPtr == 0 ? null : new JImDrawList(drawListNativeObjectPtr);
+	}
+
+	@Contract(pure = true)
+	public @NotNull JImDrawList getOverlayDrawList() {
+		@Nullable JImDrawList windowDrawList = findOverlayDrawList();
+		if (null == windowDrawList) alreadyDisposed();
+		return windowDrawList;
+	}
+
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
 	 * @return same as {@link #getStyle()}
 	 */
 	@Contract(pure = true)
@@ -200,6 +236,8 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
+	private static native long getWindowDrawListNativeObjectPtr();
+	private static native long getOverlayDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);

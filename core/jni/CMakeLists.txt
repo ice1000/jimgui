@@ -52,6 +52,7 @@ set(ALL_LIBRARIES
 		generated_imgui_io.cpp
 		generated_imgui_font.cpp
 		generated_imgui_font_atlas.cpp
+		generated_imgui_draw_list.cpp
 		generated_imgui_style.cpp
 		hand_written_bindings.cpp
 		overloads_helper.cpp

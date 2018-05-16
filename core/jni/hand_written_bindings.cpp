@@ -20,6 +20,14 @@ jlong Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNIEnv *, jclass) {
 	return reinterpret_cast<jlong> (ImGui::GetFont());
 }
 
+jlong Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) {
+	return reinterpret_cast<jlong> (ImGui::GetWindowDrawList());
+}
+
+jlong Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) {
+	return reinterpret_cast<jlong> (ImGui::GetOverlayDrawList());
+}
+
 jlong Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) {
 	return reinterpret_cast<jlong> (&ImGui::GetStyle().Colors[index]);
 }
