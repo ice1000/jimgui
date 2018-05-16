@@ -18,7 +18,12 @@ abstract class GenEnumTask<T>(className: String) : GenJavaTask(className), Runna
 		}.let { targetJavaFile.writeText(it) }
 	}
 
-	abstract fun StringBuilder.genStatement(index: Int, element: T)
+	open fun StringBuilder.genStatement(index: Int, element: T) {
+		append("int ")
+		append(element)
+		append(" = ")
+		append(index)
+	}
 }
 
 open class GenStyleVarsTask : GenEnumTask<Pair<String, String>>("JImStyleVars") {
@@ -52,11 +57,11 @@ open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
 			"SeparatorActive", "ResizeGrip", "ResizeGripHovered", "ResizeGripActive", "PlotLines", "PlotLinesHovered",
 			"PlotHistogram", "PlotHistogramHovered", "TextSelectedBg", "ModalWindowDarkening", "DragDropTarget",
 			"NavHighlight", "NavWindowingHighlight")
+}
 
-	override fun StringBuilder.genStatement(index: Int, element: String) {
-		append("int ")
-		append(element)
-		append(" = ")
-		append(index)
-	}
+open class GenDefaultKeysTask : GenEnumTask<String>("JImDefaultKeys") {
+	override val list = listOf(
+			"Tab", "LeftArrow", "RightArrow", "UpArrow", "DownArrow", "PageUp", "PageDown",
+			"Home", "End", "Insert", "Delete", "Backspace", "Space", "Enter", "Escape", "A",
+			"C", "V", "X", "Y", "Z")
 }

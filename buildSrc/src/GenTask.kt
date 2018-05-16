@@ -67,8 +67,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 }"""
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?, `c++Expr`: String, init: String = "", deinit: String = "", additionalParamText: String = "") =
-			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass $additionalParamText ${
-			comma(params)}${params.`c++`()}) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
+			"$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass ${comma(params)}${
+			params.`c++`()}$additionalParamText) -> ${orVoid(type)} {$eol$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")} }"
 //endregion
 
 	//region Trivial helpers
@@ -160,9 +160,9 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 					additionalParamText = additionalParamText)
 			cppCode.appendln(f)
 		} else {
-			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject").append(additionalParamText)
+			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject")
 			if (params.isNotEmpty()) cppCode.append(",")
-			cppCode.append(params.`c++`()).append(")->")
+			cppCode.append(params.`c++`()).append(additionalParamText).append(")->")
 			val isVoid = type == null
 			if (isVoid) cppCode.append("void")
 			else cppCode.append('j').append(type)

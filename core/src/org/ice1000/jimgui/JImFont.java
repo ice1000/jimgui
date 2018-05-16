@@ -24,10 +24,6 @@ public final class JImFont extends JImGuiFontGen {
 		setFallbackChar((short) wChar);
 	}
 
-	public void setFallbackChar(short wChar) {
-		setFallbackChar(nativeObjectPtr, wChar);
-	}
-
 	public @NotNull JImFontAtlas getContainerAtlas() {
 		return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
 	}

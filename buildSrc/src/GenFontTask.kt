@@ -48,17 +48,17 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", ", jlong nativeObjectPtr") }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanAccessor`(it, ", jlong nativeObjectPtr") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params.drop(1), name, type, cppCode, ", jlong nativeObjectPtr") }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
 	}
 
 	override val `c++Expr` = "reinterpret_cast<ImFont *> (nativeObjectPtr)->"
 	private val booleanMembers = listOf("DirtyLookupTables")
 	private val imVec2Members = listOf("DisplayOffset")
 	private val functions = listOf(
-			Fun.protected("clearOutputData", nativeObjectPtr),
-			Fun.protected("setFallbackChar", nativeObjectPtr, p("wChar", "short")),
-			Fun.protected("isLoaded", "boolean", nativeObjectPtr),
-			Fun.protected("buildLookupTable", nativeObjectPtr))
+			Fun.private("clearOutputData", nativeObjectPtr),
+			Fun.protected("setFallbackChar", p("wChar", "short"), nativeObjectPtr),
+			Fun.private("isLoaded", "boolean", nativeObjectPtr),
+			Fun.private("buildLookupTable", nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
 			"float" to "FontSize",

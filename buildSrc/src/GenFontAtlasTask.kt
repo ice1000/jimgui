@@ -38,14 +38,14 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	override fun `c++`(cppCode: StringBuilder) {
 		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", ", jlong nativeObjectPtr") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params.drop(1), name, type, cppCode, ", jlong nativeObjectPtr") }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
 	}
 
 	override val `c++Expr` = "(reinterpret_cast<ImFontAtlas *> (nativeObjectPtr))->"
 	private val imVec2Members = listOf("TexUvScale", "TexUvWhitePixel")
 	private val functions = listOf(
-			Fun.protected("addFontFromFileTTF", "long", nativeObjectPtr, string("path"), float("sizePixels")),
-			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long", nativeObjectPtr, string("compressedFontDataBase85"), float("sizePixels")),
+			Fun.protected("addFontFromFileTTF", "long", string("path"), float("sizePixels"), nativeObjectPtr),
+			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long", string("compressedFontDataBase85"), float("sizePixels"), nativeObjectPtr),
 			Fun.protected("build", "boolean", nativeObjectPtr),
 			Fun.protected("clearInputData", nativeObjectPtr),
 			Fun.protected("clearTexData", nativeObjectPtr),

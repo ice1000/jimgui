@@ -48,4 +48,11 @@ public interface JImWindowFlags {
 	/** No focusing toward this window with gamepad/keyboard navigation (e.g. skipped by CTRL+TAB) */
 	int NoNavFocus = 1 << 19;
 	int NoNav = NoNavInputs | NoNavFocus;
+
+	/**
+	 * [BETA] Allow gamepad/keyboard navigation to cross over parent border to this child
+	 *
+	 * @apiNote (only use on child that have no scrolling !)
+	 */
+	int NavFlattened = 1 << 23;
 }

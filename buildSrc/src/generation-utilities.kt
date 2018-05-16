@@ -56,7 +56,9 @@ data class Fun(val name: String,
 
 	companion object {
 		fun protected(name: String, vararg param: Param) = Fun(name, *param).apply { visibility = "protected" }
+		fun private(name: String, vararg param: Param) = Fun(name, *param).apply { visibility = "private" }
 		fun protected(name: String, type: String?, vararg param: Param) = Fun(name, type, *param).apply { visibility = "protected" }
+		fun private(name: String, type: String?, vararg param: Param) = Fun(name, type, *param).apply { visibility = "private" }
 	}
 }
 
