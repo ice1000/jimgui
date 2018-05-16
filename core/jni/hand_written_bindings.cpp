@@ -116,6 +116,14 @@ jfloat Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObject
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->z;
 }
 
+jint Java_org_ice1000_jimgui_JImVec4_toImU32(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	return ImGui::ColorConvertFloat4ToU32(* reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr));
+}
+
+jlong Java_org_ice1000_jimgui_JImVec4_fromImU320(JNIEnv *, jclass, jint u32) {
+	return reinterpret_cast<jlong> (new ImVec4(ImGui::ColorConvertU32ToFloat4(static_cast<ImU32> (u32))));
+}
+
 jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->w;
 }

@@ -53,6 +53,13 @@ public class Demo {
 		manager.add(showAppMetrics);
 		manager.add(showAppAbout);
 		manager.add(pOpen);
+		manager.add(noTitlebar);
+		manager.add(noScrollbar);
+		manager.add(noMenu);
+		manager.add(noMove);
+		manager.add(noResize);
+		manager.add(noCollapse);
+		manager.add(noNav);
 		JImGuiUtil.runPer(15, imGui -> {
 			if (showAppMetrics.accessValue()) imGui.showMetricsWindow(showAppMetrics);
 			if (showAppStyleEditor.accessValue()) {

@@ -47,6 +47,11 @@ public class JImVec4 implements DeallocatableObject {
 		return getZ(nativeObjectPtr);
 	}
 
+	/** convert to {@code ImU32}, unsigned 32-bit integer */
+	public final int toImU32() {
+		return toImU32(nativeObjectPtr);
+	}
+
 	/** @return see {@link JImVec4#nativeObjectPtr} */
 	private static native long allocateNativeObjects0();
 
@@ -78,6 +83,15 @@ public class JImVec4 implements DeallocatableObject {
 				(float) color.getOpacity());
 	}
 
+	/**
+	 * @param u32 unsigned 32-bit int color representation
+	 * @return a mutable imgui vec4 instance
+	 * @see JImVec4#toImU32()
+	 */
+	public static @NotNull MutableJImVec4 fromU32(int u32) {
+		return new MutableJImVec4(fromU320(u32));
+	}
+
 	@Override
 	public String toString() {
 		return "ImVec4{" +
@@ -92,6 +106,8 @@ public class JImVec4 implements DeallocatableObject {
 	private static native float getY(final long nativeObjectPtr);
 	private static native float getX(final long nativeObjectPtr);
 	private static native float getW(final long nativeObjectPtr);
+	private static native int toImU32(final long nativeObjectPtr);
 	private static native long allocateNativeObjects(float x, float y, float z, float w);
+	private static native long fromU320(int u32);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 }

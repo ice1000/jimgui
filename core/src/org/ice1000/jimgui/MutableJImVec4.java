@@ -12,6 +12,10 @@ public final class MutableJImVec4 extends JImVec4 {
 		super();
 	}
 
+	/** package-private by design */
+	MutableJImVec4(long nativeObjectPtr) {
+		super(nativeObjectPtr);
+	}
 	public MutableJImVec4(float x, float y, float z, float w) {
 		super(x, y, z, w);
 	}
