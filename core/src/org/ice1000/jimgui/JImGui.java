@@ -191,6 +191,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return new String(saveIniSettingsToMemory0());
 	}
 
+	public @NotNull String getClipboardText() {
+		return new String(getClipboardText0());
+	}
+
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
@@ -201,5 +205,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
 	private static native void textUnformatted(byte @NotNull [] text);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
+	private static native byte @NotNull [] getClipboardText0();
 	//endregion
 }

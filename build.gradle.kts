@@ -5,6 +5,7 @@ plugins {
 	maven
 	`maven-publish`
 	kotlin("jvm") version "1.2.41" apply false
+	id("org.sonarqube") version "2.6.2"
 }
 
 var isCI: Boolean by extra

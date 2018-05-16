@@ -100,6 +100,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("captureKeyboardFromApp", bool("capture", default = true)),
 			Fun("captureMouseFromApp", bool("capture", default = true)),
 
+			// Clipboard Utilities
+			Fun("setClipboardText", string("text")),
+
 			// ID stack/scopes
 			Fun("popID"),
 			Fun("pushID", int("intID")),
@@ -258,7 +261,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Columns
 			Fun("columns",
 					int("count", default = 1),
-					string("id", default = strNull),
+					nStringID,
 					bool("border", default = true)),
 			Fun("nextColumn"),
 			Fun("getColumnIndex", "int"),
@@ -328,6 +331,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isAnyItemFocused", "boolean"),
 			Fun("setItemAllowOverlap"),
 			Fun("isRectVisible", "boolean", size()),
+			Fun("getTime", "float"),
+			Fun("getFrameCount", "int"),
 
 			// Windows Scrolling
 			Fun("setScrollX", float("scrollX")),

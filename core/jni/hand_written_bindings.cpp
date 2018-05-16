@@ -136,7 +136,16 @@ auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass
 	auto len = static_cast<jsize> (strlen(ini_data));
 	auto *data = reinterpret_cast<Ptr<const jbyte>> (ini_data);
 	__init(Byte, data, len);
-	delete[] ini_data;
+	__JNI__FUNCTION__CLEAN__
+	return _data;
+}
+
+auto Java_org_ice1000_jimgui_JImGui_getClipboardText0(JNIEnv *env, jclass) -> jbyteArray {
+	__JNI__FUNCTION__INIT__
+	auto ini_data = ImGui::GetClipboardText();
+	auto len = static_cast<jsize> (strlen(ini_data));
+	auto *data = reinterpret_cast<Ptr<const jbyte>> (ini_data);
+	__init(Byte, data, len);
 	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
