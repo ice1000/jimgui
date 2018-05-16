@@ -56,7 +56,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	private val imVec2Members = listOf("DisplayOffset")
 	private val functions = listOf(
 			Fun.private("clearOutputData", nativeObjectPtr),
-			Fun.protected("setFallbackChar", p("wChar", "short"), nativeObjectPtr),
+			Fun.private("setFallbackChar", p("wChar", "short"), nativeObjectPtr),
 			Fun.private("isLoaded", "boolean", nativeObjectPtr),
 			Fun.private("buildLookupTable", nativeObjectPtr))
 

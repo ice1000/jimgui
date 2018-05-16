@@ -17,12 +17,19 @@ public final class JImGuiIO extends JImGuiIOGen {
 	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseDragMaxDistanceAbsX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 	public native float getMouseDragMaxDistanceAbsY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
+
 	public @NotNull String getInputString() {
 		return new String(getInputString0());
 	}
+
 	public void addInputCharacter(char character) {
 		addInputCharacter((short) character);
 	}
 
-	private native byte @NotNull [] getInputString0();
+	public @NotNull JImFontAtlas getFonts() {
+		return new JImFontAtlas(getFonts0());
+	}
+
+	private static native byte @NotNull [] getInputString0();
+	private static native long getFonts0();
 }

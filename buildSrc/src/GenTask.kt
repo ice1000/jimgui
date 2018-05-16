@@ -168,7 +168,11 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 			else cppCode.append('j').append(type)
 			cppCode.appendln('{')
 			if (isVoid) cppCode.`c++Expr`(name, params, type).append(';')
-			else cppCode.append("return static_cast<j").append(type).append(">(").`c++Expr`(name, params, type).append(");")
+			else {
+				if (type == "long") cppCode.append("return reinterpret_cast<jlong> (")
+				else cppCode.append("return static_cast<j").append(type).append(">(")
+				cppCode.`c++Expr`(name, params, type).append(");")
+			}
 			cppCode.appendln('}')
 		}
 	}

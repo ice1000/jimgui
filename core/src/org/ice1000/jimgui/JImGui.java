@@ -61,7 +61,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	@Contract(" -> fail")
 	private void alreadyDisposed() {
-		throw new IllegalStateException("Window already disposed.");
+		throw new IllegalStateException("Native object is nullptr.");
 	}
 
 	/**

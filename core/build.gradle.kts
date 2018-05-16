@@ -70,6 +70,12 @@ val downloadImplGL = task<Download>("downloadImplGL") {
 	overwrite(false)
 }
 
+val downloadFiraCode = task<Download>("downloadFiraCode") {
+	src("https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
+	dest(file("testRes/font").apply { if (!exists()) mkdirs() })
+	overwrite(false)
+}
+
 val cmake = task<Exec>("cmake") {
 	group = compileCxx.group
 	workingDir(`cmake-build-debug`)

@@ -44,13 +44,14 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	override val `c++Expr` = "(reinterpret_cast<ImFontAtlas *> (nativeObjectPtr))->"
 	private val imVec2Members = listOf("TexUvScale", "TexUvWhitePixel")
 	private val functions = listOf(
+			Fun.protected("addFontDefault", "long", nativeObjectPtr),
 			Fun.protected("addFontFromFileTTF", "long", string("path"), float("sizePixels"), nativeObjectPtr),
 			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long", string("compressedFontDataBase85"), float("sizePixels"), nativeObjectPtr),
 			Fun.protected("build", "boolean", nativeObjectPtr),
-			Fun.protected("clearInputData", nativeObjectPtr),
-			Fun.protected("clearTexData", nativeObjectPtr),
-			Fun.protected("clearFonts", nativeObjectPtr),
-			Fun.protected("clear", nativeObjectPtr))
+			Fun.private("clearInputData", nativeObjectPtr),
+			Fun.private("clearTexData", nativeObjectPtr),
+			Fun.private("clearFonts", nativeObjectPtr),
+			Fun.private("clear", nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
 			PPT("int", "Flags", annotation = "@MagicConstant(flagsFromClass = JImFontAtlasFlags.class)"),
