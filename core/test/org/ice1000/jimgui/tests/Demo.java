@@ -38,7 +38,7 @@ public class Demo {
 		NativeBool showAppMetrics = new NativeBool();
 		NativeBool showAppAbout = new NativeBool();
 		NativeBool pOpen = new NativeBool();
-		DeallocatableObjectManager manager = new DeallocatableObjectManager(5);
+		DeallocatableObjectManager manager = new DeallocatableObjectManager(15);
 		manager.add(showAppSimpleOverlay);
 		manager.add(showAppMainMenuBar);
 		manager.add(show_app_log);

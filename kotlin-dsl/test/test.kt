@@ -6,6 +6,7 @@ import org.ice1000.jimgui.util.JniLoader
 fun main(args: Array<String>) {
 	JniLoader.load()
 	runPer(15) {
+		pushID1("WtfID")
 		"Window 2" {
 			menuBar {
 				menu("What?") {
@@ -28,6 +29,7 @@ fun main(args: Array<String>) {
 		treeNode("Platforms") {
 			treeNode("JVM") {
 				treeNode("Kotlin") {
+					if (isItemHovered) tooltip { text("This is an aji language") }
 					text("Kotlin JVM")
 					text("Kotlin Native")
 					text("Kotlin JavaScript")
@@ -47,5 +49,15 @@ fun main(args: Array<String>) {
 				text("IronPython")
 			}
 		}
+		button("Reiuji Utsuho")
+		button("Show completions") {
+			openPopup("WtfID")
+		}
+		popup("WtfID") {
+			text("System.out.println")
+			text("System")
+			text("Security")
+		}
+		popID()
 	}
 }
