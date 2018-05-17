@@ -72,7 +72,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *
 	auto *inputStr = new jbyte[17];
 	jsize len;
 	for (int i = 0;; ++i) {
-		if (not inputShorts[i]) {
+		if (!inputShorts[i]) {
 			len = i;
 			break;
 		} else inputStr[i] = static_cast<jbyte> (inputShorts[i]);
