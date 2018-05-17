@@ -4,7 +4,6 @@ project(jimgui
 		LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
@@ -30,6 +29,7 @@ else ()
 	include_directories(${GLFW_INCLUDE_DIRS})
 
 	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
 endif ()
 
 if (JNI_FOUND)
