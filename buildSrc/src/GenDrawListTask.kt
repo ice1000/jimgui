@@ -36,7 +36,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 
 	override val `c++Expr` = "(reinterpret_cast<ImDrawList *> (nativeObjectPtr))->"
 	private val functions = listOf(
-			Fun("pushClipRect",
+			Fun.private("pushClipRect",
 					size("clipRectMin"),
 					size("clipRectMax"),
 					bool("intersectWithCurrentClipRect", default = false),
@@ -63,7 +63,14 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			// Stateful path API, add points then finish with PathFillConvex() or PathStroke()
 			Fun.private("pathClear", nativeObjectPtr),
 			Fun.private("pathLineTo", pos(), nativeObjectPtr),
-			Fun.private("pathLineToMergeDuplicate", pos(), nativeObjectPtr)
+			Fun.private("pathLineToMergeDuplicate", pos(), nativeObjectPtr),
+			Fun.private("pathFillConvex", u32, nativeObjectPtr),
+			Fun.private("pathStroke", u32, bool("closed"), thickness, nativeObjectPtr),
+
+			// Channels
+			Fun("channelsSplit", int("channelsCount"), nativeObjectPtr),
+			Fun("channelsMerge", nativeObjectPtr),
+			Fun("channelsSetCurrent", int("channelsIndex"), nativeObjectPtr)
 	)
 
 	private val primitiveMembers = listOf(PPT("int", "Flags",

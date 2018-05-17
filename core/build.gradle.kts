@@ -23,6 +23,12 @@ val `cmake-build-debug` = jniDir.resolve("cmake-build-debug")
 val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
 
+fun Task.configureCxxBuild() = doLast {
+	`cmake-build-debug`
+			.listFiles { f: File -> f.extension in nativeLibraryExtensions }
+			.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
+}
+
 val genImguiIO = task<GenIOTask>("genImguiIO")
 val genImgui = task<GenGenTask>("genImgui")
 val genNativeTypes = task<GenNativeTypesTask>("genNativeTypes")
@@ -79,9 +85,7 @@ val downloadFiraCode = task<Download>("downloadFiraCode") {
 val cmake = task<Exec>("cmake") {
 	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
-	if (Os.isFamily(Os.FAMILY_WINDOWS))
-		commandLine("cmake", "-DCMAKE_BUILD_TYPE=", "-G", "CodeBlocks - MinGW Makefiles", `cmake-build-debug`.parent)
-	else commandLine("cmake", `cmake-build-debug`.parent)
+	commandLine("cmake", `cmake-build-debug`.parent)
 	doFirst { `cmake-build-debug`.mkdirs() }
 }
 
@@ -89,12 +93,15 @@ val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
 	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
-	commandLine(if (Os.isFamily(Os.FAMILY_WINDOWS)) "mingw32-make" else "make", "-f", "Makefile")
-	doLast {
-		`cmake-build-debug`
-				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
-				.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
-	}
+	commandLine("make", "-f", "Makefile")
+	configureCxxBuild()
+}
+
+val msvc = task<Exec>("msvc") {
+	group = compileCxx.group
+	workingDir(`cmake-build-debug`)
+	commandLine("dir")
+	configureCxxBuild()
 }
 
 val clearGenerated = task<Delete>("clearGenerated") {
@@ -106,7 +113,6 @@ val clearCMake = task<Exec>("clearCMake") {
 	group = clean.group
 	workingDir(`cmake-build-debug`)
 	commandLine("cmake", "clean")
-	commandLine("make", "clean")
 }
 
 val clearDownloaded = task<Delete>("clearDownloaded") {
@@ -123,7 +129,7 @@ compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImgu
 clean.dependsOn(clearGenerated)
 clean.dependsOn(clearCMake)
 // clean.dependsOn(clearDownloaded)
-compileCxx.dependsOn(make)
+compileCxx.dependsOn(if (Os.isFamily(Os.FAMILY_WINDOWS)) msvc else make)
 make.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)

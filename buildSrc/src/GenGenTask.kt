@@ -345,8 +345,3 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollMaxY", "float")
 	)
 }
-
-// Channels
-//Fun("channelsSplit", int("channelsCount")),
-//Fun("channelsMerge"),
-//Fun("channelsSetCurrent", int("channelsIndex"))
