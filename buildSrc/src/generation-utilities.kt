@@ -26,9 +26,14 @@ val windowFlags = flags(from = "Window", default = "Nothing")
 val treeNodeFlags = flags(from = "TreeNode", default = "Selected")
 val mouseButton = int("button", default = "JImMouseIndexes.Left", annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)")
 val pOpen = boolPtr("openPtr")
+val u32 = int("u32Color")
+val thickness = float("thickness", default = 1)
+val roundingFlags = flags(name = "roundingCornersFlags", from = "DrawCorner", default = "All")
+val rounding = float("rounding", default = 0)
+val numSegments = int("numSegments", default = 12)
 val stringID = string("stringID")
 val nStringID = string("stringID", default = strNull)
-fun flags(from: String? = null, default: String? = null) = int("flag",
+fun flags(from: String? = null, default: String? = null, name: String = "flags") = int(name,
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
 

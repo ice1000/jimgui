@@ -109,9 +109,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 	}
 
 	fun genJavaFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
-		javaCode.javadoc(name.capitalize())
-
-		javaCode.append('\t').append(visibility)
+		val capitalName = name.capitalize()
+		javaCode.javadoc(capitalName).append('\t').append(visibility)
 		if (isStatic(params)) {
 			javaCode.append(" final ").append(type(type)).append(' ').append(name).append('(')
 			params.forEachIndexed { index, param ->
@@ -134,8 +133,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_get${name}Y(JNIEnv *
 				return
 			}
 			defaults += default
-			if (!comment.isNullOrBlank()) javaCode.append("\t/** ").append(comment).appendln(" */")
-			javaCode.append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
+			javaCode.javadoc(capitalName).append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
 			val newParams = params.dropLast(index + 1)
 			newParams.joinTo(javaCode) { it.javaDefault() }
 			javaCode.append("){")
