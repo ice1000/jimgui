@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,10 +13,12 @@ public final class JImFont extends JImGuiFontGen {
 	 *
 	 * @param nativeObjectPtr native ImFont*
 	 */
+	@Contract(pure = true)
 	JImFont(long nativeObjectPtr) {
 		super(nativeObjectPtr);
 	}
 
+	@Contract
 	public @NotNull String getDebugName() {
 		return new String(getDebugName0(nativeObjectPtr));
 	}
@@ -30,6 +33,7 @@ public final class JImFont extends JImGuiFontGen {
 
 	public native void setDisplayOffset(float newX, float newY);
 
+	@Contract
 	private static native byte[] getDebugName0(long nativeObjectPtr);
 	private static native long getContainerFontAtlas(long nativeObjectPtr);
 }

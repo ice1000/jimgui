@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,42 +15,50 @@ public class JImVec4 implements DeallocatableObject {
 	/** package-private by design */
 	long nativeObjectPtr;
 
+	@Contract
 	public JImVec4() {
 		nativeObjectPtr = allocateNativeObjects0();
 	}
 
 	/** package-private by design */
+	@Contract(pure = true)
 	JImVec4(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 
+	@Contract
 	public JImVec4(float x, float y, float z, float w) {
 		nativeObjectPtr = allocateNativeObjects(x, y, z, w);
 	}
 
 	/** Don't call this unless necessary. */
+	@Contract(pure = true)
 	public final float getW() {
 		return getW(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
+	@Contract(pure = true)
 	public final float getX() {
 		return getX(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
+	@Contract(pure = true)
 	public final float getY() {
 		return getY(nativeObjectPtr);
 	}
 
 	/** Don't call this unless necessary. */
+	@Contract(pure = true)
 	public final float getZ() {
 		return getZ(nativeObjectPtr);
 	}
 
 	/** convert to {@code ImU32}, unsigned 32-bit integer */
-	public final int toImU32() {
-		return toImU32(nativeObjectPtr);
+	@Contract(pure = true)
+	public final int toU32() {
+		return toU32(nativeObjectPtr);
 	}
 
 	/** @return see {@link JImVec4#nativeObjectPtr} */
@@ -65,6 +74,7 @@ public class JImVec4 implements DeallocatableObject {
 	 * @param color AWT color
 	 * @return a mutable imgui vec4 instance
 	 */
+	@Contract
 	public static @NotNull MutableJImVec4 fromAWT(@NotNull java.awt.Color color) {
 		return new MutableJImVec4(color.getRed() / 256f,
 				color.getGreen() / 256f,
@@ -76,6 +86,7 @@ public class JImVec4 implements DeallocatableObject {
 	 * @param color JavaFX color
 	 * @return a mutable imgui vec4 instance
 	 */
+	@Contract
 	public static @NotNull MutableJImVec4 fromJFX(@NotNull javafx.scene.paint.Color color) {
 		return new MutableJImVec4((float) color.getRed(),
 				(float) color.getGreen(),
@@ -86,10 +97,11 @@ public class JImVec4 implements DeallocatableObject {
 	/**
 	 * @param u32 unsigned 32-bit int color representation
 	 * @return a mutable imgui vec4 instance
-	 * @see JImVec4#toImU32()
+	 * @see JImVec4#toU32()
 	 */
+	@Contract
 	public static @NotNull MutableJImVec4 fromU32(int u32) {
-		return new MutableJImVec4(fromU320(u32));
+		return new MutableJImVec4(fromImU32(u32));
 	}
 
 	@Override
@@ -102,12 +114,18 @@ public class JImVec4 implements DeallocatableObject {
 				'}';
 	}
 
+	@Contract(pure = true)
 	private static native float getZ(final long nativeObjectPtr);
+	@Contract(pure = true)
 	private static native float getY(final long nativeObjectPtr);
+	@Contract(pure = true)
 	private static native float getX(final long nativeObjectPtr);
+	@Contract(pure = true)
 	private static native float getW(final long nativeObjectPtr);
-	private static native int toImU32(final long nativeObjectPtr);
+	@Contract(pure = true)
+	private static native int toU32(final long nativeObjectPtr);
+	@Contract
+	private static native long fromImU32(int u32);
 	private static native long allocateNativeObjects(float x, float y, float z, float w);
-	private static native long fromU320(int u32);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 }
