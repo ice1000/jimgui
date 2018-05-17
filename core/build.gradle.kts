@@ -97,10 +97,10 @@ val make = task<Exec>("make") {
 	configureCxxBuild()
 }
 
-val msvc = task<Exec>("msvc") {
+val msbuild = task<Exec>("msbuild") {
 	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
-	commandLine("devenv", "jimgui.sln", "/Build")
+	commandLine("msbuild", "jimgui.sln")
 	configureCxxBuild()
 }
 
@@ -127,9 +127,9 @@ genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys, genImguiStyleColor, genImguiFontAtlas)
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
-compileCxx.dependsOn(if (Os.isFamily(Os.FAMILY_WINDOWS)) msvc else make)
+compileCxx.dependsOn(if (Os.isFamily(Os.FAMILY_WINDOWS)) msbuild else make)
 make.dependsOn(cmake)
-msvc.dependsOn(cmake)
+msbuild.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(compileCxx)

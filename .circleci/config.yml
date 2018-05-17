@@ -33,7 +33,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: bash gradlew dependencies
+      - run: bash gradlew dependencies --no-daemon
 
       - save_cache:
           paths:
@@ -42,7 +42,7 @@ jobs:
 
       - run:
           name: Build all projects
-          command: bash gradlew assemble --info --stacktrace
+          command: bash gradlew assemble --info --stacktrace --no-daemon
 
       - store_artifacts:
           path: core/build/libs
@@ -52,7 +52,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: bash gradlew test --info --stacktrace
+          command: bash gradlew test --info --stacktrace --no-daemon
 
       - run:
           name: Save test results

@@ -7,9 +7,7 @@ environment:
 #
 
 build_script:
-  # CMake refuses to generate MinGW Makefiles if sh.exe is in the Path
-  - ps: Get-Command sh.exe -All | Remove-Item
-  - gradlew assemble --info --stacktrace
+  - gradlew assemble --info --stacktrace --no-daemon
 
 #platform:
 #  - x86
@@ -20,7 +18,7 @@ cache:
 #
 
 test_script:
-  - gradlew test --info --stacktrace
+  - gradlew test --info --stacktrace --no-daemon
 
 before_build:
   - set Path=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;%Path%
