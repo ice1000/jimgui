@@ -9,18 +9,18 @@
 #include <org_ice1000_jimgui_NativeFloat.h>
 
 #define NativeImpls(JavaName, JavaType, CppType, ExtraCodes, InitValue) \
-JavaType Java_org_ice1000_jimgui_Native ## JavaName ## _accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) { \
+JNIEXPORT JavaType JNICALL Java_org_ice1000_jimgui_Native ## JavaName ## _accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) { \
   auto nativeObject = reinterpret_cast<Ptr<CppType>> (nativeObjectPtr); \
   return static_cast<JavaType> (*nativeObject ExtraCodes); \
 } \
-void Java_org_ice1000_jimgui_Native ## JavaName ## _modifyValue(JNIEnv *, jclass, jlong nativeObjectPtr, JavaType newValue) { \
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_Native ## JavaName ## _modifyValue(JNIEnv *, jclass, jlong nativeObjectPtr, JavaType newValue) { \
   auto nativeObject = reinterpret_cast<Ptr<CppType>> (nativeObjectPtr); \
   *nativeObject = static_cast<CppType> (newValue); \
 } \
-jlong Java_org_ice1000_jimgui_Native ## JavaName ## _allocateNativeObject(JNIEnv *, jclass) { \
+JNIEXPORT jlong JNICALL Java_org_ice1000_jimgui_Native ## JavaName ## _allocateNativeObject(JNIEnv *, jclass) { \
   return reinterpret_cast<jlong> (new CppType(InitValue)); \
 } \
-void Java_org_ice1000_jimgui_Native ## JavaName ## _deallocateNativeObject0(JNIEnv *, jclass, jlong nativeObjectPtr) { \
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_Native ## JavaName ## _deallocateNativeObject0(JNIEnv *, jclass, jlong nativeObjectPtr) { \
   auto nativeObject = reinterpret_cast<Ptr<CppType>> (nativeObjectPtr); \
   delete nativeObject; \
 }
