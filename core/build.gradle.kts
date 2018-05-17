@@ -35,8 +35,8 @@ fun Exec.configureCxxBuild(workingDir: File) {
 	group = compileCxx.group
 	workingDir(workingDir)
 	doLast {
-		workingDir
-				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
+		workingDir.walk()
+				.filter { it.extension in nativeLibraryExtensions }
 				.forEach {
 					println("Found native library $it")
 					it.copyTo(res.resolve("native").resolve(it.name), overwrite = true)
