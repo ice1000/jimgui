@@ -15,8 +15,8 @@ cache:
   - C:\Users\appveyor\.gradle
 #
 
-test_script:
-  - gradlew test --info --stacktrace --no-daemon
+#test_script:
+#  - gradlew test --info --stacktrace --no-daemon
 
 before_build:
   - set Path=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;%Path%

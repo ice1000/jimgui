@@ -41,9 +41,6 @@ import java.nio.file.*;
 public final class NativeUtil {
 	public static final String NATIVE_FOLDER_PATH_PREFIX = "jimgui";
 
-	/** Temporary directory which will contain the DLLs. */
-	private static File temporaryDir;
-
 	/** Private constructor - this class will never be instanced */
 	private NativeUtil() {
 	}
@@ -62,16 +59,14 @@ public final class NativeUtil {
 	 */
 	public static void loadLibraryFromJar(@NotNull String fullPath, @NotNull String filename) {
 		// Prepare temporary file
-		if (temporaryDir == null) {
-			temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
-			temporaryDir.deleteOnExit();
-		}
+		File temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
+		temporaryDir.deleteOnExit();
 
 		File temp = new File(temporaryDir, filename);
 		try (InputStream is = NativeUtil.class.getResourceAsStream(fullPath)) {
 			Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException | NullPointerException e) {
-			System.err.println("Deleting since load failed... " + temp.delete());
+			if (temp.exists()) System.err.println("Deleting since load failed... " + temp.delete());
 		}
 
 		try {
