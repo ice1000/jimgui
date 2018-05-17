@@ -126,11 +126,10 @@ compileJava.options.compilerArgs =
 genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys, genImguiStyleColor, genImguiFontAtlas)
-clean.dependsOn(clearGenerated)
-clean.dependsOn(clearCMake)
-// clean.dependsOn(clearDownloaded)
+clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
 compileCxx.dependsOn(if (Os.isFamily(Os.FAMILY_WINDOWS)) msvc else make)
 make.dependsOn(cmake)
+msvc.dependsOn(cmake)
 cmake.dependsOn(compileJava)
 cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(compileCxx)
