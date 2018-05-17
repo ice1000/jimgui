@@ -4,6 +4,10 @@ import org.gradle.api.DefaultTask
 import org.intellij.lang.annotations.Language
 
 open class GenJavaTask(val className: String) : DefaultTask() {
+	init {
+		group = "code generation"
+	}
+
 	@JvmField
 	val targetJavaFile = project
 			.projectDir

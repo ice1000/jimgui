@@ -100,7 +100,7 @@ val make = task<Exec>("make") {
 val msvc = task<Exec>("msvc") {
 	group = compileCxx.group
 	workingDir(`cmake-build-debug`)
-	commandLine("dir")
+	commandLine("devenv", "jimgui.sln", "/Build")
 	configureCxxBuild()
 }
 

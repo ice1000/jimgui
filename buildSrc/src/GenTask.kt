@@ -8,10 +8,6 @@ abstract class GenTask(
 		className: String,
 		private val `c++FileSuffix`: String
 ) : GenJavaTask(className), Runnable {
-	init {
-		group = "code generation"
-	}
-
 	private val `prefixC++`
 		@Language("C++")
 		get() = """$CXX_PREFIX
