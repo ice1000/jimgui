@@ -148,7 +148,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
@@ -179,21 +179,21 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	return reinterpret_cast<jlong> (object);
 }
 
-auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
-void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-	while (object->msg.message != WM_QUIT and PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
+	while (object->msg.message != WM_QUIT && PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
 		TranslateMessage(&object->msg);
 		DispatchMessage(&object->msg);
 	}
 	ImGui_ImplDX11_NewFrame();
 }
 
-void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
 	auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
 // Rendering
 	g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
@@ -205,7 +205,7 @@ void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorP
 //g_pSwapChain->Present(0, 0); // Present without vsync
 }
 
-void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();

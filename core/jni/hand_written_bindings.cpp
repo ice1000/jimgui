@@ -16,28 +16,28 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
-jlong Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetFont());
 }
 
-jlong Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetWindowDrawList());
 }
 
-jlong Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetOverlayDrawList());
 }
 
-jlong Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) -> jlong {
 	return reinterpret_cast<jlong> (&ImGui::GetStyle().Colors[index]);
 }
 
-void Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX, jfloat newY) {
 	ImGui::GetFont()->DisplayOffset.x = newX;
 	ImGui::GetFont()->DisplayOffset.y = newY;
 }
 
-jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto *font = reinterpret_cast<Ptr<ImFont>> (nativeObjectPtr);
 	auto debugName = font->GetDebugName();
@@ -48,16 +48,16 @@ jbyteArray Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jl
 	return _data;
 }
 
-jlong Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) -> jlong {
 	auto *font = reinterpret_cast<Ptr<ImFont>> (nativeObjectPtr);
 	return reinterpret_cast<jlong> (font->ContainerAtlas);
 }
 
 #define JImIOMouseArrayAccessor(property) \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) { \
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) -> jfloat { \
   return ImGui::GetIO().Mouse ## property [index].x; \
 } \
-jfloat Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) { \
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) -> jfloat { \
   return ImGui::GetIO().Mouse ## property [index].y; \
 }
 
@@ -66,7 +66,7 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 
 #undef JImIOMouseArrayAccessor
 
-jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto *inputShorts = ImGui::GetIO().InputCharacters;
 	auto *inputStr = new jbyte[17];
@@ -83,68 +83,68 @@ jbyteArray Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass)
 	return _inputStr;
 }
 
-jlong Java_org_ice1000_jimgui_JImGuiIO_getFonts0(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFonts0(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetIO().Fonts);
 }
 
-jlong Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetIO().FontDefault);
 }
 
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong>(new ImVec4());
 }
 
-void Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	delete reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr);
 }
 
-jlong Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
-		JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
+		JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
 	return reinterpret_cast<jlong> (new ImVec4(x, y, z, w));
 }
 
-jfloat Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->x;
 }
 
-jfloat Java_org_ice1000_jimgui_JImVec4_getY(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getY(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->y;
 }
 
-jfloat Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->z;
 }
 
-jint Java_org_ice1000_jimgui_JImVec4_toU32(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_toU32(JNIEnv *, jclass, jlong nativeObjectPtr) -> jint {
 	return ImGui::ColorConvertFloat4ToU32(* reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr));
 }
 
-jlong Java_org_ice1000_jimgui_JImVec4_fromImU32(JNIEnv *, jclass, jint u32) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_fromImU32(JNIEnv *, jclass, jint u32) -> jlong {
 	return reinterpret_cast<jlong> (new ImVec4(ImGui::ColorConvertU32ToFloat4(static_cast<ImU32> (u32))));
 }
 
-jfloat Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
 	return reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->w;
 }
 
-void Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
 	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->x = newValue;
 }
 
-void Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
 	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->y = newValue;
 }
 
-void Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
 	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->z = newValue;
 }
 
-void Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
 	reinterpret_cast<Ptr<ImVec4>> (nativeObjectPtr)->w = newValue;
 }
 
-void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, data)
 	const auto *ini_data = reinterpret_cast<Ptr<const char>>(data);
@@ -154,7 +154,7 @@ void Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclas
 	__JNI__FUNCTION__CLEAN__
 }
 
-auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass) -> jbyteArray {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::SaveIniSettingsToMemory();
 	auto len = static_cast<jsize> (strlen(ini_data));
@@ -164,7 +164,7 @@ auto Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(JNIEnv *env, jclass
 	return _data;
 }
 
-auto Java_org_ice1000_jimgui_JImGui_getClipboardText0(JNIEnv *env, jclass) -> jbyteArray {
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getClipboardText0(JNIEnv *env, jclass) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::GetClipboardText();
 	auto len = static_cast<jsize> (strlen(ini_data));
