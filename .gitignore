@@ -50,6 +50,8 @@ hs_err_pid*
 # CMake
 cmake-build-debug/
 cmake-build-release/
+cmake-build/
+cmake-build-win64/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml

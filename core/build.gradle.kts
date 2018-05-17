@@ -13,20 +13,31 @@ val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"]!!
 val processResources = tasks["processResources"]!!
-val compileCxx = task("compileC++") { group = compileJava.group }
-val downloadAll = task("downloadAll") { group = "download" }
+val downloadAll = task("downloadAll") {
+	group = "download"
+	description = "Virtual task representing all downloading tasks"
+}
+val compileCxx = task("compileC++") {
+	group = compileJava.group
+	description = "Virtual task representing all C++ compilation tasks"
+}
 
 val jniDir = projectDir.resolve("jni").absoluteFile!!
 val imguiDir = jniDir.resolve("imgui")
 val implDir = jniDir.resolve("impl")
-val `cmake-build-debug` = jniDir.resolve("cmake-build-debug")
+val `cmake-build-win64` = jniDir.resolve("cmake-build-win64")
+val `cmake-build` = jniDir.resolve("cmake-build")
 val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
 
-fun Task.configureCxxBuild() = doLast {
-	`cmake-build-debug`
-			.listFiles { f: File -> f.extension in nativeLibraryExtensions }
-			.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
+fun Exec.configureCxxBuild(workingDir: File) {
+	group = compileCxx.group
+	workingDir(workingDir)
+	doLast {
+		workingDir
+				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
+				.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
+	}
 }
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
@@ -82,26 +93,39 @@ val downloadFiraCode = task<Download>("downloadFiraCode") {
 	overwrite(false)
 }
 
+val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+val cmakeWin64 = task<Exec>("cmakeWin64") {
+	group = compileCxx.group
+	workingDir(`cmake-build-win64`)
+	commandLine("cmake", "-G",
+			if (isWindows) "Visual Studio 15 2017 Win64"
+			else "Unix Makefiles", `cmake-build-win64`.parent)
+	doFirst { `cmake-build-win64`.mkdirs() }
+}
+
 val cmake = task<Exec>("cmake") {
 	group = compileCxx.group
-	workingDir(`cmake-build-debug`)
-	commandLine("cmake", `cmake-build-debug`.parent)
-	doFirst { `cmake-build-debug`.mkdirs() }
+	workingDir(`cmake-build`)
+	commandLine("cmake", "-G",
+			if (isWindows) "Visual Studio 15 2017"
+			else "Unix Makefiles", `cmake-build`.parent)
+	doFirst { `cmake-build`.mkdirs() }
 }
 
 val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
-	group = compileCxx.group
-	workingDir(`cmake-build-debug`)
+	configureCxxBuild(`cmake-build`)
 	commandLine("make", "-f", "Makefile")
-	configureCxxBuild()
 }
 
 val msbuild = task<Exec>("msbuild") {
-	group = compileCxx.group
-	workingDir(`cmake-build-debug`)
+	configureCxxBuild(`cmake-build`)
 	commandLine("msbuild", "jimgui.sln")
-	configureCxxBuild()
+}
+
+val msbuildWin64 = task<Exec>("msbuildWin64") {
+	configureCxxBuild(`cmake-build-win64`)
+	commandLine("msbuild", "jimgui.sln")
 }
 
 val clearGenerated = task<Delete>("clearGenerated") {
@@ -109,10 +133,9 @@ val clearGenerated = task<Delete>("clearGenerated") {
 	delete(projectDir.resolve("gen"), javahDir, *jniDir.listFiles { f: File -> f.name.startsWith("generated") })
 }
 
-val clearCMake = task<Exec>("clearCMake") {
+val clearCMake = task<Delete>("clearCMake") {
 	group = clean.group
-	workingDir(`cmake-build-debug`)
-	commandLine("cmake", "clean")
+	delete(`cmake-build-win64`, `cmake-build`)
 }
 
 val clearDownloaded = task<Delete>("clearDownloaded") {
@@ -127,11 +150,13 @@ genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys, genImguiStyleColor, genImguiFontAtlas)
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
-compileCxx.dependsOn(if (Os.isFamily(Os.FAMILY_WINDOWS)) msbuild else make)
+if (isWindows) compileCxx.dependsOn(msbuild, msbuildWin64)
+else compileCxx.dependsOn(make)
 make.dependsOn(cmake)
 msbuild.dependsOn(cmake)
-cmake.dependsOn(compileJava)
-cmake.dependsOn(downloadImgui, downloadImpl, downloadImplGL)
+msbuildWin64.dependsOn(cmakeWin64)
+cmake.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
+cmakeWin64.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(compileCxx)
 
 java.sourceSets {
