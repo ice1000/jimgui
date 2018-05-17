@@ -17,7 +17,7 @@ val downloadAll = task("downloadAll") {
 	group = "download"
 	description = "Virtual task representing all downloading tasks"
 }
-val compileCxx = task("compileC++") {
+val compileCxx = task("compileCxx") {
 	group = compileJava.group
 	description = "Virtual task representing all C++ compilation tasks"
 }
@@ -115,8 +115,8 @@ val cmake = task<Exec>("cmake") {
 }
 
 val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }
-val msbuild = task<Exec>("msbuild") { configureCxxBuild(`cmake-build`, "msbuild", "jimgui.sln") }
-val msbuildWin64 = task<Exec>("msbuildWin64") { configureCxxBuild(`cmake-build-win64`, "msbuild", "jimgui.sln") }
+val msbuild = task<Exec>("msbuild") { configureCxxBuild(`cmake-build`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release") }
+val msbuildWin64 = task<Exec>("msbuildWin64") { configureCxxBuild(`cmake-build-win64`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release") }
 
 val clearGenerated = task<Delete>("clearGenerated") {
 	group = clean.group
