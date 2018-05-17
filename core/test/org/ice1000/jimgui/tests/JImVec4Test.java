@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImVec4;
+import org.ice1000.jimgui.util.JniLoader;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class JImVec4Test {
 
 	@BeforeClass
 	public static void loadJni() {
-		useAlternativeJniLibAndCheckHeadless();
+		JniLoader.load();
 		randX = (float) Math.random();
 		randY = (float) Math.random();
 		randZ = (float) Math.random();
