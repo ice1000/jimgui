@@ -11,7 +11,7 @@ val isCI: Boolean by rootProject.extra
 
 val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
-val clean = tasks["clean"]!!
+val clean = tasks["clean"] as Delete
 val processResources = tasks["processResources"]!!
 val downloadAll = task("downloadAll") {
 	group = "download"
@@ -30,13 +30,17 @@ val `cmake-build` = jniDir.resolve("cmake-build")
 val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
 
+val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 fun Exec.configureCxxBuild(workingDir: File) {
 	group = compileCxx.group
 	workingDir(workingDir)
 	doLast {
 		workingDir
 				.listFiles { f: File -> f.extension in nativeLibraryExtensions }
-				.forEach { it.copyTo(res.resolve("native").resolve(it.name), overwrite = true) }
+				.forEach {
+					println("Found native library $it")
+					it.copyTo(res.resolve("native").resolve(it.name), overwrite = true)
+				}
 	}
 }
 
@@ -112,7 +116,6 @@ val cmake = task<Exec>("cmake") {
 	doFirst { `cmake-build`.mkdirs() }
 }
 
-val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val make = task<Exec>("make") {
 	configureCxxBuild(`cmake-build`)
 	commandLine("make", "-f", "Makefile")
@@ -143,8 +146,7 @@ val clearDownloaded = task<Delete>("clearDownloaded") {
 	delete(imguiDir, implDir)
 }
 
-compileJava.options.compilerArgs =
-		listOf("-h", javahDir.toString())
+compileJava.options.compilerArgs = listOf("-h", javahDir.toString())
 
 genImgui.dependsOn(downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,

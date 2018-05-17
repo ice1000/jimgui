@@ -58,11 +58,11 @@ set(ALL_LIBRARIES
 		cpp_interop.cpp)
 
 if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
-	message("64 bit architecture")
+	message(STATUS "64 bit architecture")
 	add_library(jimgui SHARED ${ALL_LIBRARIES})
 	target_link_libraries(jimgui ${TARGET_LINK_LIBS})
 else ()
-	message("32 bit architecture")
+	message(STATUS "32 bit architecture")
 	add_library(jimgui32 SHARED ${ALL_LIBRARIES})
 	target_link_libraries(jimgui32 ${TARGET_LINK_LIBS})
 endif ()
