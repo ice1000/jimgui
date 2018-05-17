@@ -1,5 +1,7 @@
 package org.ice1000.jimgui.cpp;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * Represents a native (C++) object
  *
@@ -7,6 +9,7 @@ package org.ice1000.jimgui.cpp;
  * @since v0.1
  */
 public interface DeallocatableObject extends AutoCloseable {
+	@Contract
 	void deallocateNativeObject();
 
 	@Override

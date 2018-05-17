@@ -24,6 +24,7 @@ open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.*;
+import org.jetbrains.annotations.Contract;
 
 /**
  * @author ice1000
@@ -33,19 +34,23 @@ public class Native$it implements DeallocatableObject {
 	/** package-private by design */
 	long nativeObjectPtr;
 
+	@Contract
 	public Native$it() {
 		nativeObjectPtr = allocateNativeObject();
 	}
 
 	@Override
+	@Contract
 	public void deallocateNativeObject() {
 		deallocateNativeObject0(nativeObjectPtr);
 	}
 
+	@Contract(pure = true)
 	public $java accessValue() {
 		return accessValue(nativeObjectPtr);
 	}
 
+	@Contract
 	public void modifyValue($java newValue) {
 		modifyValue(nativeObjectPtr, newValue);
 	}

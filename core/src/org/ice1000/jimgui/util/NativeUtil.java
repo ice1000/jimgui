@@ -64,6 +64,7 @@ public final class NativeUtil {
 
 		File temp = new File(temporaryDir, filename);
 		try (InputStream is = NativeUtil.class.getResourceAsStream(fullPath)) {
+			if (is == null) throw new UnsupportedOperationException("Native library" + fullPath + " not found.");
 			Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException | NullPointerException e) {
 			if (temp.exists()) System.err.println("Deleting since load failed... " + temp.delete());

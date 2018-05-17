@@ -31,9 +31,10 @@ val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
 
 val nativeLibraryExtensions = listOf("so", "dll", "dylib")
-fun Exec.configureCxxBuild(workingDir: File) {
+fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 	group = compileCxx.group
 	workingDir(workingDir)
+	commandLine(*commandLine)
 	doLast {
 		workingDir.walk()
 				.filter { it.extension in nativeLibraryExtensions }
@@ -42,6 +43,13 @@ fun Exec.configureCxxBuild(workingDir: File) {
 					it.copyTo(res.resolve("native").resolve(it.name), overwrite = true)
 				}
 	}
+}
+
+fun Exec.configureCMake(workingDir: File, generator: String) {
+	group = compileCxx.group
+	workingDir(workingDir)
+	commandLine("cmake", "-G", generator, workingDir.parent)
+	doFirst { workingDir.mkdirs() }
 }
 
 val genImguiIO = task<GenIOTask>("genImguiIO")
@@ -99,37 +107,16 @@ val downloadFiraCode = task<Download>("downloadFiraCode") {
 
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 val cmakeWin64 = task<Exec>("cmakeWin64") {
-	group = compileCxx.group
-	workingDir(`cmake-build-win64`)
-	commandLine("cmake", "-G",
-			if (isWindows) "Visual Studio 15 2017 Win64"
-			else "Unix Makefiles", `cmake-build-win64`.parent)
-	doFirst { `cmake-build-win64`.mkdirs() }
+	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 15 2017 Win64" else "Unix Makefiles")
 }
 
 val cmake = task<Exec>("cmake") {
-	group = compileCxx.group
-	workingDir(`cmake-build`)
-	commandLine("cmake", "-G",
-			if (isWindows) "Visual Studio 15 2017"
-			else "Unix Makefiles", `cmake-build`.parent)
-	doFirst { `cmake-build`.mkdirs() }
+	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 15 2017" else "Unix Makefiles")
 }
 
-val make = task<Exec>("make") {
-	configureCxxBuild(`cmake-build`)
-	commandLine("make", "-f", "Makefile")
-}
-
-val msbuild = task<Exec>("msbuild") {
-	configureCxxBuild(`cmake-build`)
-	commandLine("msbuild", "jimgui.sln")
-}
-
-val msbuildWin64 = task<Exec>("msbuildWin64") {
-	configureCxxBuild(`cmake-build-win64`)
-	commandLine("msbuild", "jimgui.sln")
-}
+val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }
+val msbuild = task<Exec>("msbuild") { configureCxxBuild(`cmake-build`, "msbuild", "jimgui.sln") }
+val msbuildWin64 = task<Exec>("msbuildWin64") { configureCxxBuild(`cmake-build-win64`, "msbuild", "jimgui.sln") }
 
 val clearGenerated = task<Delete>("clearGenerated") {
 	group = clean.group

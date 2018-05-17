@@ -53,6 +53,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * @param background shouldn't be closed, will close automatically
 	 */
+	@Contract
 	public void setBackground(@NotNull JImVec4 background) {
 		if (this.background == background) return;
 		this.background.close();
