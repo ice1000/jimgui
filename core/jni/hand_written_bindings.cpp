@@ -167,17 +167,18 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(
 	return PTR_C2J(new ImVec4(x, y, z, w));
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getX(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
-	return PTR_J2C(ImVec4, nativeObjectPtr)->x;
+#define JIMVEC4_GETTER(name, Name) \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImVec4_get ## Name(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat { \
+	return PTR_J2C(ImVec4, nativeObjectPtr)->name; \
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getY(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
-	return PTR_J2C(ImVec4, nativeObjectPtr)->y;
-}
+JIMVEC4_GETTER(x, X)
+JIMVEC4_GETTER(y, Y)
+JIMVEC4_GETTER(z, Z)
+JIMVEC4_GETTER(w, W)
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getZ(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
-	return PTR_J2C(ImVec4, nativeObjectPtr)->z;
-}
+#undef JIMVEC4_GETTER
 
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_toU32(JNIEnv *, jclass, jlong nativeObjectPtr) -> jint {
 	return ImGui::ColorConvertFloat4ToU32(*PTR_J2C(ImVec4, nativeObjectPtr));
@@ -187,29 +188,22 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_fromImU32(JNIEnv *, jclas
 	return PTR_C2J(new ImVec4(ImGui::ColorConvertU32ToFloat4(static_cast<ImU32> (u32))));
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_getW(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat {
-	return PTR_J2C(ImVec4, nativeObjectPtr)->w;
+#define JIMVEC4_SETTER(name, Name) \
+JNIEXPORT void JNICALL \
+Java_org_ice1000_jimgui_MutableJImVec4_set ## Name(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) { \
+	PTR_J2C(ImVec4, nativeObjectPtr)->name = newValue; \
+} \
+JNIEXPORT void JNICALL \
+Java_org_ice1000_jimgui_MutableJImVec4_inc ## Name(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat increment) { \
+	PTR_J2C(ImVec4, nativeObjectPtr)->name += increment; \
 }
 
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_MutableJImVec4_setX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	PTR_J2C(ImVec4, nativeObjectPtr)->x = newValue;
-}
+JIMVEC4_SETTER(x, X)
+JIMVEC4_SETTER(y, Y)
+JIMVEC4_SETTER(z, Z)
+JIMVEC4_SETTER(w, W)
 
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_MutableJImVec4_setY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	PTR_J2C(ImVec4, nativeObjectPtr)->y = newValue;
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_MutableJImVec4_setZ(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	PTR_J2C(ImVec4, nativeObjectPtr)->z = newValue;
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_MutableJImVec4_setW(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	PTR_J2C(ImVec4, nativeObjectPtr)->w = newValue;
-}
+#undef JIMVEC4_SETTER
 
 JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(JNIEnv *env, jclass, jbyteArray _data) {
 	__JNI__FUNCTION__INIT__
