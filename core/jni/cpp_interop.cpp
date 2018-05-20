@@ -41,7 +41,8 @@ NativeImpls(Int, jint, int, 0)
 NativeImpls(Float, jfloat, float, 0)
 NativeImpls(Double, jdouble, float, 0)
 
-JNIEXPORT jboolean Java_org_ice1000_jimgui_NativeBool_accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT jboolean JNICALL
+Java_org_ice1000_jimgui_NativeBool_accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
 	return static_cast<jboolean>(*nativeObject ? JNI_TRUE : JNI_FALSE);
 }
@@ -58,7 +59,8 @@ Java_org_ice1000_jimgui_NativeBool_invertValue(JNIEnv *, jclass, jlong nativeObj
 	*nativeObject = !*nativeObject;
 }
 
-JNIEXPORT jlong JNICALL Java_org_ice1000_jimgui_NativeBool_allocateNativeObject(JNIEnv *, jclass) {
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_NativeBool_allocateNativeObject(JNIEnv *, jclass) {
 	return PTR_C2J(new bool(false));
 }
 
