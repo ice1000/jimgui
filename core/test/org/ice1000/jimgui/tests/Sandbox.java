@@ -10,13 +10,13 @@ import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Sandbox {
+	private static String ini = "";
+
 	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
-		AtomicReference<String> ini = new AtomicReference<>("");
 		NativeFloat aFloat = new NativeFloat();
 		NativeFloat aFloat2 = new NativeFloat();
 		NativeInt anInt = new NativeInt();
@@ -110,10 +110,10 @@ public class Sandbox {
 			imGui.newLine();
 			imGui.newLine();
 			if (io.isWantSaveIniSettings()) {
-				ini.set(imGui.saveIniSettingsToMemory());
+				ini = imGui.saveIniSettingsToMemory();
 				io.setWantSaveIniSettings(false);
 			}
-			imGui.text(ini.get());
+			imGui.text(ini);
 			imGui.newLine();
 			try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
 			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
