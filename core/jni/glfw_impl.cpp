@@ -3,7 +3,7 @@
 ///
 
 #include <imgui.h>
-#include <imgui_impl_glfw_gl3.h>
+#include <imgui_impl_glfw_gl3.cpp> // to modify g_Time
 #include "impl/GL/glcorearb.h" // avoid conflicting with system include
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
@@ -19,26 +19,25 @@ static void glfw_error_callback(int error, Ptr<const char> description) {
 	fprintf(stderr, "ImGui Error %d: %s\n", error, description);
 }
 
-auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
 	glfwSetErrorCallback(glfw_error_callback);
-	if (!glfwInit())
-		return 1;
+	if (!glfwInit()) return 0L;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-	Ptr<GLFWwindow> window = glfwCreateWindow(
-			width, height,
-			reinterpret_cast<Ptr<const char>> (title), nullptr, nullptr);
+	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	// Enable vsync
 	glfwSwapInterval(1);
 	gl3wInit();
+	g_Time = 0;
 
 	// Setup Dear ImGui binding
 	IMGUI_CHECKVERSION();
@@ -48,31 +47,35 @@ auto Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfwGL3_Init(window, true);
-	__abort(Byte, title);
+	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (window);
 }
 
-void Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	auto *window = reinterpret_cast<Ptr<GLFWwindow>>(nativeObjectPtr);
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 
-auto Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	return static_cast<jboolean>(glfwWindowShouldClose(reinterpret_cast<Ptr<GLFWwindow>>(nativeObjectPtr)));
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+	return static_cast<jboolean>(glfwWindowShouldClose(PTR_J2C(GLFWwindow, nativeObjectPtr)) ? JNI_TRUE : JNI_FALSE);
 }
 
-void Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL3_NewFrame();
 }
 
-void Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
-	auto *window = reinterpret_cast<Ptr<GLFWwindow>> (nativeObjectPtr);
-	auto *clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
+	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
+	auto *clear_color = PTR_J2C(ImVec4, colorPtr);
 	int display_w, display_h;
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);

@@ -13,6 +13,7 @@ val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"] as Delete
 val processResources = tasks["processResources"]!!
+val processTestResources = tasks["processTestResources"]!!
 val downloadAll = task("downloadAll") {
 	group = "download"
 	description = "Virtual task representing all downloading tasks"
@@ -147,6 +148,7 @@ msbuildWin64.dependsOn(cmakeWin64)
 cmake.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
 cmakeWin64.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(compileCxx)
+processTestResources.dependsOn(downloadFiraCode)
 
 java.sourceSets {
 	"main" {

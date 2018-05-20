@@ -77,7 +77,8 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 
 #undef JImIOMouseArrayAccessor
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) -> jbyteArray {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto *inputShorts = ImGui::GetIO().InputCharacters;
 	auto *inputStr = new jbyte[17];
