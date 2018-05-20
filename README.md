@@ -36,7 +36,7 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
   + [X] 32-bit hosted on AppVeyor
   + [X] 64-bit hosted on AppVeyor
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
-+ [ ] MacOS native library with ? implementation, hosted on ?
++ [X] MacOS native library with `Cocoa`, `GLUT` and `OpenGL` implementation, hosted on ?
 
 # Build
 
@@ -52,6 +52,9 @@ First you need to make sure you have these software installed:
     + Visual Studio 2017 with `msbuild`
     + `d3d11`
     + `d3dcompiler`
++ For Mac OS X
+	+ run with JVM Argument: `-XstartOnFirstThread`
+		+ such as `export _JAVA_OPTIONS='-XstartOnFirstThread'`.
 
 To compile a jar library, run:
 
