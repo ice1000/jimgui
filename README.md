@@ -45,11 +45,9 @@ First you need to make sure you have these software installed:
     + `libglfw3-dev`
 + For Windows (\> 7)
     + `cmake` version \> 3.5
-    + `ming32-make`
+    + Visual Studio 2017 with `msbuild`
     + `d3d11`
-    + `d3dx11`
     + `d3dcompiler`
-    + `dxguid`
 
 To compile a jar library, run:
 
