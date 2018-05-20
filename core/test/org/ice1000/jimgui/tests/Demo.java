@@ -163,7 +163,7 @@ public class Demo {
 			if (imGui.collapsingHeader("Widgets")) {
 				if (imGui.treeNode("Basic")) {
 					if (imGui.button("Button"))
-						clicked.modifyValue(clicked.accessValue() + 1);
+						clicked.increaseValue(1);
 					if ((clicked.accessValue() & 1) > 0) {
 						imGui.sameLine();
 						imGui.text("Thanks for clicking me!");
