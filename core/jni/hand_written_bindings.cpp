@@ -20,21 +20,8 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNI
 	return PTR_C2J(ImGui::GetFont());
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _id) {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, id);
-	ImGui::PushID(STR_J2C(id), STR_J2C(id + __len(id)));
-	__release(Byte, id);
-	__JNI__FUNCTION__CLEAN__
-}
-
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getID(JNIEnv *env, jclass, jbyteArray _id) -> jint {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, id);
-	auto res = ImGui::GetID(STR_J2C(id), STR_J2C(id + __len(id)));
-	__release(Byte, id);
-	__JNI__FUNCTION__CLEAN__
-	return res;
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jobject, jint id) {
+	ImGui::PushID(id);
 }
 
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
@@ -57,7 +44,7 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
-	auto *font = reinterpret_cast<Ptr<ImFont>> (nativeObjectPtr);
+	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
 	auto debugName = font->GetDebugName();
 	auto len = static_cast<jsize> (strlen(debugName));
 	auto *data = PTR_J2C(const jbyte, debugName);

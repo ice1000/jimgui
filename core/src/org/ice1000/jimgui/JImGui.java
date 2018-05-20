@@ -339,13 +339,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 				graphHeight);
 	}
 
-	public void pushID(@NotNull String stringID) {
-		pushID(stringID.getBytes(StandardCharsets.UTF_8));
-	}
-
-	public int getID(@NotNull String stringID) {
-		return getID(stringID.getBytes(StandardCharsets.UTF_8));
-	}
+	public native void pushID(int intID);
 
 	/**
 	 * @param styleVar should be a value from {@link JImStyleVars}
@@ -447,8 +441,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
 	private static native void textUnformatted(byte @NotNull [] text);
-	private static native void pushID(byte @NotNull [] bytes);
-	private static native int getID(byte @NotNull [] bytes);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	private static native byte @NotNull [] getClipboardText0();
 	private static native void plotLines(byte @NotNull [] label,

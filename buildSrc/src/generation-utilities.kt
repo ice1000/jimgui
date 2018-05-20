@@ -8,9 +8,9 @@ import org.intellij.lang.annotations.MagicConstant
 val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
-fun boolPtr(name: String, nullable: Boolean = false) = BoolPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
-fun floatPtr(name: String, nullable: Boolean = false) = FloatPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
-fun intPtr(name: String, nullable: Boolean = false) = IntPtrParam(name, if (nullable) "@Nullable" else "@NotNull")
+fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", 0)
+fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull")
+fun intPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
 fun int(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
@@ -18,6 +18,7 @@ fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(name: String = "pos", default: Any? = null) = vec2("${name}X", "${name}Y", default)
 fun string(name: String, default: String? = null) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
+fun stringSized(name: String, default: String? = null) = SizedStringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
 val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromClass = JImCondition.class)")
 val nativeObjectPtr = p("nativeObjectPtr", "long", default = "this.nativeObjectPtr")
 val label = string("label")
@@ -105,7 +106,7 @@ data class SimpleParam(val name: String,
 	override fun `c++Expr`() = name
 }
 
-data class StringParam(val name: String,
+open class StringParam(val name: String,
                        val annotation: String = "@NotNull",
                        override val default: Any?) : Param() {
 	override fun java() = "byte[] $name"
@@ -116,37 +117,35 @@ data class StringParam(val name: String,
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
 
+class SizedStringParam(name: String,
+                       annotation: String = "@NotNull",
+                       default: Any?) : StringParam(name, annotation, default) {
+	override fun java() = "byte[] $name"
+	override fun javaDefault() = "$annotation String $name"
+	override fun javaExpr() = "$name.getBytes(StandardCharsets.UTF_8)"
+	override fun `c++`() = "jbyteArray _$name"
+	override fun `c++Expr`() = "STR_J2C($name), STR_J2C($name + __len($name))"
+	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
+}
+
 data class ImVec4Param(val name: String, override val default: Any?) : Param() {
 	override fun java() = "long $name"
 	override fun javaDefault() = "@NotNull JImVec4 $name"
 	override fun javaExpr() = "$name.nativeObjectPtr"
 	override fun `c++`() = "jlong $name"
-	override fun `c++Expr`() = "*reinterpret_cast<ImVec4 *> ($name)"
+	override fun `c++Expr`() = "*PTR_J2C(ImVec4, $name)"
 }
 
-data class FloatPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
+data class PointerParam(val name: String,
+                        val jvmType: String,
+                        val nativeType: String,
+                        val annotation: String = "@NotNull",
+                        override val default: Any? = null) : Param() {
 	override fun java() = "long $name"
-	override fun javaDefault() = "$annotation NativeFloat $name"
+	override fun javaDefault() = "@NotNull $jvmType $name"
 	override fun javaExpr() = "$name.nativeObjectPtr"
 	override fun `c++`() = "jlong $name"
-	override fun `c++Expr`() = "reinterpret_cast<float *> ($name)"
-}
-
-data class IntPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
-	override fun java() = "long $name"
-	override fun javaDefault() = "$annotation NativeInt $name"
-	override fun javaExpr() = "$name.nativeObjectPtr"
-	override fun `c++`() = "jlong $name"
-	override fun `c++Expr`() = "reinterpret_cast<int *> ($name)"
-}
-
-data class BoolPtrParam(val name: String, val annotation: String = "@NotNull") : Param() {
-	override val default: Any? get() = 0
-	override fun java() = "long $name"
-	override fun javaDefault() = "$annotation NativeBool $name"
-	override fun javaExpr() = "$name.nativeObjectPtr"
-	override fun `c++`() = "jlong $name"
-	override fun `c++Expr`() = "reinterpret_cast<bool *> ($name)"
+	override fun `c++Expr`() = "PTR_J2C($nativeType, $name)"
 }
 
 /**

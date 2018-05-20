@@ -105,8 +105,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// ID stack/scopes
 			Fun("popID"),
-			Fun("pushID", int("intID")),
-			/* Fun("getID", "int", stringID), */
+			Fun("pushID", stringSized("stringID")),
+			Fun("getID", "int", stringSized("stringID")),
 
 			// Windows
 			Fun("begin", "boolean", string("name"), pOpen, windowFlags),

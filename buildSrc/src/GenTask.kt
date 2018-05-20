@@ -82,7 +82,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_${className}_${jvmName}At(JNIEnv 
 
 	fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
 	fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
-	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is BoolPtrParam }
+	fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is PointerParam }
 
 	fun genJavaXYAccessor(javaCode: StringBuilder, name: String, type: String) {
 		genJavaPrimitiveMember(javaCode, "${name}X", "", type, false, "", name)
