@@ -29,8 +29,12 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
   + [X] Generate functions with `MagicConstant` annotation
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
 + [X] `ImVec4` wrapper with optional mutability
-+ [X] Linux native library with glfw3 + opengl3 implementation, hosted on CircleCI
-+ [X] Windows7+ native library with directX11 implementation, hosted on AppVeyor
++ Linux native library with glfw3 + opengl3 implementation
+  + [ ] 32-bit hosted on ?
+  + [X] 64-bit hosted on CircleCI
++ Windows7+ native library with directX11 implementation
+  + [X] 32-bit hosted on AppVeyor
+  + [X] 64-bit hosted on AppVeyor
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
 + [ ] MacOS native library with ? implementation, hosted on ?
 
