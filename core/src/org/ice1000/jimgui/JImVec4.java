@@ -137,17 +137,11 @@ public class JImVec4 implements DeallocatableObject {
 				'}';
 	}
 
-	@Contract(pure = true)
 	private static native float getZ(final long nativeObjectPtr);
-	@Contract(pure = true)
 	private static native float getY(final long nativeObjectPtr);
-	@Contract(pure = true)
 	private static native float getX(final long nativeObjectPtr);
-	@Contract(pure = true)
 	private static native float getW(final long nativeObjectPtr);
-	@Contract(pure = true)
 	private static native int toU32(final long nativeObjectPtr);
-	@Contract
 	private static native long fromImU32(int u32);
 	private static native long fromHSV0(float h, float s, float v, float a);
 	private static native long allocateNativeObjects(float x, float y, float z, float w);

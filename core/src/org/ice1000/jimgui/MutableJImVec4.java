@@ -43,12 +43,8 @@ public final class MutableJImVec4 extends JImVec4 {
 		setW(nativeObjectPtr, newValue);
 	}
 
-	@Contract
 	private static native void setZ(final long nativeObjectPtr, final float newValue);
-	@Contract
 	private static native void setY(final long nativeObjectPtr, final float newValue);
-	@Contract
 	private static native void setX(final long nativeObjectPtr, final float newValue);
-	@Contract
 	private static native void setW(final long nativeObjectPtr, final float newValue);
 }

@@ -24,15 +24,18 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jobjec
 	ImGui::PushID(id);
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return PTR_C2J(ImGui::GetWindowDrawList());
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return PTR_C2J(ImGui::GetOverlayDrawList());
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) -> jlong {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) -> jlong {
 	return PTR_C2J(&ImGui::GetStyle().Colors[index]);
 }
 
@@ -60,10 +63,12 @@ Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong na
 }
 
 #define JImIOMouseArrayAccessor(property) \
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) -> jfloat { \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## X(JNIEnv *, jobject, jint index) -> jfloat { \
   return ImGui::GetIO().Mouse ## property [index].x; \
 } \
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) -> jfloat { \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImGuiIO_getMouse ## property ## Y(JNIEnv *, jobject, jint index) -> jfloat { \
   return ImGui::GetIO().Mouse ## property [index].y; \
 }
 
