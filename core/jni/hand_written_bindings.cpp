@@ -111,7 +111,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_fromHSV0(JNIEnv *, jclass
 }
 
 JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotLines(JNIEnv *env, jclass,
-		jbyteArray _label, jfloatArray _values, jint valuesOffset, jbyteArray _overlayText, jfloat scaleMin, jfloat scaleMax, jfloat graphWidth, jfloat graphHeight) {
+		jbyteArray _label, jfloatArray _values, jint valuesOffset, jint valuesLength, jbyteArray _overlayText, jfloat scaleMin, jfloat scaleMax, jfloat graphWidth, jfloat graphHeight) {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Float, values);
@@ -119,7 +119,29 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotLines(JNIEnv *env, jcl
 	ImGui::PlotLines(
 			reinterpret_cast<Ptr<const char>> (label),
 			values,
-			__len(values),
+			valuesLength,
+			valuesOffset,
+			reinterpret_cast<Ptr<const char>> (overlayText),
+			scaleMin,
+			scaleMax,
+			ImVec2(graphWidth, graphHeight)
+	);
+	__release(Byte, label);
+	__release(Float, values);
+	__release(Byte, overlayText);
+	__JNI__FUNCTION__CLEAN__
+}
+
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotHistogram(JNIEnv *env, jclass,
+		jbyteArray _label, jfloatArray _values, jint valuesOffset, jint valuesLength, jbyteArray _overlayText, jfloat scaleMin, jfloat scaleMax, jfloat graphWidth, jfloat graphHeight) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, label);
+	__get(Float, values);
+	__get(Byte, overlayText);
+	ImGui::PlotHistogram(
+			reinterpret_cast<Ptr<const char>> (label),
+			values,
+			valuesLength,
 			valuesOffset,
 			reinterpret_cast<Ptr<const char>> (overlayText),
 			scaleMin,

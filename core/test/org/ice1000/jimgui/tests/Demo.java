@@ -212,9 +212,30 @@ public class Demo {
 
 					imGui.separator();
 
+					imGui.labelText("label", "Value");
+
+					// TODO
+
+					imGui.treePop();
+				}
+
+				if (imGui.treeNode("Trees")) {
+					if (imGui.treeNode("Basic trees")) {
+						for (int i = 0; i < 5; i++) {
+							if (imGui.treeNode("Child " + i)) {
+								imGui.text("blah blah");
+								imGui.sameLine();
+								if (imGui.smallButton("button")) ;
+								imGui.treePop();
+							}
+						}
+						imGui.treePop();
+					}
 					imGui.treePop();
 				}
 			}
+
+			// TODO
 
 			if (showAppMainMenuBar.accessValue()) showExampleAppMainMenuBar(imGui);
 			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);

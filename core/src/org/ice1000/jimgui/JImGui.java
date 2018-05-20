@@ -184,38 +184,53 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		popStyleColor();
 	}
 
-	// TODO doc
-	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
-	                      int valuesOffset) {
-		plotLines(label.getBytes(StandardCharsets.UTF_8), values, valuesOffset, (byte[]) null, FLT_MAX, FLT_MAX, 0, 0);
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 */
+	public void plotLines(@NotNull String label, @NotNull float[] values, int valuesOffset, int valuesLength) {
+		plotLines(label.getBytes(StandardCharsets.UTF_8), values, valuesOffset, valuesLength, null, FLT_MAX, FLT_MAX, 0, 0);
 	}
 
-	// TODO doc
+	/**
+	 * @param label  label text
+	 * @param values plot values
+	 */
+	public void plotLines(@NotNull String label, @NotNull float[] values) {
+		plotLines(label, values, 0, values.length);
+	}
+
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 * @param overlayText  tooltip text when plot is hovered
+	 */
 	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values) {
-		plotLines(label, values, 0);
+	                      @NotNull float[] values,
+	                      int valuesOffset,
+	                      int valuesLength,
+	                      @NotNull String overlayText) {
+		plotLines(label, values, valuesOffset, valuesLength, overlayText, FLT_MAX, FLT_MAX, 0, 0);
+	}
+
+	/**
+	 * @param label       label text
+	 * @param values      plot values
+	 * @param overlayText tooltip text when plot is hovered
+	 */
+	public void plotLines(@NotNull String label, @NotNull float[] values, @NotNull String overlayText) {
+		plotLines(label, values, 0, 0, overlayText);
 	}
 
 	// TODO doc
 	public void plotLines(@NotNull String label,
 	                      @NotNull float[] values,
 	                      int valuesOffset,
-	                      @NotNull String overlayText) {
-		plotLines(label, values, valuesOffset, overlayText, FLT_MAX, FLT_MAX, 0, 0);
-	}
-
-	// TODO doc
-	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
-	                      @NotNull String overlayText) {
-		plotLines(label, values, 0, overlayText);
-	}
-
-	// TODO doc
-	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
-	                      int valuesOffset,
+	                      int valuesLength,
 	                      @NotNull String overlayText,
 	                      float scaleMin,
 	                      float scaleMax,
@@ -224,6 +239,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		plotLines(label.getBytes(StandardCharsets.UTF_8),
 				values,
 				valuesOffset,
+				valuesLength,
 				overlayText.getBytes(StandardCharsets.UTF_8),
 				scaleMin,
 				scaleMax,
@@ -235,6 +251,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	public void plotHistogram(@NotNull String label,
 	                          @NotNull float[] values,
 	                          int valuesOffset,
+	                          int valuesLength,
 	                          @NotNull String overlayText,
 	                          float scaleMin,
 	                          float scaleMax,
@@ -243,6 +260,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		plotHistogram(label.getBytes(StandardCharsets.UTF_8),
 				values,
 				valuesOffset,
+				valuesLength,
 				overlayText.getBytes(StandardCharsets.UTF_8),
 				scaleMin,
 				scaleMax,
@@ -328,6 +346,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void plotLines(byte @NotNull [] label,
 	                                     float @NotNull [] values,
 	                                     int valuesOffset,
+	                                     int valuesLength,
 	                                     byte[] overlayText,
 	                                     float scaleMin,
 	                                     float scaleMax,
@@ -336,6 +355,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void plotHistogram(byte @NotNull [] label,
 	                                         float @NotNull [] values,
 	                                         int valuesOffset,
+	                                         int valuesLength,
 	                                         byte[] overlayText,
 	                                         float scaleMin,
 	                                         float scaleMax,
