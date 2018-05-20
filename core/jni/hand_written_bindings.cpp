@@ -128,8 +128,7 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotLines(
 			STR_J2C(overlayText),
 			scaleMin,
 			scaleMax,
-			ImVec2(graphWidth, graphHeight)
-	);
+			ImVec2(graphWidth, graphHeight));
 	__release(Byte, label);
 	__release(Float, values);
 	__release(Byte, overlayText);
@@ -151,8 +150,7 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotHistogram(
 			STR_J2C(overlayText),
 			scaleMin,
 			scaleMax,
-			ImVec2(graphWidth, graphHeight)
-	);
+			ImVec2(graphWidth, graphHeight));
 	__release(Byte, label);
 	__release(Float, values);
 	__release(Byte, overlayText);

@@ -26,7 +26,7 @@ auto ImGui::MenuItem0(Ptr<const char> label, Ptr<const char> shortcut, Ptr<bool>
 
 #define ColorRelated(name) \
 auto ImGui::Color ## name(Ptr<const char>label, ImVec4& col, ImGuiColorEditFlags flags) -> bool { \
-  return Color ## name(label, reinterpret_cast<Ptr<float>> (&col), flags); \
+  return Color ## name(label, PTR_J2C(float, &col), flags); \
 }
 
 ColorRelated(Edit3)

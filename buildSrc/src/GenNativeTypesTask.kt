@@ -10,7 +10,7 @@ open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 		listOf(
 				"Int" to "int",
 				"Float" to "float",
-				// "Double" to "double",
+				"Double" to "double",
 				// "Short" to "short",
 				// "Byte" to "byte",
 				// "Char" to "char",
@@ -35,28 +35,18 @@ public class Native$it implements DeallocatableObject {
 	long nativeObjectPtr;
 
 	@Contract
-	public Native$it() {
-		nativeObjectPtr = allocateNativeObject();
-	}
+	public Native$it() { nativeObjectPtr = allocateNativeObject(); }
 
-	@Override
-	@Contract
-	public void deallocateNativeObject() {
-		deallocateNativeObject0(nativeObjectPtr);
-	}
+	@Override @Contract
+	public void deallocateNativeObject() { deallocateNativeObject0(nativeObjectPtr); }
 
-	@Contract(pure = true)
-	public $java accessValue() {
-		return accessValue(nativeObjectPtr);
-	}
-
-	@Contract
-	public void modifyValue($java newValue) {
-		modifyValue(nativeObjectPtr, newValue);
-	}
+	@Contract(pure = true) public $java accessValue() { return accessValue(nativeObjectPtr); }
+	@Contract public void increaseValue($java increasement) { increaseValue(nativeObjectPtr, increasement); }
+	@Contract public void modifyValue($java newValue) { modifyValue(nativeObjectPtr, newValue); }
 
 	private static native $java accessValue(long nativeObjectPtr);
 	private static native void modifyValue(long nativeObjectPtr, $java newValue);
+	private static native void increaseValue(long nativeObjectPtr, $java increasement);
 	private static native long allocateNativeObject();
 	private static native void deallocateNativeObject0(long nativeObjectPtr);
 }
