@@ -1,7 +1,6 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
-import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -226,7 +225,30 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		plotLines(label, values, 0, 0, overlayText);
 	}
 
-	// TODO doc
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 * @param overlayText  tooltip text when plot is hovered
+	 */
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values,
+	                      int valuesOffset,
+	                      int valuesLength,
+	                      @NotNull String overlayText,
+	                      float graphWidth,
+	                      float graphHeight) {
+		plotLines(label, values, valuesOffset, valuesLength, overlayText, FLT_MAX, FLT_MAX, graphWidth, graphHeight);
+	}
+
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 * @param overlayText  tooltip text when plot is hovered
+	 */
 	public void plotLines(@NotNull String label,
 	                      @NotNull float[] values,
 	                      int valuesOffset,
@@ -247,20 +269,53 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 				graphHeight);
 	}
 
-	// TODO doc
-	public void plotHistogram(@NotNull String label,
-	                          @NotNull float[] values,
-	                          @NotNull String overlayText) {
+	/**
+	 * @param label  label text
+	 * @param values plot values
+	 */
+	public void plotHistogram(@NotNull String label, @NotNull float[] values) {
+		plotHistogram(label.getBytes(StandardCharsets.UTF_8), values, 0, values.length, null, FLT_MAX, FLT_MAX, 0, 0);
+	}
+
+	/**
+	 * @param label       label text
+	 * @param values      plot values
+	 * @param overlayText tooltip text when plot is hovered
+	 */
+	public void plotHistogram(@NotNull String label, @NotNull float[] values, @NotNull String overlayText) {
 		plotHistogram(label, values, 0, values.length, overlayText);
 	}
 
-	// TODO doc
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 * @param overlayText  tooltip text when plot is hovered
+	 */
 	public void plotHistogram(@NotNull String label,
 	                          @NotNull float[] values,
 	                          int valuesOffset,
 	                          int valuesLength,
 	                          @NotNull String overlayText) {
-		plotHistogram(label, values, valuesOffset, valuesLength, overlayText, FLT_MAX, FLT_MAX, 0, 0);
+		plotHistogram(label, values, valuesOffset, valuesLength, overlayText, FLT_MAX, FLT_MAX);
+	}
+
+	/**
+	 * @param label        label text
+	 * @param values       plot values
+	 * @param valuesOffset offset in [values]
+	 * @param valuesLength length in [values]
+	 * @param overlayText  tooltip text when plot is hovered
+	 */
+	public void plotHistogram(@NotNull String label,
+	                          @NotNull float[] values,
+	                          int valuesOffset,
+	                          int valuesLength,
+	                          @NotNull String overlayText,
+	                          float scaleMin,
+	                          float scaleMax) {
+		plotHistogram(label, values, valuesOffset, valuesLength, overlayText, scaleMin, scaleMax, 0, 0);
 	}
 
 	// TODO doc
@@ -296,7 +351,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param styleVar should be a value from {@link JImStyleVars}
 	 * @param value    the value to set
 	 */
-	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar,
+	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Float> styleVar,
 	                         float value) {
 		pushStyleVarFloat(styleVar.nativeValue, value);
 	}
@@ -306,7 +361,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param valueX   the first value of ImVec2 to set
 	 * @param valueY   the second value of ImVec2 to set
 	 */
-	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar,
+	public void pushStyleVar(@NotNull JImStyleVar<@NotNull Void> styleVar,
 	                         float valueX,
 	                         float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
