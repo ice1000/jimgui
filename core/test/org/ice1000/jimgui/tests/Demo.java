@@ -206,8 +206,12 @@ public class Demo {
 					if (imGui.isItemHovered()) {
 						imGui.beginTooltip();
 						imGui.text("I am a fancy tooltip");
+						imGui.plotLines("Curve", new float[]{0.6f, 0.1f, 1.0f, 0.5f, 0.92f, 0.1f, 0.2f});
 						imGui.endTooltip();
 					}
+
+					imGui.separator();
+
 					imGui.treePop();
 				}
 			}

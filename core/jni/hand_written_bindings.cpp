@@ -110,6 +110,28 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_fromHSV0(JNIEnv *, jclass
 	return reinterpret_cast<jlong> (new ImVec4(r, g, b, a));
 }
 
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_plotLines(JNIEnv *env, jclass,
+		jbyteArray _label, jfloatArray _values, jint valuesOffset, jbyteArray _overlayText, jfloat scaleMin, jfloat scaleMax, jfloat graphWidth, jfloat graphHeight) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, label);
+	__get(Float, values);
+	__get(Byte, overlayText);
+	ImGui::PlotLines(
+			reinterpret_cast<Ptr<const char>> (label),
+			values,
+			__len(values),
+			valuesOffset,
+			reinterpret_cast<Ptr<const char>> (overlayText),
+			scaleMin,
+			scaleMax,
+			ImVec2(graphWidth, graphHeight)
+	);
+	__release(Byte, label);
+	__release(Float, values);
+	__release(Byte, overlayText);
+	__JNI__FUNCTION__CLEAN__
+}
+
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetIO().FontDefault);
 }

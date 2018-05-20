@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.ice1000.jimgui.util.JImGuiUtil.FLT_MAX;
 import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
 /**
@@ -183,6 +184,72 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		popStyleColor();
 	}
 
+	// TODO doc
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values,
+	                      int valuesOffset) {
+		plotLines(label.getBytes(StandardCharsets.UTF_8), values, valuesOffset, (byte[]) null, FLT_MAX, FLT_MAX, 0, 0);
+	}
+
+	// TODO doc
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values) {
+		plotLines(label, values, 0);
+	}
+
+	// TODO doc
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values,
+	                      int valuesOffset,
+	                      @NotNull String overlayText) {
+		plotLines(label, values, valuesOffset, overlayText, FLT_MAX, FLT_MAX, 0, 0);
+	}
+
+	// TODO doc
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values,
+	                      @NotNull String overlayText) {
+		plotLines(label, values, 0, overlayText);
+	}
+
+	// TODO doc
+	public void plotLines(@NotNull String label,
+	                      @NotNull float[] values,
+	                      int valuesOffset,
+	                      @NotNull String overlayText,
+	                      float scaleMin,
+	                      float scaleMax,
+	                      float graphWidth,
+	                      float graphHeight) {
+		plotLines(label.getBytes(StandardCharsets.UTF_8),
+				values,
+				valuesOffset,
+				overlayText.getBytes(StandardCharsets.UTF_8),
+				scaleMin,
+				scaleMax,
+				graphWidth,
+				graphHeight);
+	}
+
+	// TODO doc
+	public void plotHistogram(@NotNull String label,
+	                          @NotNull float[] values,
+	                          int valuesOffset,
+	                          @NotNull String overlayText,
+	                          float scaleMin,
+	                          float scaleMax,
+	                          float graphWidth,
+	                          float graphHeight) {
+		plotHistogram(label.getBytes(StandardCharsets.UTF_8),
+				values,
+				valuesOffset,
+				overlayText.getBytes(StandardCharsets.UTF_8),
+				scaleMin,
+				scaleMax,
+				graphWidth,
+				graphHeight);
+	}
+
 	public void pushID(@NotNull String stringID) {
 		pushID(stringID.getBytes(StandardCharsets.UTF_8));
 	}
@@ -195,7 +262,8 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param styleVar should be a value from {@link JImStyleVars}
 	 * @param value    the value to set
 	 */
-	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar, float value) {
+	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Float> styleVar,
+	                         float value) {
 		pushStyleVarFloat(styleVar.nativeValue, value);
 	}
 
@@ -204,7 +272,9 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param valueX   the first value of ImVec2 to set
 	 * @param valueY   the second value of ImVec2 to set
 	 */
-	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar, float valueX, float valueY) {
+	public void pushStyleVar(@MagicConstant(valuesFromClass = JImStyleVars.class) @NotNull JImStyleVar<@NotNull Void> styleVar,
+	                         float valueX,
+	                         float valueY) {
 		pushStyleVarImVec2(styleVar.nativeValue, valueX, valueY);
 	}
 
@@ -255,5 +325,21 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native int getID(byte @NotNull [] bytes);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	private static native byte @NotNull [] getClipboardText0();
+	private static native void plotLines(byte @NotNull [] label,
+	                                     float @NotNull [] values,
+	                                     int valuesOffset,
+	                                     byte[] overlayText,
+	                                     float scaleMin,
+	                                     float scaleMax,
+	                                     float graphWidth,
+	                                     float graphHeight);
+	private static native void plotHistogram(byte @NotNull [] label,
+	                                         float @NotNull [] values,
+	                                         int valuesOffset,
+	                                         byte[] overlayText,
+	                                         float scaleMin,
+	                                         float scaleMax,
+	                                         float graphWidth,
+	                                         float graphHeight);
 	//endregion
 }

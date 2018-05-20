@@ -14,6 +14,9 @@ import java.util.function.LongSupplier;
  * @since v0.1
  */
 public class JImGuiUtil {
+	/** defined in C++ float.h */
+	public static final float FLT_MAX = 3.402823466e+38F;
+
 	/**
 	 * Run a GUI in a limited time period.
 	 *
