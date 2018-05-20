@@ -249,4 +249,17 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getClipboardText0(JNIEnv *
 	return _data;
 }
 
+JNIEXPORT jboolean JNICALL
+Java_org_ice1000_jimgui_JImGui_menuItem(
+		JNIEnv *env, jclass, jbyteArray _label, jbyteArray _shortcut, jboolean selected, jboolean enabled) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, label);
+	__get(Byte, shortcut);
+	auto res = ImGui::MenuItem(STR_J2C(label), STR_J2C(shortcut), selected, enabled);
+	__release(Byte, label);
+	__release(Byte, shortcut);
+	__JNI__FUNCTION__CLEAN__
+	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
+}
+
 #pragma clang diagnostic pop

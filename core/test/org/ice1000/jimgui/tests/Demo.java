@@ -105,22 +105,22 @@ public class Demo {
 					imGui.endMenu();
 				}
 				if (imGui.beginMenu("Examples")) {
-					imGui.menuItem0("Main menu bar", null, showAppMainMenuBar);
-					imGui.menuItem0("Log", null, show_app_log);
-					imGui.menuItem0("Simple layout", null, show_app_layout);
-					imGui.menuItem0("Property editor", null, show_app_property_editor);
-					imGui.menuItem0("Long text display", null, show_app_long_text);
-					imGui.menuItem0("Auto-resizing window", null, show_app_auto_resize);
-					imGui.menuItem0("Constrained-resizing window", null, show_app_constrained_resize);
-					imGui.menuItem0("Simple overlay", null, showAppSimpleOverlay);
-					imGui.menuItem0("Manipulating window titles", null, showAppWindowTitles);
-					imGui.menuItem0("Custom rendering", null, show_app_custom_rendering);
+					imGui.menuItem("Main menu bar", null, showAppMainMenuBar);
+					imGui.menuItem("Log", null, show_app_log);
+					imGui.menuItem("Simple layout", null, show_app_layout);
+					imGui.menuItem("Property editor", null, show_app_property_editor);
+					imGui.menuItem("Long text display", null, show_app_long_text);
+					imGui.menuItem("Auto-resizing window", null, show_app_auto_resize);
+					imGui.menuItem("Constrained-resizing window", null, show_app_constrained_resize);
+					imGui.menuItem("Simple overlay", null, showAppSimpleOverlay);
+					imGui.menuItem("Manipulating window titles", null, showAppWindowTitles);
+					imGui.menuItem("Custom rendering", null, show_app_custom_rendering);
 					imGui.endMenu();
 				}
 				if (imGui.beginMenu("Help")) {
-					imGui.menuItem0("Metrics", null, showAppMetrics);
-					imGui.menuItem0("Style Editor", null, showAppStyleEditor);
-					imGui.menuItem0("About Dear Imgui", null, showAppAbout);
+					imGui.menuItem("Metrics", null, showAppMetrics);
+					imGui.menuItem("Style Editor", null, showAppStyleEditor);
+					imGui.menuItem("About Dear Imgui", null, showAppAbout);
 					imGui.endMenu();
 				}
 				imGui.endMenuBar();
@@ -270,11 +270,11 @@ public class Demo {
 				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
 			else imGui.text("Mouse Position: <invalid>");
 			if (imGui.beginPopupContextWindow()) {
-				if (imGui.menuItem("Custom", null, corner == -1)) corner = -1;
-				if (imGui.menuItem("Top-left", null, corner == 0)) corner = 0;
-				if (imGui.menuItem("Top-right", null, corner == 1)) corner = 1;
-				if (imGui.menuItem("Bottom-left", null, corner == 2)) corner = 2;
-				if (imGui.menuItem("Bottom-right", null, corner == 3)) corner = 3;
+				if (imGui.menuItem("Custom", corner == -1)) corner = -1;
+				if (imGui.menuItem("Top-left", corner == 0)) corner = 0;
+				if (imGui.menuItem("Top-right", corner == 1)) corner = 1;
+				if (imGui.menuItem("Bottom-left", corner == 2)) corner = 2;
+				if (imGui.menuItem("Bottom-right", corner == 3)) corner = 3;
 				if (openPtr.accessValue() && imGui.menuItem("Close")) openPtr.modifyValue(false);
 				imGui.endPopup();
 			}

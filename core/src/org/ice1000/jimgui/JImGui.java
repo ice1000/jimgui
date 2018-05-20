@@ -399,11 +399,48 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return new String(getClipboardText0());
 	}
 
+	/**
+	 * @param label    label text
+	 * @param shortcut displayed for convenience but not processed by ImGui at the moment
+	 * @param selected like checkbox
+	 * @param enabled  if not, will be grey
+	 * @return true when activated.
+	 */
+	public boolean menuItem(@NotNull String label,
+	                        @Nullable String shortcut,
+	                        boolean selected,
+	                        boolean enabled) {
+		return menuItem(label.getBytes(StandardCharsets.UTF_8),
+				shortcut != null ? shortcut.getBytes(StandardCharsets.UTF_8) : null,
+				selected,
+				enabled);
+	}
+
+	/**
+	 * @param label    label text
+	 * @param shortcut displayed for convenience but not processed by ImGui at the moment
+	 * @param selected like checkbox
+	 * @return true when activated.
+	 */
+	public boolean menuItem(@NotNull String label, @Nullable String shortcut, boolean selected) {
+		return menuItem(label, shortcut, selected, true);
+	}
+
+	/**
+	 * @param label    label text
+	 * @param selected like checkbox
+	 * @return true when activated.
+	 */
+	public boolean menuItem(@NotNull String label, boolean selected) {
+		return menuItem(label, null, selected);
+	}
+
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
+	private static native boolean menuItem(byte[] label, byte[] shortcut, boolean selected, boolean enabled);
 	private static native long getWindowDrawListNativeObjectPtr();
 	private static native long getOverlayDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);

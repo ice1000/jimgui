@@ -236,11 +236,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("menuItem", "boolean",
 					label,
 					string("shortcut", default = strNull),
-					bool("selected", default = false),
-					bool("enabled", default = true)),
-			Fun("menuItem0", "boolean",
-					label,
-					string("shortcut", default = strNull),
 					boolPtr("selected", nullable = true),
 					bool("enabled", default = true)),
 

@@ -20,10 +20,6 @@ auto ImGui::BeginChild0(Ptr<const char> str_id, const ImVec2 &size, bool border,
 	return BeginChild(str_id, size, border, flags);
 }
 
-auto ImGui::MenuItem0(Ptr<const char> label, Ptr<const char> shortcut, Ptr<bool> p_selected, bool enabled) -> bool {
-	return MenuItem(label, shortcut, p_selected, enabled);
-}
-
 #define ColorRelated(name) \
 auto ImGui::Color ## name(Ptr<const char>label, ImVec4& col, ImGuiColorEditFlags flags) -> bool { \
   return Color ## name(label, PTR_J2C(float, &col), flags); \

@@ -20,7 +20,6 @@ namespace ImGui {
 	auto ColorPicker3(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto ColorPicker4(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto RadioButton0(Ptr<const char> label, bool active) -> bool;
-	auto MenuItem0(Ptr<const char> label, Ptr<const char> shortcut, Ptr<bool> p_selected, bool enabled = true) -> bool;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H
