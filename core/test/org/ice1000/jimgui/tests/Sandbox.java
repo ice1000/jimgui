@@ -9,7 +9,6 @@ import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -86,6 +85,7 @@ public class Sandbox {
 				imGui.text("[Shift]");
 				imGui.sameLine();
 			}
+			imGui.plotHistogram("Wtf", new float[]{1, 2, 3, 4}, "What?");
 			imGui.newLine();
 			font.setFontSize(bizarreValue + 13);
 			JImFontAtlas containerAtlas = font.getContainerAtlas();

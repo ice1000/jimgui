@@ -250,6 +250,22 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	// TODO doc
 	public void plotHistogram(@NotNull String label,
 	                          @NotNull float[] values,
+	                          @NotNull String overlayText) {
+		plotHistogram(label, values, 0, values.length, overlayText);
+	}
+
+	// TODO doc
+	public void plotHistogram(@NotNull String label,
+	                          @NotNull float[] values,
+	                          int valuesOffset,
+	                          int valuesLength,
+	                          @NotNull String overlayText) {
+		plotHistogram(label, values, valuesOffset, valuesLength, overlayText, FLT_MAX, FLT_MAX, 0, 0);
+	}
+
+	// TODO doc
+	public void plotHistogram(@NotNull String label,
+	                          @NotNull float[] values,
 	                          int valuesOffset,
 	                          int valuesLength,
 	                          @NotNull String overlayText,
