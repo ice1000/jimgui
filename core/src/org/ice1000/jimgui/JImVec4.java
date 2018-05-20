@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
  * @since v0.1
  */
 public class JImVec4 implements DeallocatableObject {
+	// not sure if there should be one
+	// public static final @NotNull JImVec4 NULL = new JImVec4(0);
+
 	/** package-private by design */
 	long nativeObjectPtr;
 

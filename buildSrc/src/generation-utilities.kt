@@ -15,6 +15,8 @@ fun int(name: String, default: Any? = null, annotation: String? = null) = Simple
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
 fun vec4(name: String, default: Any? = null) = ImVec4Param(name, default)
+fun font(name: String = "font") = PointerParam(name, "JImFont", "ImFont")
+fun vec4Ptr(name: String, default: Any? = null) = PointerParam(name, "JImVec4", "ImVec4", default = default)
 fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$name", default)
 fun pos(name: String = "pos", default: Any? = null) = vec2("${name}X", "${name}Y", default)
 fun string(name: String, default: String? = null) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
@@ -34,6 +36,7 @@ val rounding = float("rounding", default = 0)
 val numSegments = int("numSegments", default = 12)
 val stringID = string("stringID")
 val nStringID = string("stringID", default = strNull)
+val pos = pos()
 fun flags(from: String? = null, default: String? = null, name: String = "flags") = int(name,
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })

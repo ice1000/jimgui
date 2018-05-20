@@ -70,7 +70,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getContentRegionAvailWidth", "float"),
 			Fun("getWindowContentRegionWidth", "float"),
 
-			Fun("setNextWindowPos", pos(), cond, pos("windowPosPivot", default = "0,0")),
+			Fun("setNextWindowPos", pos, cond, pos("windowPosPivot", default = "0,0")),
 			Fun("setNextWindowSize", size(), cond),
 			Fun("setNextWindowSizeConstraints", size("Min"), size("Max")),
 			Fun("setNextWindowContentSize", size()),

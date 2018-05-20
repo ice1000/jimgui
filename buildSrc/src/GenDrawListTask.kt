@@ -34,7 +34,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
 	}
 
-	override val `c++Expr` = "(reinterpret_cast<ImDrawList *> (nativeObjectPtr))->"
+	override val `c++Expr` = "PTR_J2C(ImDrawList, nativeObjectPtr)->"
 	private val functions = listOf(
 			Fun.private("pushClipRect",
 					size("clipRectMin"),
@@ -59,13 +59,24 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			Fun.private("addTriangleFilled", pos("a"), pos("b"), pos("c"), u32, nativeObjectPtr),
 			Fun.private("addCircle", pos("centre"), float("radius"), u32, numSegments, thickness, nativeObjectPtr),
 			Fun.private("addCircleFilled", pos("centre"), float("radius"), u32, numSegments, nativeObjectPtr),
+			Fun.protected("addText",
+					font(), float("fontSize"), pos, u32,
+					stringSized("text"),
+					float("wrapWidth", default = 0),
+					vec4Ptr("cpuFineClipRect", default = 0),
+					nativeObjectPtr),
 
 			// Stateful path API, add points then finish with PathFillConvex() or PathStroke()
 			Fun.private("pathClear", nativeObjectPtr),
-			Fun.private("pathLineTo", pos(), nativeObjectPtr),
-			Fun.private("pathLineToMergeDuplicate", pos(), nativeObjectPtr),
+			Fun.private("pathLineTo", pos, nativeObjectPtr),
+			Fun.private("pathLineToMergeDuplicate", pos, nativeObjectPtr),
 			Fun.private("pathFillConvex", u32, nativeObjectPtr),
 			Fun.private("pathStroke", u32, bool("closed"), thickness, nativeObjectPtr),
+			Fun.private("pathArcTo", pos("centre"), float("radius"),
+					float("aMin"), float("aMax"),
+					int("numSegments", default = 10), nativeObjectPtr),
+			Fun.private("pathArcToFast", pos("centre"), float("radius"),
+					float("aMinOf12"), float("aMaxOf12"), nativeObjectPtr),
 
 			// Channels
 			Fun("channelsSplit", int("channelsCount"), nativeObjectPtr),
