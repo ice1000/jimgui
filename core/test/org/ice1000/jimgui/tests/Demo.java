@@ -191,7 +191,6 @@ public class Demo {
 						}
 						imGui.popID();
 					}
-					imGui.treePop();
 
 					float spacingX = imGui.getStyle().getItemInnerSpacingX();
 					if (imGui.arrowButton("##left", JImDirection.Left)) ;
@@ -201,6 +200,15 @@ public class Demo {
 					imGui.text("Hover over me");
 					if (imGui.isItemHovered())
 						imGui.setTooltip("I am a tooltip");
+
+					imGui.sameLine();
+					imGui.text("- or me");
+					if (imGui.isItemHovered()) {
+						imGui.beginTooltip();
+						imGui.text("I am a fancy tooltip");
+						imGui.endTooltip();
+					}
+					imGui.treePop();
 				}
 			}
 

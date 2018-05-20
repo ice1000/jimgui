@@ -6,7 +6,7 @@ import org.ice1000.jimgui.util.JniLoader
 fun main(args: Array<String>) {
 	JniLoader.load()
 	runPer(15) {
-		pushID1("WtfID")
+		pushID("WtfID")
 		"Window 2" {
 			menuBar {
 				menu("What?") {
