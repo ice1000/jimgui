@@ -38,6 +38,15 @@ env->Set ## type ## ArrayRegion(_ ## name, 0, len, name);
 #define __len(name) \
 env->GetArrayLength(_ ## name)
 
+#define STR_J2C(value) \
+reinterpret_cast<Ptr<const char>> (value)
+
+#define PTR_C2J(value) \
+reinterpret_cast<jlong> (value)
+
+#define PTR_J2C(type, value) \
+reinterpret_cast<Ptr<type>> (value)
+
 #undef _
 
 #endif // __JIMGUI_BASICS_HPP__
