@@ -179,8 +179,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	public void textDisabled(@NotNull String text) {
 		if (style == null) alreadyDisposed();
 		pushStyleColor(JImStyleColors.Text, style.getColor(JImStyleColors.TextDisabled));
-		textUnformatted(text);
-		popStyleColor();
+		textUnformatted(text);popStyleColor();
 	}
 
 	/**
