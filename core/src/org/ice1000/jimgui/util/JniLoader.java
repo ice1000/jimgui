@@ -23,15 +23,13 @@ public final class JniLoader {
 			boolean windows7 = "Windows 7".equals(osName);
 			boolean windows8 = "Windows 8".equals(osName) || "Windows 8.1".equals(osName);
 			boolean windows10 = "Windows 10".equals(osName);
-			boolean osx = "Mac OS X".equals(osName);
+//			boolean osx = "Mac OS X".equals(osName);
 			if (windows98 || windows95 || windows2000 || windows2003)
 				throw new UnsupportedOperationException("Windows 98/95/2000/2003 are not supported and won't be supported");
 			else if (windowsXP)
 				throw new UnsupportedOperationException("Windows XP required DirectX9 implementation of imgui, which is not available yet.");
 			else if (windowsVista)
 				throw new UnsupportedOperationException("Windows Vista required DirectX10 implementation of imgui, which is not available yet.");
-			else if (osx)
-				throw new UnsupportedOperationException("Mac OS X is not supported yet.");
 			else if ((linux || windows7 || windows8 || windows10) && x86) {
 				suffix = "32";
 			} else suffix = "";
