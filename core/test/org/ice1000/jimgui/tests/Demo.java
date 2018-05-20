@@ -1,8 +1,6 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.JImGui;
-import org.ice1000.jimgui.NativeBool;
-import org.ice1000.jimgui.NativeInt;
+import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
 import org.ice1000.jimgui.flag.JImCondition;
 import org.ice1000.jimgui.flag.JImDirection;
@@ -178,11 +176,20 @@ public class Demo {
 					imGui.radioButton("radio b", e, 1);
 					imGui.sameLine();
 					imGui.radioButton("radio c", e, 2);
-					imGui.sameLine();
 
 					for (int i = 0; i < 7; i++) {
 						if (i > 0) imGui.sameLine();
-						// TODO
+						imGui.pushID(i);
+						try (JImVec4 color1 = JImVec4.fromHSV(i / 7.0f, 0.6f, 0.6f);
+						     JImVec4 color2 = JImVec4.fromHSV(i / 7.0f, 0.7f, 0.7f);
+						     JImVec4 color3 = JImVec4.fromHSV(i / 7.0f, 0.8f, 0.8f)) {
+							imGui.pushStyleColor(JImStyleColors.Button, color1);
+							imGui.pushStyleColor(JImStyleColors.ButtonHovered, color2);
+							imGui.pushStyleColor(JImStyleColors.ButtonActive, color3);
+							imGui.button("Click");
+							imGui.popStyleColor(3);
+						}
+						imGui.popID();
 					}
 					imGui.treePop();
 

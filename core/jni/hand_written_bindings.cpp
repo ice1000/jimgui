@@ -20,6 +20,23 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNI
 	return reinterpret_cast<jlong> (ImGui::GetFont());
 }
 
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jbyteArray _id) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, id);
+	ImGui::PushID(reinterpret_cast<Ptr<const char>> (id), reinterpret_cast<Ptr<const char>> (id + __len(id)));
+	__release(Byte, id);
+	__JNI__FUNCTION__CLEAN__
+}
+
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getID(JNIEnv *env, jclass, jbyteArray _id) -> jint {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, id);
+	auto res = ImGui::GetID(reinterpret_cast<Ptr<const char>> (id), reinterpret_cast<Ptr<const char>> (id + __len(id)));
+	__release(Byte, id);
+	__JNI__FUNCTION__CLEAN__
+	return res;
+}
+
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetWindowDrawList());
 }
@@ -85,6 +102,12 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *
 
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFonts0(JNIEnv *, jclass) -> jlong {
 	return reinterpret_cast<jlong> (ImGui::GetIO().Fonts);
+}
+
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_fromHSV0(JNIEnv *, jclass, jfloat h, jfloat s, jfloat v, jfloat a) -> jlong {
+	float r, g, b;
+	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
+	return reinterpret_cast<jlong> (new ImVec4(r, g, b, a));
 }
 
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *, jclass) -> jlong {

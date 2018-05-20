@@ -10,9 +10,6 @@
 
 namespace ImGui {
 	auto ListBoxHeader0(Ptr<const char> label, int items_count, int height_in_items) -> bool;
-	auto PushID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> void;
-	auto GetID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> ImGuiID;
-	auto PushID1(Ptr<const char> str_id) -> void;
 	auto PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void;
 	auto PushStyleVarFloat(ImGuiStyleVar idx, float val) -> void;
 	auto BeginChild0(

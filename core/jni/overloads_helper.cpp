@@ -8,18 +8,6 @@ auto ImGui::ListBoxHeader0(Ptr<const char> label, int items_count, int height_in
 	return ListBoxHeader(label, items_count, height_in_items);
 }
 
-auto ImGui::PushID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> void {
-	PushID(str_id_begin, str_id_end);
-}
-
-auto ImGui::PushID1(Ptr<const char> str_id) -> void {
-	PushID(str_id);
-}
-
-auto ImGui::GetID0(Ptr<const char> str_id_begin, Ptr<const char> str_id_end) -> ImGuiID {
-	return GetID(str_id_begin, str_id_end);
-}
-
 auto ImGui::PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void {
 	ImGui::PushStyleVar(idx, val);
 }

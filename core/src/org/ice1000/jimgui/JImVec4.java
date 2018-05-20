@@ -95,6 +95,26 @@ public class JImVec4 implements DeallocatableObject {
 	}
 
 	/**
+	 * Convert HSV color to RGB
+	 *
+	 * @return a mutable imgui vec4 instance
+	 */
+	@Contract
+	public static @NotNull MutableJImVec4 fromHSV(float h, float s, float v) {
+		return fromHSV(h, s, v, 1);
+	}
+
+	/**
+	 * Convert HSV color to RGB
+	 *
+	 * @return a mutable imgui vec4 instance
+	 */
+	@Contract
+	public static @NotNull MutableJImVec4 fromHSV(float h, float s, float v, float a) {
+		return new MutableJImVec4(fromHSV0(h, s, v, a));
+	}
+
+	/**
 	 * @param u32 unsigned 32-bit int color representation
 	 * @return a mutable imgui vec4 instance
 	 * @see JImVec4#toU32()
@@ -126,6 +146,7 @@ public class JImVec4 implements DeallocatableObject {
 	private static native int toU32(final long nativeObjectPtr);
 	@Contract
 	private static native long fromImU32(int u32);
+	private static native long fromHSV0(float h, float s, float v, float a);
 	private static native long allocateNativeObjects(float x, float y, float z, float w);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 }
