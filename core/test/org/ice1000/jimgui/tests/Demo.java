@@ -2,12 +2,13 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.NativeBool;
+import org.ice1000.jimgui.NativeInt;
 import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
 import org.ice1000.jimgui.flag.JImCondition;
+import org.ice1000.jimgui.flag.JImDirection;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
-import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
 public class Demo {
@@ -38,6 +39,11 @@ public class Demo {
 		NativeBool showAppMetrics = new NativeBool();
 		NativeBool showAppAbout = new NativeBool();
 		NativeBool pOpen = new NativeBool();
+
+		NativeInt clicked = new NativeInt();
+		NativeBool check = new NativeBool();
+		check.modifyValue(true);
+		NativeInt e = new NativeInt();
 		DeallocatableObjectManager manager = new DeallocatableObjectManager(15);
 		manager.add(showAppSimpleOverlay);
 		manager.add(showAppMainMenuBar);
@@ -60,6 +66,9 @@ public class Demo {
 		manager.add(noResize);
 		manager.add(noCollapse);
 		manager.add(noNav);
+		manager.add(clicked);
+		manager.add(check);
+		manager.add(e);
 		JImGuiUtil.runPer(15, imGui -> {
 			if (showAppMetrics.accessValue()) imGui.showMetricsWindow(showAppMetrics);
 			if (showAppStyleEditor.accessValue()) {
@@ -76,7 +85,7 @@ public class Demo {
 			}
 
 			// Demonstrate the various window flags. Typically you would just use the default.
-			@MagicConstant(flagsFromClass = JImWindowFlags.class) int windowFlags = 0;
+			int windowFlags = JImWindowFlags.Nothing;
 			if (noTitlebar.accessValue()) windowFlags |= JImWindowFlags.NoTitleBar;
 			if (noScrollbar.accessValue()) windowFlags |= JImWindowFlags.NoScrollbar;
 			if (!noMenu.accessValue()) windowFlags |= JImWindowFlags.MenuBar;
@@ -92,40 +101,6 @@ public class Demo {
 
 			imGui.text("dear imgui says hello. (1.61 WIP)");
 
-			if (imGui.collapsingHeader("Help")) {
-				imGui.textWrapped(
-						"This window is being created by the ShowDemoWindow() function. Please refer to the code in imgui_demo.cpp for reference.\n\n");
-				imGui.text("USER GUIDE:");
-				showUserGuide(imGui);
-			}
-			if (imGui.collapsingHeader("Window options")) {
-				imGui.checkbox("No titlebar", noTitlebar);
-				imGui.sameLine(150);
-				imGui.checkbox("No scrollbar", noScrollbar);
-				imGui.sameLine(300);
-				imGui.checkbox("No menu", noMenu);
-				imGui.checkbox("No move", noMove);
-				imGui.sameLine(150);
-				imGui.checkbox("No resize", noResize);
-				imGui.sameLine(300);
-				imGui.checkbox("No collapse", noCollapse);
-				imGui.sameLine(150);
-				imGui.checkbox("No nav", noNav);
-				if (imGui.treeNode("Style")) {
-					imGui.showStyleEditor();
-					imGui.treePop();
-				}
-				if (imGui.treeNode("Capture/Logging")) {
-					imGui.textWrapped(
-							"The logging API redirects all text output so you can easily capture the content of a window or a block. Tree nodes can be automatically expanded. You can also call ImGui::LogText() to output directly to the log without a visual output.");
-					imGui.logButtons();
-					imGui.treePop();
-				}
-			}
-
-			if (showAppMainMenuBar.accessValue()) showExampleAppMainMenuBar(imGui);
-			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);
-			if (showAppWindowTitles.accessValue()) showExampleAppWindowTitles(imGui);
 			if (imGui.beginMenuBar()) {
 				if (imGui.beginMenu("Menu")) {
 					showExampleMenuFile(imGui);
@@ -152,6 +127,79 @@ public class Demo {
 				}
 				imGui.endMenuBar();
 			}
+
+			imGui.spacing();
+			if (imGui.collapsingHeader("Help")) {
+				imGui.textWrapped(
+						"This window is being created by the ShowDemoWindow() function. Please refer to the code in imgui_demo.cpp for reference.\n\n");
+				imGui.text("USER GUIDE:");
+				showUserGuide(imGui);
+			}
+			if (imGui.collapsingHeader("Window options")) {
+				imGui.checkbox("No titlebar", noTitlebar);
+				imGui.sameLine(150);
+				imGui.checkbox("No scrollbar", noScrollbar);
+				imGui.sameLine(300);
+				imGui.checkbox("No menu", noMenu);
+				imGui.checkbox("No move", noMove);
+				imGui.sameLine(150);
+				imGui.checkbox("No resize", noResize);
+				imGui.sameLine(300);
+				imGui.checkbox("No collapse", noCollapse);
+				imGui.sameLine(150);
+				imGui.checkbox("No nav", noNav);
+
+				if (imGui.treeNode("Style")) {
+					imGui.showStyleEditor();
+					imGui.treePop();
+				}
+
+				if (imGui.treeNode("Capture/Logging")) {
+					imGui.textWrapped(
+							"The logging API redirects all text output so you can easily capture the content of a window or a block. Tree nodes can be automatically expanded. You can also call ImGui::LogText() to output directly to the log without a visual output.");
+					imGui.logButtons();
+					imGui.treePop();
+				}
+			}
+
+			if (imGui.collapsingHeader("Widgets")) {
+				if (imGui.treeNode("Basic")) {
+					if (imGui.button("Button"))
+						clicked.modifyValue(clicked.accessValue() + 1);
+					if ((clicked.accessValue() & 1) > 0) {
+						imGui.sameLine();
+						imGui.text("Thanks for clicking me!");
+					}
+
+					imGui.checkbox("checkbox", check);
+
+					imGui.radioButton("radio a", e, 0);
+					imGui.sameLine();
+					imGui.radioButton("radio b", e, 1);
+					imGui.sameLine();
+					imGui.radioButton("radio c", e, 2);
+					imGui.sameLine();
+
+					for (int i = 0; i < 7; i++) {
+						if (i > 0) imGui.sameLine();
+						// TODO
+					}
+					imGui.treePop();
+
+					float spacingX = imGui.getStyle().getItemInnerSpacingX();
+					if (imGui.arrowButton("##left", JImDirection.Left)) ;
+					imGui.sameLine(0, spacingX);
+					if (imGui.arrowButton("##left", JImDirection.Right)) ;
+
+					imGui.text("Hover over me");
+					if (imGui.isItemHovered())
+						imGui.setTooltip("I am a tooltip");
+				}
+			}
+
+			if (showAppMainMenuBar.accessValue()) showExampleAppMainMenuBar(imGui);
+			if (showAppSimpleOverlay.accessValue()) showExampleAppFixedOverlay(imGui, showAppSimpleOverlay);
+			if (showAppWindowTitles.accessValue()) showExampleAppWindowTitles(imGui);
 			imGui.end();
 		});
 		manager.deallocateAll();

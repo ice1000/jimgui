@@ -46,4 +46,8 @@ ColorRelated(Edit4)
 ColorRelated(Picker3)
 ColorRelated(Picker4)
 
+auto ImGui::RadioButton0(const char* label, bool active) -> bool {
+	return RadioButton(label, active);
+}
+
 #undef ColorRelated
