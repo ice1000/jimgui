@@ -5,8 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
-
 public class JImDrawList extends JImGuiDrawListGen {
 	/**
 	 * package-private by design

@@ -3,7 +3,7 @@
 ///
 
 #include <imgui.h>
-#include <imgui_impl_glfw_gl3.cpp> // to modify g_Time
+#include <imgui_impl_glfw_gl3.h>
 #include "impl/GL/glcorearb.h" // avoid conflicting with system include
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
@@ -37,7 +37,6 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	// Enable vsync
 	glfwSwapInterval(1);
 	gl3wInit();
-	g_Time = 0;
 
 	// Setup Dear ImGui binding
 	IMGUI_CHECKVERSION();

@@ -65,6 +65,7 @@ val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
+val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
 val imguiExamples = "$imguiGitHub/examples"
 
 val downloadImgui = task<Download>("downloadImgui") {
@@ -87,15 +88,15 @@ val downloadImpl = task<Download>("downloadImpl") {
 	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.cpp")
 	src("$imguiExamples/directx11_example/imgui_impl_dx11.h")
 	src("$imguiExamples/directx11_example/imgui_impl_dx11.cpp")
-	src("$imguiExamples/libs/gl3w/GL/gl3w.c")
+	src("$covGitHub/src/gl3w.c")
 	dest(implDir)
 	overwrite(false)
 }
 
 val downloadImplGL = task<Download>("downloadImplGL") {
 	group = downloadAll.group
-	src("$imguiExamples/libs/gl3w/GL/gl3w.h")
-	src("https://raw.githubusercontent.com/covscript/covscript-imgui/master/include/GL/glcorearb.h")
+	src("$covGitHub/include/GL/gl3w.h")
+	src("$covGitHub/include/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
 	overwrite(false)
 }
