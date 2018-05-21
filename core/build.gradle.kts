@@ -95,7 +95,7 @@ val downloadImpl = task<Download>("downloadImpl") {
 val downloadImplGL = task<Download>("downloadImplGL") {
 	group = downloadAll.group
 	src("$imguiExamples/libs/gl3w/GL/gl3w.h")
-	src("$imguiExamples/libs/gl3w/GL/glcorearb.h")
+	src("https://raw.githubusercontent.com/covscript/covscript-imgui/master/include/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
 	overwrite(false)
 }

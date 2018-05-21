@@ -10,7 +10,7 @@ cache:
   - C:\Users\appveyor\.gradle
 
 test_script:
- - gradlew test --info --stacktrace --no-daemon
+ - gradlew assemble test --info --stacktrace --no-daemon
 
 artifacts:
   - path: 'core\build\libs\*.jar'
