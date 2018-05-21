@@ -73,6 +73,14 @@ public class JImVec4 implements DeallocatableObject {
 		deallocateNativeObjects(nativeObjectPtr);
 	}
 
+	public @NotNull java.awt.Color toAWT() {
+		return new java.awt.Color(getW(), getX(), getY(), getZ());
+	}
+
+	public @NotNull javafx.scene.paint.Color toJFX() {
+		return new javafx.scene.paint.Color(getW(), getX(), getY(), getZ());
+	}
+
 	/**
 	 * @param color AWT color
 	 * @return a mutable imgui vec4 instance

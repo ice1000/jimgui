@@ -268,6 +268,10 @@ XY_ACCESSOR(ContentRegionMax)
 XY_ACCESSOR(WindowContentRegionMin)
 XY_ACCESSOR(WindowContentRegionMax)
 XY_ACCESSOR(FontTexUvWhitePixel)
+XY_ACCESSOR(ItemRectMin)
+XY_ACCESSOR(ItemRectMax)
+XY_ACCESSOR(ItemRectSize)
+XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
 
 #undef XY_ACCESSOR
 

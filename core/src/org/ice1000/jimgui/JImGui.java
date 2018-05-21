@@ -355,6 +355,14 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	public native float getWindowContentRegionMaxY();
 	public native float getFontTexUvWhitePixelX();
 	public native float getFontTexUvWhitePixelY();
+	public native float getItemRectMinX();
+	public native float getItemRectMinY();
+	public native float getItemRectMaxX();
+	public native float getItemRectMaxY();
+	public native float getItemRectSizeX();
+	public native float getItemRectSizeY();
+	public native float getMousePosOnOpeningCurrentPopupX();
+	public native float getMousePosOnOpeningCurrentPopupY();
 
 	/**
 	 * @param styleVar should be a value from {@link JImStyleVars}
