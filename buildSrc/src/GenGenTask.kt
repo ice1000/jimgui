@@ -159,6 +159,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					string("previewValue"),
 					flags(from = "Combo", default = "PopupAlignLeft")),
 			Fun("endCombo"),
+			Fun("combo", label, intPtr("currentItem"),
+					string("itemsSeparatedByZeros"),
+					int("popupMaxHeightInItems", default = -1)),
 
 			// Widgets: Drags
 			Fun("dragFloat", "boolean", label,
