@@ -194,7 +194,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param valuesLength length in [values]
 	 */
 	public void plotLines(@NotNull String label, @NotNull float[] values, int valuesOffset, int valuesLength) {
-		plotLines(label.getBytes(StandardCharsets.UTF_8), values, valuesOffset, valuesLength, null, FLT_MAX, FLT_MAX, 0, 0);
+		plotLines(getBytes(label), values, valuesOffset, valuesLength, null, FLT_MAX, FLT_MAX, 0, 0);
 	}
 
 	/**
@@ -262,11 +262,11 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                      float scaleMax,
 	                      float graphWidth,
 	                      float graphHeight) {
-		plotLines(label.getBytes(StandardCharsets.UTF_8),
+		plotLines(getBytes(label),
 				values,
 				valuesOffset,
 				valuesLength,
-				overlayText.getBytes(StandardCharsets.UTF_8),
+				getBytes(overlayText),
 				scaleMin,
 				scaleMax,
 				graphWidth,
@@ -278,7 +278,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param values plot values
 	 */
 	public void plotHistogram(@NotNull String label, @NotNull float[] values) {
-		plotHistogram(label.getBytes(StandardCharsets.UTF_8), values, 0, values.length, null, FLT_MAX, FLT_MAX, 0, 0);
+		plotHistogram(getBytes(label), values, 0, values.length, null, FLT_MAX, FLT_MAX, 0, 0);
 	}
 
 	/**
@@ -332,11 +332,11 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                          float scaleMax,
 	                          float graphWidth,
 	                          float graphHeight) {
-		plotHistogram(label.getBytes(StandardCharsets.UTF_8),
+		plotHistogram(getBytes(label),
 				values,
 				valuesOffset,
 				valuesLength,
-				overlayText.getBytes(StandardCharsets.UTF_8),
+				getBytes(overlayText),
 				scaleMin,
 				scaleMax,
 				graphWidth,
@@ -411,10 +411,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                        @Nullable String shortcut,
 	                        boolean selected,
 	                        boolean enabled) {
-		return menuItem(label.getBytes(StandardCharsets.UTF_8),
-				shortcut != null ? shortcut.getBytes(StandardCharsets.UTF_8) : null,
-				selected,
-				enabled);
+		return menuItem(getBytes(label), shortcut != null ? getBytes(shortcut) : null, selected, enabled);
 	}
 
 	/**
