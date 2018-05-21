@@ -253,12 +253,22 @@ Java_org_ice1000_jimgui_JImGui_menuItem(
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowX(JNIEnv *, jobject) -> jfloat {
-	return ImGui::GetWindowPos().x;
+#define XY_ACCESSOR(Property) \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImGui_get ## Property ## X(JNIEnv *, jobject) -> jfloat { \
+	return ImGui::Get ## Property().x; \
+} \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImGui_get ## Property ## Y(JNIEnv *, jobject) -> jfloat { \
+	return ImGui::Get ## Property().y; \
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowY(JNIEnv *, jobject) -> jfloat {
-	return ImGui::GetWindowPos().y;
-}
+XY_ACCESSOR(WindowPos)
+XY_ACCESSOR(ContentRegionMax)
+XY_ACCESSOR(WindowContentRegionMin)
+XY_ACCESSOR(WindowContentRegionMax)
+XY_ACCESSOR(FontTexUvWhitePixel)
+
+#undef XY_ACCESSOR
 
 #pragma clang diagnostic pop

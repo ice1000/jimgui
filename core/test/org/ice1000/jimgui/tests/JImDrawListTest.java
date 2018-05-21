@@ -30,8 +30,8 @@ public class JImDrawListTest {
 			assertNotNull(windowDrawList);
 			JImDrawList overlayDrawList = imGui.findOverlayDrawList();
 			assertNotNull(overlayDrawList);
-			float cursorPosX = imGui.getWindowX();
-			float cursorPosY = imGui.getWindowY();
+			float cursorPosX = imGui.getWindowPosX();
+			float cursorPosY = imGui.getWindowPosY();
 			windowDrawList.addText(30,
 					cursorPosX + 122,
 					cursorPosY + 22,
@@ -40,7 +40,7 @@ public class JImDrawListTest {
 			windowDrawList.addCircle(
 					cursorPosX + 250,
 					cursorPosY + 150,
-					50, rgb);
+					50, rgb, 100);
 			windowDrawList.addText(72,
 					cursorPosX + 230,
 					cursorPosY + 120,

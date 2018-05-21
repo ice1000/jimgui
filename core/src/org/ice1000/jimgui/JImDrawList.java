@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.nio.charset.StandardCharsets;
 
+import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
+
 public class JImDrawList extends JImGuiDrawListGen {
 	/**
 	 * package-private by design
@@ -21,6 +23,6 @@ public class JImDrawList extends JImGuiDrawListGen {
 	}
 
 	public void addText(float fontSize, float posX, float posY, int u32Color, @NotNull String text) {
-		addText(0, fontSize, posX, posY, u32Color, text.getBytes(StandardCharsets.UTF_8), 0, 0, nativeObjectPtr);
+		addText(0, fontSize, posX, posY, u32Color, getBytes(text), 0, 0, nativeObjectPtr);
 	}
 }
