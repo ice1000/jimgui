@@ -81,7 +81,7 @@ public class Demo {
 		manager.add(clicked);
 		manager.add(check);
 		manager.add(e);
-		JImGuiUtil.runPer(15, imGui -> {
+		JImGuiUtil.runWithinPer(20000, 15, imGui -> {
 			if (showAppMetrics.accessValue()) imGui.showMetricsWindow(showAppMetrics);
 			if (showAppStyleEditor.accessValue()) {
 				imGui.begin("Style Editor", showAppStyleEditor);
