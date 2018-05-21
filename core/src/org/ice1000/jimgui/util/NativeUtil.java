@@ -52,19 +52,19 @@ public final class NativeUtil {
 	 * exiting.
 	 * Method uses String as filename because the pathname is "abstract", not system-dependent.
 	 *
-	 * @param fullPath The path of file inside JAR as absolute path (beginning with '/'), e.g. /package/File.ext
 	 * @throws IllegalArgumentException If source file (param path) does not exist
 	 * @throws IllegalArgumentException If the path is not absolute or if the filename is shorter than three characters
 	 *                                  (restriction of {@link File#createTempFile(java.lang.String, java.lang.String)}).
 	 */
-	public static void loadLibraryFromJar(@NotNull String fullPath, @NotNull String filename) {
+	public static void loadLibraryFromJar(@NotNull String filename) {
 		// Prepare temporary file
 		File temporaryDir = createTempDirectory(NATIVE_FOLDER_PATH_PREFIX);
 		temporaryDir.deleteOnExit();
+		String fullPath = "/native/" + filename;
 
 		File temp = new File(temporaryDir, filename);
 		try (InputStream is = NativeUtil.class.getResourceAsStream(fullPath)) {
-			if (is == null) throw new UnsupportedOperationException("Native library" + fullPath + " not found.");
+			if (is == null) throw new UnsupportedOperationException("Native library" + filename + " not found.");
 			Files.copy(is, temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException | NullPointerException e) {
 			if (temp.exists()) System.err.println("Deleting since load failed... " + temp.delete());

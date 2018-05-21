@@ -8,10 +8,24 @@ import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
 
 public class Demo {
 	private static final float DISTANCE = 10.0f;
 	private static int corner = 0;
+
+	@BeforeClass
+	public static void setup() {
+		useAlternativeJniLibAndCheckHeadless();
+	}
+
+	@Test
+	public void testSandbox() {
+		main();
+	}
 
 	public static void main(String @NotNull ... args) {
 		JniLoader.load();
@@ -67,7 +81,7 @@ public class Demo {
 		manager.add(clicked);
 		manager.add(check);
 		manager.add(e);
-		JImGuiUtil.runPer(15, imGui -> {
+		JImGuiUtil.runWithinPer(20000, 15, imGui -> {
 			if (showAppMetrics.accessValue()) imGui.showMetricsWindow(showAppMetrics);
 			if (showAppStyleEditor.accessValue()) {
 				imGui.begin("Style Editor", showAppStyleEditor);

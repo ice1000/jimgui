@@ -8,11 +8,24 @@ import org.ice1000.jimgui.flag.JImMouseIndexes;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
+
 public class Sandbox {
 	private static String ini = "";
+	@BeforeClass
+	public static void setup() {
+		useAlternativeJniLibAndCheckHeadless();
+	}
+
+	@Test
+	public void testSandbox() {
+		main();
+	}
 
 	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();

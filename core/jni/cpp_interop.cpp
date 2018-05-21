@@ -23,9 +23,9 @@ Java_org_ice1000_jimgui_Native ## JavaName ## _modifyValue(JNIEnv *, jclass, jlo
   *nativeObject = static_cast<CppType> (newValue); \
 } \
 JNIEXPORT void JNICALL \
-Java_org_ice1000_jimgui_Native ## JavaName ## _increaseValue(JNIEnv *, jclass, jlong nativeObjectPtr, JavaType increasement) { \
+Java_org_ice1000_jimgui_Native ## JavaName ## _increaseValue(JNIEnv *, jclass, jlong nativeObjectPtr, JavaType increment) { \
   auto *nativeObject = PTR_J2C(CppType, nativeObjectPtr); \
-  *nativeObject += static_cast<CppType> (increasement); \
+  *nativeObject += static_cast<CppType> (increment); \
 } \
 JNIEXPORT jlong JNICALL \
 Java_org_ice1000_jimgui_Native ## JavaName ## _allocateNativeObject(JNIEnv *, jclass) { \

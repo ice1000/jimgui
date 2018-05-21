@@ -4,6 +4,7 @@ import org.ice1000.jimgui.JImGui;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
@@ -23,6 +24,7 @@ public class JImGuiUtil {
 	 * @param millis   millis seconds to run
 	 * @param runnable the task executed in each refreshing
 	 */
+	@TestOnly
 	public static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long end = System.currentTimeMillis() + millis;
@@ -63,6 +65,7 @@ public class JImGuiUtil {
 		}
 	}
 
+	@TestOnly
 	public static void runWithinPer(long limit, long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
@@ -70,7 +73,7 @@ public class JImGuiUtil {
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
-				Thread.sleep(deltaTime / 2);
+				Thread.sleep(deltaTime * 2 / 3);
 				if (deltaTime > millis) {
 					imGui.initNewFrame();
 					runnable.accept(imGui);
@@ -106,6 +109,6 @@ public class JImGuiUtil {
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
 	public static @Nullable byte[] getBytes(@Nullable String text) {
-		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
+		return text != null ? (text.endsWith("\0") ? text : text + '\0').getBytes(StandardCharsets.UTF_8) : null;
 	}
 }

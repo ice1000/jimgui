@@ -19,6 +19,7 @@ open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 			cppPackage
 					.resolve("Native$it.java")
 					.apply { if (!exists()) createNewFile() }
+					//language=JAVA
 					.writeText("""
 package org.ice1000.jimgui;
 import org.ice1000.jimgui.cpp.*;
@@ -37,7 +38,7 @@ public final class Native$it extends Number implements DeallocatableObject, Clon
 	@Override @Contract
 	public void deallocateNativeObject() { deallocateNativeObject0(nativeObjectPtr); }
 	@Contract(pure = true) public $java accessValue() { return accessValue(nativeObjectPtr); }
-	@Contract public void increaseValue($java increasement) { increaseValue(nativeObjectPtr, increasement); }
+	@Contract public void increaseValue($java increment) { increaseValue(nativeObjectPtr, increment); }
 	@Contract public void modifyValue($java newValue) { modifyValue(nativeObjectPtr, newValue); }
 
 	@Override @Contract(pure = true) public int intValue() { return (int) accessValue(); }
@@ -47,7 +48,7 @@ public final class Native$it extends Number implements DeallocatableObject, Clon
 
 	private static native $java accessValue(long nativeObjectPtr);
 	private static native void modifyValue(long nativeObjectPtr, $java newValue);
-	private static native void increaseValue(long nativeObjectPtr, $java increasement);
+	private static native void increaseValue(long nativeObjectPtr, $java increment);
 	private static native long allocateNativeObject();
 	private static native void deallocateNativeObject0(long nativeObjectPtr);
 

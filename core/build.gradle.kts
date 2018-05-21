@@ -13,6 +13,7 @@ val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"] as Delete
 val processResources = tasks["processResources"]!!
+val processTestResources = tasks["processTestResources"]!!
 val downloadAll = task("downloadAll") {
 	group = "download"
 	description = "Virtual task representing all downloading tasks"
@@ -64,7 +65,7 @@ val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
-val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
+val imguiExamples = "$imguiGitHub/examples"
 
 val downloadImgui = task<Download>("downloadImgui") {
 	group = downloadAll.group
@@ -82,19 +83,19 @@ val downloadImgui = task<Download>("downloadImgui") {
 
 val downloadImpl = task<Download>("downloadImpl") {
 	group = downloadAll.group
-	src("$imguiGitHub/examples/opengl3_example/imgui_impl_glfw_gl3.h")
-	src("$imguiGitHub/examples/opengl3_example/imgui_impl_glfw_gl3.cpp")
-	src("$imguiGitHub/examples/directx11_example/imgui_impl_dx11.h")
-	src("$imguiGitHub/examples/directx11_example/imgui_impl_dx11.cpp")
-	src("$covGitHub/src/gl3w.c")
+	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.h")
+	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.cpp")
+	src("$imguiExamples/directx11_example/imgui_impl_dx11.h")
+	src("$imguiExamples/directx11_example/imgui_impl_dx11.cpp")
+	src("$imguiExamples/libs/gl3w/GL/gl3w.c")
 	dest(implDir)
 	overwrite(false)
 }
 
 val downloadImplGL = task<Download>("downloadImplGL") {
 	group = downloadAll.group
-	src("$covGitHub/include/GL/gl3w.h")
-	src("$covGitHub/include/GL/glcorearb.h")
+	src("$imguiExamples/libs/gl3w/GL/gl3w.h")
+	src("$imguiExamples/libs/gl3w/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
 	overwrite(false)
 }
@@ -147,6 +148,7 @@ msbuildWin64.dependsOn(cmakeWin64)
 cmake.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
 cmakeWin64.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
 processResources.dependsOn(compileCxx)
+processTestResources.dependsOn(downloadFiraCode)
 
 java.sourceSets {
 	"main" {

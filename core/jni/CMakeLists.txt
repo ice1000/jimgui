@@ -24,11 +24,21 @@ else ()
 		message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
 	endif ()
 
-	set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp impl/gl3w.c glfw_impl.cpp)
+	set(IMGUI_IMPL impl/gl3w.c glfw_impl.cpp)
 	include_directories(${GLFW_INCLUDE_DIRS})
 
 	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
+
+	if (APPLE)
+		include_directories(/System/Library/Frameworks)
+		find_library(COCOA_LIBRARY Cocoa)
+		find_library(GLUT_LIBRARY GLUT)
+		find_library(OpenGL_LIBRARY OpenGL)
+		mark_as_advanced(COCOA_LIBRARY GLUT_LIBRARY OpenGL_LIBRARY)
+		set(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
+		list(APPEND TARGET_LINK_LIBS ${EXTRA_LIBS})
+	endif ()
 endif ()
 
 if(APPLE)
