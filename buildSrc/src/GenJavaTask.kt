@@ -27,7 +27,7 @@ open class GenJavaTask(val className: String) : DefaultTask() {
 		@Language("JAVA", suffix = "}")
 		get() = """$CLASS_PREFIX
 public class $className {
-	$userCode
+$userCode
 """
 
 	protected val prefixInterfacedJava
