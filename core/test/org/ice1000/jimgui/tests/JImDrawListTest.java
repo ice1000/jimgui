@@ -30,15 +30,21 @@ public class JImDrawListTest {
 			assertNotNull(windowDrawList);
 			JImDrawList overlayDrawList = imGui.findOverlayDrawList();
 			assertNotNull(overlayDrawList);
-			float cursorPosX = imGui.getCursorPosX();
-			float cursorPosY = imGui.getCursorPosY();
+			float cursorPosX = imGui.getWindowX();
+			float cursorPosY = imGui.getWindowY();
 			windowDrawList.addText(30,
-					cursorPosX + 222,
-					cursorPosY + 122,
+					cursorPosX + 122,
+					cursorPosY + 22,
 					Color.BLUE.getRGB(), "I XiHuan Reiuji Utsuho forever\nQAQ");
 			int rgb = Color.GREEN.getRGB();
-			windowDrawList.addCircle(350, 250, 50, rgb);
-			windowDrawList.addText(72, 330, 220, rgb, "6");
+			windowDrawList.addCircle(
+					cursorPosX + 250,
+					cursorPosY + 150,
+					50, rgb);
+			windowDrawList.addText(72,
+					cursorPosX + 230,
+					cursorPosY + 120,
+					rgb, "6");
 		});
 	}
 }

@@ -341,6 +341,9 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public native void pushID(int intID);
 
+	public native float getWindowX();
+	public native float getWindowY();
+
 	/**
 	 * @param styleVar should be a value from {@link JImStyleVars}
 	 * @param value    the value to set

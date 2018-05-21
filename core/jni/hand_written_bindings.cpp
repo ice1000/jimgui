@@ -240,9 +240,9 @@ Java_org_ice1000_jimgui_JImGui_getClipboardText0(JNIEnv *env, jclass) -> jbyteAr
 	return _data;
 }
 
-JNIEXPORT jboolean JNICALL
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_menuItem(
-		JNIEnv *env, jclass, jbyteArray _label, jbyteArray _shortcut, jboolean selected, jboolean enabled) {
+		JNIEnv *env, jclass, jbyteArray _label, jbyteArray _shortcut, jboolean selected, jboolean enabled) -> jboolean {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Byte, shortcut);
@@ -251,6 +251,14 @@ Java_org_ice1000_jimgui_JImGui_menuItem(
 	__release(Byte, shortcut);
 	__JNI__FUNCTION__CLEAN__
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
+}
+
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowX(JNIEnv *, jobject) -> jfloat {
+	return ImGui::GetWindowPos().x;
+}
+
+JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getWindowY(JNIEnv *, jobject) -> jfloat {
+	return ImGui::GetWindowPos().y;
 }
 
 #pragma clang diagnostic pop
