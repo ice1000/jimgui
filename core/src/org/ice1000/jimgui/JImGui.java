@@ -183,6 +183,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		popStyleColor();
 	}
 
+	public final void progressBar(float fraction, @Nullable String overlay) {
+		progressBar(fraction, -1, 0, getBytes(overlay));
+	}
+
 	/**
 	 * @param label        label text
 	 * @param values       plot values

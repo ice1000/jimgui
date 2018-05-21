@@ -23,7 +23,7 @@ public class JImStyleVarTest {
 
 	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();
-		JImGuiUtil.run(imGui -> {
+		JImGuiUtil.runWithinPer(2000, 15, imGui -> {
 			imGui.pushStyleVar(JImStyleVars.WindowMinSize, 300, 300);
 			imGui.pushStyleVar(JImStyleVars.Alpha, 0.5f);
 			imGui.begin("What =_=?");
