@@ -20,9 +20,13 @@ public final class JniLoader {
 			boolean windows2003 = "Windows 2003".equals(osName);
 			boolean windowsXP = "Windows XP".equals(osName);
 			boolean windowsVista = "Windows Vista".equals(osName);
-			boolean windows7 = "Windows 7".equals(osName);
-			boolean windows8 = "Windows 8".equals(osName) || "Windows 8.1".equals(osName);
-			boolean windows10 = "Windows 10".equals(osName);
+			boolean windows7 = "Windows 7".equals(osName)
+					|| osName.startsWith("Windows Server 2008");
+			boolean windows8 = "Windows 8".equals(osName)
+					|| "Windows 8.1".equals(osName)
+					|| osName.startsWith("Windows Server 2012");
+			boolean windows10 = "Windows 10".equals(osName)
+					|| "Windows Server 2016".equals(osName);
 			boolean osx = "Mac OS X".equals(osName);
 			if (windows98 || windows95 || windows2000 || windows2003)
 				throw new UnsupportedOperationException("Windows 98/95/2000/2003 are not supported and won't be supported");
