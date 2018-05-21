@@ -3,6 +3,9 @@ environment:
 
 image: Visual Studio 2017
 
+build_script:
+  - echo Hello world
+
 cache:
   - C:\Users\appveyor\.gradle
 
