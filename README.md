@@ -49,7 +49,7 @@ First you need to make sure you have these software installed:
 	+ `make`
 	+ `pkg-config`
 	+ `libglfw3-dev`
-+ For Windows (\> 7)	
++ For Windows (\> 7)
 	+ `cmake` version \> 3.5
 	+ Visual Studio 2017 with `msbuild`
 	+ `d3d11`
