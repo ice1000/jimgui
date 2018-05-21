@@ -3,9 +3,6 @@ environment:
 
 image: Visual Studio 2017
 
-build_script:
-  - gradlew assemble --info --stacktrace --no-daemon
-
 cache:
   - C:\Users\appveyor\.gradle
 

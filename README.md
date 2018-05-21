@@ -36,9 +36,8 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
   + [X] 32-bit hosted on AppVeyor
   + [X] 64-bit hosted on AppVeyor
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
-+ [X] MacOS native library with Cocoa, glut as additional to Linux implementation
-  + [ ] 32-bit hosted on ?
-  + [X] 64-bit hosted on @zxj5470 's Mac laptop
++ MacOS native library with Cocoa, glut as additional to Linux implementation
+  + [X] hosted on @zxj5470 's Mac laptop
 
 # Build
 
