@@ -38,6 +38,7 @@ import java.nio.file.*;
  * @see <a href="http://adamheinrich.com/blog/2012/how-to-load-native-jni-library-from-jar">http://adamheinrich.com/blog/2012/how-to-load-native-jni-library-from-jar</a>
  * @see <a href="https://github.com/adamheinrich/native-utils">https://github.com/adamheinrich/native-utils</a>
  */
+@SuppressWarnings("WeakerAccess")
 public final class NativeUtil {
 	public static final String NATIVE_FOLDER_PATH_PREFIX = "jimgui";
 

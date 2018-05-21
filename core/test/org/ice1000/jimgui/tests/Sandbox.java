@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
+import static org.junit.Assert.assertNotNull;
 
 public class Sandbox {
 	private static String ini = "";
@@ -76,11 +77,14 @@ public class Sandbox {
 			imGui.text("Int2 = " + anInt2.accessValue());
 			float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
 			imGui.getStyle().setWindowBorderSize(bizarreValue);
-			@NotNull JImVec4 background = imGui.getBackground();
+			JImVec4 background = imGui.getBackground();
+			assertNotNull(background);
 			// System.out.print(background);
 			imGui.colorEdit3("Background", background);
 			// System.out.println(background);
-			JImGuiIO io = imGui.getIO();
+			// use `getIO` in production environment
+			JImGuiIO io = imGui.findIO();
+			assertNotNull(io);
 			imGui.text("framerate: " + io.getFramerate());
 			if (io.isKeyCtrl()) {
 				imGui.text("[Ctrl]");
