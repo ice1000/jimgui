@@ -109,6 +109,6 @@ public class JImGuiUtil {
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
 	public static @Nullable byte[] getBytes(@Nullable String text) {
-		return text != null ? (text.endsWith("\0") ? text : text + '\0').getBytes(StandardCharsets.UTF_8) : null;
+		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
 	}
 }

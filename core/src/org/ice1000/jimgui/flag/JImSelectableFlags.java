@@ -5,6 +5,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImSelectableFlags {
+	int Nothing = 0;
 	/** Clicking this don't close parent popup window */
 	int DontClosePopups = 1;
 	/** Selectable frame can span all columns (text will still fit in current column) */

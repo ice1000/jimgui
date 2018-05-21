@@ -7,6 +7,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImFocusedFlags {
+	int Default = 0;
 	/** {@link org.ice1000.jimgui.JImGuiGen#isWindowFocused}: Return true if any children of the window is focused */
 	int ChildWindows = 1;
 	/** {@link org.ice1000.jimgui.JImGuiGen#isWindowFocused}: Test from root window (top most parent of the current hierarchy) */

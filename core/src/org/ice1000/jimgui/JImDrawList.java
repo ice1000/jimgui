@@ -17,6 +17,10 @@ public class JImDrawList extends JImGuiDrawListGen {
 	}
 
 	public void addText(float posX, float posY, int u32Color, @NotNull String text) {
-		addText(0, 0, posX, posY, u32Color, text.getBytes(StandardCharsets.UTF_8), 0, 0, nativeObjectPtr);
+		addText(0, posX, posY, u32Color, text);
+	}
+
+	public void addText(float fontSize, float posX, float posY, int u32Color, @NotNull String text) {
+		addText(0, fontSize, posX, posY, u32Color, text.getBytes(StandardCharsets.UTF_8), 0, 0, nativeObjectPtr);
 	}
 }

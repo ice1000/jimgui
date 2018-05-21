@@ -9,6 +9,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 		description = "Generate binding for ImGui"
 	}
 
+	override val userCode = """
+	/** %.3f */ public static final @NotNull byte[] FLOAT_FMT = new byte[]{${"%.3f".toList().joinToString { "${it.toInt()}" }}, 0};
+	/** %.6f */ public static final @NotNull byte[] DOUBLE_FMT = new byte[]{${"%.6f".toList().joinToString { "${it.toInt()}" }}, 0};
+	/** %d */ public static final @NotNull byte[] INT_FMT = new byte[]{${"%d".toList().joinToString { "${it.toInt()}" }}, 0};
+"""
+
 	override fun java(javaCode: StringBuilder) {
 		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
 		trivialMethods.forEach {
@@ -63,7 +69,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
 			Fun("isWindowCollapsed", "boolean"),
-			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "ChildWindows")),
+			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "Default")),
 			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "Default")),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
@@ -153,6 +159,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					string("previewValue"),
 					flags(from = "Combo", default = "PopupAlignLeft")),
 			Fun("endCombo"),
+			Fun("combo", label, intPtr("currentItem"),
+					string("itemsSeparatedByZeros"),
+					int("popupMaxHeightInItems", default = -1)),
 
 			// Widgets: Drags
 			Fun("dragFloat", "boolean", label,
@@ -160,7 +169,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					float("valueSpeed", default = 1),
 					float("valueMin", default = 0),
 					float("valueMax", default = 0),
-					string("format", default = "\"%.3f\\0\".getBytes(StandardCharsets.UTF_8)"),
+					string("format", default = "FLOAT_FMT"),
 					float("power", default = 1)),
 			Fun("dragFloatRange2", "boolean", label,
 					floatPtr("valueCurrentMin"),
@@ -168,7 +177,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					float("valueSpeed", default = 1),
 					float("valueMin", default = 0),
 					float("valueMax", default = 0),
-					string("format", default = "\"%.3f\\0\".getBytes(StandardCharsets.UTF_8)"),
+					string("format", default = "FLOAT_FMT"),
 					string("formatMax", default = strNull),
 					float("power", default = 1)),
 			Fun("dragInt", "boolean", label,
@@ -176,14 +185,58 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					float("valueSpeed", default = 1),
 					int("valueMin", default = 0),
 					int("valueMax", default = 0),
-					string("format", default = "\"%d\\0\".getBytes(StandardCharsets.UTF_8)")),
+					string("format", default = "INT_FMT")),
 			Fun("dragIntRange2", "boolean", label,
 					intPtr("valueCurrentMin"),
 					intPtr("valueCurrentMax"),
 					float("valueSpeed", default = 1),
 					int("valueMin", default = 0),
 					int("valueMax", default = 0),
-					string("format", default = "\"%d\\0\".getBytes(StandardCharsets.UTF_8)")),
+					string("format", default = "INT_FMT")),
+
+			// Widgets: Input with Keyboard
+			Fun("inputFloat", "boolean", label,
+					floatPtr("value"), float("step", default = 0),
+					float("stepFast", default = 0),
+					string("format", default = "FLOAT_FMT"),
+					flags("InputText", default = "Nothing")),
+			Fun("inputInt", "boolean", label,
+					intPtr("value"), int("step", default = 1),
+					int("stepFast", default = 100),
+					flags("InputText", default = "Nothing")),
+			Fun("inputDouble", "boolean", label,
+					doublePtr("value"), double("step", default = 0),
+					double("stepFast", default = 0),
+					string("format", default = "DOUBLE_FMT"),
+					flags("InputText", default = "Nothing")),
+
+			// Widgets: Sliders
+			Fun("sliderFloat", "boolean", label,
+					floatPtr("value"),
+					float("valueMin", default = 0),
+					float("valueMax", default = 0),
+					string("format", default = "FLOAT_FMT"),
+					float("power", default = 1)),
+			Fun("sliderAngle", "boolean", label,
+					floatPtr("valueRad"),
+					float("valueDegreeMin", default = -360),
+					float("valueDegreeMax", default = 360)),
+			Fun("sliderInt", "boolean", label,
+					intPtr("value"),
+					int("valueMin", default = 0),
+					int("valueMax", default = 0),
+					string("format", default = "FLOAT_FMT")),
+			Fun("vSliderFloat", "boolean", label, size(),
+					floatPtr("value"),
+					float("valueMin", default = 0),
+					float("valueMax", default = 0),
+					string("format", default = "FLOAT_FMT"),
+					float("power", default = 1)),
+			Fun("vSliderInt", "boolean", label, size(),
+					intPtr("value"),
+					int("valueMin", default = 0),
+					int("valueMax", default = 0),
+					string("format", default = "FLOAT_FMT")),
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", label),
@@ -205,13 +258,18 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					size(default = "0,0")),
 			Fun("colorPicker3", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
 			Fun("colorPicker4", "boolean", string("label"), vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("setColorEditOptions", flags()),
+			Fun("setColorEditOptions", flags(from = "ColorEdit")),
 
 			// Widgets: Selectable / Lists
-			Fun("selectable", "boolean",
+			Fun("selectable0", "boolean",
 					string("label"),
 					bool("selected", default = false),
-					flags(from = "Selectable", default = "DontClosePopups"),
+					flags(from = "Selectable", default = "Nothing"),
+					size(default = "0,0")),
+			Fun("selectable", "boolean",
+					string("label"),
+					boolPtr("selected"),
+					flags(from = "Selectable", default = "Nothing"),
 					size(default = "0,0")),
 			Fun("listBoxHeader", "boolean", string("label"), size()),
 			Fun("listBoxHeader0", "boolean",

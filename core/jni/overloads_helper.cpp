@@ -8,6 +8,10 @@ auto ImGui::ListBoxHeader0(Ptr<const char> label, int items_count, int height_in
 	return ListBoxHeader(label, items_count, height_in_items);
 }
 
+auto ImGui::Selectable0(Ptr<const char> label, bool selected, ImGuiSelectableFlags flags, const ImVec2 &size) -> bool {
+	return Selectable(label, selected, flags, size);
+}
+
 auto ImGui::PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void {
 	ImGui::PushStyleVar(idx, val);
 }
@@ -30,7 +34,7 @@ ColorRelated(Edit4)
 ColorRelated(Picker3)
 ColorRelated(Picker4)
 
-auto ImGui::RadioButton0(const char* label, bool active) -> bool {
+auto ImGui::RadioButton0(const char *label, bool active) -> bool {
 	return RadioButton(label, active);
 }
 
