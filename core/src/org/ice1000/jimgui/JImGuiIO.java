@@ -19,7 +19,7 @@ public final class JImGuiIO extends JImGuiIOGen {
 	public native float getMouseDragMaxDistanceAbsY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
 
 	public @NotNull String getInputString() {
-		return new String(getInputString0());
+		return new String(getInputChars());
 	}
 
 	public void addInputCharacter(char character) {
@@ -34,7 +34,7 @@ public final class JImGuiIO extends JImGuiIOGen {
 		return new JImFont(getFontDefault0());
 	}
 
-	private static native byte @NotNull [] getInputString0();
+	public native char @NotNull [] getInputChars();
 	private static native long getFonts0();
 	private static native long getFontDefault0();
 }

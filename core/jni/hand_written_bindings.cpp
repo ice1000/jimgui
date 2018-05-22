@@ -52,7 +52,7 @@ Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 	__JNI__FUNCTION__INIT__
 	__get(Byte, path)
 	auto *fonts = PTR_J2C(ImFontAtlas, nativeObjectPtr);
-	auto res = PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, nullptr, PTR_J2C(ImWchar, range)));
+	auto res = PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, nullptr, PTR_J2C(const ImWchar, range)));
 	__release(Byte, path)
 	__JNI__FUNCTION__CLEAN__
 	return res;
@@ -92,18 +92,18 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 #undef JImIOMouseArrayAccessor
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) -> jbyteArray {
+Java_org_ice1000_jimgui_JImGuiIO_getInputChars(JNIEnv *env, jobject) -> jcharArray {
 	__JNI__FUNCTION__INIT__
 	auto *inputShorts = ImGui::GetIO().InputCharacters;
-	auto *inputStr = new jbyte[17];
+	auto *inputStr = new jchar[17];
 	jsize len;
 	for (int i = 0;; ++i) {
 		if (!inputShorts[i]) {
 			len = i;
 			break;
-		} else inputStr[i] = static_cast<jbyte> (inputShorts[i]);
+		} else inputStr[i] = static_cast<jchar> (inputShorts[i]);
 	}
-	__init(Byte, inputStr, len);
+	__init(Char, inputStr, len);
 	__JNI__FUNCTION__CLEAN__
 	delete[] inputStr;
 	return _inputStr;
