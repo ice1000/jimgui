@@ -1,10 +1,10 @@
-import org.ice1000.gradle.*
+import com.jfrog.bintray.gradle.*
 
 plugins {
 	java
-	maven
 	`maven-publish`
 	kotlin("jvm") version "1.2.41" apply false
+	id("com.jfrog.bintray") version "1.7.3"
 	id("org.sonarqube") version "2.6.2"
 }
 
@@ -17,7 +17,8 @@ allprojects {
 
 	apply {
 		plugin("java")
-		plugin("maven")
+		plugin("maven-publish")
+		plugin("com.jfrog.bintray")
 	}
 
 	repositories {
@@ -44,4 +45,41 @@ allprojects {
 	}
 
 	artifacts { add("archives", sourcesJar) }
+
+	bintray {
+		user = "ice1000"
+		key = findProperty("key").toString()
+		setConfigurations("archives")
+		pkg.apply {
+			name = project.name
+			repo = "ice1000"
+			githubRepo = "ice1000/jimgui"
+			publicDownloadNumbers = true
+			vcsUrl = "https://github.com/ice1000/jimgui.git"
+			version.apply {
+				name = project.version.toString()
+				vcsTag = "v${project.version}"
+				websiteUrl = "https://github.com/ice1000/jimgui/releases/tag/$vcsTag"
+			}
+		}
+	}
+
+	publishing {
+		(publications) {
+			"mavenJava"(MavenPublication::class) {
+				from(components["java"])
+				groupId = project.group.toString()
+				artifactId = project.name
+				version = project.version.toString()
+				artifact(sourcesJar)
+				pom.withXml {
+					val root = asNode()
+					root.appendNode("description", "Pure Java binding for dear-imgui")
+					root.appendNode("name", project.name)
+					root.appendNode("url", "https://github.com/ice1000/jimgui")
+					root.children().last()
+				}
+			}
+		}
+	}
 }
