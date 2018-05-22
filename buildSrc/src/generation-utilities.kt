@@ -40,6 +40,7 @@ val numSegments = numSegments(12)
 val stringID = string("stringID")
 val nStringID = string("stringID", default = strNull)
 val pos = pos()
+val userKeyIndex = int("userKeyIndex")
 fun flags(from: String? = null, default: String? = null, name: String = "flags") = int(name,
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })

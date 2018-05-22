@@ -108,6 +108,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			PPT("int", "MetricsRenderVertices"),
 			PPT("int", "MetricsRenderIndices"),
 			PPT("int", "MetricsActiveWindows"),
+			PPT("int", "KeyMap", isArray = true),
 			PPT("int", "ConfigFlags", "@MagicConstant(flagsFromClass = JImConfigFlags.class)"),
 			PPT("int", "BackendFlags", "@MagicConstant(flagsFromClass = JImBackendFlags.class)"),
 			PPT("float", "MouseDoubleClickTime"),
@@ -118,6 +119,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			PPT("float", "MouseWheel"),
 			PPT("float", "MouseWheelH"),
 			PPT("float", "Framerate"),
+			PPT("float", "DeltaTime"),
 			PPT("float", "IniSavingRate"))
 
 	private val imVec2Members = listOf(
