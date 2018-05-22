@@ -1,5 +1,7 @@
 # jimgui
 
+[ ![Download](https://api.bintray.com/packages/ice1000/ice1000/jimgui/images/download.svg?version=v0.1) ](https://bintray.com/ice1000/ice1000/jimgui/v0.1/link)
+
 Linux Build | Windows Build
 :----------:|:-------------:
 [![CCI][0]][1]|[![AV][2]][3]
@@ -38,6 +40,17 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
 + MacOS native library with Cocoa, glut as additional to Linux implementation
   + [X] hosted on @zxj5470 's Mac laptop
+
+# Usage
+
+Gradle:
+
+```groovy
+repositories { jcenter() }
+dependencies { compile 'org.ice1000.jimgui:core:v0.1' }
+```
+
+If it doesn't work, replace `jcenter()` with `maven { url 'https://dl.bintray.com/ice1000/ice1000' }`.
 
 # Build
 

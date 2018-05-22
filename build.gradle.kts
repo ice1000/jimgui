@@ -4,7 +4,7 @@ plugins {
 	java
 	`maven-publish`
 	kotlin("jvm") version "1.2.41" apply false
-	id("com.jfrog.bintray") version "1.7.3"
+	id("com.jfrog.bintray") version "1.8.0"
 	id("org.sonarqube") version "2.6.2"
 }
 
@@ -17,6 +17,7 @@ allprojects {
 
 	apply {
 		plugin("java")
+		plugin("maven")
 		plugin("maven-publish")
 		plugin("com.jfrog.bintray")
 	}
@@ -45,13 +46,15 @@ allprojects {
 	}
 
 	artifacts { add("archives", sourcesJar) }
+}
 
+subprojects {
 	bintray {
 		user = "ice1000"
 		key = findProperty("key").toString()
 		setConfigurations("archives")
 		pkg.apply {
-			name = project.name
+			name = rootProject.name
 			repo = "ice1000"
 			githubRepo = "ice1000/jimgui"
 			publicDownloadNumbers = true
@@ -69,9 +72,9 @@ allprojects {
 			"mavenJava"(MavenPublication::class) {
 				from(components["java"])
 				groupId = project.group.toString()
-				artifactId = project.name
+				artifactId = "${rootProject.name}-${project.name}"
 				version = project.version.toString()
-				artifact(sourcesJar)
+				artifact(tasks["sourcesJar"])
 				pom.withXml {
 					val root = asNode()
 					root.appendNode("description", "Pure Java binding for dear-imgui")
