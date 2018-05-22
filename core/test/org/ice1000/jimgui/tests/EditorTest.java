@@ -27,19 +27,21 @@ public class EditorTest {
 				cursor += inputString.length;
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.LeftArrow)) && cursor > 0) cursor--;
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.RightArrow)) && cursor < builder.length()) cursor++;
+				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Enter))) builder.insert(cursor++, '\n');
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Backspace)) && cursor > 0) builder.deleteCharAt(--cursor);
 				gui.pushStyleVar(JImStyleVars.ItemSpacing, -0.5f, 2f);
 				gui.begin("Editor");
-				gui.text(builder.substring(0, cursor));
-				gui.sameLine();
+				String substring = builder.substring(0, cursor);
+				for (String line : substring.split("\n")) gui.text(line);
+				if (!substring.endsWith("\n")) gui.sameLine();
 				float cursorPosX = gui.getCursorPosX();
-				if ((System.currentTimeMillis() / 200) % 2 == 1) {
+				if ((System.currentTimeMillis() / 500) % 2 == 1) {
 					gui.text("|");
 					itemRectSizeX = gui.getItemRectSizeX();
 					gui.setCursorPosX(cursorPosX);
 					gui.sameLine();
 				} else gui.setCursorPosX(cursorPosX + itemRectSizeX);
-				gui.text(builder.substring(cursor));
+				for (String line : builder.substring(cursor).split("\n")) gui.text(line);
 				gui.popStyleVar();
 				gui.end();
 				gui.render();
