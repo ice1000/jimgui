@@ -5,6 +5,7 @@ plugins {
 	`maven-publish`
 	kotlin("jvm") version "1.2.41" apply false
 	id("com.jfrog.bintray") version "1.7.3"
+	id("de.undercouch.download") version "3.4.2" apply false
 	id("org.sonarqube") version "2.6.2"
 }
 
@@ -13,13 +14,9 @@ isCI = !System.getenv("CI").isNullOrBlank()
 
 allprojects {
 	group = "org.ice1000.jimgui"
-	version = "v0.1"
+	version = "v0.2"
 
-	apply {
-		plugin("java")
-		plugin("maven-publish")
-		plugin("com.jfrog.bintray")
-	}
+	apply { plugin("java") }
 
 	repositories {
 		mavenCentral()
@@ -45,20 +42,28 @@ allprojects {
 	}
 
 	artifacts { add("archives", sourcesJar) }
+}
+
+subprojects {
+	apply {
+		plugin("maven")
+		plugin("maven-publish")
+		plugin("com.jfrog.bintray")
+	}
 
 	bintray {
 		user = "ice1000"
 		key = findProperty("key").toString()
 		setConfigurations("archives")
 		pkg.apply {
-			name = project.name
+			name = rootProject.name
 			repo = "ice1000"
 			githubRepo = "ice1000/jimgui"
 			publicDownloadNumbers = true
 			vcsUrl = "https://github.com/ice1000/jimgui.git"
 			version.apply {
-				name = project.version.toString()
-				vcsTag = "v${project.version}"
+				vcsTag = "${project.version}"
+				name = vcsTag
 				websiteUrl = "https://github.com/ice1000/jimgui/releases/tag/$vcsTag"
 			}
 		}
@@ -69,9 +74,9 @@ allprojects {
 			"mavenJava"(MavenPublication::class) {
 				from(components["java"])
 				groupId = project.group.toString()
-				artifactId = project.name
+				artifactId = "${rootProject.name}-${project.name}"
 				version = project.version.toString()
-				artifact(sourcesJar)
+				artifact(tasks["sourcesJar"])
 				pom.withXml {
 					val root = asNode()
 					root.appendNode("description", "Pure Java binding for dear-imgui")
