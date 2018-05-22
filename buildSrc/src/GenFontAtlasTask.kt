@@ -36,7 +36,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
 	}
 
-	override val `c++Expr` = "(reinterpret_cast<ImFontAtlas *> (nativeObjectPtr))->"
+	override val `c++Expr` = "PTR_J2C(ImFontAtlas, nativeObjectPtr)->"
 	private val imVec2Members = listOf("TexUvScale", "TexUvWhitePixel")
 	private val functions = listOf(
 			Fun.protected("addFontDefault", "long", nativeObjectPtr),
@@ -46,7 +46,13 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 			Fun.private("clearInputData", nativeObjectPtr),
 			Fun.private("clearTexData", nativeObjectPtr),
 			Fun.private("clearFonts", nativeObjectPtr),
-			Fun.private("clear", nativeObjectPtr))
+			Fun.private("clear", nativeObjectPtr),
+			Fun.protected("getGlyphRangesDefault", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesKorean", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesJapanese", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesChinese", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesCyrillic", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesThai", "long", nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
 			PPT("int", "Flags", annotation = "@MagicConstant(flagsFromClass = JImFontAtlasFlags.class)"),

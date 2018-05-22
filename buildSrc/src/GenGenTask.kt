@@ -91,9 +91,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Inputs
 			Fun("getKeyIndex", "int", int("imguiKey")),
-			Fun("isKeyDown", "boolean", int("userKeyIndex")),
-			Fun("isKeyPressed", "boolean", int("userKeyIndex"), bool("repeat", default = true)),
-			Fun("isKeyReleased", "boolean", int("userKeyIndex")),
+			Fun("isKeyDown", "boolean", userKeyIndex),
+			Fun("isKeyPressed", "boolean", userKeyIndex, bool("repeat", default = true)),
+			Fun("isKeyReleased", "boolean", userKeyIndex),
 			Fun("getKeyPressedAmount", "int", int("keyIndex"), float("repeatDelay"), float("rate")),
 			Fun("isMouseDown", "boolean", mouseButton),
 			Fun("isAnyMouseDown", "boolean"),

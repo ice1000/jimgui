@@ -11,7 +11,7 @@ open class GenNativeTypesTask : GenJavaTask(""), Runnable {
 				"Int" to "int",
 				"Float" to "float",
 				"Double" to "double",
-				// "Short" to "short",
+				"Short" to "short",
 				// "Byte" to "byte",
 				// "Char" to "char",
 				"Long" to "long"
@@ -34,6 +34,7 @@ public final class Native$it extends Number implements DeallocatableObject, Clon
 	/** package-private by design */
 	long nativeObjectPtr;
 	@Contract public Native$it() { nativeObjectPtr = allocateNativeObject(); }
+	@Contract(pure = true) public Native$it(long nativeObjectPtr) { this.nativeObjectPtr = nativeObjectPtr; }
 
 	@Override @Contract
 	public void deallocateNativeObject() { deallocateNativeObject0(nativeObjectPtr); }

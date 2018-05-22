@@ -10,6 +10,7 @@
 #include <org_ice1000_jimgui_MutableJImVec4.h>
 #include <org_ice1000_jimgui_JImGuiIO.h>
 #include <org_ice1000_jimgui_JImFont.h>
+#include <org_ice1000_jimgui_JImFontAtlas.h>
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImStyle.h>
 
@@ -46,6 +47,18 @@ Java_org_ice1000_jimgui_JImFont_setDisplayOffset(JNIEnv *, jobject, jfloat newX,
 }
 
 JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
+		JNIEnv *env, jclass, jbyteArray _path, jfloat size, jlong range, jlong nativeObjectPtr) -> jlong {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, path)
+	auto *fonts = PTR_J2C(ImFontAtlas, nativeObjectPtr);
+	auto res = PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, nullptr, PTR_J2C(const ImWchar, range)));
+	__release(Byte, path)
+	__JNI__FUNCTION__CLEAN__
+	return res;
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
@@ -79,18 +92,18 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 #undef JImIOMouseArrayAccessor
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGuiIO_getInputString0(JNIEnv *env, jclass) -> jbyteArray {
+Java_org_ice1000_jimgui_JImGuiIO_getInputChars(JNIEnv *env, jobject) -> jcharArray {
 	__JNI__FUNCTION__INIT__
 	auto *inputShorts = ImGui::GetIO().InputCharacters;
-	auto *inputStr = new jbyte[17];
+	auto *inputStr = new jchar[17];
 	jsize len;
 	for (int i = 0;; ++i) {
 		if (!inputShorts[i]) {
 			len = i;
 			break;
-		} else inputStr[i] = static_cast<jbyte> (inputShorts[i]);
+		} else inputStr[i] = static_cast<jchar> (inputShorts[i]);
 	}
-	__init(Byte, inputStr, len);
+	__init(Char, inputStr, len);
 	__JNI__FUNCTION__CLEAN__
 	delete[] inputStr;
 	return _inputStr;
@@ -163,7 +176,8 @@ Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong 
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
+Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(JNIEnv *, jclass, jfloat x, jfloat y, jfloat z,
+                                                      jfloat w) -> jlong {
 	return PTR_C2J(new ImVec4(x, y, z, w));
 }
 
@@ -256,11 +270,11 @@ Java_org_ice1000_jimgui_JImGui_menuItem(
 #define XY_ACCESSOR(Property) \
 JNIEXPORT auto JNICALL \
 Java_org_ice1000_jimgui_JImGui_get ## Property ## X(JNIEnv *, jobject) -> jfloat { \
-	return ImGui::Get ## Property().x; \
+  return ImGui::Get ## Property().x; \
 } \
 JNIEXPORT auto JNICALL \
 Java_org_ice1000_jimgui_JImGui_get ## Property ## Y(JNIEnv *, jobject) -> jfloat { \
-	return ImGui::Get ## Property().y; \
+  return ImGui::Get ## Property().y; \
 }
 
 XY_ACCESSOR(WindowPos)

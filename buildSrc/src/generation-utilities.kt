@@ -40,6 +40,7 @@ val numSegments = numSegments(12)
 val stringID = string("stringID")
 val nStringID = string("stringID", default = strNull)
 val pos = pos()
+val userKeyIndex = int("userKeyIndex")
 fun flags(from: String? = null, default: String? = null, name: String = "flags") = int(name,
 		default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
 		annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
@@ -119,7 +120,7 @@ open class StringParam(val name: String,
 	override fun javaDefault() = "$annotation String $name"
 	override fun javaExpr() = "getBytes($name)"
 	override fun `c++`() = "jbyteArray _$name"
-	override fun `c++Expr`() = "reinterpret_cast<const char *> ($name)"
+	override fun `c++Expr`() = "STR_J2C($name)"
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
 

@@ -39,13 +39,13 @@ env->Set ## type ## ArrayRegion(_ ## name, 0, (len), name);
 env->GetArrayLength(_ ## name)
 
 #define STR_J2C(value) \
-reinterpret_cast<Ptr<const char>> (value)
+reinterpret_cast<Ptr<const char>> ((value))
 
 #define PTR_C2J(value) \
-reinterpret_cast<jlong> (value)
+reinterpret_cast<jlong> ((value))
 
 #define PTR_J2C(type, value) \
-reinterpret_cast<Ptr<type>> (value)
+reinterpret_cast<Ptr<type>> ((value))
 
 #undef _
 

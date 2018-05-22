@@ -48,7 +48,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	ImGui_ImplGlfwGL3_Init(window, true);
 	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
-	return reinterpret_cast<jlong> (window);
+	return PTR_C2J(window);
 }
 
 JNIEXPORT void JNICALL
