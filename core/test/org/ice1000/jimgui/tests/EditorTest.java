@@ -10,7 +10,8 @@ public class EditorTest {
 	public static void main(String @NotNull ... args) throws InterruptedException, URISyntaxException {
 		JniLoader.load();
 		StringBuilder builder = new StringBuilder("输入一些文本");
-		int cursorPos = builder.length();
+		int cursor = builder.length();
+		float itemRectSizeX = 0;
 		try (JImGui gui = new JImGui()) {
 			JImGuiIO io = gui.getIO();
 			JImFontAtlas fonts = io.getFonts();
@@ -21,18 +22,24 @@ public class EditorTest {
 				Thread.sleep((long) Math.abs(20 - deltaTime));
 				gui.initNewFrame();
 				char[] inputString = io.getInputChars();
-				builder.insert(cursorPos, inputString);
-				cursorPos += inputString.length;
-				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.LeftArrow)) && cursorPos > 0) cursorPos--;
-				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.RightArrow)) && cursorPos < builder.length()) cursorPos++;
-				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Backspace)) && cursorPos > 0) builder.deleteCharAt(--cursorPos);
+				io.clearInputCharacters();
+				builder.insert(cursor, inputString);
+				cursor += inputString.length;
+				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.LeftArrow)) && cursor > 0) cursor--;
+				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.RightArrow)) && cursor < builder.length()) cursor++;
+				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Backspace)) && cursor > 0) builder.deleteCharAt(--cursor);
 				gui.pushStyleVar(JImStyleVars.ItemSpacing, -0.5f, 2f);
 				gui.begin("Editor");
-				gui.text(builder.substring(0, cursorPos));
+				gui.text(builder.substring(0, cursor));
 				gui.sameLine();
-				gui.text((System.currentTimeMillis() / 500) % 2 == 1 ? "|" : " ");
-				gui.sameLine();
-				gui.text(builder.substring(cursorPos));
+				float cursorPosX = gui.getCursorPosX();
+				if ((System.currentTimeMillis() / 200) % 2 == 1) {
+					gui.text("|");
+					itemRectSizeX = gui.getItemRectSizeX();
+					gui.setCursorPosX(cursorPosX);
+					gui.sameLine();
+				} else gui.setCursorPosX(cursorPosX + itemRectSizeX);
+				gui.text(builder.substring(cursor));
 				gui.popStyleVar();
 				gui.end();
 				gui.render();

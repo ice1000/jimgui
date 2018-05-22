@@ -50,7 +50,9 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 			Fun.protected("getGlyphRangesDefault", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesKorean", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesJapanese", "long", nativeObjectPtr),
-			Fun.protected("getGlyphRangesChinese", "long", nativeObjectPtr))
+			Fun.protected("getGlyphRangesChinese", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesCyrillic", "long", nativeObjectPtr),
+			Fun.protected("getGlyphRangesThai", "long", nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
 			PPT("int", "Flags", annotation = "@MagicConstant(flagsFromClass = JImFontAtlasFlags.class)"),
