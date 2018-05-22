@@ -47,7 +47,11 @@ Gradle:
 
 ```groovy
 repositories { jcenter() }
-dependencies { compile 'org.ice1000.jimgui:core:v0.1' }
+dependencies {
+  String jimgui_version = "v0.1"
+  compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
+  compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
+}
 ```
 
 If it doesn't work, replace `jcenter()` with `maven { url 'https://dl.bintray.com/ice1000/ice1000' }`.

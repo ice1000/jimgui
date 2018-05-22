@@ -4,7 +4,8 @@ plugins {
 	java
 	`maven-publish`
 	kotlin("jvm") version "1.2.41" apply false
-	id("com.jfrog.bintray") version "1.8.0"
+	id("com.jfrog.bintray") version "1.7.3"
+	id("de.undercouch.download") version "3.4.2" apply false
 	id("org.sonarqube") version "2.6.2"
 }
 
@@ -15,12 +16,7 @@ allprojects {
 	group = "org.ice1000.jimgui"
 	version = "v0.1"
 
-	apply {
-		plugin("java")
-		plugin("maven")
-		plugin("maven-publish")
-		plugin("com.jfrog.bintray")
-	}
+	apply { plugin("java") }
 
 	repositories {
 		mavenCentral()
@@ -49,6 +45,12 @@ allprojects {
 }
 
 subprojects {
+	apply {
+		plugin("maven")
+		plugin("maven-publish")
+		plugin("com.jfrog.bintray")
+	}
+
 	bintray {
 		user = "ice1000"
 		key = findProperty("key").toString()

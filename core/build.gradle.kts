@@ -4,7 +4,7 @@ import org.ice1000.gradle.*
 
 plugins {
 	java
-	id("de.undercouch.download") version "3.4.2"
+	id("de.undercouch.download")
 }
 
 val isCI: Boolean by rootProject.extra
