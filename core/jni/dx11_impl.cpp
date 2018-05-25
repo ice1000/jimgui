@@ -25,6 +25,10 @@
 #define IDXGISwapChain int
 #define ID3D11RenderTargetView int
 #define WNDCLASSEX int
+#define _In_
+#define _In_opt_
+#define _In_z_
+#define _Out_opt_
 #endif
 
 #pragma clang diagnostic push
@@ -39,23 +43,60 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-struct NativeObject {
-		HWND hwnd;
-		MSG msg;
-		WNDCLASSEX wc;
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, fileName)
+	int width, height, channels;
+	auto *imageData = stbi_load(fileName, &width, &height, &channels, 4);
+	if (imageData == nullptr) return nullptr;
+	D3D11_TEwidthTURE1D_DESC desc;
+	desc.Width = static_cast<UINT> (width);
+	// desc.Height = static_cast<UINT> (height);
+	desc.MipLevels = static_cast<UINT> (1);
+	desc.ArraySize = static_cast<UINT> (1);
+	desc.BindFlags = static_cast<UINT> (D3D11_BIND_SHADER_RESOURCE);
+	switch (channels) {
+		case 3:
+		case 4:
+			desc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+			break;
+		default:
+			delete[] imageData;
+			return nullptr;
+	}
+	desc.Usage = D3D11_USAGE_IMMUTABLE;
+	desc.CPUAccessFlags = 0;
+	ID3D11Texture1D *tex = nullptr;
+	auto *hr = g_pd3dDevice->CreateTexture1D(&desc, imageData, &tex);
+	auto ret = new jlong[4];
+	ret[0] = static_cast<jlong> (hr);
+	ret[1] = static_cast<jlong> (width);
+	ret[2] = static_cast<jlong> (height);
+	ret[3] = static_cast<jlong> (channels);
+	__init(Long, ret, 4);
+	delete[] ret;
+	__JNI__FUNCTION__CLEAN__
+	return _ret;
+}
 
-		NativeObject(jint width, jint height, Ptr<const char> title) : wc(
-				{
-						sizeof(WNDCLASSEX),
-						CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-						_T(WINDOW_ID), NULL
-				}) {
-			RegisterClassEx(&wc);
-			ZeroMemory(&msg, sizeof(msg));
-			hwnd = CreateWindow(
-					_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-					100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
-		};
+struct NativeObject {
+	HWND hwnd;
+	MSG msg;
+	WNDCLASSEX wc;
+
+	NativeObject(jint width, jint height, Ptr<const char> title) : wc(
+			{
+					sizeof(WNDCLASSEX),
+					CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+					_T(WINDOW_ID), NULL
+			}) {
+		RegisterClassEx(&wc);
+		ZeroMemory(&msg, sizeof(msg));
+		hwnd = CreateWindow(
+				_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
+				100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
+	};
 };
 
 void CreateRenderTarget() {
@@ -174,7 +215,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	(void) io;
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 	ImGui_ImplDX11_Init(object->hwnd, g_pd3dDevice, g_pd3dDeviceContext);
-	__abort(Byte, title);
+	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (object);
 }

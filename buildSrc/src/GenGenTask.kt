@@ -144,6 +144,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("arrowButton", "boolean",
 					text,
 					int("direction", annotation = "@MagicConstant(valuesFromClass = JImDirection.class)")),
+			Fun("image", texture("userTextureID"), size()),
 			Fun("checkbox", "boolean", label, boolPtr("v")),
 			Fun("radioButton", "boolean", text, intPtr("v"), int("v_button")),
 			Fun("radioButton0", "boolean", text, bool("active")),

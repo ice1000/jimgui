@@ -11,6 +11,7 @@ fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", defa
 fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", 0)
 fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull")
 fun doublePtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", if (nullable) "@Nullable" else "@NotNull")
+fun texture(name: String, nullable: Boolean = false) = PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
 fun intPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
 fun int(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
 fun double(name: String, default: Any? = null, annotation: String? = null) = SimpleParam(name, "double", default, annotation.orEmpty())

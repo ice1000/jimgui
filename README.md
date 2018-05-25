@@ -11,7 +11,7 @@ Linux Build | Windows Build
   [2]: https://ci.appveyor.com/api/projects/status/le5v5lne7au0lnn2?svg=true
   [3]: https://ci.appveyor.com/project/ice1000/jimgui
 
-Pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
+Cross-platform pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
 This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-based lightweight IDE for experiment purpose.
 
@@ -31,6 +31,7 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
   + [X] Generate functions with `MagicConstant` annotation
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
 + [X] `ImVec4` wrapper with optional mutability
++ [ ] `ImTextureID` wrapper (with `ID3D11ShaderResourceView *` on Windows7+ and `GLuint` on Linux)
 + Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI

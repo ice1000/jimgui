@@ -64,8 +64,8 @@ val genImguiFontAtlas = task<GenFontAtlasTask>("genImguiFontAtlas")
 val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
-val imguiGitHub = "https://raw.githubusercontent.com/ocornut/imgui/master"
-val covGitHub = "https://raw.githubusercontent.com/covscript/covscript-imgui/master"
+val github = "https://raw.githubusercontent.com"
+val imguiGitHub = "$github/ocornut/imgui/master"
 val imguiExamples = "$imguiGitHub/examples"
 
 val downloadImgui = task<Download>("downloadImgui") {
@@ -78,6 +78,7 @@ val downloadImgui = task<Download>("downloadImgui") {
 	src("$imguiGitHub/stb_rect_pack.h")
 	src("$imguiGitHub/stb_textedit.h")
 	src("$imguiGitHub/stb_truetype.h")
+	src("$github/nothings/stb/master/stb_image.h")
 	dest(imguiDir)
 	overwrite(false)
 }
@@ -88,22 +89,30 @@ val downloadImpl = task<Download>("downloadImpl") {
 	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.cpp")
 	src("$imguiExamples/directx11_example/imgui_impl_dx11.h")
 	src("$imguiExamples/directx11_example/imgui_impl_dx11.cpp")
-	src("$covGitHub/src/gl3w.c")
+	src("$github/covscript/covscript-imgui/master/src/gl3w.c")
 	dest(implDir)
 	overwrite(false)
 }
 
 val downloadImplGL = task<Download>("downloadImplGL") {
 	group = downloadAll.group
-	src("$covGitHub/include/GL/gl3w.h")
-	src("$covGitHub/include/GL/glcorearb.h")
+	src("$github/covscript/covscript-imgui/master/include/GL/gl3w.h")
+	src("$github/covscript/covscript-imgui/master/include/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
 	overwrite(false)
 }
 
 val downloadFiraCode = task<Download>("downloadFiraCode") {
-	src("https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
-	dest(file("testRes/font").apply { if (!exists()) mkdirs() })
+	group = downloadAll.group
+	src("$github/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
+	dest(file("testRes/font/FiraCode-Regular.ttf"))
+	overwrite(false)
+}
+
+val downloadIce1000 = task<Download>("downloadIce1000") {
+	group = downloadAll.group
+	src("https://pic4.zhimg.com/61984a25d44df15b857475e7f7b1c7e3_xl.jpg")
+	dest(file("testRes/pics/ice1000.png"))
 	overwrite(false)
 }
 
@@ -138,6 +147,7 @@ val clearDownloaded = task<Delete>("clearDownloaded") {
 compileJava.options.compilerArgs = listOf("-h", javahDir.toString())
 
 genImgui.dependsOn(downloadImgui)
+downloadAll.dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys, genImguiStyleColor, genImguiFontAtlas)
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
@@ -146,10 +156,10 @@ else compileCxx.dependsOn(make)
 make.dependsOn(cmake)
 msbuild.dependsOn(cmake)
 msbuildWin64.dependsOn(cmakeWin64)
-cmake.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
-cmakeWin64.dependsOn(compileJava, downloadImgui, downloadImpl, downloadImplGL)
+cmake.dependsOn(compileJava, downloadAll)
+cmakeWin64.dependsOn(compileJava, downloadAll)
 processResources.dependsOn(compileCxx)
-processTestResources.dependsOn(downloadFiraCode)
+processTestResources.dependsOn(downloadFiraCode, downloadIce1000)
 
 java.sourceSets {
 	"main" {
