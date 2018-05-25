@@ -63,7 +63,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 		__release(Byte, fileName)
 		return nullptr;
 	}
-	D3D11_TEwidthTURE1D_DESC desc;
+	D3D11_TEXTURE1D_DESC desc;
 	desc.Width = static_cast<UINT> (width);
 	// desc.Height = static_cast<UINT> (height);
 	desc.MipLevels = static_cast<UINT> (1);
