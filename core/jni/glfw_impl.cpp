@@ -8,7 +8,14 @@
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
 #include <org_ice1000_jimgui_JImGui.h>
+#include <org_ice1000_jimgui_JImTextureID.h>
+
+#include <algorithm>
+#include <iostream>
 
 #include "basics.hpp"
 
@@ -17,6 +24,55 @@
 
 static void glfw_error_callback(int error, Ptr<const char> description) {
 	fprintf(stderr, "ImGui Error %d: %s\n", error, description);
+}
+
+// See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
+bool load_texture(Ptr<const char> fileName, Ptr<GLuint> tex) {
+	int x, y, n;
+	int forceChannels = 4;
+	unsigned char *imageData = stbi_load(fileName, &x, &y, &n, forceChannels);
+	if (!imageData) {
+		fprintf(stderr, "ERROR: could not load %s\n", fileName);
+		return false;
+	}
+	// NPOT check
+	if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0) {
+		fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
+	}
+	int widthInBytes = x * 4, halfHeight = y / 2;
+	unsigned char *top = nullptr, *bottom = nullptr, temp = 0;
+	for (int row = 0; row < halfHeight; row++) {
+		top = imageData + row * widthInBytes;
+		bottom = imageData + (y - row - 1) * widthInBytes;
+		for (int col = 0; col < widthInBytes; col++) {
+			temp = *top;
+			*top = *bottom;
+			*bottom = temp;
+			top++;
+			bottom++;
+		}
+	}
+	glGenTextures(1, tex);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, *tex);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	return true;
+}
+
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, fileName)
+	GLuint texture = 0;
+	auto success = load_texture(STR_J2C(fileName), &texture);
+	__release(Byte, fileName)
+	__JNI__FUNCTION__CLEAN__
+	return success ? static_cast<jlong> (texture) : 0L;
 }
 
 JNIEXPORT auto JNICALL

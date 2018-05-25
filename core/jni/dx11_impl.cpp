@@ -174,7 +174,7 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	(void) io;
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 	ImGui_ImplDX11_Init(object->hwnd, g_pd3dDevice, g_pd3dDeviceContext);
-	__abort(Byte, title);
+	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (object);
 }

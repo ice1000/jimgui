@@ -24,5 +24,7 @@ repositories {
 dependencies {
 	compile(project(":core"))
 	compile(kotlin("stdlib-jdk8"))
+	testCompile(kotlin("test-junit"))
+	testCompile(group = "junit", name = "junit", version = "4.12")
 	testCompile("org.lice:lice:3.3.2")
 }
