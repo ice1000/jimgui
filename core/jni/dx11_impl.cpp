@@ -58,7 +58,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	int width, height, channels;
-	auto *imageData = stbi_load(fileName, &width, &height, &channels, 4);
+	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, 4);
 	if (imageData == nullptr) return nullptr;
 	D3D11_TEwidthTURE1D_DESC desc;
 	desc.Width = static_cast<UINT> (width);
