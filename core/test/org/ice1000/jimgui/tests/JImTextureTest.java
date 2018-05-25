@@ -25,14 +25,16 @@ public class JImTextureTest {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + (long) 3000;
-			JImTextureID texture = new JImTextureID(JImTextureTest.class.getResource("/pics/ice1000.png").getFile());
+			JImTextureID texture = JImTextureID.fromPNG(JImTextureTest.class.getResource("/pics/ice1000.png"));
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
 				Thread.sleep(deltaTime * 2 / 3);
 				if (deltaTime > (long) 16) {
 					imGui.initNewFrame();
-					imGui.image(texture, 400, 400);
+					if (end - System.currentTimeMillis() > 1500)
+						imGui.image(texture, texture.width, texture.height);
+					else imGui.image(texture, imGui.getWindowWidth(), imGui.getWindowHeight());
 					imGui.render();
 					latestRefresh = currentTimeMillis;
 				}
