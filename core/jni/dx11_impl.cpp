@@ -6,11 +6,19 @@
 #include <imgui_impl_dx11.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
-#include "basics.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_NO_LINEAR
+#define STBI_NO_HDR
+#define STBI_NO_GIF
+
+#include <stb_image.h>
 
 #include <d3d11.h>
 #include <dinput.h>
 #include <tchar.h>
+
+#include "basics.hpp"
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -43,6 +51,7 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+// see https://github.com/Microsoft/DirectXTex/blob/94b06c90728a08c1eab43a190fe0376e8426cb1d/DDSTextureLoader/DDSTextureLoader.cpp#L914-L1145
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
 	__JNI__FUNCTION__INIT__
@@ -68,9 +77,22 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	desc.Usage = D3D11_USAGE_IMMUTABLE;
 	desc.CPUAccessFlags = 0;
 	ID3D11Texture1D *tex = nullptr;
-	auto *hr = g_pd3dDevice->CreateTexture1D(&desc, imageData, &tex);
+	ID3D11ShaderResourceView *resourceView = nullptr;
+	HRESULT hr = E_FAIL;
+	hr = g_pd3dDevice->CreateTexture1D(&desc, imageData, &tex);
+	if (SUCCEEDED(hr) && tex != nullptr) {
+		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
+		SRVDesc.Format = desc.Format;
+		SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
+		SRVDesc.Texture1D.MipLevels = 1;
+		hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resouceView);
+		if (FAILED(hr)) {
+			tex->Release();
+			return nullptr;
+		}
+	}
 	auto ret = new jlong[4];
-	ret[0] = static_cast<jlong> (hr);
+	ret[0] = static_cast<jlong> (resouceView);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
 	ret[3] = static_cast<jlong> (channels);
