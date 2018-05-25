@@ -31,12 +31,9 @@ static void glfw_error_callback(int error, Ptr<const char> description) {
 }
 
 // See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
-bool loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int &n, int forceChannels = 4) {
-	unsigned char *imageData = stbi_load(fileName, &x, &y, &n, forceChannels);
-	if (!imageData) {
-		fprintf(stderr, "ERROR: could not load %s\n", fileName);
-		return false;
-	}
+auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int &n, int forceChannels = 4) -> bool {
+	auto *imageData = stbi_load(fileName, &x, &y, &n, forceChannels);
+	if (!imageData) return false;
 	// NPOT check
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
@@ -57,13 +54,14 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	GLuint texture = 0;
-	int x, y, channels;
-	auto success = loadTexture(STR_J2C(fileName), &texture, x, y, channels);
+	int width, height, channels;
+	auto success = loadTexture(STR_J2C(fileName), &texture, width, height, channels);
+	if (!success) return nullptr;
 	__release(Byte, fileName)
 	auto ret = new jlong[4];
-	ret[0] = success ? static_cast<jlong> (texture) : 0L;
-	ret[1] = static_cast<jlong> (x);
-	ret[2] = static_cast<jlong> (y);
+	ret[0] = static_cast<jlong> (texture);
+	ret[1] = static_cast<jlong> (width);
+	ret[2] = static_cast<jlong> (height);
 	ret[3] = static_cast<jlong> (channels);
 	__init(Long, ret, 4);
 	delete[] ret;

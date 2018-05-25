@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.net.URL;
@@ -31,18 +32,27 @@ public class JImTextureID {
 	 * @param height          image height
 	 * @param channelsInFile
 	 */
-	private JImTextureID(long nativeObjectPtr, int width, int height, int channelsInFile) {
+	private JImTextureID(long nativeObjectPtr,
+	                     int width,
+	                     int height,
+	                     int channelsInFile,
+	                     @Nullable String fileNameShownInError) {
 		this.width = width;
 		this.height = height;
 		this.channelsInFile = channelsInFile;
 		if (nativeObjectPtr == 0)
-			throw new IllegalArgumentException("Native object is null, please check if you're using ");
+			throw new IllegalArgumentException("Native object is null, cannot load " + fileNameShownInError);
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 
 	public static @NotNull JImTextureID fromPNG(@NotNull String fileName) {
 		long[] extractedData = createTextureFromFile(getBytes(fileName));
-		return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2], (int) extractedData[3]);
+		if (extractedData == null) throw new IllegalStateException("cannot load " + fileName);
+		return new JImTextureID(extractedData[0],
+				(int) extractedData[1],
+				(int) extractedData[2],
+				(int) extractedData[3],
+				fileName);
 	}
 
 	public static @NotNull JImTextureID fromPNG(@NotNull URL file) {
@@ -57,5 +67,5 @@ public class JImTextureID {
 		return fromPNG(path.toString());
 	}
 
-	public static native long @NotNull [] createTextureFromFile(byte @NotNull [] fileName);
+	public static native long[] createTextureFromFile(byte @NotNull [] fileName);
 }

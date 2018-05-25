@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
+import static org.junit.Assert.assertEquals;
 
 public class JImTextureTest {
 	@BeforeClass
@@ -26,6 +27,7 @@ public class JImTextureTest {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + (long) 3000;
 			JImTextureID texture = JImTextureID.fromPNG(JImTextureTest.class.getResource("/pics/ice1000.png"));
+			assertEquals(3, texture.channelsInFile);
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
