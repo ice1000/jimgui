@@ -84,13 +84,13 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	ID3D11Texture1D *tex = nullptr;
 	ID3D11ShaderResourceView *resourceView = nullptr;
 	HRESULT hr = E_FAIL;
-	hr = g_pd3dDevice->CreateTexture1D(&desc, imageData, &tex);
+	hr = g_pd3dDevice->CreateTexture1D(&desc, PTR_J2C(const D3D11_SUBRESOURCE_DATA, imageData), &tex);
 	if (SUCCEEDED(hr) && tex != nullptr) {
 		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 		SRVDesc.Format = desc.Format;
 		SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
 		SRVDesc.Texture1D.MipLevels = 1;
-		hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resouceView);
+		hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resourceView);
 		if (FAILED(hr)) {
 			tex->Release();
 			__release(Byte, fileName)
@@ -99,7 +99,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	}
 	__release(Byte, fileName)
 	auto ret = new jlong[4];
-	ret[0] = static_cast<jlong> (resouceView);
+	ret[0] = static_cast<jlong> (resourceView);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
 	ret[3] = static_cast<jlong> (channels);
