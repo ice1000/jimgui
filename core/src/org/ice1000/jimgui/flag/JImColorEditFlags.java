@@ -56,6 +56,12 @@ public interface JImColorEditFlags {
 	 */
 	int NoSidePreview = 1 << 8;
 
+	/**
+	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4)}: disable drag and drop target.
+	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4)}: disable drag and drop source.
+	 */
+	int NoDragDrop = 1 << 9;
+
 	// user options
 
 	/**
@@ -64,7 +70,7 @@ public interface JImColorEditFlags {
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorPicker4(String, JImVec4, int)}:
 	 * show vertical alpha bar/gradient in picker.
 	 */
-	int AlphaBar = 1 << 9;
+	int AlphaBar = 1 << 16;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)},
@@ -72,7 +78,7 @@ public interface JImColorEditFlags {
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4, int, float, float)}:
 	 * display preview as a transparent color over a checkerboard, instead of opaque.
 	 */
-	int AlphaPreview = 1 << 10;
+	int AlphaPreview = 1 << 17;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)},
@@ -80,7 +86,7 @@ public interface JImColorEditFlags {
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4, int, float, float)}:
 	 * display half opaque / half checkerboard, instead of opaque.
 	 */
-	int AlphaPreviewHalf = 1 << 11;
+	int AlphaPreviewHalf = 1 << 18;
 	/**
 	 * User option
 	 * (WIP) {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)}:
@@ -88,17 +94,17 @@ public interface JImColorEditFlags {
 	 *
 	 * @apiNote you probably want to use {@link JImColorEditFlags#Float} flag as well.
 	 */
-	int HDR = 1 << 12;
+	int HDR = 1 << 19;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)}: choose one among RGB/HSV/HEX.
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorPicker4(String, JImVec4, int)}: choose any combination using RGB/HSV/HEX.
 	 */
-	int RGB = 1 << 13;
+	int RGB = 1 << 20;
 	/** @see JImColorEditFlags#RGB */
-	int HSV = 1 << 14;
+	int HSV = 1 << 21;
 	/** @see JImColorEditFlags#RGB */
-	int HEX = 1 << 15;
+	int HEX = 1 << 22;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)},
@@ -106,7 +112,7 @@ public interface JImColorEditFlags {
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4, int, float, float)}:
 	 * _display_ values formatted as 0..255.
 	 */
-	int Uint8 = 1 << 16;
+	int Uint8 = 1 << 23;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorEdit4(String, JImVec4, int)},
@@ -114,19 +120,19 @@ public interface JImColorEditFlags {
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4, int, float, float)}:
 	 * _display_ values formatted as 0.0f..1.0f floats instead of 0..255 integers. No round-trip of value via integers.
 	 */
-	int Float = 1 << 17;
+	int Float = 1 << 24;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorPicker4(String, JImVec4, int)}:
 	 * bar for Hue, rectangle for Sat/Value.
 	 */
-	int PickerHueBar = 1 << 18;
+	int PickerHueBar = 1 << 25;
 	/**
 	 * User option
 	 * {@link org.ice1000.jimgui.JImGuiGen#colorPicker4(String, JImVec4, int)}:
 	 * wheel for Hue, triangle for Sat/Value.
 	 */
-	int PickerHueWheel = 1 << 19;
+	int PickerHueWheel = 1 << 26;
 
 	// [Internal] Masks
 
