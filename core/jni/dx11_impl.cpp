@@ -99,7 +99,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	}
 	__release(Byte, fileName)
 	auto ret = new jlong[4];
-	ret[0] = static_cast<jlong> (resourceView);
+	ret[0] = PTR_C2J(resourceView);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
 	ret[3] = static_cast<jlong> (channels);
