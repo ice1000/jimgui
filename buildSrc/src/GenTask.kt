@@ -182,10 +182,26 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jclass")
 			if (params.isNotEmpty()) cppCode.append(",")
 			cppCode.append(params.`c++`())
-			if (additionalParamText != null)
+			val hasAdditional = additionalParamText != null
+			if (hasAdditional)
 				cppCode.append(',').append(additionalParamText)
 			cppCode.append(")->")
 			val isVoid = type == null
+			if (isVoid) cppCode.append("void")
+			else cppCode.append('j').append(type)
+			cppCode.appendln('{')
+			if (isVoid) cppCode.`c++Expr`(name, params, type).append(';')
+			else {
+				if (type == "long") cppCode.append("return PTR_C2J(")
+				else cppCode.append("return static_cast<j").append(type).append(">(")
+				cppCode.`c++Expr`(name, params, type).append(");")
+			}
+			cppCode.appendln('}')
+			cppCode.append(JNI_C_FUNC_PREFIX).append(className).append('_').append(name).append('(')
+			cppCode.append(params.`c++`())
+			if (params.isNotEmpty() && hasAdditional) cppCode.append(',')
+			if (hasAdditional) cppCode.append(additionalParamText)
+			cppCode.append(")->")
 			if (isVoid) cppCode.append("void")
 			else cppCode.append('j').append(type)
 			cppCode.appendln('{')
