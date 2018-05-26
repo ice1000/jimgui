@@ -43,6 +43,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 					nativeObjectPtr),
 			Fun.private("pushClipRectFullScreen", nativeObjectPtr),
 			Fun.private("popClipRect", nativeObjectPtr),
+			Fun.private("pushTextureID", texture("textureID"), nativeObjectPtr),
 			Fun.private("popTextureID", nativeObjectPtr),
 
 			// Primitives

@@ -156,11 +156,6 @@ data class PointerParam(val name: String,
 	override fun `c++Expr`() = "PTR_J2C($nativeType, $name)"
 }
 
-/**
- * @property nameX String
- * @property nameY String
- * @property default Any? don't use ATM
- */
 data class ImVec2Param(val nameX: String, val nameY: String, override val default: Any?) : Param() {
 	override fun java() = "float $nameX, float $nameY"
 	override fun javaExpr() = "$nameX, $nameY"
