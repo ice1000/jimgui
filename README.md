@@ -31,6 +31,7 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
   + [X] Generate functions with `MagicConstant` annotation
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
 + [X] `ImVec4` wrapper with optional mutability
++ [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
 + [ ] `ImTextureID` wrapper (with `ID3D11ShaderResourceView *` on Windows7+ and `GLuint` on Linux)
 + Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?

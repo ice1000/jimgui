@@ -38,45 +38,52 @@ abstract class GenTask(
 
 	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
 
-	fun `c++BooleanAccessor`(name: String, additionalParamText: String = "") =
-			"""$JNI_FUNC_PREFIX${className}_is$name(JNIEnv *, jobject $additionalParamText) -> jboolean { return static_cast<jboolean> ($`c++Expr`$name ? JNI_TRUE : JNI_FALSE); }
-$JNI_FUNC_PREFIX${className}_set$name(JNIEnv *, jobject $additionalParamText, jboolean newValue) -> void { $`c++Expr`$name = newValue; }"""
+	fun `c++BooleanAccessor`(name: String, additionalParamText: String? = null) =
+			"""$JNI_FUNC_PREFIX${className}_is$name(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}) -> jboolean { return static_cast<jboolean> ($`c++Expr`$name ? JNI_TRUE : JNI_FALSE); }
+$JNI_FUNC_PREFIX${className}_set$name(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}, jboolean newValue) -> void { $`c++Expr`$name = newValue; }"""
 
-	fun `c++PrimitiveAccessor`(type: String, name: String, additionalParamText: String = "") =
-			"""$JNI_FUNC_PREFIX${className}_set$name(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name = newValue; }
-$JNI_FUNC_PREFIX${className}_get$name(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
+	fun `c++PrimitiveAccessor`(type: String, name: String, additionalParamText: String? = null) =
+			"""$JNI_FUNC_PREFIX${className}_set$name(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}, j$type newValue) -> void { $`c++Expr`$name = newValue; }
+$JNI_FUNC_PREFIX${className}_get$name(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}) -> j$type { return static_cast<j$type> ($`c++Expr`$name); }"""
 
 	fun `c++BooleanArrayAccessor`(name: String, jvmName: String, `c++Name`: String) =
-			"""$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jobject, jint index, jboolean newValue) -> void {
+			"""$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jclass, jint index, jboolean newValue) -> void {
 	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
-$JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> jboolean {
+$JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jclass, jint index) -> jboolean {
 	return static_cast<jboolean> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
 }"""
 
 	fun `c++PrimitiveArrayAccessor`(type: String, name: String, jvmName: String, `c++Name`: String) =
-			"""$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jobject, jint index, j$type newValue) -> void {
+			"""$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jclass, jint index, j$type newValue) -> void {
 	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
-$JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jobject, jint index) -> j$type {
+$JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jclass, jint index) -> j$type {
+	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
+}
+$JNI_C_FUNC_PREFIX${className}_$jvmName(jint index, j$type newValue) -> void {
+	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
+}
+$JNI_C_FUNC_PREFIX${className}_${jvmName}At(jint index) -> j$type {
 	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
 }"""
 
 	fun `c++StringedFunction`(name: String, params: List<Param>, type: String?,
 	                          `c++Expr`: String, `c++CriticalExpr`: String,
-	                          init: String = "", deinit: String = "", additionalParamText: String = "") =
+	                          init: String = "", deinit: String = "", additionalParamText: String? = null) =
 			"""$JNI_FUNC_PREFIX${className}_$name(JNIEnv *env, jclass ${comma(params)}${
-			params.`c++`()}$additionalParamText) -> ${orVoid(type)} {
+			params.`c++`()}${addtionalOrEmpty(additionalParamText)}) -> ${orVoid(type)} {
 	$init ${auto(type)}$`c++Expr`; $deinit ${ret(type, "res", "")}
 }
-JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_${className}_$name(${
-			params.`c++Critical`()}$additionalParamText) -> ${orVoid(type)} {
+$JNI_C_FUNC_PREFIX${className}_$name(${
+			params.`c++Critical`()}${addtionalOrEmpty(additionalParamText)}) -> ${orVoid(type)} {
 	${auto(type)}$`c++CriticalExpr`; ${ret(type, "res", "")}
 }"""
 //endregion
 
 	//region Trivial helpers
 	fun List<Param>.`c++`() = joinToString { it.`c++`() }
+
 	fun List<Param>.`c++Critical`() = joinToString { it.`c++Critical`() }
 
 	fun List<Param>.`c++`(builder: StringBuilder) = joinTo(builder) { it.`c++`() }
@@ -104,11 +111,17 @@ JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_${className}_$name(${
 		genJavaPrimitiveObjectiveMember(javaCode, type, "${name}Y", name)
 	}
 
-	fun `c++XYAccessor`(name: String, type: String, additionalParamText: String = "") =
-			"""$JNI_FUNC_PREFIX${className}_set${name}X(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
-$JNI_FUNC_PREFIX${className}_get${name}X(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
-$JNI_FUNC_PREFIX${className}_set${name}Y(JNIEnv *, jobject $additionalParamText, j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
-$JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jobject $additionalParamText) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }"""
+	fun `c++XYAccessor`(name: String, type: String, additionalParamText: String? = null) =
+			"""$JNI_FUNC_PREFIX${className}_set${name}X(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}, j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
+$JNI_FUNC_PREFIX${className}_get${name}X(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
+$JNI_FUNC_PREFIX${className}_set${name}Y(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}, j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
+$JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }
+$JNI_C_FUNC_PREFIX${className}_set${name}X(${additionalParamText?.let { "$it," }.orEmpty()}j$type newValue) -> void { $`c++Expr`$name.x = newValue; }
+$JNI_C_FUNC_PREFIX${className}_get${name}X(${additionalParamText.orEmpty()}) -> j$type { return static_cast<j$type> ($`c++Expr`$name.x); }
+$JNI_C_FUNC_PREFIX${className}_set${name}Y(${additionalParamText?.let { "$it," }.orEmpty()}j$type newValue) -> void { $`c++Expr`$name.y = newValue; }
+$JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> j$type { return static_cast<j$type> ($`c++Expr`$name.y); }"""
+
+	private fun addtionalOrEmpty(additionalParamText: String?) = additionalParamText?.let { ",$it" }.orEmpty()
 
 	fun genJavaFun(javaCode: StringBuilder, function: Fun) = function.let { (name, type, params, visibility, comment) ->
 		genJavaFun(javaCode, visibility, params, type, name, comment)
@@ -128,7 +141,7 @@ $JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jobject $additionalParamText)
 			javaCode.append(name).append('(')
 			params.joinTo(javaCode) { it.javaExpr() }
 			javaCode.append(");}").append(eol).append("\tprotected static native ")
-		} else javaCode.append(" final native ")
+		} else javaCode.append(" static native ")
 		javaCode.append(type(type)).append(' ').append(name).append('(')
 		params.joinTo(javaCode) { it.java() }
 		javaCode.append(");").append(eol)
@@ -155,7 +168,7 @@ $JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jobject $additionalParamText)
 	fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
 			append(`c++Expr`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
-	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder, additionalParamText: String = "") {
+	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder, additionalParamText: String? = null) {
 		val initParams = params.mapNotNull { it.surrounding() }
 		if (isStatic(params)) {
 			val f = `c++StringedFunction`(name, params, type,
@@ -166,9 +179,12 @@ $JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jobject $additionalParamText)
 					additionalParamText = additionalParamText)
 			cppCode.appendln(f)
 		} else {
-			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jobject")
+			cppCode.append(JNI_FUNC_PREFIX).append(className).append('_').append(name).append("(JNIEnv *env, jclass")
 			if (params.isNotEmpty()) cppCode.append(",")
-			cppCode.append(params.`c++`()).append(additionalParamText).append(")->")
+			cppCode.append(params.`c++`())
+			if (additionalParamText != null)
+				cppCode.append(',').append(additionalParamText)
+			cppCode.append(")->")
 			val isVoid = type == null
 			if (isVoid) cppCode.append("void")
 			else cppCode.append('j').append(type)
@@ -184,31 +200,31 @@ $JNI_FUNC_PREFIX${className}_get${name}Y(JNIEnv *, jobject $additionalParamText)
 	}
 
 	fun genJavaBooleanMember(javaCode: StringBuilder, name: String, isArray: Boolean, jvmName: String, annotation: String, `c++Name`: String) {
-		javaCode.javadoc(`c++Name`).append("\tpublic native boolean ")
+		javaCode.javadoc(`c++Name`).append("\tpublic static native boolean ")
 		if (isArray) javaCode.append(jvmName).append("At").append('(').append(annotation).appendln("int index);")
 		else javaCode.append("is").append(name).appendln("();")
-		javaCode.javadoc(`c++Name`).append("\tpublic native void ")
+		javaCode.javadoc(`c++Name`).append("\tpublic static native void ")
 		if (isArray) javaCode.append(jvmName).append('(').append(annotation).appendln("int index,boolean newValue);")
 		else javaCode.append("set").append(name).appendln("(boolean newValue);")
 	}
 
 	fun genJavaPrimitiveMember(javaCode: StringBuilder, name: String, annotation: String, type: String, isArray: Boolean, jvmName: String, `c++Name`: String) {
-		javaCode.javadoc(`c++Name`).append("\tpublic native ").append(annotation).append(type)
+		javaCode.javadoc(`c++Name`).append("\tpublic static native ").append(annotation).append(type)
 		if (isArray) javaCode.append(' ').append(jvmName).append("At(").append(annotation).appendln("int index);")
 		else javaCode.append(" get").append(name).appendln("();")
-		javaCode.javadoc(`c++Name`).append("\tpublic native void ")
+		javaCode.javadoc(`c++Name`).append("\tpublic static native void ")
 		if (isArray) javaCode.append(jvmName).append('(').append(annotation).append("int index,")
 		else javaCode.append("set").append(name).append('(')
 		javaCode.append(annotation).append(type).appendln(" newValue);")
 	}
 
 	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder, type: String, name: String, `c++Name`: String, ptrName: String = "nativeObjectPtr") {
-		javaCode.append("\tprivate native void set").append(name).append("(long ")
+		javaCode.append("\tprivate static native void set").append(name).append("(long ")
 				.append(ptrName).append(',').append(type).appendln(" newValue);")
 				.javadoc(`c++Name`)
 				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue){set")
 				.append(name).append('(').append(ptrName).appendln(", newValue); }")
-				.append("\tprivate native ").append(type).append(" get")
+				.append("\tprivate static native ").append(type).append(" get")
 				.append(name).append("(long ").append(ptrName).appendln(");")
 				.javadoc(`c++Name`)
 				.append("\tpublic ").append(type).append(" get").append(name)

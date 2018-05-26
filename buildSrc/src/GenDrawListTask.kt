@@ -30,8 +30,8 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, "jlong nativeObjectPtr") }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, "jlong nativeObjectPtr") }
 	}
 
 	override val `c++Expr` = "PTR_J2C(ImDrawList, nativeObjectPtr)->"

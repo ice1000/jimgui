@@ -216,3 +216,5 @@ const val CXX_SUFFIX = """
 
 @Language("C++", suffix = "(){}")
 const val JNI_FUNC_PREFIX = "JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_"
+@Language("C++", suffix = "(){}")
+const val JNI_C_FUNC_PREFIX = "JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_"
