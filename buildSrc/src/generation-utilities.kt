@@ -97,7 +97,9 @@ sealed class Param {
 	open fun javaDefault(): String = java()
 	abstract fun javaExpr(): String
 	abstract fun `c++`(): String
+	open fun `c++Critical`(): String = `c++`()
 	abstract fun `c++Expr`(): String
+	open fun `c++CriticalExpr`(): String = `c++Expr`()
 	open fun surrounding(): Pair<String, String>? = null
 	/** null refers to no default value. */
 	open val default: Any? get() = null
@@ -121,6 +123,7 @@ open class StringParam(val name: String,
 	override fun javaDefault() = "$annotation String $name"
 	override fun javaExpr() = "getBytes($name)"
 	override fun `c++`() = "jbyteArray _$name"
+	override fun `c++Critical`() = "jint ${name}Len, Ptr<jbyte> $name"
 	override fun `c++Expr`() = "STR_J2C($name)"
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
@@ -128,12 +131,9 @@ open class StringParam(val name: String,
 class SizedStringParam(name: String,
                        annotation: String = "@NotNull",
                        default: Any?) : StringParam(name, annotation, default) {
-	override fun java() = "byte[] $name"
-	override fun javaDefault() = "$annotation String $name"
 	override fun javaExpr() = "$name.getBytes(StandardCharsets.UTF_8)"
-	override fun `c++`() = "jbyteArray _$name"
 	override fun `c++Expr`() = "STR_J2C($name), STR_J2C($name + __len($name))"
-	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
+	override fun `c++CriticalExpr`() = "STR_J2C($name), STR_J2C($name + ${name}Len)"
 }
 
 data class ImVec4Param(val name: String, override val default: Any?) : Param() {
