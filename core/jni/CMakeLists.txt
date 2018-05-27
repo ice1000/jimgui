@@ -10,6 +10,7 @@ find_package(JNI REQUIRED)
 
 if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 	set(IMGUI_IMPL impl/imgui_impl_dx11.cpp dx11_impl.cpp)
 	set(TARGET_LINK_LIBS d3dcompiler d3d11)
@@ -28,7 +29,7 @@ else ()
 	include_directories(${GLFW_INCLUDE_DIRS})
 
 	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security -O3")
 
 	if (APPLE)
 		include_directories(/System/Library/Frameworks)

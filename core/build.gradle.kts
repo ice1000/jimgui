@@ -49,7 +49,7 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 fun Exec.configureCMake(workingDir: File, generator: String) {
 	group = compileCxx.group
 	workingDir(workingDir)
-	commandLine("cmake", "-G", generator, workingDir.parent)
+	commandLine("cmake", "-DCMAKE_BUILD_TYPE=Release", "-G", generator, workingDir.parent)
 	doFirst { workingDir.mkdirs() }
 }
 
