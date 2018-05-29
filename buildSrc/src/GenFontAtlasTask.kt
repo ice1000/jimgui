@@ -47,6 +47,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 			Fun.private("clearTexData", nativeObjectPtr),
 			Fun.private("clearFonts", nativeObjectPtr),
 			Fun.private("clear", nativeObjectPtr),
+			Fun.private("setTexID", texture("id"), nativeObjectPtr),
 			Fun.protected("getGlyphRangesDefault", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesKorean", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesJapanese", "long", nativeObjectPtr),
