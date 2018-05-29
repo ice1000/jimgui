@@ -335,12 +335,18 @@ Java_org_ice1000_jimgui_JImGui_getClipboardText0(Ptr<JNIEnv> env, jclass) -> jby
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_menuItem(
+		jint labelLen, Ptr<jbyte> label, jint shortcutLen, Ptr<jbyte> shortcut, jboolean selected, jboolean enabled) -> jboolean {
+	return static_cast<jboolean>(ImGui::MenuItem(STR_J2C(label), STR_J2C(shortcut), selected, enabled) ? JNI_TRUE : JNI_FALSE);
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_menuItem(
 		Ptr<JNIEnv> env, jclass, jbyteArray _label, jbyteArray _shortcut, jboolean selected, jboolean enabled) -> jboolean {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Byte, shortcut);
-	auto res = ImGui::MenuItem(STR_J2C(label), STR_J2C(shortcut), selected, enabled);
+	auto res = JavaCritical_org_ice1000_jimgui_JImGui_menuItem(-1, label, -1, shortcut, selected, enabled);
 	__release(Byte, label);
 	__release(Byte, shortcut);
 	__JNI__FUNCTION__CLEAN__

@@ -45,35 +45,54 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 
 # Usage
 
-Gradle:
+Remember to add jcenter to your repositories.
+
+## Gradle
 
 ```groovy
-repositories { jcenter() }
 dependencies {
-  String jimgui_version = "v0.1"
+  String jimgui_version = 'v0.1'
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
 ```
 
-If it doesn't work, replace `jcenter()` with `maven { url 'https://dl.bintray.com/ice1000/ice1000' }`.
+## Gradle Kotlin DSL
+
+```kotlin
+dependencies {
+  val jimguiVersion = "v0.1"
+  compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
+  compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+}
+```
+
+## Maven
+
+```xml
+<dependency>
+  <groupId>org.ice1000.jimgui</groupId>
+  <!-- basic functionality -->
+  <artifactId>core</artifactId>
+  <version>v0.1</version>
+  <type>pom</type>
+</dependency>
+```
 
 # Build
 
-First you need to make sure you have these software installed:
+First you need to make sure you have `cmake` newer than 3.5 and the following software installed:
 
 + For Linux
-	+ `cmake` version \> 3.5
 	+ `make`
 	+ `pkg-config`
 	+ `libglfw3-dev`
 + For Windows (\> 7)
-	+ `cmake` version \> 3.5
 	+ Visual Studio 2017 with `msbuild`
 	+ `d3d11`
 	+ `d3dcompiler`
 + For Mac OS X
-	+ Everything needed on Linux is needed on MacOS
+	+ Everything needed on Linux
 	+ `Cocoa`
 	+ `GLUT`
 	+ `OpenGL`
