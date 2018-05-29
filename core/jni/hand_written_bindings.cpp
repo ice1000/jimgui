@@ -28,7 +28,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr() -> jlong {
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jobject, jint id) {
+Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jclass, jint id) {
 	ImGui::PushID(id);
 }
 
@@ -222,14 +222,6 @@ JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_JImGuiIO_getFontDefault0(
 	return PTR_C2J(ImGui::GetIO().FontDefault);
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) -> jlong {
-	return PTR_C2J(new ImVec4());
-}
-
-JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects0() -> jlong {
-	return PTR_C2J(new ImVec4());
-}
-
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	delete PTR_J2C(ImVec4, nativeObjectPtr);
@@ -254,6 +246,10 @@ JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects(jfloat x, jfloat y
 JNIEXPORT auto JNICALL \
 Java_org_ice1000_jimgui_JImVec4_get ## Name(JNIEnv *, jclass, jlong nativeObjectPtr) -> jfloat { \
   return PTR_J2C(ImVec4, nativeObjectPtr)->name; \
+} \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_JImVec4_get ## Name(jlong nativeObjectPtr) -> jfloat { \
+  return PTR_J2C(ImVec4, nativeObjectPtr)->name; \
 }
 
 JIMVEC4_GETTER(x, X)
@@ -269,7 +265,17 @@ Java_org_ice1000_jimgui_JImVec4_toU32(JNIEnv *, jclass, jlong nativeObjectPtr) -
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImVec4_toU32(jlong nativeObjectPtr) -> jint {
+	return ImGui::ColorConvertFloat4ToU32(*PTR_J2C(ImVec4, nativeObjectPtr));
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImVec4_fromImU32(JNIEnv *, jclass, jint u32) -> jlong {
+	return PTR_C2J(new ImVec4(ImGui::ColorConvertU32ToFloat4(static_cast<ImU32> (u32))));
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImVec4_fromImU32(jint u32) -> jlong {
 	return PTR_C2J(new ImVec4(ImGui::ColorConvertU32ToFloat4(static_cast<ImU32> (u32))));
 }
 
@@ -280,6 +286,14 @@ Java_org_ice1000_jimgui_MutableJImVec4_set ## Name(JNIEnv *, jclass, jlong nativ
 } \
 JNIEXPORT void JNICALL \
 Java_org_ice1000_jimgui_MutableJImVec4_inc ## Name(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat increment) { \
+  PTR_J2C(ImVec4, nativeObjectPtr)->name += increment; \
+} \
+JNIEXPORT void JNICALL \
+JavaCritical_org_ice1000_jimgui_MutableJImVec4_set ## Name(jlong nativeObjectPtr, jfloat newValue) { \
+  PTR_J2C(ImVec4, nativeObjectPtr)->name = newValue; \
+} \
+JNIEXPORT void JNICALL \
+JavaCritical_org_ice1000_jimgui_MutableJImVec4_inc ## Name(jlong nativeObjectPtr, jfloat increment) { \
   PTR_J2C(ImVec4, nativeObjectPtr)->name += increment; \
 }
 

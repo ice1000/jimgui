@@ -380,6 +380,7 @@ public class Demo {
 		imGui.menuItem("Quit", "Alt+F4");
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showUserGuide(@NotNull JImGui imGui) {
 		imGui.bulletText("Double-click on title bar to collapse window.");
 		imGui.bulletText(
