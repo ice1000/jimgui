@@ -23,6 +23,7 @@ public class JImDrawListTest {
 		main();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();
 		JImGuiUtil.runWithinPer(5000, 15, imGui -> {

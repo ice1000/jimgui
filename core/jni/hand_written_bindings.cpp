@@ -17,11 +17,23 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNIEnv *, jclass) -> jlong {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return PTR_C2J(ImGui::GetFont());
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jobject, jint id) {
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr() -> jlong {
+	return PTR_C2J(ImGui::GetFont());
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_pushID(JNIEnv *env, jobject, jint id) {
+	ImGui::PushID(id);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_pushID(jint id) {
 	ImGui::PushID(id);
 }
 
@@ -31,12 +43,27 @@ Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(JNIEnv *, jclass
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr() -> jlong {
+	return PTR_C2J(ImGui::GetWindowDrawList());
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(JNIEnv *, jclass) -> jlong {
 	return PTR_C2J(ImGui::GetOverlayDrawList());
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr() -> jlong {
+	return PTR_C2J(ImGui::GetOverlayDrawList());
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImStyle_getColor0(JNIEnv *, jclass, jint index) -> jlong {
+	return PTR_C2J(&ImGui::GetStyle().Colors[index]);
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jint index) -> jlong {
 	return PTR_C2J(&ImGui::GetStyle().Colors[index]);
 }
 
@@ -59,6 +86,14 @@ Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
+		jint pathLen, Ptr<jbyte> path, jfloat size, jlong range, jlong nativeObjectPtr) -> jlong {
+	auto *fonts = PTR_J2C(ImFontAtlas, nativeObjectPtr);
+	auto res = PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, nullptr, PTR_J2C(const ImWchar, range)));
+	return res;
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeObjectPtr) -> jbyteArray {
 	__JNI__FUNCTION__INIT__
 	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
@@ -72,6 +107,12 @@ Java_org_ice1000_jimgui_JImFont_getDebugName0(JNIEnv *env, jclass, jlong nativeO
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(JNIEnv *, jclass, jlong nativeObjectPtr) -> jlong {
+	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
+	return PTR_C2J(font->ContainerAtlas);
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(jlong nativeObjectPtr) -> jlong {
 	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
 	return PTR_C2J(font->ContainerAtlas);
 }
@@ -113,8 +154,19 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFonts0(JNIEnv *, jcla
 	return PTR_C2J(ImGui::GetIO().Fonts);
 }
 
+JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_JImGuiIO_getFonts0() -> jlong {
+	return PTR_C2J(ImGui::GetIO().Fonts);
+}
+
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImVec4_fromHSV0(JNIEnv *, jclass, jfloat h, jfloat s, jfloat v, jfloat a) -> jlong {
+	float r, g, b;
+	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
+	return PTR_C2J(new ImVec4(r, g, b, a));
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImVec4_fromHSV0(jfloat h, jfloat s, jfloat v, jfloat a) -> jlong {
 	float r, g, b;
 	ImGui::ColorConvertHSVtoRGB(h, s, v, r, g, b);
 	return PTR_C2J(new ImVec4(r, g, b, a));
@@ -166,7 +218,15 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(JNIEnv *
 	return PTR_C2J(ImGui::GetIO().FontDefault);
 }
 
+JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_JImGuiIO_getFontDefault0() -> jlong {
+	return PTR_C2J(ImGui::GetIO().FontDefault);
+}
+
 JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects0(JNIEnv *, jclass) -> jlong {
+	return PTR_C2J(new ImVec4());
+}
+
+JNIEXPORT auto JNICALL JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects0() -> jlong {
 	return PTR_C2J(new ImVec4());
 }
 
@@ -175,9 +235,18 @@ Java_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(JNIEnv *, jclass, jlong 
 	delete PTR_J2C(ImVec4, nativeObjectPtr);
 }
 
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(jlong nativeObjectPtr) {
+	delete PTR_J2C(ImVec4, nativeObjectPtr);
+}
+
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(JNIEnv *, jclass, jfloat x, jfloat y, jfloat z,
-                                                      jfloat w) -> jlong {
+Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(JNIEnv *, jclass, jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
+	return PTR_C2J(new ImVec4(x, y, z, w));
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects(jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
 	return PTR_C2J(new ImVec4(x, y, z, w));
 }
 
@@ -269,11 +338,19 @@ Java_org_ice1000_jimgui_JImGui_menuItem(
 
 #define XY_ACCESSOR(Property) \
 JNIEXPORT auto JNICALL \
-Java_org_ice1000_jimgui_JImGui_get ## Property ## X(JNIEnv *, jobject) -> jfloat { \
+Java_org_ice1000_jimgui_JImGui_get ## Property ## X(JNIEnv *, jclass) -> jfloat { \
   return ImGui::Get ## Property().x; \
 } \
 JNIEXPORT auto JNICALL \
-Java_org_ice1000_jimgui_JImGui_get ## Property ## Y(JNIEnv *, jobject) -> jfloat { \
+Java_org_ice1000_jimgui_JImGui_get ## Property ## Y(JNIEnv *, jclass) -> jfloat { \
+  return ImGui::Get ## Property().y; \
+} \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## X() -> jfloat { \
+  return ImGui::Get ## Property().x; \
+} \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## Y() -> jfloat { \
   return ImGui::Get ## Property().y; \
 }
 
