@@ -21,8 +21,8 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName, `c++Name`)
 		}
 		booleanMembers.forEach {
-			javaCode.javadoc(it).append("\tpublic native boolean is").append(it).appendln("();")
-					.javadoc(it).append("\tpublic native void set").append(it).appendln("(boolean newValue);")
+			javaCode.javadoc(it).append("\tpublic static native boolean is").append(it).appendln("();")
+					.javadoc(it).append("\tpublic static native void set").append(it).appendln("(boolean newValue);")
 		}
 		functions.forEach { genJavaFun(javaCode, it) }
 	}

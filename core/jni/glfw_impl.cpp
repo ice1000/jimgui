@@ -18,9 +18,6 @@
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
 
-#include <algorithm>
-#include <iostream>
-
 #include "basics.hpp"
 
 #pragma clang diagnostic push

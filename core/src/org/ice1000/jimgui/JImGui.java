@@ -5,8 +5,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.charset.StandardCharsets;
-
 import static org.ice1000.jimgui.util.JImGuiUtil.FLT_MAX;
 import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
@@ -343,26 +341,26 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 				graphHeight);
 	}
 
-	public native void pushID(int intID);
+	public static native void pushID(int intID);
 
-	public native float getWindowPosX();
-	public native float getWindowPosY();
-	public native float getContentRegionMaxX();
-	public native float getContentRegionMaxY();
-	public native float getWindowContentRegionMinX();
-	public native float getWindowContentRegionMinY();
-	public native float getWindowContentRegionMaxX();
-	public native float getWindowContentRegionMaxY();
-	public native float getFontTexUvWhitePixelX();
-	public native float getFontTexUvWhitePixelY();
-	public native float getItemRectMinX();
-	public native float getItemRectMinY();
-	public native float getItemRectMaxX();
-	public native float getItemRectMaxY();
-	public native float getItemRectSizeX();
-	public native float getItemRectSizeY();
-	public native float getMousePosOnOpeningCurrentPopupX();
-	public native float getMousePosOnOpeningCurrentPopupY();
+	public static native float getWindowPosX();
+	public static native float getWindowPosY();
+	public static native float getContentRegionMaxX();
+	public static native float getContentRegionMaxY();
+	public static native float getWindowContentRegionMinX();
+	public static native float getWindowContentRegionMinY();
+	public static native float getWindowContentRegionMaxX();
+	public static native float getWindowContentRegionMaxY();
+	public static native float getFontTexUvWhitePixelX();
+	public static native float getFontTexUvWhitePixelY();
+	public static native float getItemRectMinX();
+	public static native float getItemRectMinY();
+	public static native float getItemRectMaxX();
+	public static native float getItemRectMaxY();
+	public static native float getItemRectSizeX();
+	public static native float getItemRectSizeY();
+	public static native float getMousePosOnOpeningCurrentPopupX();
+	public static native float getMousePosOnOpeningCurrentPopupY();
 
 	/**
 	 * @param styleVar should be a value from {@link JImStyleVars}
@@ -466,7 +464,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                                     float @NotNull [] values,
 	                                     int valuesOffset,
 	                                     int valuesLength,
-	                                     byte[] overlayText,
+	                                     byte @Nullable [] overlayText,
 	                                     float scaleMin,
 	                                     float scaleMax,
 	                                     float graphWidth,
@@ -475,7 +473,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                                         float @NotNull [] values,
 	                                         int valuesOffset,
 	                                         int valuesLength,
-	                                         byte[] overlayText,
+	                                         byte @Nullable [] overlayText,
 	                                         float scaleMin,
 	                                         float scaleMax,
 	                                         float graphWidth,

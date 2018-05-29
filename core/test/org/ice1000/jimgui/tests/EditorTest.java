@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URISyntaxException;
 
 public class EditorTest {
+	@SuppressWarnings("AccessStaticViaInstance")
 	public static void main(String @NotNull ... args) throws InterruptedException, URISyntaxException {
 		JniLoader.load();
 		StringBuilder builder = new StringBuilder("输入一些文本");

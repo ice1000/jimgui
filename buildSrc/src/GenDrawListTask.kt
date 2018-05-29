@@ -30,8 +30,8 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, "jlong nativeObjectPtr") }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, "jlong nativeObjectPtr") }
 	}
 
 	override val `c++Expr` = "PTR_J2C(ImDrawList, nativeObjectPtr)->"
@@ -43,6 +43,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 					nativeObjectPtr),
 			Fun.private("pushClipRectFullScreen", nativeObjectPtr),
 			Fun.private("popClipRect", nativeObjectPtr),
+			Fun.private("pushTextureID", texture("textureID"), nativeObjectPtr),
 			Fun.private("popTextureID", nativeObjectPtr),
 
 			// Primitives
@@ -64,6 +65,22 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 					stringSized("text"),
 					float("wrapWidth", default = 0),
 					vec4Ptr("cpuFineClipRect", default = 0),
+					nativeObjectPtr),
+			Fun.private("addImage",
+					texture("userTextureID"), pos("a"), pos("b"),
+					pos("uvA", default = "0,0"), pos("uvB", default = "1,1"),
+					int("color", default = 0xFFFFFFFF.toInt()),
+					nativeObjectPtr),
+			Fun.private("addImageQuad",
+					texture("userTextureID"), pos("a"), pos("b"), pos("c"), pos("d"),
+					pos("uvA", default = "0,0"), pos("uvB", default = "1,0"),
+					pos("uvC", default = "1,1"), pos("uvD", default = "0,1"),
+					int("color", default = 0xFFFFFFFF.toInt()),
+					nativeObjectPtr),
+			Fun.private("addImageRounded",
+					texture("userTextureID"), pos("a"), pos("b"),
+					pos("uvA", default = "0,0"), pos("uvB", default = "1,1"),
+					int("color", default = 0xFFFFFFFF.toInt()), float("rounding"), roundingFlags,
 					nativeObjectPtr),
 			Fun.private("addBezierCurve",
 					pos("pos0"), pos("cp0"), pos("cp1"),

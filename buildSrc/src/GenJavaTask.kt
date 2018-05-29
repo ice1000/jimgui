@@ -40,9 +40,9 @@ public interface $className {
 	fun StringBuilder.genJavaObjectiveMemberAccessor(name: String, annotation: String, type: String) {
 		javadoc(name)
 				.append("\tpublic ").append(annotation).append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
-				.append("\tprivate native ").append(annotation).append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
+				.append("\tprivate static native ").append(annotation).append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
 				.javadoc(name)
 				.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
-				.append("\tprivate native void set").append(name).append("(long nativeObjectPtr, ").append(annotation).append(type).appendln(" newValue);")
+				.append("\tprivate static native void set").append(name).append("(long nativeObjectPtr, ").append(annotation).append(type).appendln(" newValue);")
 	}
 }

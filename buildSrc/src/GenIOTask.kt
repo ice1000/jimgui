@@ -58,6 +58,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 					params = listOf(param),
 					type = null,
 					`c++Expr` = "$`c++Expr`$it = ${param.`c++Expr`()}",
+					`c++CriticalExpr` = "$`c++Expr`$it = ${param.`c++CriticalExpr`()}",
 					init = "$JNI_FUNCTION_INIT $init",
 					deinit = "$deinit $JNI_FUNCTION_CLEAN")
 		}

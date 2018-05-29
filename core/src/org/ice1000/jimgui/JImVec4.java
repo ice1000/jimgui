@@ -20,7 +20,7 @@ public class JImVec4 implements DeallocatableObject {
 
 	@Contract
 	public JImVec4() {
-		nativeObjectPtr = allocateNativeObjects0();
+		this(0, 0, 0, 0);
 	}
 
 	/** package-private by design */
@@ -63,9 +63,6 @@ public class JImVec4 implements DeallocatableObject {
 	public final int toU32() {
 		return toU32(nativeObjectPtr);
 	}
-
-	/** @return see {@link JImVec4#nativeObjectPtr} */
-	private static native long allocateNativeObjects0();
 
 	/** Should only be called once. */
 	@Override

@@ -6,11 +6,20 @@
 #include <imgui_impl_dx11.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
-#include "basics.hpp"
+
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_NO_LINEAR
+#define STBI_NO_HDR
+#define STBI_NO_GIF
+
+#include <stb_image.h>
 
 #include <d3d11.h>
+#include <d3d11_1.h>
 #include <dinput.h>
 #include <tchar.h>
+
+#include "basics.hpp"
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -43,14 +52,18 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+// see https://github.com/Microsoft/DirectXTex/blob/94b06c90728a08c1eab43a190fe0376e8426cb1d/DDSTextureLoader/DDSTextureLoader.cpp#L914-L1145
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	int width, height, channels;
-	auto *imageData = stbi_load(fileName, &width, &height, &channels, 4);
-	if (imageData == nullptr) return nullptr;
-	D3D11_TEwidthTURE1D_DESC desc;
+	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, 4);
+	if (imageData == nullptr) {
+		__release(Byte, fileName)
+		return nullptr;
+	}
+	D3D11_TEXTURE1D_DESC desc;
 	desc.Width = static_cast<UINT> (width);
 	// desc.Height = static_cast<UINT> (height);
 	desc.MipLevels = static_cast<UINT> (1);
@@ -63,14 +76,30 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 			break;
 		default:
 			delete[] imageData;
+			__release(Byte, fileName)
 			return nullptr;
 	}
 	desc.Usage = D3D11_USAGE_IMMUTABLE;
 	desc.CPUAccessFlags = 0;
 	ID3D11Texture1D *tex = nullptr;
-	auto *hr = g_pd3dDevice->CreateTexture1D(&desc, imageData, &tex);
+	ID3D11ShaderResourceView *resourceView = nullptr;
+	HRESULT hr = E_FAIL;
+	hr = g_pd3dDevice->CreateTexture1D(&desc, PTR_J2C(const D3D11_SUBRESOURCE_DATA, imageData), &tex);
+	if (SUCCEEDED(hr) && tex != nullptr) {
+		D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
+		SRVDesc.Format = desc.Format;
+		SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
+		SRVDesc.Texture1D.MipLevels = 1;
+		hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resourceView);
+		if (FAILED(hr)) {
+			tex->Release();
+			__release(Byte, fileName)
+			return nullptr;
+		}
+	}
+	__release(Byte, fileName)
 	auto ret = new jlong[4];
-	ret[0] = static_cast<jlong> (hr);
+	ret[0] = PTR_C2J(resourceView);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
 	ret[3] = static_cast<jlong> (channels);

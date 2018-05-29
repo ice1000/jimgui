@@ -27,6 +27,7 @@ public class Demo {
 		main();
 	}
 
+	@SuppressWarnings({"AccessStaticViaInstance", "StatementWithEmptyBody"})
 	public static void main(String @NotNull ... args) {
 		JniLoader.load();
 		final String windowName = "Debug";
@@ -259,6 +260,7 @@ public class Demo {
 		manager.deallocateAll();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showExampleAppFixedOverlay(@NotNull JImGui imGui, @NotNull NativeBool openPtr) {
 		float windowPosX = (corner & 1) > 0 ? imGui.getIO().getDisplaySizeX() - DISTANCE : DISTANCE;
 		float windowPosY = (corner & 2) > 0 ? imGui.getIO().getDisplaySizeY() - DISTANCE : DISTANCE;
@@ -304,6 +306,7 @@ public class Demo {
 		if (imGui.button("800x200")) imGui.setWindowSize(windowName, 800, 200);
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showExampleAppMainMenuBar(@NotNull JImGui imGui) {
 		if (imGui.beginMainMenuBar()) {
 			if (imGui.beginMenu("File")) {
@@ -323,6 +326,7 @@ public class Demo {
 		}
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showExampleAppWindowTitles(@NotNull JImGui imGui) {
 		// By default, Windows are uniquely identified by their title.
 		// You can use the "##" and "###" markers to manipulate the display/ID.
@@ -348,6 +352,7 @@ public class Demo {
 		imGui.end();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showExampleMenuFile(@NotNull JImGui imGui) {
 		imGui.menuItem("(dummy menu)", null, false, false);
 		imGui.menuItem("New");
@@ -375,6 +380,7 @@ public class Demo {
 		imGui.menuItem("Quit", "Alt+F4");
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showUserGuide(@NotNull JImGui imGui) {
 		imGui.bulletText("Double-click on title bar to collapse window.");
 		imGui.bulletText(

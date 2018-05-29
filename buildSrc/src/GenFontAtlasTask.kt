@@ -31,9 +31,9 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", ", jlong nativeObjectPtr") }
-		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, ", jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, ", jlong nativeObjectPtr") }
+		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", "jlong nativeObjectPtr") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, "jlong nativeObjectPtr") }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, "jlong nativeObjectPtr") }
 	}
 
 	override val `c++Expr` = "PTR_J2C(ImFontAtlas, nativeObjectPtr)->"
@@ -47,6 +47,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 			Fun.private("clearTexData", nativeObjectPtr),
 			Fun.private("clearFonts", nativeObjectPtr),
 			Fun.private("clear", nativeObjectPtr),
+			Fun.private("setTexID", texture("id"), nativeObjectPtr),
 			Fun.protected("getGlyphRangesDefault", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesKorean", "long", nativeObjectPtr),
 			Fun.protected("getGlyphRangesJapanese", "long", nativeObjectPtr),

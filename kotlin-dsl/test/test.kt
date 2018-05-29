@@ -1,5 +1,7 @@
 package test
 
+import org.ice1000.jimgui.JImGuiGen
+import org.ice1000.jimgui.JImGuiGen.*
 import org.ice1000.jimgui.dsl.*
 import org.ice1000.jimgui.util.JniLoader
 
