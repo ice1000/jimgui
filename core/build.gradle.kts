@@ -87,8 +87,8 @@ val downloadImpl = task<Download>("downloadImpl") {
 	group = downloadAll.group
 	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.h")
 	src("$imguiExamples/opengl3_example/imgui_impl_glfw_gl3.cpp")
-	src("$imguiExamples/directx11_example/imgui_impl_dx11.h")
-	src("$imguiExamples/directx11_example/imgui_impl_dx11.cpp")
+	src("$imguiExamples/directx9_example/imgui_impl_dx9.h")
+	src("$imguiExamples/directx9_example/imgui_impl_dx9.cpp")
 	src("$github/covscript/covscript-imgui/master/src/gl3w.c")
 	dest(implDir)
 	overwrite(false)
