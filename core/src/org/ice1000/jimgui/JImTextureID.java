@@ -64,5 +64,5 @@ public class JImTextureID {
 		return fromPNG(path.toString());
 	}
 
-	public static native long[] createTextureFromFile(byte @NotNull [] fileName);
+	private static native long[] createTextureFromFile(byte @NotNull [] fileName);
 }

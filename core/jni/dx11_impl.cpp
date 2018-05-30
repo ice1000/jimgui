@@ -6,6 +6,7 @@
 #include <imgui_impl_dx11.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
+#include <org_ice1000_jimgui_JImTextureID.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #define STBI_NO_LINEAR
