@@ -71,6 +71,8 @@ JavaCritical_org_ice1000_jimgui_Native ## JavaName ## _deallocateNativeObject0(j
 NativeImpls(Int, jint, int, 0)
 NativeImpls(Float, jfloat, float, 0)
 NativeImpls(Double, jdouble, float, 0)
+NativeImpls(Short, jshort, float, 0)
+NativeImpls(Long, jlong, float, 0)
 
 #undef NativeImpls
 
