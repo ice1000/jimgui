@@ -140,10 +140,10 @@ XY_ACCESSOR(ItemRectMax)
 XY_ACCESSOR(ItemRectSize)
 XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
 
+#undef XY_ACCESSOR
+
 #ifdef __cplusplus
 }
 #endif
-
-#undef XY_ACCESSOR
 
 #pragma clang diagnostic pop
