@@ -14,6 +14,10 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define NativeImpls(JavaName, JavaType, CppType, InitValue) \
 JNIEXPORT JavaType JNICALL \
 Java_org_ice1000_jimgui_Native ## JavaName ## _accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) { \
@@ -123,5 +127,9 @@ JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	JavaCritical_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(nativeObjectPtr);
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #pragma clang diagnostic pop
