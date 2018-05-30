@@ -2,10 +2,16 @@ package test
 
 import org.ice1000.jimgui.JImStyleVars
 import org.ice1000.jimgui.JImVec4
-import org.ice1000.jimgui.dsl.*
+import org.ice1000.jimgui.cpp.DeallocatableObjectManager
+import org.ice1000.jimgui.dsl.JImGuiContext
+import org.ice1000.jimgui.dsl.runPer
+import org.ice1000.jimgui.dsl.treeNode
 import org.ice1000.jimgui.util.JniLoader
 import org.lice.core.SymbolList
-import org.lice.model.*
+import org.lice.model.ExpressionNode
+import org.lice.model.Node
+import org.lice.model.SymbolNode
+import org.lice.model.ValueNode
 import org.lice.parse.Lexer
 import org.lice.parse.Parser
 import java.awt.Color
@@ -21,6 +27,7 @@ fun main(args: Array<String>) {
 	val keywords = JImVec4.fromAWT(Color.decode("#CC7832"))
 	val strings = JImVec4.fromAWT(Color.decode("#6A8759"))
 	val numbers = JImVec4.fromAWT(Color.decode("#6897BB"))
+	val manager = DeallocatableObjectManager(listOf(keywords, strings, numbers))
 	val codeColors = arrayOfNulls<JImVec4>(sourceCode.length)
 	val eolLen = System.lineSeparator().length
 
@@ -83,9 +90,7 @@ fun main(args: Array<String>) {
 			popStyleVar()
 		}
 	}
-	keywords.close()
-	strings.close()
-	numbers.close()
+	manager.deallocateAll()
 }
 
 fun displayAST(root: Node, imgui: JImGuiContext): Unit = when (root) {

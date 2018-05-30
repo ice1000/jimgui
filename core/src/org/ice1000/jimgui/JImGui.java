@@ -425,7 +425,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                        @Nullable String shortcut,
 	                        boolean selected,
 	                        boolean enabled) {
-		return menuItem(getBytes(label), shortcut != null ? getBytes(shortcut) : null, selected, enabled);
+		return menuItem(getBytes(label), getBytes(shortcut), selected, enabled);
 	}
 
 	/**
@@ -452,7 +452,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
-	private static native boolean menuItem(byte[] label, byte[] shortcut, boolean selected, boolean enabled);
+	private static native boolean menuItem(byte @NotNull [] label,
+	                                       byte @Nullable [] shortcut,
+	                                       boolean selected,
+	                                       boolean enabled);
 	private static native long getWindowDrawListNativeObjectPtr();
 	private static native long getOverlayDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);

@@ -7,6 +7,9 @@
 #include <org_ice1000_jimgui_NativeBool.h>
 #include <org_ice1000_jimgui_NativeInt.h>
 #include <org_ice1000_jimgui_NativeFloat.h>
+#include <org_ice1000_jimgui_NativeDouble.h>
+#include <org_ice1000_jimgui_NativeLong.h>
+#include <org_ice1000_jimgui_NativeShort.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
