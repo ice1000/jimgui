@@ -1,6 +1,6 @@
 # jimgui
 
-[ ![Download](https://api.bintray.com/packages/ice1000/ice1000/jimgui/images/download.svg?version=v0.1) ](https://bintray.com/ice1000/ice1000/jimgui/v0.1/link)
+[ ![Download](null/packages/ice1000/ice1000/jimgui/images/download.svg?version=v0.2) ](https://bintray.com/ice1000/ice1000/jimgui/v0.2/link)
 
 Linux Build | Windows Build
 :----------:|:-------------:
@@ -53,7 +53,7 @@ Remember to add jcenter to your repositories.
 
 ```groovy
 dependencies {
-  String jimgui_version = 'v0.1'
+  String jimgui_version = 'v0.2'
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
@@ -63,7 +63,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-  val jimguiVersion = "v0.1"
+  val jimguiVersion = "v0.2"
   compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -76,7 +76,7 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.1</version>
+  <version>v0.2</version>
   <type>pom</type>
 </dependency>
 ```
