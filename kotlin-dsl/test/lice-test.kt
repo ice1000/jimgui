@@ -1,10 +1,17 @@
 package test
 
-import org.ice1000.jimgui.*
-import org.ice1000.jimgui.dsl.*
-import org.ice1000.jimgui.util.*
+import org.ice1000.jimgui.JImStyleVars
+import org.ice1000.jimgui.JImVec4
+import org.ice1000.jimgui.cpp.DeallocatableObjectManager
+import org.ice1000.jimgui.dsl.JImGuiContext
+import org.ice1000.jimgui.dsl.runPer
+import org.ice1000.jimgui.dsl.treeNode
+import org.ice1000.jimgui.util.JniLoader
 import org.lice.core.SymbolList
-import org.lice.model.*
+import org.lice.model.ExpressionNode
+import org.lice.model.Node
+import org.lice.model.SymbolNode
+import org.lice.model.ValueNode
 import org.lice.parse.Lexer
 import org.lice.parse.Parser
 import java.awt.Color
