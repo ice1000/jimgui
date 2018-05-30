@@ -21,10 +21,10 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 
 # Progress
 
-+ [X] `ImGui` namespace function/javadoc generation
-+ [X] `ImGuiIO` properties getter/setter/javadoc generation
-+ [X] `ImGuiFont` properties getter/setter/javadoc generation
-+ [X] `ImGuiFontAtlas` properties getter/setter/javadoc generation
++ [X] `ImGui` namespace getter/setter/function/javadoc generation
++ [X] `ImGuiIO` properties getter/setter/function/javadoc generation
++ [X] `ImGuiFont` properties getter/setter/function/javadoc generation
++ [X] `ImGuiFontAtlas` properties getter/setter/function/javadoc generation
 + [X] `ImGui*Flags` copy-pasted constant/javadoc
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
@@ -32,15 +32,17 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
 + [X] `ImVec4` wrapper with optional mutability
 + [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
-+ [ ] `ImTextureID` wrapper (with `ID3D11ShaderResourceView *` on Windows7+ and `GLuint` on Linux)
-+ Linux native library with glfw3 + opengl3 implementation
++ [ ] `ImTextureID` wrapper with platform-dependent implementations
+  + [ ] `ID3D11ShaderResourceView *` on Windows7+
+  + [X] `GLuint` on Linux
++ [ ] Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI
-+ Windows7+ native library with directX11 implementation
++ [X] Windows7+ native library with directX11 implementation
   + [X] 32-bit hosted on AppVeyor
   + [X] 64-bit hosted on AppVeyor
 + [ ] WindowsXP native library with directX9 implementation, hosted on ?
-+ MacOS native library with Cocoa, glut as additional to Linux implementation
++ [X] MacOS native library with Cocoa, glut as additional to Linux implementation
   + [X] hosted on @zxj5470 's Mac laptop
 
 # Usage

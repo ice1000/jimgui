@@ -60,8 +60,8 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	__get(Byte, fileName)
 	int width, height, channels;
 	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, 4);
+	__release(Byte, fileName)
 	if (imageData == nullptr) {
-		__release(Byte, fileName)
 		return nullptr;
 	}
 	D3D11_TEXTURE1D_DESC desc;
@@ -77,7 +77,6 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 			break;
 		default:
 			delete[] imageData;
-			__release(Byte, fileName)
 			return nullptr;
 	}
 	desc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -94,7 +93,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 		hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resourceView);
 		if (FAILED(hr)) {
 			tex->Release();
-			__release(Byte, fileName)
+			delete[] imageData;
 			return nullptr;
 		}
 	}
