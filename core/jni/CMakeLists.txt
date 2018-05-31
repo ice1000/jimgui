@@ -13,7 +13,7 @@ if (WIN32)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 
 	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp dx9_impl.cpp)
-	set(TARGET_LINK_LIBS d3dcompiler d3d9)
+	set(TARGET_LINK_LIBS d3d9)
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)
