@@ -42,8 +42,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+//extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<wchar_t>, Ptr<LPDIRECT3DTEXTURE9>);
 
-auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture,  int &width, int &height) -> bool {
+auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture, int &width, int &height) -> bool {
 	size_t size = strlen(fileName) + 1;
 	auto *wFileName = new wchar_t[size << 1];
 
