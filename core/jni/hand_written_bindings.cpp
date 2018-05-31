@@ -4,8 +4,10 @@
 
 #include "hand_written_bindings.h"
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr() -> jlong {
@@ -456,4 +458,6 @@ XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
 
 #undef XY_ACCESSOR
 
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif

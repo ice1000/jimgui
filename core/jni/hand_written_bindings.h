@@ -14,8 +14,10 @@
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImStyle.h>
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -146,4 +148,6 @@ XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
 }
 #endif
 
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif

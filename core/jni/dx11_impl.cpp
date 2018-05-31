@@ -23,8 +23,10 @@
 
 #include "basics.hpp"
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -293,5 +295,6 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 	delete object;
 }
 
-
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif

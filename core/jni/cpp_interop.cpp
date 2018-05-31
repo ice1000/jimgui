@@ -11,8 +11,10 @@
 #include <org_ice1000_jimgui_NativeLong.h>
 #include <org_ice1000_jimgui_NativeShort.h>
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -134,4 +136,6 @@ Java_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(JNIEnv *, jclass, jlo
 }
 #endif
 
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif

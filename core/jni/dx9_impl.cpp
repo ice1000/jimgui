@@ -8,8 +8,11 @@
 
 #include <d3d9.h>
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
+
 #define DIRECTINPUT_VERSION 0x0800
 
 #include <dinput.h>
@@ -195,4 +198,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif
