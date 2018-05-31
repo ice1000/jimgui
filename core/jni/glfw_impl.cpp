@@ -38,7 +38,6 @@ auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int 
 	glBindTexture(GL_TEXTURE_2D, *tex);
 	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	stbi_image_free(imageData);
 	return true;
 }
 
