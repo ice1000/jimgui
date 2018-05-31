@@ -37,7 +37,7 @@ public class JImTextureID {
 
 	public static @NotNull JImTextureID fromFile(@NotNull String fileName) {
 		long[] extractedData = createTextureFromFile(getBytes(fileName));
-		if (extractedData == null || extractedData.length != 4 || extractedData[0] == 0)
+		if (extractedData == null || extractedData.length != 3 || extractedData[0] == 0)
 			throw new IllegalStateException("cannot load " + fileName);
 		return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2]);
 	}
