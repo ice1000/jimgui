@@ -50,12 +50,13 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	auto success = loadTexture(STR_J2C(fileName), &texture, width, height, channels);
 	if (!success) return nullptr;
 	__release(Byte, fileName)
-	auto ret = new jlong[4];
+#define RET_LEN 3
+	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
-	ret[3] = static_cast<jlong> (channels);
-	__init(Long, ret, 4);
+	__init(Long, ret, RET_LEN);
+#undef RET_LEN
 	delete[] ret;
 	__JNI__FUNCTION__CLEAN__
 	return _ret;

@@ -26,8 +26,7 @@ public class JImTextureTest {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + (long) 3000;
-			JImTextureID texture = JImTextureID.fromPNG(JImTextureTest.class.getResource("/pics/ice1000.png"));
-			assertEquals(3, texture.channelsInFile);
+			JImTextureID texture = JImTextureID.fromFile(JImTextureTest.class.getResource("/pics/ice1000.png"));
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;

@@ -7,6 +7,7 @@
 #include <org_ice1000_jimgui_JImTextureID.h>
 
 #include <d3d9.h>
+#include <d3dx9tex.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -29,12 +30,9 @@
 #define MSG int
 #define WNDCLASSEX int
 #define LPDIRECT3D9 int
+#define LPDIRECT3DTEXTURE9 int
 #define WPARAM int
 #define LPARAM int
-#define _In_
-#define _In_opt_
-#define _In_z_
-#define _Out_opt_
 #endif
 
 // Data
@@ -44,6 +42,41 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture  int &width, int &height) -> bool {
+	size_t size = strlen(fileName) + 1;
+	auto *wFileName = new wchar_t[size << 1];
+
+	size_t outSize;
+	mbstowcs_s(&outSize, wFileName, size, fileName, size - 1);
+	auto hr = D3DXCreateTextureFromFile(g_pd3dDevice, wFileName, &texture);
+	D3DSURFACE_DESC desc;
+	t->GetLevelDesc(0, &desc);
+	width = static_cast<jint>(desc.Width);
+	height = static_cast<jint>(desc.Height);
+	return (SUCCEEDED(hr));
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, fileName)
+	LPDIRECT3DTEXTURE9 texture;
+	int width, height, channels;
+	auto success = loadTexture(STR_J2C(fileName), texture, width, height, channels);
+	if (!success) return nullptr;
+	__release(Byte, fileName)
+#define RET_LEN 3
+	auto ret = new jlong[RET_LEN];
+	ret[0] = static_cast<jlong> (texture);
+	ret[1] = static_cast<jlong> (width);
+	ret[2] = static_cast<jlong> (height);
+	__init(Long, ret, RET_LEN);
+#undef RET_LEN
+	delete[] ret;
+	__JNI__FUNCTION__CLEAN__
+	return _ret;
+}
 
 struct NativeObject {
 	HWND hwnd;
