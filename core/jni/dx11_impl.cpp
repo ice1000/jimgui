@@ -23,6 +23,9 @@
 
 #include "basics.hpp"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
 #define DIRECTINPUT_VERSION 0x0800
 
 // for Linux editing experience
@@ -41,9 +44,6 @@
 #define _In_z_
 #define _Out_opt_
 #endif
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 // Data
 static ID3D11Device *g_pd3dDevice = NULL;

@@ -8,6 +8,8 @@
 
 #include <d3d9.h>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #define DIRECTINPUT_VERSION 0x0800
 
 #include <dinput.h>
@@ -17,16 +19,14 @@
 
 // for Linux editing experience
 #ifndef WIN32
-#define LRESULT
+#define LRESULT int
 #define WINAPI
 #define HWND int
-#define LPVOID int
 #define UINT unsigned int
 #define MSG int
-#define LARGE_INTEGER long long
-#define IDXGISwapChain int
-#define ID3D11RenderTargetView int
 #define WNDCLASSEX int
+#define WPARAM int
+#define LPARAM int
 #define _In_
 #define _In_opt_
 #define _In_z_
@@ -132,10 +132,10 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
 	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, false);
-	D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int) (clear_color.x * 255.0f),
-	                                      (int) (clear_color.y * 255.0f),
-	                                      (int) (clear_color.z * 255.0f),
-	                                      (int) (clear_color.w * 255.0f));
+	D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int) (clear_color->x * 255.0f),
+	                                      (int) (clear_color->y * 255.0f),
+	                                      (int) (clear_color->z * 255.0f),
+	                                      (int) (clear_color->w * 255.0f));
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
 	if (g_pd3dDevice->BeginScene() >= 0) {
 		ImGui::Render();
@@ -160,7 +160,7 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 
 	if (g_pd3dDevice) g_pd3dDevice->Release();
 	if (pD3D) pD3D->Release();
-	DestroyWindow(hwnd);
+	DestroyWindow(object->hwnd);
 	UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 	delete object;
 }
@@ -191,3 +191,5 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+
+#pragma clang diagnostic pop
