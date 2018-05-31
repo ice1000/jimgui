@@ -19,7 +19,7 @@ if (WIN32)
 		message(STATUS "DIRECTX_DINPUT_INCLUDE_DIR=${DIRECTX_DINPUT_INCLUDE_DIR}")
 	endif ()
 	include_directories(${DIRECTX_INCLUDE_DIRS})
-	include_directories(${DIRECTX_DINPUT_INCLUDE_DIR})
+	link_directories(${DIRECTX_D3DX9_LIBRARIES})
 
 	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp dx9_impl.cpp)
 	set(TARGET_LINK_LIBS d3d9 d3dx9)
