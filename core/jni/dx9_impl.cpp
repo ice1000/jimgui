@@ -9,11 +9,6 @@
 #include <d3d9.h>
 #include <d3dx9tex.h>
 
-#ifndef WIN32
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
-#endif
-
 #define DIRECTINPUT_VERSION 0x0800
 
 #include <dinput.h>
@@ -23,6 +18,8 @@
 
 // for Linux editing experience
 #ifndef WIN32
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #define LRESULT int
 #define WINAPI
 #define HWND int
@@ -44,18 +41,8 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<wchar_t>, Ptr<LPDIRECT3DTEXTURE9>);
 
-auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture, int &width, int &height) -> bool {
-	size_t size = strlen(fileName) + 1;
-//	auto *wFileName = new wchar_t[size << 1];
-//
-//	size_t outSize;
-//	mbstowcs_s(&outSize, wFileName, size, fileName, size - 1);
-	auto hr = D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture);
-	D3DSURFACE_DESC desc;
-	texture->GetLevelDesc(0, &desc);
-	width = static_cast<jint>(desc.Width);
-	height = static_cast<jint>(desc.Height);
-	return (SUCCEEDED(hr));
+auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
+	return SUCCEEDED(D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture));
 }
 
 JNIEXPORT auto JNICALL
@@ -63,13 +50,16 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	LPDIRECT3DTEXTURE9 texture;
-	int width, height, channels;
-	auto success = loadTexture(STR_J2C(fileName), texture, width, height, channels);
-	if (!success) return nullptr;
+	auto success = loadTexture(STR_J2C(fileName), texture);
 	__release(Byte, fileName)
+	if (!success) return nullptr;
+	D3DSURFACE_DESC desc;
+	texture->GetLevelDesc(0, &desc);
+	int width = static_cast<jint>(desc.Width);
+	int height = static_cast<jint>(desc.Height);
 #define RET_LEN 3
 	auto ret = new jlong[RET_LEN];
-	ret[0] = static_cast<jlong> (texture);
+	ret[0] = PTR_C2J(texture);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
 	__init(Long, ret, RET_LEN);
@@ -145,7 +135,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	ImGui_ImplDX9_Init(object->hwnd, g_pd3dDevice);
 	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(object->hwnd);
-	return reinterpret_cast<jlong> (object);
+	return PTR_C2J(object);
 }
 
 JNIEXPORT auto JNICALL
