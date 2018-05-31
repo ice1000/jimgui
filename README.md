@@ -33,16 +33,15 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [X] `ImVec4` wrapper with optional mutability
 + [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
 + [ ] `ImTextureID` wrapper with platform-dependent implementations
-  + [ ] `ID3D11ShaderResourceView *` on Windows7+
+  + [ ] `LPDIRECT3DTEXTURE9` on WindowsXP+
   + [X] `GLuint` on Linux
 + [ ] Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI
-+ [X] Windows7+ native library with directX11 implementation
-  + [X] 32-bit hosted on AppVeyor
-  + [X] 64-bit hosted on AppVeyor
-+ [ ] WindowsXP native library with directX9 implementation, hosted on ?
-+ [X] MacOS native library with Cocoa, glut as additional to Linux implementation
++ [ ] WindowsXP+ native library with directX9 implementation
+  + [ ] 32-bit hosted on AppVeyor
+  + [ ] 64-bit hosted on AppVeyor
++ [X] MacOS native library with Cocoa, glut as additions to Linux implementation
   + [X] hosted on @zxj5470 's Mac laptop
 
 # Usage
@@ -89,7 +88,7 @@ First you need to make sure you have `cmake` newer than 3.5 and the following so
 	+ `make`
 	+ `pkg-config`
 	+ `libglfw3-dev`
-+ For Windows (\> 7)
++ For Windows (\> XP)
 	+ Visual Studio 2017 with `msbuild`
 	+ `d3d11`
 	+ `d3dcompiler`
