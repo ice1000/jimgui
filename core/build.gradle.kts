@@ -118,11 +118,11 @@ val downloadIce1000 = task<Download>("downloadIce1000") {
 
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 val cmakeWin64 = task<Exec>("cmakeWin64") {
-	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 14 2015 Win64" else "Unix Makefiles")
+	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 15 2017 Win64" else "Unix Makefiles")
 }
 
 val cmake = task<Exec>("cmake") {
-	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 14 2015" else "Unix Makefiles")
+	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 15 2017" else "Unix Makefiles")
 }
 
 val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }

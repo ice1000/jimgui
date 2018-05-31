@@ -4,6 +4,7 @@ project(jimgui
 		LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake-modules/")
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
@@ -11,6 +12,10 @@ find_package(JNI REQUIRED)
 if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Ox")
+	find_package(DirectX REQUIRED)
+	if (DIRECTX_FOUND)
+		message(STATUS "DIRECTX_INCLUDE_DIRS=${DIRECTX_INCLUDE_DIRS}")
+	endif ()
 
 	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp dx9_impl.cpp)
 	set(TARGET_LINK_LIBS d3d9 d3dx9)
