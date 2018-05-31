@@ -46,13 +46,13 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 
 auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture, int &width, int &height) -> bool {
 	size_t size = strlen(fileName) + 1;
-	auto *wFileName = new wchar_t[size << 1];
-
-	size_t outSize;
-	mbstowcs_s(&outSize, wFileName, size, fileName, size - 1);
-	auto hr = D3DXCreateTextureFromFile(g_pd3dDevice, wFileName, &texture);
+//	auto *wFileName = new wchar_t[size << 1];
+//
+//	size_t outSize;
+//	mbstowcs_s(&outSize, wFileName, size, fileName, size - 1);
+	auto hr = D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture);
 	D3DSURFACE_DESC desc;
-	t->GetLevelDesc(0, &desc);
+	texture->GetLevelDesc(0, &desc);
 	width = static_cast<jint>(desc.Width);
 	height = static_cast<jint>(desc.Height);
 	return (SUCCEEDED(hr));
