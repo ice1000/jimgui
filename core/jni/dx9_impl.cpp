@@ -25,6 +25,7 @@
 #define UINT unsigned int
 #define MSG int
 #define WNDCLASSEX int
+#define LPDIRECT3D9 int
 #define WPARAM int
 #define LPARAM int
 #define _In_
@@ -45,6 +46,7 @@ struct NativeObject {
 	HWND hwnd;
 	MSG msg;
 	WNDCLASSEX wc;
+	LPDIRECT3D9 pD3D;
 
 	NativeObject(jint width, jint height, Ptr<const char> title) : wc(
 			{
@@ -78,6 +80,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 		return NULL;
 	}
+	object->pD3D = pD3D;
 	ZeroMemory(&g_d3dpp, sizeof(g_d3dpp));
 	g_d3dpp.Windowed = TRUE;
 	g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -159,7 +162,7 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 	ImGui::DestroyContext();
 
 	if (g_pd3dDevice) g_pd3dDevice->Release();
-	if (pD3D) pD3D->Release();
+	if (object->pD3D) object->pD3D->Release();
 	DestroyWindow(object->hwnd);
 	UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 	delete object;
