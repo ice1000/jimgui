@@ -8,7 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
-import static org.junit.Assert.assertEquals;
 
 public class JImTextureTest {
 	@BeforeClass
@@ -21,6 +20,7 @@ public class JImTextureTest {
 		main();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	public static void main(String @NotNull ... args) throws InterruptedException {
 		JniLoader.load();
 		try (JImGui imGui = new JImGui()) {

@@ -14,7 +14,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @author ice1000
  * @since v0.2
  */
-public class JImTextureID {
+public final class JImTextureID {
 	/** package-private by design */
 	long nativeObjectPtr;
 
@@ -42,14 +42,35 @@ public class JImTextureID {
 		return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2]);
 	}
 
+	/**
+	 * Create a texture from file.
+	 *
+	 * @param url file path
+	 * @return the texture
+	 * @throws IllegalStateException if load failed
+	 */
 	public static @NotNull JImTextureID fromFile(@NotNull URL url) {
 		return fromFile(url.getFile());
 	}
 
+	/**
+	 * Create a texture from file.
+	 *
+	 * @param file file instance
+	 * @return the texture
+	 * @throws IllegalStateException if load failed
+	 */
 	public static @NotNull JImTextureID fromFile(@NotNull File file) {
 		return fromFile(file.getAbsolutePath());
 	}
 
+	/**
+	 * Create a texture from file.
+	 *
+	 * @param path file path
+	 * @return the texture
+	 * @throws IllegalStateException if load failed
+	 */
 	public static @NotNull JImTextureID fromFile(@NotNull Path path) {
 		return fromFile(path.toString());
 	}
