@@ -79,6 +79,7 @@ set(ALL_LIBRARIES
 		hand_written_bindings.cpp
 		overloads_helper.cpp
 		basics.hpp
+		impl_header.h
 		cpp_interop.cpp)
 
 if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")

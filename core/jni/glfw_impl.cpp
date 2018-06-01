@@ -19,6 +19,7 @@
 #include <org_ice1000_jimgui_JImTextureID.h>
 
 #include "basics.hpp"
+#include "impl_header.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
@@ -95,7 +96,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
@@ -103,19 +104,34 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 	glfwTerminate();
 }
 
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
+}
+
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
 	return static_cast<jboolean>(glfwWindowShouldClose(PTR_J2C(GLFWwindow, nativeObjectPtr)) ? JNI_TRUE : JNI_FALSE);
 }
 
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+	return JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(nativeObjectPtr);
+}
+
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
+JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL3_NewFrame();
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
+Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong ptr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(ptr);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	auto *clear_color = PTR_J2C(ImVec4, colorPtr);
 	int display_w, display_h;
@@ -126,6 +142,11 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, j
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(window);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_render(nativeObjectPtr, colorPtr);
 }
 
 #pragma clang diagnostic pop

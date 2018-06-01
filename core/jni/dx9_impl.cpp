@@ -15,6 +15,7 @@
 #include <tchar.h>
 
 #include "basics.hpp"
+#include "impl_header.h"
 
 // for Linux editing experience
 #ifndef WIN32
@@ -139,13 +140,18 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+	return JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(nativeObjectPtr);
+}
+
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	while (object->msg.message != WM_QUIT && PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
 		TranslateMessage(&object->msg);
@@ -155,7 +161,12 @@ Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObject
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
+Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
 	auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
 // Rendering
 	ImGui::EndFrame();
@@ -183,7 +194,12 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_render(ptr, colorPtr);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	ImGui_ImplDX9_Shutdown();
 	ImGui::DestroyContext();
@@ -193,6 +209,11 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 	DestroyWindow(object->hwnd);
 	UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 	delete object;
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
 }
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
