@@ -30,20 +30,14 @@ public final class JniLoader {
 		String libraryName;
 		// Supported OS
 		if (linux) libraryName = x86 ? "libjimgui32.so" : "libjimgui.so";
-		else if (windows7 || windows8 || windows10) libraryName = x86 ? "jimgui32.dll" : "jimgui.dll";
+		else if (windowsVista || windowsXP || windows7 || windows8 || windows10) libraryName = x86 ? "jimgui32.dll" : "jimgui.dll";
 		else if (osx) libraryName = "libjimgui.dylib";
 			// Unsupported OS
 		else if (windows98 || windows95 || windows200X)
 			throw new UnsupportedOperationException("Windows 98/95/2000/2003 are not supported and won't be supported.");
-		else if (windowsXP)
-			throw new UnsupportedOperationException(
-					"Windows XP required DirectX9 implementation of imgui, which is not available yet.");
-		else if (windowsVista)
-			throw new UnsupportedOperationException(
-					"Windows Vista required DirectX10 implementation of imgui, which is not available yet.");
 		else throw new UnsupportedOperationException("Unknown OS " + osName +
 					", please submit issue to https://github.com/ice1000/jimgui/issues");
-		NativeUtil.loadLibraryFromJar(libraryName);
+		NativeUtil.loadLibraryFromJar(libraryName, NativeUtil.class);
 		isLoaded = true;
 	}
 }

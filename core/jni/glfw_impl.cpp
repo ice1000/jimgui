@@ -19,6 +19,7 @@
 #include <org_ice1000_jimgui_JImTextureID.h>
 
 #include "basics.hpp"
+#include "impl_header.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
@@ -35,14 +36,9 @@ auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int 
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
 	glGenTextures(1, tex);
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, *tex);
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	return true;
 }
 
@@ -55,12 +51,13 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	auto success = loadTexture(STR_J2C(fileName), &texture, width, height, channels);
 	if (!success) return nullptr;
 	__release(Byte, fileName)
-	auto ret = new jlong[4];
+#define RET_LEN 3
+	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
 	ret[1] = static_cast<jlong> (width);
 	ret[2] = static_cast<jlong> (height);
-	ret[3] = static_cast<jlong> (channels);
-	__init(Long, ret, 4);
+	__init(Long, ret, RET_LEN);
+#undef RET_LEN
 	delete[] ret;
 	__JNI__FUNCTION__CLEAN__
 	return _ret;
@@ -69,10 +66,10 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, title);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
+	__JNI__FUNCTION__INIT__
+	__get(Byte, title);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -99,7 +96,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	ImGui_ImplGlfwGL3_Shutdown();
 	ImGui::DestroyContext();
@@ -107,19 +104,34 @@ Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong n
 	glfwTerminate();
 }
 
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
+}
+
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
 	return static_cast<jboolean>(glfwWindowShouldClose(PTR_J2C(GLFWwindow, nativeObjectPtr)) ? JNI_TRUE : JNI_FALSE);
 }
 
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+	return JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(nativeObjectPtr);
+}
+
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong) {
+JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong) {
 	glfwPollEvents();
 	ImGui_ImplGlfwGL3_NewFrame();
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
+Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong ptr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(ptr);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	auto *clear_color = PTR_J2C(ImVec4, colorPtr);
 	int display_w, display_h;
@@ -130,6 +142,11 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, j
 	ImGui::Render();
 	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwSwapBuffers(window);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_render(nativeObjectPtr, colorPtr);
 }
 
 #pragma clang diagnostic pop

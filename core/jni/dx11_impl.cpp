@@ -1,5 +1,6 @@
 ///
 /// Created by ice1000 on 18-5-8.
+/// [WARNING] OBSOLETE, see dx9_impl.cpp
 ///
 
 #include <imgui.h>
@@ -22,6 +23,11 @@
 
 #include "basics.hpp"
 
+#ifndef WIN32
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
+
 #define DIRECTINPUT_VERSION 0x0800
 
 // for Linux editing experience
@@ -40,9 +46,6 @@
 #define _In_z_
 #define _Out_opt_
 #endif
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 // Data
 static ID3D11Device *g_pd3dDevice = NULL;
@@ -218,13 +221,16 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
 
 	// Create application window
 	auto object = new NativeObject(width, height, reinterpret_cast<Ptr<const char>> (title));
+	__release(Byte, title);
+	__JNI__FUNCTION__CLEAN__
 
 	// Initialize Direct3D
 	if (CreateDeviceD3D(object->hwnd) < 0) {
@@ -242,19 +248,20 @@ JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	ImGui::CreateContext();
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+	// Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplDX11_Init(object->hwnd, g_pd3dDevice, g_pd3dDeviceContext);
-	__release(Byte, title);
-	__JNI__FUNCTION__CLEAN__
 	return reinterpret_cast<jlong> (object);
 }
 
-JNIEXPORT auto JNICALL Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	while (object->msg.message != WM_QUIT && PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
 		TranslateMessage(&object->msg);
@@ -263,7 +270,8 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jcl
 	ImGui_ImplDX11_NewFrame();
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
 	auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
 // Rendering
 	g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
@@ -275,7 +283,8 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, j
 //g_pSwapChain->Present(0, 0); // Present without vsync
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();
@@ -286,5 +295,6 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JN
 	delete object;
 }
 
-
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif

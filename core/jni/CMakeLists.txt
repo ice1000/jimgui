@@ -4,16 +4,27 @@ project(jimgui
 		LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake-modules/")
 
 find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
 
 if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Ox")
+	find_package(DirectX REQUIRED)
+
+	if (DIRECTX_FOUND)
+		message(STATUS "DIRECTX_INCLUDE_DIRS=${DIRECTX_INCLUDE_DIRS}")
+		message(STATUS "DIRECTX_D3DX9_LIBRARIES=${DIRECTX_D3DX9_LIBRARIES}")
+		message(STATUS "DXSDK_DIRS=${DXSDK_DIRS}")
+	endif ()
+	include_directories(${DIRECTX_INCLUDE_DIRS})
+	include_directories("${DXSDK_DIRS}\\Include")
 
 	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp dx9_impl.cpp)
-	set(TARGET_LINK_LIBS d3dcompiler d3d9)
+	set(TARGET_LINK_LIBS d3d9)
+	list(APPEND TARGET_LINK_LIBS ${DIRECTX_D3DX9_LIBRARIES})
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)
@@ -68,6 +79,7 @@ set(ALL_LIBRARIES
 		hand_written_bindings.cpp
 		overloads_helper.cpp
 		basics.hpp
+		impl_header.h
 		cpp_interop.cpp)
 
 if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")

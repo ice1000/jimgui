@@ -195,8 +195,10 @@ const val CXX_PREFIX = """///
 /// generated code, edits are not expected.
 ///
 
+#ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+#endif
 
 #include <imgui.h>
 #include "basics.hpp"
@@ -208,7 +210,9 @@ extern "C" {
 
 @Language("C++")
 const val CXX_SUFFIX = """
+#ifndef WIN32
 #pragma clang diagnostic pop
+#endif
 #ifdef __cplusplus
 }
 #endif
