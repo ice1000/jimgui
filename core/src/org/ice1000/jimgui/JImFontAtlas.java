@@ -50,7 +50,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	 *
 	 * @param path       path to a ttf file
 	 * @param sizePixels font size
-	 * @param glyphRange see {@link JImFontAtlas#getGlyphRangesForChinese()},
+	 * @param glyphRange see {@link JImFontAtlas#getGlyphRangesForChineseFull()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForDefault()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForJapanese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForCyrillic()},
@@ -79,8 +79,8 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	}
 	/** Do NOT deallocate the returned pointer */
 	@Contract(pure = true)
-	public @NotNull NativeShort getGlyphRangesForChinese() {
-		return new NativeShort(super.getGlyphRangesChinese());
+	public @NotNull NativeShort getGlyphRangesForChineseFull() {
+		return new NativeShort(super.getGlyphRangesChineseFull());
 	}
 	/** Do NOT deallocate the returned pointer */
 	@Contract(pure = true)
