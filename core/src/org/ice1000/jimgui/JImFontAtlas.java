@@ -25,6 +25,10 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 		return addFontFromFile(path, 16);
 	}
 
+	public void addCustomRectFontGlyph(@NotNull JImFont font, char id, int width, int height, float advanceX) {
+		super.addCustomRectFontGlyph(font, (short) id, width, height, advanceX);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -51,6 +55,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	 * @param path       path to a ttf file
 	 * @param sizePixels font size
 	 * @param glyphRange see {@link JImFontAtlas#getGlyphRangesForChineseFull()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForChineseSimplifiedCommon()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForDefault()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForJapanese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForCyrillic()},
@@ -81,6 +86,11 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	@Contract(pure = true)
 	public @NotNull NativeShort getGlyphRangesForChineseFull() {
 		return new NativeShort(super.getGlyphRangesChineseFull());
+	}
+	/** Do NOT deallocate the returned pointer */
+	@Contract(pure = true)
+	public @NotNull NativeShort getGlyphRangesForChineseSimplifiedCommon() {
+		return new NativeShort(super.getGlyphRangesChineseSimplifiedCommon());
 	}
 	/** Do NOT deallocate the returned pointer */
 	@Contract(pure = true)
