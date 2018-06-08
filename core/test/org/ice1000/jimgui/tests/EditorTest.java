@@ -17,7 +17,7 @@ public class EditorTest {
 			JImGuiIO io = gui.getIO();
 			JImFontAtlas fonts = io.getFonts();
 			String fontPath = EditorTest.class.getResource("/font/sarasa-gothic-sc-regular.ttf").toURI().getPath();
-			JImFont sarasaGothic = fonts.addFontFromFile(fontPath, 20, fonts.getGlyphRangesForChinese());
+			JImFont sarasaGothic = fonts.addFontFromFile(fontPath, 20, fonts.getGlyphRangesForChineseFull());
 			while (!gui.windowShouldClose()) {
 				float deltaTime = io.getDeltaTime() * 1000;
 				Thread.sleep((long) Math.abs(20 - deltaTime));
