@@ -3,7 +3,9 @@
 ///
 
 #include <imgui.h>
-#include <imgui_impl_glfw_gl3.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
+#include <stdio.h>
 #include "impl/GL/glcorearb.h" // avoid conflicting with system include
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
@@ -89,7 +91,8 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	ImGui_ImplGlfwGL3_Init(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init();
 	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 	return PTR_C2J(window);
@@ -98,8 +101,10 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
-	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
+
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
@@ -122,7 +127,9 @@ Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeO
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong) {
 	glfwPollEvents();
-	ImGui_ImplGlfwGL3_NewFrame();
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
 }
 
 JNIEXPORT void JNICALL
@@ -134,13 +141,16 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	auto *clear_color = PTR_J2C(ImVec4, colorPtr);
+	ImGui::Render();
 	int display_w, display_h;
+	glfwMakeContextCurrent(window);
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);
 	glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
 	glClear(GL_COLOR_BUFFER_BIT);
-	ImGui::Render();
-	ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    	
+	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
 }
 
