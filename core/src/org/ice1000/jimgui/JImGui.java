@@ -18,7 +18,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
 	private @Nullable JImGuiIO io;
-	private @Nullable JImStyle style;
 
 	//region Native-unrelated
 	public JImGui() {
@@ -36,7 +35,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 			System.exit(1);
 		}
 		io = new JImGuiIO();
-		style = new JImStyle();
 		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
 	}
 
@@ -45,7 +43,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		background.close();
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
-		style = null;
 	}
 
 	/**
@@ -140,11 +137,13 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 */
 	@Contract(pure = true)
 	public @Nullable JImStyle findStyle() {
-		return style;
+		long styleNativeObjectPtr = getStyleNativeObjectPtr();
+		return styleNativeObjectPtr == 0 ? null : new JImStyle(styleNativeObjectPtr);
 	}
 
 	@Contract(pure = true)
 	public @NotNull JImStyle getStyle() {
+		JImStyle style = findStyle();
 		if (null == style) alreadyDisposed();
 		return style;
 	}
@@ -175,8 +174,9 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	public void textDisabled(@NotNull String text) {
-		if (style == null) alreadyDisposed();
-		pushStyleColor(JImStyleColors.Text, style.getColor(JImStyleColors.TextDisabled));
+		long styleNativeObjectPtr = getStyleNativeObjectPtr();
+		if (styleNativeObjectPtr == 0) alreadyDisposed();
+		pushStyleColor(JImStyleColors.Text, JImStyle.getColor0(styleNativeObjectPtr, JImStyleColors.TextDisabled));
 		textUnformatted(text);
 		popStyleColor();
 	}
@@ -452,6 +452,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
+	private static native long getStyleNativeObjectPtr();
 	private static native boolean menuItem(byte @NotNull [] label,
 	                                       byte @Nullable [] shortcut,
 	                                       boolean selected,

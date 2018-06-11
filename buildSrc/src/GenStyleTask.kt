@@ -13,51 +13,53 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	}
 
 	@Language("JAVA")
-	//override val userCode = "@Contract(pure = true) public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }"
+	override val userCode = """@Contract(pure = true)
+	public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }
+
+	/** package-private by design */
+	JImGuiFontAtlasGen(long nativeObjectPtr) {
+		this.nativeObjectPtr = nativeObjectPtr;
+	}
+
+	protected long nativeObjectPtr;
+"""
 
 	override fun java(javaCode: StringBuilder) {
-		imVec2Members.forEach { genJavaXYAccessor(javaCode, it, "float") }
-		primitiveMembers.forEach { (type, name, annotation, isArray, jvmName, `c++Name`) ->
-			genJavaPrimitiveMember(javaCode, name, annotation, type, isArray, jvmName, `c++Name`)
-		}
-		booleanMembers.forEach {
-			javaCode.javadoc(it).append("\tpublic static native boolean is").append(it).appendln("();")
-					.javadoc(it).append("\tpublic static native void set").append(it).appendln("(boolean newValue);")
-		}
+		GenGenTask.checkParserInitialized(project)
+		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
+		primitiveMembers.forEach { (type, name) -> genSimpleJavaObjectivePrimitiveMembers(javaCode, type, name) }
+		booleanMembers.forEach { genSimpleJavaObjectiveBooleanMember(javaCode, it) }
 		functions.forEach { genJavaFun(javaCode, it) }
 	}
 
 	override fun `c++`(cppCode: StringBuilder) {
-		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float") }
-		booleanMembers.joinLinesTo(cppCode) { name -> `c++BooleanAccessor`(name) }
-		primitiveMembers.joinLinesTo(cppCode) { (type, name, _, isArray, jvmName, `c++Name`) ->
-			if (isArray) `c++PrimitiveArrayAccessor`(type, name, jvmName, `c++Name`)
-			else `c++PrimitiveAccessor`(type, name)
-		}
+		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", "jlong nativeObjectPtr") }
+		booleanMembers.joinLinesTo(cppCode) { `c++BooleanAccessor`(it, "jlong nativeObjectPtr") }
+		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, "jlong nativeObjectPtr") }
 		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 	}
 
-	override val `c++Expr` = "ImGui::GetStyle()."
+	override val `c++Expr` = "PTR_J2C(ImStyle, nativeObjectPtr)->"
 	private val booleanMembers = listOf("AntiAliasedLines", "AntiAliasedFill")
 	private val functions = listOf(Fun("scaleAllSizes", float("scaleFactor")))
 	private val primitiveMembers = listOf(
-			PPT("float", "Alpha"),
-			PPT("float", "WindowRounding"),
-			PPT("float", "WindowBorderSize"),
-			PPT("float", "ChildRounding"),
-			PPT("float", "ChildBorderSize"),
-			PPT("float", "PopupRounding"),
-			PPT("float", "PopupBorderSize"),
-			PPT("float", "FrameRounding"),
-			PPT("float", "FrameBorderSize"),
-			PPT("float", "IndentSpacing"),
-			PPT("float", "ColumnsMinSpacing"),
-			PPT("float", "ScrollbarSize"),
-			PPT("float", "ScrollbarRounding"),
-			PPT("float", "GrabMinSize"),
-			PPT("float", "GrabRounding"),
-			PPT("float", "MouseCursorScale"),
-			PPT("float", "CurveTessellationTol"))
+			"float" to "Alpha",
+			"float" to "WindowRounding",
+			"float" to "WindowBorderSize",
+			"float" to "ChildRounding",
+			"float" to "ChildBorderSize",
+			"float" to "PopupRounding",
+			"float" to "PopupBorderSize",
+			"float" to "FrameRounding",
+			"float" to "FrameBorderSize",
+			"float" to "IndentSpacing",
+			"float" to "ColumnsMinSpacing",
+			"float" to "ScrollbarSize",
+			"float" to "ScrollbarRounding",
+			"float" to "GrabMinSize",
+			"float" to "GrabRounding",
+			"float" to "MouseCursorScale",
+			"float" to "CurveTessellationTol")
 
 	private val imVec2Members = listOf(
 			"WindowPadding",

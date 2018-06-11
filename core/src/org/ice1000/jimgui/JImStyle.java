@@ -8,13 +8,20 @@ import org.jetbrains.annotations.NotNull;
  * @since v0.1
  */
 public final class JImStyle extends JImGuiStyleGen {
-	/** package-private by design */
-	JImStyle() {
+	/**
+	 * package-private by design
+	 *
+	 * @param nativeObjectPtr native pointer {@code ImStyle*}
+	 */
+	JImStyle(long nativeObjectPtr) {
+		super(nativeObjectPtr);
 	}
 
 	public @NotNull JImVec4 getColor(@MagicConstant(valuesFromClass = JImStyleColors.class) int index) {
-		return new JImVec4(getColor0(index));
+		return new JImVec4(getColor0(nativeObjectPtr, index));
 	}
 
-	private static native long getColor0(@MagicConstant(valuesFromClass = JImStyleColors.class) int index);
+	static native long getColor0(
+			long nativeObjectPtr,
+			@MagicConstant(valuesFromClass = JImStyleColors.class) int index);
 }

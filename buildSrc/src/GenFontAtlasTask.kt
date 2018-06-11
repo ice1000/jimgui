@@ -13,8 +13,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	}
 
 	@Language("JAVA", prefix = "class A{", suffix = "}")
-	override val userCode = """/** package-private by design */
-	protected long nativeObjectPtr;
+	override val userCode = """protected long nativeObjectPtr;
 
 	/** package-private by design */
 	JImGuiFontAtlasGen(long nativeObjectPtr) {

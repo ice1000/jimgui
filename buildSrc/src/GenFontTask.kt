@@ -29,21 +29,8 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 
 	override fun java(javaCode: StringBuilder) {
 		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
-		primitiveMembers.forEach { (type, name) ->
-			javaCode.javadoc(name)
-					.append("\tpublic ").append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
-					.append("\tprivate static native ").append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
-					.javadoc(name)
-					.append("\tpublic void set").append(name).append('(').append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
-					.append("\tprivate static native void set").append(name).append("(long nativeObjectPtr, ").append(type).appendln(" newValue);")
-		}
-		booleanMembers.forEach {
-			javaCode
-					.javadoc(it).append("\tpublic boolean is").append(it).append("(){return is").append(it).appendln("(this.nativeObjectPtr);}")
-					.append("\tpublic static native boolean is").append(it).appendln("(long nativeObjectPtr);")
-					.javadoc(it).append("\tpublic void set").append(it).append("(boolean newValue){set").append(it).appendln("(this.nativeObjectPtr,newValue);}")
-					.append("\tpublic static native void set").append(it).appendln("(long nativeObjectPtr, boolean newValue);")
-		}
+		primitiveMembers.forEach { (type, name) -> genSimpleJavaObjectivePrimitiveMembers(javaCode, name, type) }
+		booleanMembers.forEach { genSimpleJavaObjectiveBooleanMember(javaCode, it) }
 		functions.forEach { genJavaFun(javaCode, it) }
 	}
 
@@ -54,7 +41,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, "jlong nativeObjectPtr") }
 	}
 
-	override val `c++Expr` = "reinterpret_cast<ImFont *> (nativeObjectPtr)->"
+	override val `c++Expr` = "PTR_J2C(ImFont, nativeObjectPtr)->"
 	private val booleanMembers = listOf("DirtyLookupTables")
 	private val imVec2Members = listOf("DisplayOffset")
 	private val functions = listOf(

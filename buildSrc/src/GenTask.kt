@@ -36,7 +36,8 @@ abstract class GenTask(
 	abstract fun `c++`(cppCode: StringBuilder)
 	abstract fun java(javaCode: StringBuilder)
 
-	fun <T> List<T>.joinLinesTo(builder: StringBuilder, transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
+	fun <T> List<T>.joinLinesTo(builder: StringBuilder,
+	                            transform: (T) -> CharSequence) = joinTo(builder, eol, postfix = eol, transform = transform)
 
 	fun `c++BooleanAccessor`(name: String, additionalParamText: String? = null) =
 			"""$JNI_FUNC_PREFIX${className}_is$name(JNIEnv *, jclass ${addtionalOrEmpty(additionalParamText)}) -> jboolean { return static_cast<jboolean> ($`c++Expr`$name ? JNI_TRUE : JNI_FALSE); }
@@ -127,7 +128,12 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 		genJavaFun(javaCode, visibility, params, type, name, comment)
 	}
 
-	fun genJavaFun(javaCode: StringBuilder, visibility: String, params: List<Param>, type: String?, name: String, comment: String?) {
+	fun genJavaFun(javaCode: StringBuilder,
+	               visibility: String,
+	               params: List<Param>,
+	               type: String?,
+	               name: String,
+	               comment: String?) {
 		val capitalName = name.capitalize()
 		javaCode.javadoc(capitalName).append('\t').append(visibility)
 		if (isStatic(params)) {
@@ -168,7 +174,11 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 	fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
 			append(`c++Expr`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
-	fun `genC++Fun`(params: List<Param>, name: String, type: String?, cppCode: StringBuilder, additionalParamText: String? = null) {
+	fun `genC++Fun`(params: List<Param>,
+	                name: String,
+	                type: String?,
+	                cppCode: StringBuilder,
+	                additionalParamText: String? = null) {
 		val initParams = params.mapNotNull { it.surrounding() }
 		if (isStatic(params)) {
 			val f = `c++StringedFunction`(name, params, type,
@@ -215,7 +225,12 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 		}
 	}
 
-	fun genJavaBooleanMember(javaCode: StringBuilder, name: String, isArray: Boolean, jvmName: String, annotation: String, `c++Name`: String) {
+	fun genJavaBooleanMember(javaCode: StringBuilder,
+	                         name: String,
+	                         isArray: Boolean,
+	                         jvmName: String,
+	                         annotation: String,
+	                         `c++Name`: String) {
 		javaCode.javadoc(`c++Name`).append("\tpublic static native boolean ")
 		if (isArray) javaCode.append(jvmName).append("At").append('(').append(annotation).appendln("int index);")
 		else javaCode.append("is").append(name).appendln("();")
@@ -224,7 +239,13 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 		else javaCode.append("set").append(name).appendln("(boolean newValue);")
 	}
 
-	fun genJavaPrimitiveMember(javaCode: StringBuilder, name: String, annotation: String, type: String, isArray: Boolean, jvmName: String, `c++Name`: String) {
+	fun genJavaPrimitiveMember(javaCode: StringBuilder,
+	                           name: String,
+	                           annotation: String,
+	                           type: String,
+	                           isArray: Boolean,
+	                           jvmName: String,
+	                           `c++Name`: String) {
 		javaCode.javadoc(`c++Name`).append("\tpublic static native ").append(annotation).append(type)
 		if (isArray) javaCode.append(' ').append(jvmName).append("At(").append(annotation).appendln("int index);")
 		else javaCode.append(" get").append(name).appendln("();")
@@ -234,16 +255,37 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 		javaCode.append(annotation).append(type).appendln(" newValue);")
 	}
 
-	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder, type: String, name: String, `c++Name`: String, ptrName: String = "nativeObjectPtr") {
+	fun genSimpleJavaObjectiveBooleanMember(javaCode: StringBuilder, it: String) {
+		javaCode.javadoc(it).append("\tpublic boolean is").append(it).append("(){return is").append(it).appendln("(this.nativeObjectPtr);}")
+				.append("\tpublic static native boolean is").append(it).appendln("(long nativeObjectPtr);")
+				.javadoc(it).append("\tpublic void set").append(it).append("(boolean newValue){set").append(it).appendln("(this.nativeObjectPtr,newValue);}")
+				.append("\tpublic static native void set").append(it).appendln("(long nativeObjectPtr, boolean newValue);")
+	}
+
+	fun genSimpleJavaObjectivePrimitiveMembers(javaCode: StringBuilder, name: String, type: String) {
+		javaCode.javadoc(name)
+				.append("\tpublic ").append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
+				.append("\tprotected static native ").append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
+				.javadoc(name)
+				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
+				.append("\tprotected static native void set").append(name).append("(long nativeObjectPtr, ").append(type).appendln(" newValue);")
+	}
+
+	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder,
+	                                    type: String,
+	                                    name: String,
+	                                    `c++Name`: String,
+	                                    annotation: String = "",
+	                                    ptrName: String = "nativeObjectPtr") {
 		javaCode.append("\tprivate static native void set").append(name).append("(long ")
-				.append(ptrName).append(',').append(type).appendln(" newValue);")
+				.append(ptrName).append(',').appendln(" newValue);")
 				.javadoc(`c++Name`)
-				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue){set")
+				.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue){set")
 				.append(name).append('(').append(ptrName).appendln(", newValue); }")
 				.append("\tprivate static native ").append(type).append(" get")
 				.append(name).append("(long ").append(ptrName).appendln(");")
 				.javadoc(`c++Name`)
-				.append("\tpublic ").append(type).append(" get").append(name)
+				.append("\tpublic ").append(annotation).append(type).append(" get").append(name)
 				.append("(){return get").append(name).append('(').append(ptrName).appendln(");}")
 	}
 

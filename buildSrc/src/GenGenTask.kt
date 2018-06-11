@@ -1,8 +1,14 @@
 package org.ice1000.gradle
 
+import org.gradle.api.Project
+
 open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	companion object {
 		lateinit var parser: ImGuiHeaderParser
+		fun checkParserInitialized(project: Project) {
+			if (GenGenTask.Companion::parser.isInitialized) return
+			parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+		}
 	}
 
 	init {
@@ -16,7 +22,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 """
 
 	override fun java(javaCode: StringBuilder) {
-		parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+		checkParserInitialized(project)
 		trivialMethods.forEach {
 			it.document = it.document ?: parser.map[it.name.capitalize()]
 			genJavaFun(javaCode, it)
