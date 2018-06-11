@@ -4,6 +4,7 @@
 + Internal refactoring about `JImStyle`
 + Removed `showDemoWindow` and `showUserGuide`
 + Added `ImFontConfig` bindings
++ More constructors for `JImGui`, added constructor for `JImFontAtlas`
 
 ## v0.3
 
