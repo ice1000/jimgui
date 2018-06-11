@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
+#include <imgui_impl_win32.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
@@ -133,7 +134,9 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	ImGui_ImplDX9_Init(object->hwnd, g_pd3dDevice);
+  ImGui_ImplWin32_Init(hwnd);
+	ImGui_ImplDX9_Init(g_pd3dDevice);
+
 	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(object->hwnd);
 	return PTR_C2J(object);
@@ -158,6 +161,8 @@ JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
 		DispatchMessage(&object->msg);
 	}
 	ImGui_ImplDX9_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 }
 
 JNIEXPORT void JNICALL
@@ -168,7 +173,7 @@ Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObject
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
 	auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
-// Rendering
+	// Rendering
 	ImGui::EndFrame();
 	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, false);
 	g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
@@ -185,7 +190,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
 	}
 	HRESULT result = g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 
-// Handle loss of D3D9 device
+	// Handle loss of D3D9 device
 	if (result == D3DERR_DEVICELOST && g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
 		ImGui_ImplDX9_InvalidateDeviceObjects();
 		g_pd3dDevice->Reset(&g_d3dpp);
@@ -202,6 +207,7 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
 	ImGui_ImplDX9_Shutdown();
+	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
 	if (g_pd3dDevice) g_pd3dDevice->Release();
