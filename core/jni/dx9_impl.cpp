@@ -134,7 +134,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  ImGui_ImplWin32_Init(hwnd);
+  ImGui_ImplWin32_Init(object->hwnd);
 	ImGui_ImplDX9_Init(g_pd3dDevice);
 
 	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
