@@ -24,6 +24,7 @@ See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [X] `ImGui` namespace getter/setter/function/javadoc generation
 + [X] `ImGuiIO` properties getter/setter/function/javadoc generation
 + [X] `ImGuiFont` properties getter/setter/function/javadoc generation
++ [X] `ImGuiStyle` properties getter/setter/function/javadoc generation
 + [X] `ImGuiFontAtlas` properties getter/setter/function/javadoc generation
 + [X] `ImGui*Flags` copy-pasted constant/javadoc
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)

@@ -3,7 +3,7 @@ package org.ice1000.gradle
 import org.gradle.api.DefaultTask
 import org.intellij.lang.annotations.Language
 
-open class GenJavaTask(val className: String) : DefaultTask() {
+open class GenJavaTask(val className: String, val since: String = "v0.1") : DefaultTask() {
 	init {
 		group = "code generation"
 	}
@@ -25,24 +25,46 @@ open class GenJavaTask(val className: String) : DefaultTask() {
 
 	protected val prefixJava
 		@Language("JAVA", suffix = "}")
-		get() = """$CLASS_PREFIX
+		get() = """package org.ice1000.jimgui;
+
+import org.ice1000.jimgui.flag.*;
+import org.ice1000.jimgui.cpp.*;
+import org.intellij.lang.annotations.*;
+import org.jetbrains.annotations.*;
+import java.nio.charset.StandardCharsets;
+
+import static org.ice1000.jimgui.util.JImGuiUtil.*;
+
+/**
+ * @author ice1000
+ * @since $since
+ */
+@SuppressWarnings("ALL")
+
 public class $className {
 $userCode
 """
 
 	protected val prefixInterfacedJava
 		@Language("JAVA", suffix = "}")
-		get() = """$CLASS_PREFIX
+		get() = """package org.ice1000.jimgui;
+
+import org.ice1000.jimgui.flag.*;
+import org.ice1000.jimgui.cpp.*;
+import org.intellij.lang.annotations.*;
+import org.jetbrains.annotations.*;
+import java.nio.charset.StandardCharsets;
+
+import static org.ice1000.jimgui.util.JImGuiUtil.*;
+
+/**
+ * @author ice1000
+ * @since $since
+ */
+@SuppressWarnings("ALL")
+
 public interface $className {
 """
 
 	val eol: String = System.lineSeparator()
-	fun StringBuilder.genJavaObjectiveMemberAccessor(name: String, annotation: String, type: String) {
-		javadoc(name)
-				.append("\tpublic ").append(annotation).append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
-				.append("\tprivate static native ").append(annotation).append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
-				.javadoc(name)
-				.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
-				.append("\tprivate static native void set").append(name).append("(long nativeObjectPtr, ").append(annotation).append(type).appendln(" newValue);")
-	}
 }

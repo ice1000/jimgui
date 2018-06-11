@@ -6,8 +6,9 @@ import org.intellij.lang.annotations.Language
 @Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
 		className: String,
-		private val `c++FileSuffix`: String
-) : GenJavaTask(className), Runnable {
+		private val `c++FileSuffix`: String,
+		since: String = "v0.1"
+) : GenJavaTask(className, since), Runnable {
 	private val `prefixC++`
 		@Language("C++")
 		get() = """$CXX_PREFIX
@@ -262,13 +263,16 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 				.append("\tpublic static native void set").append(it).appendln("(long nativeObjectPtr, boolean newValue);")
 	}
 
-	fun genSimpleJavaObjectivePrimitiveMembers(javaCode: StringBuilder, name: String, type: String) {
+	fun genSimpleJavaObjectivePrimitiveMembers(javaCode: StringBuilder,
+	                                           name: String,
+	                                           type: String,
+	                                           annotation: String = "") {
 		javaCode.javadoc(name)
-				.append("\tpublic ").append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
-				.append("\tprotected static native ").append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
+				.append("\tpublic ").append(annotation).append(type).append(" get").append(name).append("(){return get").append(name).appendln("(nativeObjectPtr);}")
+				.append("\tprotected static native ").append(annotation).append(type).append(" get").append(name).appendln("(long nativeObjectPtr);")
 				.javadoc(name)
-				.append("\tpublic void set").append(name).append('(').append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
-				.append("\tprotected static native void set").append(name).append("(long nativeObjectPtr, ").append(type).appendln(" newValue);")
+				.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue) {set").append(name).appendln("(nativeObjectPtr, newValue);}")
+				.append("\tprotected static native void set").append(name).append("(long nativeObjectPtr, ").append(annotation).append(type).appendln(" newValue);")
 	}
 
 	fun genJavaPrimitiveObjectiveMember(javaCode: StringBuilder,

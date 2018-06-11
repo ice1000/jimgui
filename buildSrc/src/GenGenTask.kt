@@ -37,9 +37,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 	private val trivialMethods = listOf(
 			// Styles
-			Fun("styleColorsDark"),
-			Fun("styleColorsClassic"),
-			Fun("styleColorsLight"),
+			Fun("styleColorsDark", stylePtr("style", true)),
+			Fun("styleColorsClassic", stylePtr("style", true)),
+			Fun("styleColorsLight", stylePtr("style", true)),
 
 			// Cursor / Layout
 			Fun("separator"),
@@ -66,13 +66,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getFrameHeightWithSpacing", "float"),
 
 			// Demo, Debug, Information
-			Fun("showUserGuide"),
-			Fun("showDemoWindow", pOpen),
+			/*Fun("showUserGuide"),*/
+			/*Fun("showDemoWindow", pOpen),*/
 			Fun("showMetricsWindow", pOpen),
 			Fun("showFontSelector", label),
 			Fun("showStyleSelector", label),
-			Fun("showStyleEditor"),
-			/*Fun("showStyleEditor", "boolean", label),*/
+			Fun("showStyleEditor", stylePtr("ref", nullable = true)),
 
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),

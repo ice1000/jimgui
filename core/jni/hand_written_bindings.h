@@ -42,6 +42,12 @@ JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong;
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject() -> jlong;
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(jlong nativeObjectPtr);
+
+JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 		jint pathLen, Ptr<jbyte> path, jfloat size, jlong range, jlong nativeObjectPtr) -> jlong;
 

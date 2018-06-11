@@ -24,7 +24,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 
 	override fun java(javaCode: StringBuilder) {
 		primitiveMembers.forEach { (type, name, annotation) ->
-			javaCode.genJavaObjectiveMemberAccessor(name, annotation, type)
+			genSimpleJavaObjectivePrimitiveMembers(javaCode, name, type, annotation)
 		}
 		functions.forEach { genJavaFun(javaCode, it) }
 	}

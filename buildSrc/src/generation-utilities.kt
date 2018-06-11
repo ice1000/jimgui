@@ -8,6 +8,7 @@ import org.intellij.lang.annotations.MagicConstant
 val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
+fun stylePtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImStyle", "ImGuiStyle", if (nullable) "@Nullable" else "@NotNull", 0)
 fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", 0)
 fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull")
 fun doublePtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", if (nullable) "@Nullable" else "@NotNull")
@@ -167,24 +168,6 @@ fun StringBuilder.javadoc(name: String): StringBuilder {
 	GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
 	return this
 }
-
-@Language("JAVA", suffix = "class A {}")
-const val CLASS_PREFIX = """package org.ice1000.jimgui;
-
-import org.ice1000.jimgui.flag.*;
-import org.ice1000.jimgui.cpp.*;
-import org.intellij.lang.annotations.*;
-import org.jetbrains.annotations.*;
-import java.nio.charset.StandardCharsets;
-
-import static org.ice1000.jimgui.util.JImGuiUtil.*;
-
-/**
- * @author ice1000
- * @since v0.1
- */
-@SuppressWarnings("ALL")
-"""
 
 const val JNI_FUNCTION_INIT = "__JNI__FUNCTION__INIT__ "
 const val JNI_FUNCTION_CLEAN = " __JNI__FUNCTION__CLEAN__"

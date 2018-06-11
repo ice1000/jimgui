@@ -9,14 +9,14 @@ import org.intellij.lang.annotations.Language
  */
 open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") {
 	init {
-		description = "Generate binding for ImGui::GetFont().ContainerAtlas"
+		description = "Generate binding for ImGui::GetFont()->ContainerAtlas"
 	}
 
 	@Language("JAVA", prefix = "class A{", suffix = "}")
 	override val userCode = """protected long nativeObjectPtr;
 
 	/** package-private by design */
-	JImGuiFontAtlasGen(long nativeObjectPtr) {
+	$className(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 """
@@ -24,7 +24,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	override fun java(javaCode: StringBuilder) {
 		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
 		primitiveMembers.forEach { (type, name, annotation) ->
-			javaCode.genJavaObjectiveMemberAccessor(name, annotation, type)
+			genSimpleJavaObjectivePrimitiveMembers(javaCode, name, type, annotation)
 		}
 		functions.forEach { genJavaFun(javaCode, it) }
 	}

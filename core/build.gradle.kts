@@ -61,6 +61,7 @@ val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
 val genImguiDefaultKeys = task<GenDefaultKeysTask>("genImguiDefaultKeys")
 val genImguiFont = task<GenFontTask>("genImguiFont")
 val genImguiFontAtlas = task<GenFontAtlasTask>("genImguiFontAtlas")
+val genImguiFontConfig = task<GenFontConfigTask>("genImguiFontConfig")
 val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
@@ -153,7 +154,8 @@ compileJava.options.compilerArgs = listOf("-h", javahDir.toString())
 genImgui.dependsOn(downloadImgui)
 downloadAll.dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
-		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys, genImguiStyleColor, genImguiFontAtlas)
+		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys,
+		genImguiStyleColor, genImguiFontAtlas, genImguiFontConfig)
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
 if (isWindows) compileCxx.dependsOn(msbuild, msbuildWin64)
 else compileCxx.dependsOn(make)

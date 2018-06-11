@@ -69,6 +69,26 @@ Java_org_ice1000_jimgui_JImStyle_getColor0(Ptr<JNIEnv>, jclass, jlong nativeObje
 	return JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(nativeObjectPtr, index);
 }
 
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject() -> jlong {
+	return PTR_C2J(new ImGuiStyle());
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImStyle_allocateNativeObject(JNIEnv *, jclass) -> jlong {
+	return JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject();
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(jlong nativeObjectPtr) {
+	delete PTR_J2C(ImGuiStyle, nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImStyle_deallocateNativeObject(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(nativeObjectPtr);
+}
+
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImFont_setDisplayOffset(Ptr<JNIEnv>, jobject, jfloat newX, jfloat newY) {
 	ImGui::GetFont()->DisplayOffset.x = newX;
