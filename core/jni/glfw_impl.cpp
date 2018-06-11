@@ -41,6 +41,11 @@ auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int 
 	glBindTexture(GL_TEXTURE_2D, *tex);
 	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	return true;
 }
 
@@ -70,15 +75,17 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
-	__JNI__FUNCTION__INIT__
-	__get(Byte, title);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+	__JNI__FUNCTION__INIT__
+	__get(Byte, title)
 	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), nullptr, nullptr);
+	__release(Byte, title)
+	__JNI__FUNCTION__CLEAN__
 	glfwMakeContextCurrent(window);
 	// Enable vsync
 	glfwSwapInterval(1);
@@ -93,8 +100,6 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init();
-	__release(Byte, title);
-	__JNI__FUNCTION__CLEAN__
 	return PTR_C2J(window);
 }
 
