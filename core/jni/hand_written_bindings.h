@@ -48,6 +48,12 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(jlong nativeObjectPtr);
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImFontConfig_allocateNativeObject() -> jlong;
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImFontConfig_deallocateNativeObject(jlong nativeObjectPtr);
+
+JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 		jint pathLen, Ptr<jbyte> path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong;
 
