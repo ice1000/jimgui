@@ -15,8 +15,18 @@ JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr() -> jlong {
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getStyleNativeObjectPtr() -> jlong {
+	return PTR_C2J(&ImGui::GetStyle());
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
 	return JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr();
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_getStyleNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
+	return JavaCritical_org_ice1000_jimgui_JImGui_getStyleNativeObjectPtr();
 }
 
 JNIEXPORT void JNICALL
@@ -50,13 +60,13 @@ Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(Ptr<JNIEnv>, jc
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jint index) -> jlong {
-	return PTR_C2J(&ImGui::GetStyle().Colors[index]);
+JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong {
+	return PTR_C2J(&PTR_J2C(ImGuiStyle, nativeObjectPtr)->Colors[index]);
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImStyle_getColor0(Ptr<JNIEnv>, jclass, jint index) -> jlong {
-	return JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(index);
+Java_org_ice1000_jimgui_JImStyle_getColor0(Ptr<JNIEnv>, jclass, jlong nativeObjectPtr, jint index) -> jlong {
+	return JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(nativeObjectPtr, index);
 }
 
 JNIEXPORT void JNICALL

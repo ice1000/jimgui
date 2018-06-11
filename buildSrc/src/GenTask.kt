@@ -278,7 +278,7 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 	                                    annotation: String = "",
 	                                    ptrName: String = "nativeObjectPtr") {
 		javaCode.append("\tprivate static native void set").append(name).append("(long ")
-				.append(ptrName).append(',').appendln(" newValue);")
+				.append(ptrName).append(',').append(type).appendln(" newValue);")
 				.javadoc(`c++Name`)
 				.append("\tpublic void set").append(name).append('(').append(annotation).append(type).append(" newValue){set")
 				.append(name).append('(').append(ptrName).appendln(", newValue); }")

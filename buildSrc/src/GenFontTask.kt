@@ -22,12 +22,13 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 	protected long nativeObjectPtr;
 
 	/** package-private by design */
-	JImGuiFontGen(long nativeObjectPtr) {
+	$className(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 """
 
 	override fun java(javaCode: StringBuilder) {
+		GenGenTask.checkParserInitialized(project)
 		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
 		primitiveMembers.forEach { (type, name) -> genSimpleJavaObjectivePrimitiveMembers(javaCode, name, type) }
 		booleanMembers.forEach { genSimpleJavaObjectiveBooleanMember(javaCode, it) }

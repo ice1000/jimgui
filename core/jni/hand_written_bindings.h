@@ -26,6 +26,9 @@ extern "C" {
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getFontNativeObjectPtr() -> jlong;
 
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getStyleNativeObjectPtr() -> jlong;
+
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_pushID(jint id);
 
@@ -36,7 +39,7 @@ JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr() -> jlong;
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jint index) -> jlong;
+JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong;
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(

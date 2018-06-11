@@ -76,15 +76,11 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return io;
 	}
 
-	/**
-	 * Call this only if you expect a nullable result.
-	 *
-	 * @return same as {@link #getFont()}
-	 */
 	@Contract(pure = true)
-	public @Nullable JImFont findFont() {
-		long fontNativeObjectPtr = getFontNativeObjectPtr();
-		return fontNativeObjectPtr == 0 ? null : new JImFont(fontNativeObjectPtr);
+	public @NotNull JImStyle getStyle() {
+		JImStyle style = findStyle();
+		if (null == style) alreadyDisposed();
+		return style;
 	}
 
 	@Contract(pure = true)
@@ -141,11 +137,15 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return styleNativeObjectPtr == 0 ? null : new JImStyle(styleNativeObjectPtr);
 	}
 
+	/**
+	 * Call this only if you expect a nullable result.
+	 *
+	 * @return same as {@link #getFont()}
+	 */
 	@Contract(pure = true)
-	public @NotNull JImStyle getStyle() {
-		JImStyle style = findStyle();
-		if (null == style) alreadyDisposed();
-		return style;
+	public @Nullable JImFont findFont() {
+		long fontNativeObjectPtr = getFontNativeObjectPtr();
+		return fontNativeObjectPtr == 0 ? null : new JImFont(fontNativeObjectPtr);
 	}
 
 	@Contract(pure = true)

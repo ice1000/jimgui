@@ -17,7 +17,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }
 
 	/** package-private by design */
-	JImGuiFontAtlasGen(long nativeObjectPtr) {
+	$className(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 	}
 
@@ -27,7 +27,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	override fun java(javaCode: StringBuilder) {
 		GenGenTask.checkParserInitialized(project)
 		imVec2Members.forEach { genJavaObjectiveXYAccessor(javaCode, it, "float") }
-		primitiveMembers.forEach { (type, name) -> genSimpleJavaObjectivePrimitiveMembers(javaCode, type, name) }
+		primitiveMembers.forEach { (type, name) -> genSimpleJavaObjectivePrimitiveMembers(javaCode, name, type) }
 		booleanMembers.forEach { genSimpleJavaObjectiveBooleanMember(javaCode, it) }
 		functions.forEach { genJavaFun(javaCode, it) }
 	}
@@ -36,12 +36,12 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 		imVec2Members.joinLinesTo(cppCode) { `c++XYAccessor`(it, "float", "jlong nativeObjectPtr") }
 		booleanMembers.joinLinesTo(cppCode) { `c++BooleanAccessor`(it, "jlong nativeObjectPtr") }
 		primitiveMembers.joinLinesTo(cppCode) { (type, name) -> `c++PrimitiveAccessor`(type, name, "jlong nativeObjectPtr") }
-		functions.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
+		functions.forEach { (name, type, params) -> `genC++Fun`(params.dropLast(1), name, type, cppCode, "jlong nativeObjectPtr") }
 	}
 
-	override val `c++Expr` = "PTR_J2C(ImStyle, nativeObjectPtr)->"
+	override val `c++Expr` = "PTR_J2C(ImGuiStyle, nativeObjectPtr)->"
 	private val booleanMembers = listOf("AntiAliasedLines", "AntiAliasedFill")
-	private val functions = listOf(Fun("scaleAllSizes", float("scaleFactor")))
+	private val functions = listOf(Fun("scaleAllSizes", float("scaleFactor"), nativeObjectPtr))
 	private val primitiveMembers = listOf(
 			"float" to "Alpha",
 			"float" to "WindowRounding",

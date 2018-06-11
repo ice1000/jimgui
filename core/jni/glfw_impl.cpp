@@ -149,7 +149,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 	glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
 	glClear(GL_COLOR_BUFFER_BIT);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    	
+
 	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
 }
