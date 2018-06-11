@@ -1,4 +1,4 @@
-## Unreleased
+## v0.4
 
 + Migrated to the newest imgui code structure
 + Internal refactoring about `JImStyle`
