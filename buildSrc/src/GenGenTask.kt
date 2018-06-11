@@ -5,9 +5,11 @@ import org.gradle.api.Project
 open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	companion object {
 		lateinit var parser: ImGuiHeaderParser
+		private var isParserInitialized = false
 		fun checkParserInitialized(project: Project) {
-			if (GenGenTask.Companion::parser.isInitialized) return
+			if (isParserInitialized) return
 			parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+			isParserInitialized = true
 		}
 	}
 
