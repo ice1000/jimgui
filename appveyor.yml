@@ -4,14 +4,15 @@ build_script:
   - set JAVA_HOME="C:\Program Files\Java\jdk1.8.0"
   - gradlew :core:cmakeWin64 --info --stacktrace --no-daemon
   - set JAVA_HOME="C:\Program Files (x86)\Java\jdk1.8.0"
-  - gradlew :core:cmakeWin32 --info --stacktrace --no-daemon
-  - gradlew assemble --info --stacktrace --no-daemon
+  - gradlew :core:cmake --info --stacktrace --no-daemon
 
 cache:
   - C:\Users\appveyor\.gradle
 
 test_script:
   - set JAVA_HOME="C:\Program Files\Java\jdk1.8.0"
+  - gradlew test --info --stacktrace --no-daemon
+  - set JAVA_HOME="C:\Program Files (x86)\Java\jdk1.8.0"
   - gradlew test --info --stacktrace --no-daemon
 
 artifacts:
