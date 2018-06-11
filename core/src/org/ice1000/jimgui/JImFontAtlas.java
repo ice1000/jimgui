@@ -15,16 +15,6 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 		super(nativeObjectPtr);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @param path path to a ttf file
-	 * @return the font
-	 */
-	public @NotNull JImFont addFontFromFile(@NotNull String path) {
-		return addFontFromFile(path, 16);
-	}
-
 	public void addCustomRectFontGlyph(@NotNull JImFont font, char id, int width, int height, float advanceX) {
 		super.addCustomRectFontGlyph(font, (short) id, width, height, advanceX);
 	}
@@ -35,7 +25,37 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	 * @return the font
 	 */
 	public @NotNull JImFont addDefaultFont() {
-		return new JImFont(addFontDefault(nativeObjectPtr));
+		return new JImFont(addFontDefault(0, nativeObjectPtr));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @return the font
+	 */
+	public @NotNull JImFont addDefaultFont(@NotNull JImFontConfig config) {
+		return new JImFont(addFontDefault(config, nativeObjectPtr));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @param path path to a ttf file
+	 * @return the font
+	 */
+	public @NotNull JImFont addFontFromFile(@NotNull String path) {
+		return addFontFromFile(path, 16);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @param path       path to a ttf file
+	 * @param sizePixels font size
+	 * @return the font
+	 */
+	public @NotNull JImFont addFontFromFile(@NotNull String path, float sizePixels, @NotNull JImFontConfig config) {
+		return new JImFont(addFontFromFileTTF0(getBytes(path), sizePixels, config.nativeObjectPtr, 0, nativeObjectPtr));
 	}
 
 	/**
@@ -46,7 +66,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	 * @return the font
 	 */
 	public @NotNull JImFont addFontFromFile(@NotNull String path, float sizePixels) {
-		return new JImFont(addFontFromFileTTF(path, sizePixels, nativeObjectPtr));
+		return new JImFont(addFontFromFileTTF0(getBytes(path), sizePixels, 0, 0, nativeObjectPtr));
 	}
 
 	/**
@@ -64,7 +84,32 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	 * @return the font
 	 */
 	public @NotNull JImFont addFontFromFile(@NotNull String path, float sizePixels, @NotNull NativeShort glyphRange) {
-		return new JImFont(addFontFromFileTTF0(getBytes(path), sizePixels, glyphRange.nativeObjectPtr, nativeObjectPtr));
+		return new JImFont(addFontFromFileTTF0(getBytes(path), sizePixels, 0, glyphRange.nativeObjectPtr, nativeObjectPtr));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @param path       path to a ttf file
+	 * @param sizePixels font size
+	 * @param glyphRange see {@link JImFontAtlas#getGlyphRangesForChineseFull()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForChineseSimplifiedCommon()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForDefault()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForJapanese()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForCyrillic()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForThai()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForKorean()}
+	 * @return the font
+	 */
+	public @NotNull JImFont addFontFromFile(@NotNull String path,
+	                                        float sizePixels,
+	                                        @NotNull JImFontConfig config,
+	                                        @NotNull NativeShort glyphRange) {
+		return new JImFont(addFontFromFileTTF0(getBytes(path),
+				sizePixels,
+				config.nativeObjectPtr,
+				glyphRange.nativeObjectPtr,
+				nativeObjectPtr));
 	}
 
 	/** Do NOT deallocate the returned pointer */
@@ -117,6 +162,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 
 	private static native long addFontFromFileTTF0(byte[] path,
 	                                               float sizePixels,
+	                                               long nativeConfigPtr,
 	                                               long nativeShortPtr,
 	                                               long nativeObjectPtr);
 }

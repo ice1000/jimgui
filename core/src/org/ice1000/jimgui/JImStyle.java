@@ -2,6 +2,7 @@ package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.intellij.lang.annotations.MagicConstant;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -14,6 +15,7 @@ public final class JImStyle extends JImGuiStyleGen implements DeallocatableObjec
 	 *
 	 * @param nativeObjectPtr native pointer {@code ImStyle*}
 	 */
+	@Contract(pure = true)
 	JImStyle(long nativeObjectPtr) {
 		super(nativeObjectPtr);
 	}
@@ -24,6 +26,7 @@ public final class JImStyle extends JImGuiStyleGen implements DeallocatableObjec
 	 * @see JImGui#getStyle()
 	 * @since v0.4
 	 */
+	@Contract
 	public JImStyle() {
 		this(allocateNativeObject());
 	}

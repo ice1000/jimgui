@@ -129,7 +129,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * Call this only if you expect a nullable result.
 	 *
-	 * @return same as {@link #getStyle()}
+	 * @return same as {@link #getStyle()}, don't call {@link JImStyle#deallocateNativeObject()}
 	 */
 	@Contract(pure = true)
 	public @Nullable JImStyle findStyle() {
@@ -140,7 +140,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * Call this only if you expect a nullable result.
 	 *
-	 * @return same as {@link #getFont()}
+	 * @return same as {@link #getFont()}, don't call {@link JImStyle#deallocateNativeObject()}
 	 */
 	@Contract(pure = true)
 	public @Nullable JImFont findFont() {

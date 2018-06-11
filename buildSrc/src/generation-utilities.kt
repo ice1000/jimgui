@@ -8,6 +8,7 @@ import org.intellij.lang.annotations.MagicConstant
 val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
+fun configPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImFontConfig", "ImFontConfig", if (nullable) "@Nullable" else "@NotNull", 0)
 fun stylePtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImStyle", "ImGuiStyle", if (nullable) "@Nullable" else "@NotNull", 0)
 fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", 0)
 fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull")

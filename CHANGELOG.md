@@ -2,6 +2,8 @@
 
 + Migrated to the newest imgui code structure
 + Internal refactoring about `JImStyle`
++ Removed `showDemoWindow` and `showUserGuide`
++ Added `ImFontConfig` bindings
 
 ## v0.3
 

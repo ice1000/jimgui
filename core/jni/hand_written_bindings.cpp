@@ -97,18 +97,18 @@ Java_org_ice1000_jimgui_JImFont_setDisplayOffset(Ptr<JNIEnv>, jobject, jfloat ne
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
-		jint pathLen, Ptr<jbyte> path, jfloat size, jlong range, jlong nativeObjectPtr) -> jlong {
+		jint pathLen, Ptr<jbyte> path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong {
 	auto *fonts = PTR_J2C(ImFontAtlas, nativeObjectPtr);
-	return PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, nullptr, PTR_J2C(
+	return PTR_C2J(fonts->AddFontFromFileTTF(STR_J2C(path), size, PTR_J2C(ImFontConfig, config), PTR_J2C(
 			               const ImWchar, range)));
 }
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
-		Ptr<JNIEnv> env, jclass, jbyteArray _path, jfloat size, jlong range, jlong nativeObjectPtr) -> jlong {
+		Ptr<JNIEnv> env, jclass, jbyteArray _path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, path)
-	auto res = JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(-1, path, size, range, nativeObjectPtr);
+	auto res = JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(-1, path, size, config, range, nativeObjectPtr);
 	__release(Byte, path)
 	__JNI__FUNCTION__CLEAN__
 	return res;

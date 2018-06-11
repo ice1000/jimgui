@@ -38,9 +38,10 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 	override val `c++Expr` = "PTR_J2C(ImFontAtlas, nativeObjectPtr)->"
 	private val imVec2Members = listOf("TexUvScale", "TexUvWhitePixel")
 	private val functions = listOf(
-			Fun.protected("addFontDefault", "long", nativeObjectPtr),
-			Fun.protected("addFontFromFileTTF", "long", string("path"), float("sizePixels"), nativeObjectPtr),
-			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long", string("compressedFontDataBase85"), float("sizePixels"), nativeObjectPtr),
+			Fun.protected("addFont", "long", configPtr("fontConfig"), nativeObjectPtr),
+			Fun.protected("addFontDefault", "long", configPtr("fontConfig", nullable = true), nativeObjectPtr),
+			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long",
+					string("compressedFontDataBase85"), float("sizePixels"), nativeObjectPtr),
 			Fun.private("build", "boolean", nativeObjectPtr),
 			Fun.private("clearInputData", nativeObjectPtr),
 			Fun.private("clearTexData", nativeObjectPtr),
