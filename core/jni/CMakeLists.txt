@@ -22,7 +22,7 @@ if (WIN32)
 	include_directories(${DIRECTX_INCLUDE_DIRS})
 	include_directories("${DXSDK_DIRS}\\Include")
 
-	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp dx9_impl.cpp)
+	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp impl/imgui_impl_win32.cpp dx9_impl.cpp)
 	set(TARGET_LINK_LIBS d3d9)
 	list(APPEND TARGET_LINK_LIBS ${DIRECTX_D3DX9_LIBRARIES})
 else ()
@@ -36,7 +36,7 @@ else ()
 		message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
 	endif ()
 
-	set(IMGUI_IMPL impl/imgui_impl_glfw_gl3.cpp impl/gl3w.c glfw_impl.cpp)
+	set(IMGUI_IMPL impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c glfw_impl.cpp)
 	include_directories(${GLFW_INCLUDE_DIRS})
 
 	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
