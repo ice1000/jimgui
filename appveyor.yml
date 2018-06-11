@@ -1,16 +1,17 @@
-environment:
-  JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-
 image: Visual Studio 2017
 
 build_script:
-  - echo Hello world
+  - set JAVA_HOME="C:\Program Files\Java\jdk1.8.0"
+  - gradlew cmakeWin64 --info --stacktrace --no-daemon
+  - set JAVA_HOME="C:\Program Files (x86)\Java\jdk1.8.0"
+  - gradlew cmakeWin32 --info --stacktrace --no-daemon
+  - gradlew assemble --info --stacktrace --no-daemon
 
 cache:
   - C:\Users\appveyor\.gradle
 
 test_script:
- - gradlew assemble test --info --stacktrace --no-daemon
+ - gradlew test --info --stacktrace --no-daemon
 
 artifacts:
   - path: 'core\build\libs\*.jar'
