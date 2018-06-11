@@ -59,7 +59,7 @@ public final class NativeUtil {
 	 * @param callerClass the caller class used to call {@link Class#getResourceAsStream(String)}
 	 * @throws IllegalArgumentException      If source file (param path) does not exist
 	 * @throws IllegalArgumentException      If the path is not absolute or if the fileName is shorter than three characters
-	 *                                       (restriction of {@link File#createTempFile(java.lang.String, java.lang.String)}).
+	 *                                       (restriction of {@link File#createTempFile(String, String)}).
 	 * @throws UnsupportedOperationException if {@link UnsatisfiedLinkError} is thrown.
 	 */
 	public static void loadLibraryFromJar(@NotNull String fileName, @NotNull Class<?> callerClass) {

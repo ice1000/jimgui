@@ -37,7 +37,7 @@ public interface JImTreeNodeFlags {
 	//** FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible */
 	// int NoScrollOnOpen = 1 << 12;
 	/**
-	 * (WIP) Nav: left direction may move to this {@link org.ice1000.jimgui.JImGuiGen#treeNode(String)} from any of its child
+	 * (WIP) Nav: left direction may move to this {@link JImGuiGen#treeNode(String)} from any of its child
 	 * (items submitted between {@link JImGuiGen#treeNode(String)} and {@link JImGuiGen#treePop()})
 	 */
 	int NavLeftJumpsBackHere = 1 << 13;

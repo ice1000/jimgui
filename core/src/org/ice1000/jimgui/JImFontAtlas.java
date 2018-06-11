@@ -20,6 +20,8 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen implements Deallocata
 	/**
 	 * @apiNote Should call {@link JImFontAtlas#deallocateNativeObject()}.
 	 * @see JImFont#getContainerAtlas()
+	 * @see JImGui#JImGui(int, int, JImFontAtlas)
+	 * @see JImGui#JImGui(int, int, JImFontAtlas, String)
 	 */
 	@Contract
 	public JImFontAtlas() {

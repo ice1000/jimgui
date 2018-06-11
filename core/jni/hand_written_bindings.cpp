@@ -208,13 +208,13 @@ Java_org_ice1000_jimgui_JImVec4_fromHSV0(Ptr<JNIEnv>, jclass, jfloat h, jfloat s
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_plotLines(jint labelLen,
+JavaCritical_org_ice1000_jimgui_JImGui_plotLines(jint,
                                                  Ptr<jbyte> label,
-                                                 jint valuesLen,
+                                                 jint,
                                                  Ptr<jfloat> values,
                                                  jint valuesOffset,
                                                  jint valuesLength,
-                                                 jint overlayTextLen,
+                                                 jint,
                                                  Ptr<jbyte> overlayText,
                                                  jfloat scaleMin,
                                                  jfloat scaleMax,
@@ -265,13 +265,13 @@ Java_org_ice1000_jimgui_JImGui_plotLines(Ptr<JNIEnv> env,
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_plotHistogram(jint labelLen,
+JavaCritical_org_ice1000_jimgui_JImGui_plotHistogram(jint,
                                                      Ptr<jbyte> label,
-                                                     jint valuesLen,
+                                                     jint,
                                                      Ptr<jfloat> values,
                                                      jint valuesOffset,
                                                      jint valuesLength,
-                                                     jint overlayTextLen,
+                                                     jint,
                                                      Ptr<jbyte> overlayText,
                                                      jfloat scaleMin,
                                                      jfloat scaleMax,

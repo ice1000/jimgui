@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import javafx.scene.paint.Color;
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -74,8 +75,8 @@ public class JImVec4 implements DeallocatableObject {
 		return new java.awt.Color(getW(), getX(), getY(), getZ());
 	}
 
-	public @NotNull javafx.scene.paint.Color toJFX() {
-		return new javafx.scene.paint.Color(getW(), getX(), getY(), getZ());
+	public @NotNull Color toJFX() {
+		return new Color(getW(), getX(), getY(), getZ());
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class JImVec4 implements DeallocatableObject {
 	 * @return a mutable imgui vec4 instance
 	 */
 	@Contract
-	public static @NotNull MutableJImVec4 fromJFX(@NotNull javafx.scene.paint.Color color) {
+	public static @NotNull MutableJImVec4 fromJFX(@NotNull Color color) {
 		return new MutableJImVec4((float) color.getRed(),
 				(float) color.getGreen(),
 				(float) color.getBlue(),

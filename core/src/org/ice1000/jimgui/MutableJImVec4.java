@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Contract;
  * Off-stack Vector providing mutability.
  *
  * @author ice1000
- * @see org.ice1000.jimgui.JImVec4
+ * @see JImVec4
  * @since v0.1
  */
 public final class MutableJImVec4 extends JImVec4 {

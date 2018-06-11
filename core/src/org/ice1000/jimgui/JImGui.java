@@ -24,12 +24,26 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		this(1280, 720);
 	}
 
+	public JImGui(int width, int height, @NotNull String title) {
+		nativeObjectPtr = allocateNativeObjects(width, height, 0, getBytes(title));
+		if (nativeObjectPtr == 0) {
+			System.err.println("Unknown error has happened during initialization!");
+			System.exit(1);
+		}
+		io = new JImGuiIO();
+		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
+	}
+
 	public JImGui(int width, int height) {
 		this(width, height, "ImGui window created by JImGui");
 	}
 
-	public JImGui(int width, int height, @NotNull String title) {
-		nativeObjectPtr = allocateNativeObjects(width, height, getBytes(title));
+	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas) {
+		this(width, height, fontAtlas, "ImGui window created by JImGui");
+	}
+
+	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title) {
+		nativeObjectPtr = allocateNativeObjects(width, height, fontAtlas.nativeObjectPtr, getBytes(title));
 		if (nativeObjectPtr == 0) {
 			System.err.println("Unknown error has happened during initialization!");
 			System.exit(1);
@@ -448,7 +462,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	//region Private native interfaces
-	private static native long allocateNativeObjects(int width, int height, byte @NotNull [] title);
+	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();

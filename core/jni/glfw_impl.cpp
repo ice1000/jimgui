@@ -72,7 +72,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
-		JNIEnv *env, jclass, jint width, jint height, jbyteArray _title) -> jlong {
+		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -93,7 +93,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 	// Setup Dear ImGui binding
 	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
+	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
 	ImGuiIO &io = ImGui::GetIO();
 	(void) io;
 	// Enable Keyboard Controls
