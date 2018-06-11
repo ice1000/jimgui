@@ -18,6 +18,10 @@ public final class JImFontConfig extends JImGuiFontConfigGen implements Dealloca
 		super(nativeObjectPtr);
 	}
 
+	/**
+	 * @apiNote Should call {@link JImFontConfig#deallocateNativeObject()}.
+	 * @see JImFont#getConfigData()
+	 */
 	@Contract
 	public JImFontConfig() {
 		this(allocateNativeObject());

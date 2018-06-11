@@ -41,17 +41,17 @@ JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr() -> jl
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong;
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject() -> jlong;
+#define ALLOCATE_AND_DEALLOCATE_H(javaClass) \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject() -> jlong; \
+JNIEXPORT void JNICALL \
+JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong nativeObjectPtr); \
 
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(jlong nativeObjectPtr);
+ALLOCATE_AND_DEALLOCATE_H(JImStyle)
+ALLOCATE_AND_DEALLOCATE_H(JImFontConfig)
+ALLOCATE_AND_DEALLOCATE_H(JImFontAtlas)
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImFontConfig_allocateNativeObject() -> jlong;
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImFontConfig_deallocateNativeObject(jlong nativeObjectPtr);
+#undef ALLOCATE_AND_DEALLOCATE_H
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
@@ -59,6 +59,9 @@ JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(jlong nativeObjectPtr) -> jlong;
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImFont_getConfigData(jlong nativeObjectPtr) -> jlong;
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGuiIO_getFonts0() -> jlong;

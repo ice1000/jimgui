@@ -43,6 +43,7 @@ open class GenFontAtlasTask : GenTask("JImGuiFontAtlasGen", "imgui_font_atlas") 
 			Fun.protected("addFontFromMemoryCompressedBase85TTF", "long",
 					string("compressedFontDataBase85"), float("sizePixels"), nativeObjectPtr),
 			Fun.private("build", "boolean", nativeObjectPtr),
+			Fun.private("isBuilt", "boolean", nativeObjectPtr),
 			Fun.private("clearInputData", nativeObjectPtr),
 			Fun.private("clearTexData", nativeObjectPtr),
 			Fun.private("clearFonts", nativeObjectPtr),

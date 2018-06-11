@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.flag.JImFontAtlasFlags;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,9 +32,14 @@ public final class JImFont extends JImGuiFontGen {
 		return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
 	}
 
+	public @NotNull JImFontConfig getConfigData() {
+		return new JImFontConfig(getConfigData(nativeObjectPtr));
+	}
+
 	public native void setDisplayOffset(float newX, float newY);
 
 	@Contract
 	private static native byte[] getDebugName0(long nativeObjectPtr);
 	private static native long getContainerFontAtlas(long nativeObjectPtr);
+	private static native long getConfigData(long nativeObjectPtr);
 }

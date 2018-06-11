@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,10 +10,20 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @author ice1000
  * @since v0.1
  */
-public final class JImFontAtlas extends JImGuiFontAtlasGen {
+public final class JImFontAtlas extends JImGuiFontAtlasGen implements DeallocatableObject {
 	/** package-private by design */
+	@Contract(pure = true)
 	JImFontAtlas(long nativeObjectPtr) {
 		super(nativeObjectPtr);
+	}
+
+	/**
+	 * @apiNote Should call {@link JImFontAtlas#deallocateNativeObject()}.
+	 * @see JImFont#getContainerAtlas()
+	 */
+	@Contract
+	public JImFontAtlas() {
+		this(allocateNativeObject());
 	}
 
 	public void addCustomRectFontGlyph(@NotNull JImFont font, char id, int width, int height, float advanceX) {
@@ -158,6 +169,14 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen {
 	public @NotNull JImFont addFontFromMemoryCompressedBase85(@NotNull String compressedFontDataBase85,
 	                                                          float sizePixels) {
 		return new JImFont(addFontFromMemoryCompressedBase85TTF(compressedFontDataBase85, sizePixels, nativeObjectPtr));
+	}
+
+	private static native long allocateNativeObject();
+	private static native void deallocateNativeObject(long nativeObjectPtr);
+
+	@Override
+	public void deallocateNativeObject() {
+		deallocateNativeObject(nativeObjectPtr);
 	}
 
 	private static native long addFontFromFileTTF0(byte[] path,

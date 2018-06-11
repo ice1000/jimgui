@@ -69,25 +69,29 @@ Java_org_ice1000_jimgui_JImStyle_getColor0(Ptr<JNIEnv>, jclass, jlong nativeObje
 	return JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(nativeObjectPtr, index);
 }
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject() -> jlong {
-	return PTR_C2J(new ImGuiStyle());
+#define ALLOCATE_AND_DEALLOCATE(cxxClass, javaClass) \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject() -> jlong { \
+  return PTR_C2J(new cxxClass()); \
+} \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject(JNIEnv *, jclass) -> jlong { \
+  return JavaCritical_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject(); \
+} \
+JNIEXPORT void JNICALL \
+JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong nativeObjectPtr) { \
+  delete PTR_J2C(cxxClass, nativeObjectPtr); \
+} \
+JNIEXPORT void JNICALL \
+Java_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(JNIEnv *, jclass, jlong nativeObjectPtr) { \
+  JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(nativeObjectPtr); \
 }
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImStyle_allocateNativeObject(JNIEnv *, jclass) -> jlong {
-	return JavaCritical_org_ice1000_jimgui_JImStyle_allocateNativeObject();
-}
+ALLOCATE_AND_DEALLOCATE(ImGuiStyle, JImStyle)
+ALLOCATE_AND_DEALLOCATE(ImFontConfig, JImFontConfig)
+ALLOCATE_AND_DEALLOCATE(ImFontAtlas, JImFontAtlas)
 
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(jlong nativeObjectPtr) {
-	delete PTR_J2C(ImGuiStyle, nativeObjectPtr);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImStyle_deallocateNativeObject(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImStyle_deallocateNativeObject(nativeObjectPtr);
-}
+#undef ALLOCATE_AND_DEALLOCATE
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImFont_setDisplayOffset(Ptr<JNIEnv>, jobject, jfloat newX, jfloat newY) {
@@ -133,8 +137,19 @@ JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(jlong nativeObject
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImFont_getConfigData(jlong nativeObjectPtr) -> jlong {
+	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
+	return PTR_C2J(font->ConfigData);
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getContainerFontAtlas(Ptr<JNIEnv>, jclass, jlong nativeObjectPtr) -> jlong {
 	return JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(nativeObjectPtr);
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImFont_getConfigData(Ptr<JNIEnv>, jclass, jlong nativeObjectPtr) -> jlong {
+	return JavaCritical_org_ice1000_jimgui_JImFont_getConfigData(nativeObjectPtr);
 }
 
 #define JImIOMouseArrayAccessor(property) \
