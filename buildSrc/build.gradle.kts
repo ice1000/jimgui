@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 group = "org.ice1000.gradle"
 version = "v0.1"
 
-plugins { kotlin("jvm") version "1.2.41" }
+plugins { kotlin("jvm") version "1.2.50" }
 
 java.sourceSets {
 	"main" {
