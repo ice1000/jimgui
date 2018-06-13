@@ -12,12 +12,14 @@ public class EditorTest {
 		JniLoader.load();
 		StringBuilder builder = new StringBuilder("输入一些文本");
 		int cursor = builder.length();
-		float itemRectSizeX = 0;
 		try (JImGui gui = new JImGui()) {
 			JImGuiIO io = gui.getIO();
 			JImFontAtlas fonts = io.getFonts();
 			String fontPath = EditorTest.class.getResource("/font/sarasa-gothic-sc-regular.ttf").toURI().getPath();
-			JImFont sarasaGothic = fonts.addFontFromFile(fontPath, 20, fonts.getGlyphRangesForChineseFull());
+			JImFont sarasaGothic = fonts.addFontFromFile(fontPath, 20, fonts.getGlyphRangesForChineseSimplifiedCommon());
+			int texHeight = 20;
+			JImStyle style = gui.getStyle();
+			style.setItemSpacingX(1f);
 			while (!gui.windowShouldClose()) {
 				float deltaTime = io.getDeltaTime() * 1000;
 				Thread.sleep((long) Math.abs(20 - deltaTime));
@@ -30,20 +32,26 @@ public class EditorTest {
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.RightArrow)) && cursor < builder.length()) cursor++;
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Enter))) builder.insert(cursor++, '\n');
 				if (gui.isKeyPressed(io.keyMapAt(JImDefaultKeys.Backspace)) && cursor > 0) builder.deleteCharAt(--cursor);
-				gui.pushStyleVar(JImStyleVars.ItemSpacing, -0.5f, 2f);
 				gui.begin("Editor");
-				String substring = builder.substring(0, cursor);
-				for (String line : substring.split("\n")) gui.text(line);
-				if (!substring.endsWith("\n")) gui.sameLine();
-				float cursorPosX = gui.getCursorPosX();
-				if ((System.currentTimeMillis() / 500) % 2 == 1) {
-					gui.text("|");
-					itemRectSizeX = gui.getItemRectSizeX();
-					gui.setCursorPosX(cursorPosX);
-					gui.sameLine();
-				} else gui.setCursorPosX(cursorPosX + itemRectSizeX);
-				for (String line : builder.substring(cursor).split("\n")) gui.text(line);
-				gui.popStyleVar();
+				int length = builder.length();
+				for (int i = 0; i <= length; i++) {
+					if (i == cursor && (System.currentTimeMillis() / 1500) % 2 == 1) {
+						float cursorPosX = gui.getCursorPosX() + gui.getWindowPosX() - 2;
+						float cursorPosY = gui.getCursorPosY() + gui.getWindowPosY();
+						gui.getWindowDrawList().addLine(cursorPosX,
+								cursorPosY,
+								cursorPosX,
+								cursorPosY + texHeight,
+								0xffffffff,
+								2);
+					}
+					if (i == length) break;
+					char c = builder.charAt(i);
+					if (c != '\n') {
+						gui.text(String.valueOf(c));
+						gui.sameLine();
+					} else gui.newLine();
+				}
 				gui.end();
 				gui.render();
 			}
