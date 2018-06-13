@@ -390,6 +390,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isItemFocused", "boolean"),
 			Fun("isItemClicked", "boolean", int("mouseButton", default = 0)),
 			Fun("isItemVisible", "boolean"),
+			Fun("isItemDeactivated", "boolean"),
+			Fun("isItemDeactivatedAfterChange", "boolean"),
 			Fun("isAnyItemHovered", "boolean"),
 			Fun("isAnyItemActive", "boolean"),
 			Fun("isAnyItemFocused", "boolean"),
