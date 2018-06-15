@@ -49,7 +49,8 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 			Fun.private("clearOutputData", nativeObjectPtr),
 			Fun.private("setFallbackChar", p("wChar", "short"), nativeObjectPtr),
 			Fun.private("isLoaded", "boolean", nativeObjectPtr),
-			Fun.private("buildLookupTable", nativeObjectPtr))
+			Fun.private("buildLookupTable", nativeObjectPtr),
+			Fun.private("renderChar", drawListPtr("drawList"), float("size"), pos(), u32, p("c", "short"), nativeObjectPtr))
 
 	private val primitiveMembers = listOf(
 			"float" to "FontSize",
