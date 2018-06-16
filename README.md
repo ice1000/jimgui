@@ -16,11 +16,12 @@ Linux Build | Windows Build
 
 Cross-platform pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
-This project is created for [DevKt](https://github.com/ice1000/dev-kt), a JVM-based lightweight IDE for experiment purpose.
+This project is created for a code editor which is another project currently not open-sourced.
 
 # Demo
 
-See [this java file](core/test/org/ice1000/jimgui/tests/Demo.java).
++ [Partly re-implementation of imgui_demo.cpp](core/test/org/ice1000/jimgui/tests/Demo.java).
++ [A sample text editor](core/test/org/ice1000/jimgui/tests/EditorTest.java)
 
 # Progress
 
