@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.net.URISyntaxException;
+
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
 
 public class JImTextureTest {
@@ -16,17 +18,17 @@ public class JImTextureTest {
 	}
 
 	@Test
-	public void testSandbox() throws InterruptedException {
+	public void testSandbox() throws InterruptedException, URISyntaxException {
 		main();
 	}
 
 	@SuppressWarnings("AccessStaticViaInstance")
-	public static void main(String @NotNull ... args) throws InterruptedException {
+	public static void main(String @NotNull ... args) throws InterruptedException, URISyntaxException {
 		JniLoader.load();
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + (long) 3000;
-			JImTextureID texture = JImTextureID.fromFile(JImTextureTest.class.getResource("/pics/ice1000.png"));
+			JImTextureID texture = JImTextureID.fromFile(JImTextureTest.class.getResource("/pics/ice1000.png").toURI());
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
