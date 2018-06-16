@@ -3,8 +3,9 @@ package org.ice1000.jimgui;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
 
@@ -45,12 +46,12 @@ public final class JImTextureID {
 	/**
 	 * Create a texture from file.
 	 *
-	 * @param url file path
+	 * @param uri file path
 	 * @return the texture
 	 * @throws IllegalStateException if load failed
 	 */
-	public static @NotNull JImTextureID fromFile(@NotNull URL url) {
-		return fromFile(url.getFile());
+	public static @NotNull JImTextureID fromFile(@NotNull URI uri) {
+		return fromFile(Paths.get(uri));
 	}
 
 	/**
