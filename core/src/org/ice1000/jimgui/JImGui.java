@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -471,6 +472,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return menuItem(label, null, selected);
 	}
 
+	public boolean inputText(@NotNull String label, @NotNull byte[] buffer, @MagicConstant int flags) {
+		return inputText(getBytes(label), buffer, buffer.length, flags);
+	}
+
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
@@ -506,5 +511,9 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                                         float scaleMax,
 	                                         float graphWidth,
 	                                         float graphHeight);
+	private static native boolean inputText(final byte @NotNull [] label,
+	                                        byte @NotNull [] buffer,
+	                                        final int bufferSize,
+	                                        @MagicConstant int flags);
 	//endregion
 }

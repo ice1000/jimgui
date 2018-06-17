@@ -112,7 +112,8 @@ Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 		Ptr<JNIEnv> env, jclass, jbyteArray _path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, path)
-	auto res = JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(-1, path, size, config, range, nativeObjectPtr);
+	auto res = JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(-1, path, size, config, range,
+	                                                                            nativeObjectPtr);
 	__release(Byte, path)
 	__JNI__FUNCTION__CLEAN__
 	return res;
@@ -321,6 +322,22 @@ Java_org_ice1000_jimgui_JImGui_plotHistogram(Ptr<JNIEnv> env,
 	__JNI__FUNCTION__CLEAN__
 }
 
+JNIEXPORT auto  JNICALL Java_org_ice1000_jimgui_JImGui_inputText(Ptr<JNIEnv> env,
+                                                                 jclass,
+                                                                 jbyteArray _label,
+                                                                 jbyteArray _buffer,
+                                                                 jint bufferLen,
+                                                                 jint flags) -> jboolean {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, label)
+	__get(Byte, buffer)
+	auto ret = ImGui::InputText(STR_J2C(label), PTR_J2C(char, buffer), static_cast<size_t>(bufferLen), flags);
+	__release(Byte, label)
+	__release(Byte, buffer)
+	__JNI__FUNCTION__CLEAN__
+	return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
+}
+
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_getFontDefault0(Ptr<JNIEnv>, jclass) -> jlong {
 	return PTR_C2J(ImGui::GetIO().FontDefault);
@@ -342,7 +359,8 @@ JavaCritical_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(jlong nativeObje
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(Ptr<JNIEnv>, jclass, jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
+Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(Ptr<JNIEnv>, jclass, jfloat x, jfloat y, jfloat z,
+                                                      jfloat w) -> jlong {
 	return PTR_C2J(new ImVec4(x, y, z, w));
 }
 
@@ -453,7 +471,8 @@ JavaCritical_org_ice1000_jimgui_JImGui_menuItem(jint labelLen,
                                                 Ptr<jbyte> shortcut,
                                                 jboolean selected,
                                                 jboolean enabled) -> jboolean {
-	return static_cast<jboolean>(ImGui::MenuItem(STR_J2C(label), STR_J2C(shortcut), selected, enabled) ? JNI_TRUE : JNI_FALSE);
+	return static_cast<jboolean>(ImGui::MenuItem(STR_J2C(label), STR_J2C(shortcut), selected, enabled) ? JNI_TRUE
+	                                                                                                   : JNI_FALSE);
 }
 
 JNIEXPORT auto JNICALL
