@@ -26,13 +26,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	public JImGui(int width, int height, @NotNull String title) {
-		nativeObjectPtr = allocateNativeObjects(width, height, 0, getBytes(title));
-		if (nativeObjectPtr == 0) {
-			System.err.println("Unknown error has happened during initialization!");
-			System.exit(1);
-		}
-		io = new JImGuiIO();
-		background = new JImVec4(1.0f, 0.55f, 0.60f, 1.00f);
+		this(allocateNativeObjects(width, height, 0, getBytes(title)));
 	}
 
 	public JImGui(int width, int height) {
@@ -47,13 +41,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		this(allocateNativeObjects(width, height, fontAtlas.nativeObjectPtr, getBytes(title)));
 	}
 
-	/**
-	 * For hacking purpose, don't use this if you're not sure what you're doing
-	 *
-	 * @param nativeObjectPtr a C++ pointer to {@code GLFWwindow} on Linux/OSX,
-	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows
-	 */
-	public JImGui(long nativeObjectPtr) {
+	private JImGui(long nativeObjectPtr) {
 		this.nativeObjectPtr = nativeObjectPtr;
 		if (nativeObjectPtr == 0) {
 			System.err.println("Unknown error has happened during initialization!");
@@ -61,6 +49,18 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		}
 		io = new JImGuiIO();
 		background = new JImVec4(0.4f, 0.55f, 0.60f, 1.00f);
+	}
+
+	/**
+	 * For hacking purpose, don't use this if you're not sure what you're doing
+	 *
+	 * @param nativeObjectPtr a C++ pointer to {@code GLFWwindow} on Linux/OSX,
+	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows
+	 */
+	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr) {
+		JImGui imGui = new JImGui(nativeObjectPtr);
+		// TODO do ImGui specific initialization
+		return imGui;
 	}
 
 	@Override
