@@ -322,6 +322,17 @@ Java_org_ice1000_jimgui_JImGui_plotHistogram(Ptr<JNIEnv> env,
 	__JNI__FUNCTION__CLEAN__
 }
 
+JNIEXPORT auto  JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_inputText(jint,
+                                                 Ptr<jbyte> label,
+                                                 jint,
+                                                 Ptr<jbyte> buffer,
+                                                 jint bufferLen,
+                                                 jint flags) -> jboolean {
+	auto ret = ImGui::InputText(STR_J2C(label), PTR_J2C(char, buffer), static_cast<size_t>(bufferLen), flags);
+	return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
+}
+
 JNIEXPORT auto  JNICALL Java_org_ice1000_jimgui_JImGui_inputText(Ptr<JNIEnv> env,
                                                                  jclass,
                                                                  jbyteArray _label,
@@ -331,11 +342,11 @@ JNIEXPORT auto  JNICALL Java_org_ice1000_jimgui_JImGui_inputText(Ptr<JNIEnv> env
 	__JNI__FUNCTION__INIT__
 	__get(Byte, label)
 	__get(Byte, buffer)
-	auto ret = ImGui::InputText(STR_J2C(label), PTR_J2C(char, buffer), static_cast<size_t>(bufferLen), flags);
+	auto ret = JavaCritical_org_ice1000_jimgui_JImGui_inputText(-1, label, -1, buffer, bufferLen, flags);
 	__release(Byte, label)
 	__release(Byte, buffer)
 	__JNI__FUNCTION__CLEAN__
-	return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
+	return ret;
 }
 
 JNIEXPORT auto JNICALL

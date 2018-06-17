@@ -144,6 +144,14 @@ JavaCritical_org_ice1000_jimgui_JImGui_plotHistogram(jint labelLen,
                                                      jfloat graphWidth,
                                                      jfloat graphHeight);
 
+JNIEXPORT auto  JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_inputText(jint labelLen,
+                                                 Ptr<jbyte> label,
+                                                 jint bufferLen_,
+                                                 Ptr<jbyte> buffer,
+                                                 jint bufferLen,
+                                                 jint flags) -> jboolean;
+
 #define XY_ACCESSOR(Property) \
 JNIEXPORT auto JNICALL \
 JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## X() -> jfloat; \

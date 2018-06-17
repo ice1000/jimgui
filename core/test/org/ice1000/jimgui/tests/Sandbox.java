@@ -28,6 +28,7 @@ public class Sandbox {
 		main();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	public static void main(@NotNull String @NotNull ... args) {
 		JniLoader.load();
 		AtomicInteger count = new AtomicInteger();
@@ -49,9 +50,11 @@ public class Sandbox {
 		anInt.modifyValue(666);
 		System.out.println(aFloat.accessValue());
 		System.out.println(anInt.accessValue());
+		byte[] buffer = new byte[500];
 		JImGuiUtil.runWithinPer(9000, 10, imGui -> {
 			JImFont font = imGui.getFont();
 			font.setFallbackChar('*');
+			if (imGui.inputText("WTF", buffer)) ;
 			if (imGui.beginMainMenuBar()) {
 				if (imGui.beginMenu("Main", true)) {
 					imGui.menuItem("Copy", "Ctrl+C");

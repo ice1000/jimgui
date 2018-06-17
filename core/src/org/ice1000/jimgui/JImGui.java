@@ -476,6 +476,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return inputText(getBytes(label), buffer, buffer.length, flags);
 	}
 
+	public boolean inputText(@NotNull String label, @NotNull byte[] buffer) {
+		return inputText(label, buffer, 0);
+	}
+
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
