@@ -105,18 +105,26 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
-	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
-
-	glfwDestroyWindow(window);
-	glfwTerminate();
 }
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr) {
+	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
+	glfwDestroyWindow(window);
+	glfwTerminate();
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_deallocateGuiFramework(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(nativeObjectPtr);
 }
 
 JNIEXPORT auto JNICALL

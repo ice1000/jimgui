@@ -64,10 +64,16 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	@Override
-	public void deallocateNativeObject() {
+	public final void deallocateNativeObject() {
 		background.close();
 		deallocateNativeObjects(nativeObjectPtr);
 		io = null;
+	}
+
+	@Override
+	public final void close() {
+		deallocateNativeObject();
+		deallocateGuiFramework(nativeObjectPtr);
 	}
 
 	/**
@@ -483,6 +489,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
+	private static native void deallocateGuiFramework(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
 	private static native long getStyleNativeObjectPtr();

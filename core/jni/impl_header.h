@@ -15,6 +15,9 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr);
 
 JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr);
+
+JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr);
 
 JNIEXPORT auto JNICALL
