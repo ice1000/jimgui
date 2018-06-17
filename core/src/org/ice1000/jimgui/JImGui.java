@@ -477,31 +477,31 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native void initNewFrame(long nativeObjectPtr);
 	private static native long getFontNativeObjectPtr();
 	private static native long getStyleNativeObjectPtr();
-	private static native boolean menuItem(byte @NotNull [] label,
-	                                       byte @Nullable [] shortcut,
+	private static native boolean menuItem(final byte @NotNull [] label,
+	                                       final byte @Nullable [] shortcut,
 	                                       boolean selected,
 	                                       boolean enabled);
 	private static native long getWindowDrawListNativeObjectPtr();
 	private static native long getOverlayDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
-	private static native void loadIniSettingsFromMemory(byte @NotNull [] data);
+	private static native void loadIniSettingsFromMemory(final byte @NotNull [] data);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	private static native byte @NotNull [] getClipboardText0();
-	private static native void plotLines(byte @NotNull [] label,
-	                                     float @NotNull [] values,
+	private static native void plotLines(final byte @NotNull [] label,
+	                                     final float @NotNull [] values,
 	                                     int valuesOffset,
 	                                     int valuesLength,
-	                                     byte @Nullable [] overlayText,
+	                                     final byte @Nullable [] overlayText,
 	                                     float scaleMin,
 	                                     float scaleMax,
 	                                     float graphWidth,
 	                                     float graphHeight);
-	private static native void plotHistogram(byte @NotNull [] label,
-	                                         float @NotNull [] values,
+	private static native void plotHistogram(final byte @NotNull [] label,
+	                                         final float @NotNull [] values,
 	                                         int valuesOffset,
 	                                         int valuesLength,
-	                                         byte @Nullable [] overlayText,
+	                                         final byte @Nullable [] overlayText,
 	                                         float scaleMin,
 	                                         float scaleMax,
 	                                         float graphWidth,
