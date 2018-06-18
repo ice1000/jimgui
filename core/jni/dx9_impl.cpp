@@ -148,11 +148,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) 
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	return JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(nativeObjectPtr);
-}
-
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
 	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
@@ -163,11 +158,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(nativeObjectPtr);
 }
 
 JNIEXPORT void JNICALL
@@ -199,20 +189,10 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_render(ptr, colorPtr);
-}
-
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
 	ImGui_ImplDX9_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
 }
 
 JNIEXPORT void JNICALL
@@ -223,11 +203,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObject
 	DestroyWindow(object->hwnd);
 	UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 	delete object;
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateGuiFramework(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(nativeObjectPtr);
 }
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {

@@ -82,20 +82,6 @@ JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint,
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(Ptr<JNIEnv> env,
-                                                                jclass,
-                                                                jbyteArray _rawData,
-                                                                jint w,
-                                                                jint h) -> jlong {
-	__JNI__FUNCTION__INIT__
-	__get(Byte, rawData)
-	auto ret = JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(-1, rawData, w, h);
-	__release(Byte, rawData)
-	__JNI__FUNCTION__CLEAN__
-	return ret;
-}
-
-JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
 	glfwSetErrorCallback(glfw_error_callback);
@@ -136,30 +122,15 @@ JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjec
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
-}
-
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
 
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateGuiFramework(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(nativeObjectPtr);
-}
-
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
 	return static_cast<jboolean>(glfwWindowShouldClose(PTR_J2C(GLFWwindow, nativeObjectPtr)) ? JNI_TRUE : JNI_FALSE);
-}
-
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	return JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(nativeObjectPtr);
 }
 
 JNIEXPORT void JNICALL
@@ -168,11 +139,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong) {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong ptr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(ptr);
 }
 
 JNIEXPORT void JNICALL
@@ -190,11 +156,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 
 	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong nativeObjectPtr, jlong colorPtr) {
-	JavaCritical_org_ice1000_jimgui_JImGui_render(nativeObjectPtr, colorPtr);
 }
 
 #pragma clang diagnostic pop
