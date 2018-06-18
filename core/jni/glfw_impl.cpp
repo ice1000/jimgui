@@ -31,9 +31,7 @@ static void glfw_error_callback(int error, Ptr<const char> description) {
 }
 
 // See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
-auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int &n, int forceChannels = 4) -> bool {
-	auto *imageData = stbi_load(fileName, &x, &y, &n, forceChannels);
-	if (!imageData) return false;
+auto loadTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) -> bool {
 	// NPOT check
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
@@ -46,18 +44,21 @@ auto loadTexture(Ptr<const char> fileName, Ptr<GLuint> tex, int &x, int &y, int 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	return true;
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
+                                                           jclass,
+                                                           jbyteArray _fileName) -> jlongArray {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	GLuint texture = 0;
 	int width, height, channels;
-	auto success = loadTexture(STR_J2C(fileName), &texture, width, height, channels);
-	if (!success) return nullptr;
+	int forceChannels = 4;
+	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, forceChannels);
 	__release(Byte, fileName)
+	if (!imageData) texture = 0;
+	else loadTexture(imageData, &texture, width, height);
 #define RET_LEN 3
 	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
@@ -68,6 +69,30 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	delete[] ret;
 	__JNI__FUNCTION__CLEAN__
 	return _ret;
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint,
+                                                                        Ptr<jbyte> rawData,
+                                                                        jint width,
+                                                                        jint height) -> jlong {
+	GLuint texture = 0;
+	loadTexture(rawData, &texture, width, height);
+	return texture;
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(Ptr<JNIEnv> env,
+                                                                jclass,
+                                                                jbyteArray _rawData,
+                                                                jint w,
+                                                                jint h) -> jlong {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, rawData)
+	auto ret = JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(-1, rawData, w, h);
+	__release(Byte, rawData)
+	__JNI__FUNCTION__CLEAN__
+	return ret;
 }
 
 JNIEXPORT auto JNICALL

@@ -76,5 +76,19 @@ public final class JImTextureID {
 		return fromFile(path.toString());
 	}
 
+	/**
+	 * GLFW specific
+	 *
+	 * @param rawData byte array passed to {@code glTexImage2D}, usually created by {@code stbi_load}, ends with {@code '\0'}
+	 * @return the texture
+	 * @throws IllegalStateException if not using glfw
+	 */
+	public static @NotNull JImTextureID glfwFromBytes(@NotNull byte[] rawData, int width, int height) {
+		long texture = createGlfwTextureFromBytes(rawData, width, height);
+		if (texture == 0) throw new IllegalStateException("Please use the GLFW backend of imgui!");
+		return new JImTextureID(texture, width, height);
+	}
+
 	private static native long[] createTextureFromFile(byte @NotNull [] fileName);
+	private static native long createGlfwTextureFromBytes(byte @NotNull [] rawData, int width, int height);
 }
