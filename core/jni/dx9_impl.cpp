@@ -15,8 +15,8 @@
 #include <dinput.h>
 #include <tchar.h>
 
-#include "basics.hpp"
-#include "impl_header.h"
+#include <basics.hpp>
+#include <impl_header.h>
 
 // for Linux editing experience
 #ifndef WIN32
@@ -48,7 +48,15 @@ auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
+JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint,
+                                                                        Ptr<jbyte> rawData,
+                                                                        jint width,
+                                                                        jint height) -> jlong { return 0; }
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
+                                                           jclass,
+                                                           jbyteArray _fileName) -> jlongArray {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	LPDIRECT3DTEXTURE9 texture;
@@ -121,7 +129,8 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 	// Create the D3DDevice
 	if (pD3D->CreateDevice(D3DADAPTER_DEFAULT,
-	                       D3DDEVTYPE_HAL, object->hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0) {
+	                       D3DDEVTYPE_HAL, object->hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) <
+	    0) {
 		pD3D->Release();
 		UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 		return NULL;
