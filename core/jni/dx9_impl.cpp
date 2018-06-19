@@ -59,7 +59,7 @@ JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint,
                                                                     jint height) -> jlong {
 	LPDIRECT3DTEXTURE9 texture;
 	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
-	if (!success) return nullptr;
+	return success ? PTR_C2J(texture) : 0;
 }
 
 JNIEXPORT auto JNICALL
