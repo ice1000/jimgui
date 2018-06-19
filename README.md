@@ -2,8 +2,8 @@
 
 [![Download][badge-img]](badge-link)
  
-  [badge-img]: https://api.bintray.com/packages/ice1000/ice1000/jimgui/images/download.svg?version=v0.4
-  [badge-link]: https://bintray.com/ice1000/ice1000/jimgui/v0.4/link
+  [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
+  [badge-link]: https://bintray.com/ice1000/ice1000/jimgui
 
 Linux Build | Windows Build
 :----------:|:-------------:

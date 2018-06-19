@@ -5,7 +5,6 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
-#include <stdio.h>
 #include "impl/GL/glcorearb.h" // avoid conflicting with system include
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
@@ -19,10 +18,9 @@
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
-#include <imgui/stb_image.h>
 
-#include "basics.hpp"
-#include "impl_header.h"
+#include <basics.hpp>
+#include <impl_header.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
