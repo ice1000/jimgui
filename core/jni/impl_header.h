@@ -33,10 +33,11 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr);
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint rawDataLen,
-                                                                        Ptr<jbyte> rawData,
-                                                                        jint width,
-                                                                        jint height) -> jlong;
+JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint rawDataLen,
+                                                                    Ptr<jbyte> rawData,
+                                                                    jint size,
+                                                                    jint width,
+                                                                    jint height) -> jlong;
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
@@ -64,14 +65,15 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPt
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(Ptr<JNIEnv> env,
-                                                                jclass,
-                                                                jbyteArray _rawData,
-                                                                jint w,
-                                                                jint h) -> jlong {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
+                                                            jclass,
+                                                            jbyteArray _rawData,
+                                                            jint size,
+                                                            jint w,
+                                                            jint h) -> jlong {
 	__JNI__FUNCTION__INIT__
 	__get(Byte, rawData)
-	auto ret = JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(-1, rawData, w, h);
+	auto ret = JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(-1, rawData, size, w, h);
 	__release(Byte, rawData)
 	__JNI__FUNCTION__CLEAN__
 	return ret;

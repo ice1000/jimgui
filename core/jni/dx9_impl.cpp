@@ -43,15 +43,24 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<const char>, Ptr<LPDIRECT3DTEXTURE9>);
 
-auto loadTexture(const char *fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
+auto loadTexture(Ptr<const char> fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
 	return SUCCEEDED(D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture));
 }
 
+auto loadTextureInMemory(Ptr<void> rawData, size_t size, LPDIRECT3DTEXTURE9 &texture) -> bool {
+	return SUCCEEDED(D3DXCreateTextureFromFileInMemory(g_pd3dDevice, rawData, size, &texture));
+}
+
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint,
-                                                                        Ptr<jbyte> rawData,
-                                                                        jint width,
-                                                                        jint height) -> jlong { return 0; }
+JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint,
+                                                                    Ptr<jbyte> rawData,
+                                                                    jint size,
+                                                                    jint width,
+                                                                    jint height) -> jlong {
+	LPDIRECT3DTEXTURE9 texture;
+	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
+	if (!success) return nullptr;
+}
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,

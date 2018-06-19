@@ -19,6 +19,7 @@
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
+#include <imgui/stb_image.h>
 
 #include "basics.hpp"
 #include "impl_header.h"
@@ -31,7 +32,7 @@ static void glfw_error_callback(int error, Ptr<const char> description) {
 }
 
 // See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
-auto loadTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) -> bool {
+void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 	// NPOT check
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
@@ -58,7 +59,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, forceChannels);
 	__release(Byte, fileName)
 	if (!imageData) texture = 0;
-	else loadTexture(imageData, &texture, width, height);
+	else initTexture(imageData, &texture, width, height);
 #define RET_LEN 3
 	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
@@ -72,12 +73,16 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImTextureID_createGlfwTextureFromBytes(jint,
-                                                                        Ptr<jbyte> rawData,
-                                                                        jint width,
-                                                                        jint height) -> jlong {
+JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint,
+                                                                    Ptr<jbyte> rawData,
+                                                                    jint size,
+                                                                    jint width,
+                                                                    jint height) -> jlong {
 	GLuint texture = 0;
-	loadTexture(rawData, &texture, width, height);
+	int channels, forceChannels = 4;
+	auto *imageData = stbi_load_from_memory(PTR_J2C(stbi_uc, rawData), size, &width, &height, &channels, forceChannels);
+	if (!imageData) return 0;
+	initTexture(imageData, &texture, width, height);
 	return texture;
 }
 

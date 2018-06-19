@@ -1,3 +1,8 @@
+## Unreleased
+
++ Added `JImTexture.glfwFromBytes` for glfw
++ Added constructor for `JImGui` which takes a `long` as the native object pointer
+
 ## v0.4
 
 + Migrated to the newest imgui code structure
