@@ -52,17 +52,6 @@ auto loadTextureInMemory(Ptr<void> rawData, size_t size, LPDIRECT3DTEXTURE9 &tex
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint,
-                                                                    Ptr<jbyte> rawData,
-                                                                    jint size,
-                                                                    jint width,
-                                                                    jint height) -> jlong {
-	LPDIRECT3DTEXTURE9 texture;
-	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
-	return success ? PTR_C2J(texture) : 0;
-}
-
-JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
                                                            jclass,
                                                            jbyteArray _fileName) -> jlongArray {
@@ -71,6 +60,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	LPDIRECT3DTEXTURE9 texture;
 	auto success = loadTexture(STR_J2C(fileName), texture);
 	__release(Byte, fileName)
+	__JNI__FUNCTION__CLEAN__
 	if (!success) return nullptr;
 	D3DSURFACE_DESC desc;
 	texture->GetLevelDesc(0, &desc);
@@ -84,7 +74,33 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	__init(Long, ret, RET_LEN);
 #undef RET_LEN
 	delete[] ret;
+	return _ret;
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
+                                                            jclass,
+                                                            jbyteArray _rawData,
+                                                            jint size) -> jlongArray {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, fileName)
+	LPDIRECT3DTEXTURE9 texture;
+	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
+	__release(Byte, fileName)
 	__JNI__FUNCTION__CLEAN__
+	if (!success) return nullptr;
+	D3DSURFACE_DESC desc;
+	texture->GetLevelDesc(0, &desc);
+	int width = static_cast<jint>(desc.Width);
+	int height = static_cast<jint>(desc.Height);
+#define RET_LEN 3
+	auto ret = new jlong[RET_LEN];
+	ret[0] = PTR_C2J(texture);
+	ret[1] = static_cast<jlong> (width);
+	ret[2] = static_cast<jlong> (height);
+	__init(Long, ret, RET_LEN);
+#undef RET_LEN
+	delete[] ret;
 	return _ret;
 }
 

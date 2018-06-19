@@ -56,6 +56,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	int forceChannels = 4;
 	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, forceChannels);
 	__release(Byte, fileName)
+	__JNI__FUNCTION__CLEAN__
 	if (!imageData) texture = 0;
 	else initTexture(imageData, &texture, width, height);
 #define RET_LEN 3
@@ -66,22 +67,33 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	__init(Long, ret, RET_LEN);
 #undef RET_LEN
 	delete[] ret;
-	__JNI__FUNCTION__CLEAN__
 	return _ret;
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(jint,
-                                                                    Ptr<jbyte> rawData,
-                                                                    jint size,
-                                                                    jint width,
-                                                                    jint height) -> jlong {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
+                                                            jclass,
+                                                            jbyteArray _rawData,
+                                                            jint size) -> jlongArray {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, rawData)
 	GLuint texture = 0;
-	int channels, forceChannels = 4;
+	int width, height, channels;
+	int forceChannels = 4;
 	auto *imageData = stbi_load_from_memory(PTR_J2C(stbi_uc, rawData), size, &width, &height, &channels, forceChannels);
-	if (!imageData) return 0;
-	initTexture(imageData, &texture, width, height);
-	return texture;
+	__release(Byte, rawData)
+	__JNI__FUNCTION__CLEAN__
+	if (!imageData) texture = 0;
+	else initTexture(imageData, &texture, width, height);
+#define RET_LEN 3
+	auto ret = new jlong[RET_LEN];
+	ret[0] = static_cast<jlong> (texture);
+	ret[1] = static_cast<jlong> (width);
+	ret[2] = static_cast<jlong> (height);
+	__init(Long, ret, RET_LEN);
+#undef RET_LEN
+	delete[] ret;
+	return _ret;
 }
 
 JNIEXPORT auto JNICALL

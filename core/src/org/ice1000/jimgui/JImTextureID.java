@@ -1,6 +1,8 @@
 package org.ice1000.jimgui;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.net.URI;
@@ -37,9 +39,13 @@ public final class JImTextureID {
 	}
 
 	public static @NotNull JImTextureID fromFile(@NotNull String fileName) {
-		long[] extractedData = createTextureFromFile(getBytes(fileName));
+		return createJImTextureID("cannot load " + fileName, createTextureFromFile(getBytes(fileName)));
+	}
+
+	@Contract("_, null -> fail")
+	private static @NotNull JImTextureID createJImTextureID(@NotNull String errorMessage, @Nullable long[] extractedData) {
 		if (extractedData == null || extractedData.length != 3 || extractedData[0] == 0)
-			throw new IllegalStateException("cannot load " + fileName);
+			throw new IllegalStateException(errorMessage);
 		return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2]);
 	}
 
@@ -83,12 +89,11 @@ public final class JImTextureID {
 	 * @return the texture
 	 * @throws IllegalStateException if native interface cannot create texture
 	 */
-	public static @NotNull JImTextureID fromBytes(@NotNull byte[] rawData, int width, int height) {
-		long texture = createTextureFromBytes(rawData, rawData.length, width, height);
-		if (texture == 0) throw new IllegalStateException("Failed to create texture!");
-		return new JImTextureID(texture, width, height);
+	public static @NotNull JImTextureID fromBytes(@NotNull byte[] rawData) {
+		long[] texture = createTextureFromBytes(rawData, rawData.length);
+		return createJImTextureID("Failed to create texture!", texture);
 	}
 
 	private static native long[] createTextureFromFile(byte @NotNull [] fileName);
-	private static native long createTextureFromBytes(byte @NotNull [] rawData, int size, int width, int height);
+	private static native long[] createTextureFromBytes(byte @NotNull [] rawData, int size);
 }

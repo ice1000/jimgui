@@ -13,7 +13,6 @@ fun main(args: Array<String>) {
 	JniLoader.load()
 	JImGui().use { imGui ->
 		var latestRefresh = System.currentTimeMillis()
-		val end = System.currentTimeMillis() + 3000.toLong()
 		val image = ImageIO.read(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png"))
 		val texture = JImTextureID.fromBytes(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png").readBytes(), image.width, image.height)
 		while (!imGui.windowShouldClose()) {
