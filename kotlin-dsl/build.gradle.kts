@@ -1,6 +1,10 @@
+import de.undercouch.gradle.tasks.download.Download
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
-plugins { kotlin("jvm") }
+plugins {
+	id("de.undercouch.download")
+	kotlin("jvm")
+}
 
 java.sourceSets {
 	"main" {
@@ -15,6 +19,14 @@ java.sourceSets {
 		resources.setSrcDirs(listOf("testRes"))
 	}
 }
+
+val downloadIce1000 = task<Download>("downloadIce1000") {
+	src("https://pic4.zhimg.com/61984a25d44df15b857475e7f7b1c7e3_xl.jpg")
+	dest(file("testRes/pics/ice1000.png"))
+	overwrite(false)
+}
+
+tasks["processTestResources"].dependsOn(downloadIce1000)
 
 repositories {
 	jcenter()
