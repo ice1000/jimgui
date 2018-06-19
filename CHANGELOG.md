@@ -1,7 +1,8 @@
 ## Unreleased
 
-+ Added `JImTexture.glfwFromBytes` for glfw
++ Added `JImTexture.fromBytes` for in-memory image loading
 + Added constructor for `JImGui` which takes a `long` as the native object pointer
+  + This requires you to manually manage the release and initialization of GLFW
 
 ## v0.4
 

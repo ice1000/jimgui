@@ -77,18 +77,18 @@ public final class JImTextureID {
 	}
 
 	/**
-	 * GLFW specific
+	 * Create a texture from in-memory files
 	 *
-	 * @param rawData byte array passed to {@code glTexImage2D}, usually created by {@code stbi_load}, ends with {@code '\0'}
+	 * @param rawData raw memory data, directly passed to C++
 	 * @return the texture
-	 * @throws IllegalStateException if not using glfw
+	 * @throws IllegalStateException if native interface cannot create texture
 	 */
-	public static @NotNull JImTextureID glfwFromBytes(@NotNull byte[] rawData, int width, int height) {
-		long texture = createGlfwTextureFromBytes(rawData, width, height);
-		if (texture == 0) throw new IllegalStateException("Please use the GLFW backend of imgui!");
+	public static @NotNull JImTextureID fromBytes(@NotNull byte[] rawData, int width, int height) {
+		long texture = createTextureFromBytes(rawData, rawData.length, width, height);
+		if (texture == 0) throw new IllegalStateException("Failed to create texture!");
 		return new JImTextureID(texture, width, height);
 	}
 
 	private static native long[] createTextureFromFile(byte @NotNull [] fileName);
-	private static native long createGlfwTextureFromBytes(byte @NotNull [] rawData, int width, int height);
+	private static native long createTextureFromBytes(byte @NotNull [] rawData, int size, int width, int height);
 }
