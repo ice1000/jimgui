@@ -13,8 +13,7 @@ fun main(args: Array<String>) {
 	JniLoader.load()
 	JImGui().use { imGui ->
 		var latestRefresh = System.currentTimeMillis()
-		val image = ImageIO.read(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png"))
-		val texture = JImTextureID.fromBytes(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png").readBytes(), image.width, image.height)
+		val texture = JImTextureID.fromBytes(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png").readBytes())
 		while (!imGui.windowShouldClose()) {
 			val currentTimeMillis = System.currentTimeMillis()
 			val deltaTime = currentTimeMillis - latestRefresh
