@@ -83,10 +83,10 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
                                                             jbyteArray _rawData,
                                                             jint size) -> jlongArray {
 	__JNI__FUNCTION__INIT__
-	__get(Byte, fileName)
+	__get(Byte, rawData)
 	LPDIRECT3DTEXTURE9 texture;
 	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
-	__release(Byte, fileName)
+	__release(Byte, rawData)
 	__JNI__FUNCTION__CLEAN__
 	if (!success) return nullptr;
 	D3DSURFACE_DESC desc;

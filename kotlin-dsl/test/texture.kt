@@ -5,7 +5,6 @@ import org.ice1000.jimgui.JImGui.getWindowHeight
 import org.ice1000.jimgui.JImGui.getWindowWidth
 import org.ice1000.jimgui.JImTextureID
 import org.ice1000.jimgui.util.JniLoader
-import javax.imageio.ImageIO
 
 class PlaceHolder
 
