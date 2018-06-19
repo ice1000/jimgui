@@ -1,6 +1,6 @@
 # jimgui
 
-[![Download][badge-img]](badge-link)
+[![Download][badge-img]][badge-link]
  
   [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
   [badge-link]: https://bintray.com/ice1000/ice1000/jimgui
@@ -65,7 +65,7 @@ dependencies {
 
 ## Gradle Kotlin DSL
 
-```kotlin
+```scala
 dependencies {
   val jimguiVersion = "v0.4"
   compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
@@ -93,7 +93,7 @@ First you need to make sure you have `cmake` newer than 3.5 and the following so
 	+ `make`
 	+ `pkg-config`
 	+ `libglfw3-dev`
-+ For Windows (\> XP)
++ For Windows (\>= XP)
 	+ Visual Studio 2017 with `msbuild`
 	+ DirectX 9 Libraries (should be pre-installed on Windows or with Visual Studio)
 	+ DirectX SDK
