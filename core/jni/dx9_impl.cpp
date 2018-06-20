@@ -169,7 +169,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	return ptr;
 }
 
-JNIEXPORT auto JNICALL
+JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
 	auto *object = PTR_J2C(NativeObject, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
