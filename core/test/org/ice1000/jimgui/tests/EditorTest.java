@@ -19,7 +19,9 @@ public class EditorTest {
 			JImFontAtlas fonts = io.getFonts();
 			String fontPath = EditorTest.class.getResource("/font/sarasa-gothic-sc-regular.ttf").toURI().getPath();
 			int texHeight = 20;
-			JImFont sarasaGothic = fonts.addFontFromFile(fontPath, texHeight, fonts.getGlyphRangesForChineseSimplifiedCommon());
+			JImFont sarasaGothic = fonts.addFontFromFile(fontPath,
+					texHeight,
+					fonts.getGlyphRangesForChineseSimplifiedCommon());
 			System.out.println(texHeight);
 			long lastMovedTime = 0;
 			JImStyle style = gui.getStyle();
@@ -48,7 +50,7 @@ public class EditorTest {
 					if (i == cursor && ((System.currentTimeMillis() - lastMovedTime) / 500) % 2 == 0) {
 						float cursorPosX = gui.getCursorPosX() + gui.getWindowPosX() - 1;
 						float cursorPosY = gui.getCursorPosY() + gui.getWindowPosY();
-						gui.getWindowDrawList().addLine(cursorPosX,
+						gui.windowDrawListAddLine(cursorPosX,
 								cursorPosY,
 								cursorPosX,
 								cursorPosY + texHeight,

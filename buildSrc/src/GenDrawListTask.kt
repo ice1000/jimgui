@@ -47,7 +47,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			Fun.private("popTextureID", nativeObjectPtr),
 
 			// Primitives
-			Fun.private("addLine", pos("a"), pos("b"), u32, thickness, nativeObjectPtr),
+			Fun.protected("addLine", pos("a"), pos("b"), u32, thickness, nativeObjectPtr),
 			Fun.private("addRect", pos("a"), pos("b"), u32, rounding, roundingFlags, thickness, nativeObjectPtr),
 			Fun.private("addRectFilled", pos("a"), pos("b"), u32, rounding, roundingFlags, nativeObjectPtr),
 			Fun.private("addRectFilledMultiColor", pos("a"), pos("b"),

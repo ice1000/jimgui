@@ -469,6 +469,28 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return menuItem(label, shortcut, selected, true);
 	}
 
+	public void windowDrawListAddImage(@NotNull JImTextureID id,
+	                                   float aX,
+	                                   float aY,
+	                                   float bX,
+	                                   float bY,
+	                                   float uvAX,
+	                                   float uvAY,
+	                                   float uvBX,
+	                                   float uvBY,
+	                                   int color) {
+		long ptr = getWindowDrawListNativeObjectPtr();
+		JImGuiDrawListGen.addImage(id.nativeObjectPtr, aX, aY, bX, bY, uvAX, uvAY, uvBX, uvBY, color, ptr);
+	}
+
+	public void windowDrawListAddLine(float aX, float aY, float bX, float bY, int u32Color, float thickness) {
+		JImGuiDrawListGen.addLine(aX, aY, bX, bY, u32Color, thickness, getWindowDrawListNativeObjectPtr());
+	}
+
+	public void windowDrawListAddLine(float aX, float aY, float bX, float bY, int u32Color) {
+		windowDrawListAddLine(aX, aY, bX, bY, u32Color, 1);
+	}
+
 	/**
 	 * @param label    label text
 	 * @param selected like checkbox
