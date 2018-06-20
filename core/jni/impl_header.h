@@ -32,6 +32,9 @@ JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr);
 
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong;
+
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
@@ -55,6 +58,11 @@ Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeO
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPtr) {
 	JavaCritical_org_ice1000_jimgui_JImGui_render(ptr, colorPtr);
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(JNIEnv *, jclass, jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(nativeObjectPtr, fontAtlas);
 }
 
 #ifdef __cplusplus

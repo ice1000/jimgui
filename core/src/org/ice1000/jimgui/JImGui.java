@@ -57,10 +57,23 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 *
 	 * @param nativeObjectPtr a C++ pointer to {@code GLFWwindow} on Linux/OSX,
 	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows
+	 * @param fontAtlas       font related settings
+	 */
+	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr, @NotNull JImFontAtlas fontAtlas) {
+		JImGui imGui = new JImGui(nativeObjectPtr);
+		setupImguiSepcificObjects(nativeObjectPtr, fontAtlas.nativeObjectPtr);
+		return imGui;
+	}
+
+	/**
+	 * For hacking purpose, don't use this if you're not sure what you're doing
+	 *
+	 * @param nativeObjectPtr a C++ pointer to {@code GLFWwindow} on Linux/OSX,
+	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows
 	 */
 	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr) {
 		JImGui imGui = new JImGui(nativeObjectPtr);
-		// TODO do ImGui specific initialization
+		setupImguiSepcificObjects(nativeObjectPtr, 0);
 		return imGui;
 	}
 
@@ -517,6 +530,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
+	protected static native long setupImguiSepcificObjects(long nativeObjectPtr, long fontAtlas);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void deallocateGuiFramework(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);

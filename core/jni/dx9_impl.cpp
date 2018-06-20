@@ -42,7 +42,7 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<const char>, Ptr<LPDIRECT3DTEXTURE9>);
-Add
+
 auto loadTexture(Ptr<const char> fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
 	return SUCCEEDED(D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture));
 }
@@ -153,32 +153,37 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	//g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE; // Present without vsync, maximum unthrottled framerate
 
 	// Create the D3DDevice
-	if (pD3D->CreateDevice(D3DADAPTER_DEFAULT,
-	                       D3DDEVTYPE_HAL, object->hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) <
-	    0) {
+	if (pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
+	                       object->hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0) {
 		pD3D->Release();
 		UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
 		return NULL;
 	}
 
 	// Setup Dear ImGui binding
+	auto ptr = PTR_C2J(object);
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(ptr, fontAtlas);
+
+	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
+	UpdateWindow(object->hwnd);
+	return ptr;
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+	auto *object = PTR_J2C(NativeObject, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
 	ImGuiIO &io = ImGui::GetIO();
-	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplWin32_Init(object->hwnd);
 	ImGui_ImplDX9_Init(g_pd3dDevice);
-
-	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
-	UpdateWindow(object->hwnd);
-	return PTR_C2J(object);
 }
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
-	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
+	auto object = PTR_J2C(NativeObject, nativeObjectPtr);
 	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 

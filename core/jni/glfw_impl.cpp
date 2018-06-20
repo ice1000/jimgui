@@ -118,15 +118,21 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	gl3wInit();
 
 	// Setup Dear ImGui binding
+	auto ptr = PTR_C2J(window);
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(ptr, fontAtlas);
+	return ptr;
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
 	ImGuiIO &io = ImGui::GetIO();
-	(void) io;
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init();
-	return PTR_C2J(window);
 }
 
 JNIEXPORT void JNICALL
