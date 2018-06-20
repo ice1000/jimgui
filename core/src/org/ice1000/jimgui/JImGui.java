@@ -530,7 +530,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
-	protected static native long setupImbueSpecificObjects(long nativeObjectPtr, long fontAtlas);
+	protected static native void setupImbueSpecificObjects(long nativeObjectPtr, long fontAtlas);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void deallocateGuiFramework(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);

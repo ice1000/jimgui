@@ -124,7 +124,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
