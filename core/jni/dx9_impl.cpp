@@ -42,7 +42,7 @@ static auto WINDOW_ID = "JIMGUI_WINDOW";
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<const char>, Ptr<LPDIRECT3DTEXTURE9>);
-
+Add
 auto loadTexture(Ptr<const char> fileName, LPDIRECT3DTEXTURE9 &texture) -> bool {
 	return SUCCEEDED(D3DXCreateTextureFromFile(g_pd3dDevice, fileName, &texture));
 }

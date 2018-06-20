@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.ice1000.jimgui.flag.JImTextEditFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -491,6 +492,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		windowDrawListAddLine(aX, aY, bX, bY, u32Color, 1);
 	}
 
+	public void image(@NotNull JImTextureID id) {
+		image(id, id.width, id.height);
+	}
+
 	/**
 	 * @param label    label text
 	 * @param selected like checkbox
@@ -500,7 +505,9 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return menuItem(label, null, selected);
 	}
 
-	public boolean inputText(@NotNull String label, @NotNull byte[] buffer, @MagicConstant int flags) {
+	public boolean inputText(@NotNull String label,
+	                         @NotNull byte[] buffer,
+	                         @MagicConstant(flagsFromClass = JImTextEditFlags.class) int flags) {
 		return inputText(getBytes(label), buffer, buffer.length, flags);
 	}
 
@@ -547,6 +554,6 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native boolean inputText(final byte @NotNull [] label,
 	                                        byte @NotNull [] buffer,
 	                                        final int bufferSize,
-	                                        @MagicConstant int flags);
+	                                        int flags);
 	//endregion
 }

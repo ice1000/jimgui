@@ -5,6 +5,7 @@
   + This requires you to manually manage the release and initialization of GLFW
 + Renamed some factories of `JImTexture`
 + Added `windowDrawListAddLine`, `windowDrawListAddImage`
++ Added `inputText` with its flags class
 
 ## v0.4
 
