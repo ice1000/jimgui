@@ -17,6 +17,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @author ice1000
  * @since v0.2
  */
+@SuppressWarnings("WeakerAccess")
 public final class JImTextureID {
 	/** package-private by design */
 	long nativeObjectPtr;
@@ -25,7 +26,10 @@ public final class JImTextureID {
 	public final int height;
 
 	/**
-	 * package-private by design
+	 * private by design
+	 * you're encouraged to call this if you want to use opengl or dx9 only
+	 * for opengl, {@code nativeObjectPtr} is {@code GLuint}
+	 * for dx9, {@code nativeObjectPtr} is {@code LPDIRECT3DTEXTURE9}
 	 *
 	 * @param nativeObjectPtr native ImTextureID*
 	 *                        have different implementation on difference platforms
@@ -43,7 +47,8 @@ public final class JImTextureID {
 	}
 
 	@Contract("_, null -> fail")
-	private static @NotNull JImTextureID createJImTextureID(@NotNull String errorMessage, @Nullable long[] extractedData) {
+	private static @NotNull JImTextureID createJImTextureID(@NotNull String errorMessage,
+	                                                        @Nullable long[] extractedData) {
 		if (extractedData == null || extractedData.length != 3 || extractedData[0] == 0)
 			throw new IllegalStateException(errorMessage);
 		return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2]);
@@ -56,8 +61,8 @@ public final class JImTextureID {
 	 * @return the texture
 	 * @throws IllegalStateException if load failed
 	 */
-	public static @NotNull JImTextureID fromFile(@NotNull URI uri) {
-		return fromFile(Paths.get(uri));
+	public static @NotNull JImTextureID fromUri(@NotNull URI uri) {
+		return fromPath(Paths.get(uri));
 	}
 
 	/**
@@ -78,7 +83,7 @@ public final class JImTextureID {
 	 * @return the texture
 	 * @throws IllegalStateException if load failed
 	 */
-	public static @NotNull JImTextureID fromFile(@NotNull Path path) {
+	public static @NotNull JImTextureID fromPath(@NotNull Path path) {
 		return fromFile(path.toString());
 	}
 
