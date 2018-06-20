@@ -119,12 +119,12 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 	// Setup Dear ImGui binding
 	auto ptr = PTR_C2J(window);
-	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(ptr, fontAtlas);
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(ptr, fontAtlas);
 	return ptr;
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));

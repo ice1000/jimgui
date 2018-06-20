@@ -33,7 +33,7 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr);
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong;
+JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) -> jlong;
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
@@ -61,8 +61,8 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPt
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(JNIEnv *, jclass, jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
-	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSepcificObjects(nativeObjectPtr, fontAtlas);
+Java_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(JNIEnv *, jclass, jlong nativeObjectPtr, jlong fontAtlas) -> jlong {
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(nativeObjectPtr, fontAtlas);
 }
 
 #ifdef __cplusplus
