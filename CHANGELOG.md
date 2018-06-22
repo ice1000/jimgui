@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Added `org.ice1000.jimgui.util.JniLoaderEx`
+
 ## v0.5
 
 + Added `JImTexture.fromBytes` for in-memory image loading

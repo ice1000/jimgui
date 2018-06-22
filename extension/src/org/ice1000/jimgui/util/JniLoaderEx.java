@@ -13,6 +13,15 @@ public final class JniLoaderEx {
 	 */
 	public static void loadGlfw() {
 		if (JniLoader.Linux) JniLoader.load();
-		else NativeUtil.loadLibraryFromJar("TODO", JniLoaderEx.class);
+		else {
+			if (JniLoader.X86) throw new UnsupportedOperationException("X86 GLFW backend is unavailable yet");
+			else NativeUtil.loadLibraryFromJar("jimgui-glfw.dll", JniLoaderEx.class);
+		}
+	}
+
+	public static void loadDirectX9() {
+		if (JniLoader.Linux || JniLoader.OSX)
+			throw new UnsupportedOperationException("DirectX9 is not supported on " + JniLoader.OsName + ".");
+		else JniLoader.load();
 	}
 }
