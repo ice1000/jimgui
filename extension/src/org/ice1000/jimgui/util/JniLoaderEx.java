@@ -2,7 +2,7 @@ package org.ice1000.jimgui.util;
 
 /**
  * @author ice1000
- * @since v0.6
+ * @since v0.5
  */
 public final class JniLoaderEx {
 	private JniLoaderEx() {
