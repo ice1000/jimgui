@@ -27,11 +27,7 @@ val downloadIce1000 = task<Download>("downloadIce1000") {
 }
 
 tasks["processTestResources"].dependsOn(downloadIce1000)
-
-repositories {
-	jcenter()
-	maven("https://dl.bintray.com/ice1000/Lice")
-}
+repositories { jcenter() }
 
 dependencies {
 	compile(project(":core"))

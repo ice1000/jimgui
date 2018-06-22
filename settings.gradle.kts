@@ -1,1 +1,1 @@
-include("core", "kotlin-dsl")
+include("core", "kotlin-dsl", "extension")

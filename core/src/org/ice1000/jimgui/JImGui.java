@@ -100,7 +100,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		this.background = background;
 	}
 
-	@Contract(" -> fail")
+	@Contract(value = " -> fail", pure = true)
 	private void alreadyDisposed() {
 		throw new IllegalStateException("Native object is nullptr.");
 	}
