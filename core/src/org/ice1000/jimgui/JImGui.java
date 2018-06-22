@@ -55,9 +55,12 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * For hacking purpose, don't use this if you're not sure what you're doing
 	 *
-	 * @param nativeObjectPtr a C++ pointer to {@code GLFWwindow} on Linux/OSX,
-	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows
+	 * @param nativeObjectPtr usually a C++ pointer to {@code GLFWwindow} on Linux/OSX,
+	 *                        {@code NativeObject} (see dx9_impl.cpp) on Windows, but if you're using
+	 *                        {@code JniLoaderEx} (in {@code org.ice1000.jimgui:extension}), this can
+	 *                        a lot of things else.
 	 * @param fontAtlas       font related settings
+	 * @see org.ice1000.jimgui.util.JniLoader
 	 */
 	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr, @NotNull JImFontAtlas fontAtlas) {
 		JImGui imGui = new JImGui(nativeObjectPtr);

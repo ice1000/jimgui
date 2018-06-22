@@ -162,7 +162,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 	// Setup Dear ImGui binding
 	auto ptr = PTR_C2J(object);
-	JavaCritical_org_ice1000_jimgui_JImGui_setupImbueSpecificObjects(ptr, fontAtlas);
+	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(ptr, fontAtlas);
 
 	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(object->hwnd);
