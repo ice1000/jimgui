@@ -12,11 +12,11 @@ public final class JniLoaderEx {
 	 * Force loading GLFW
 	 */
 	public static void loadGlfw() {
-		if (JniLoader.Linux) JniLoader.load();
-		else {
-			if (JniLoader.X86) throw new UnsupportedOperationException("X86 GLFW backend is unavailable yet");
-			else NativeUtil.loadLibraryFromJar("jimgui-glfw.dll", JniLoaderEx.class);
-		}
+		if (JniLoader.Linux || JniLoader.OSX) JniLoader.load();
+		else if (JniLoader.X86)
+			// TODO
+			throw new UnsupportedOperationException("Windows X86 GLFW backend is unavailable yet.");
+		else NativeUtil.loadLibraryFromJar("jimgui-glfw.dll", JniLoaderEx.class);
 	}
 
 	public static void loadDirectX9() {
