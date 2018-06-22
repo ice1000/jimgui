@@ -61,7 +61,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 */
 	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr, @NotNull JImFontAtlas fontAtlas) {
 		JImGui imGui = new JImGui(nativeObjectPtr);
-		setupImbueSpecificObjects(nativeObjectPtr, fontAtlas.nativeObjectPtr);
+		setupImguiSpecificObjects(nativeObjectPtr, fontAtlas.nativeObjectPtr);
 		return imGui;
 	}
 
@@ -73,7 +73,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 */
 	public static @NotNull JImGui fromExistingPointer(long nativeObjectPtr) {
 		JImGui imGui = new JImGui(nativeObjectPtr);
-		setupImbueSpecificObjects(nativeObjectPtr, 0);
+		setupImguiSpecificObjects(nativeObjectPtr, 0);
 		return imGui;
 	}
 
@@ -530,7 +530,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	//region Private native interfaces
 	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
-	protected static native void setupImbueSpecificObjects(long nativeObjectPtr, long fontAtlas);
+	protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void deallocateGuiFramework(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
