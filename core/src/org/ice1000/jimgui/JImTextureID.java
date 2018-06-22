@@ -99,6 +99,16 @@ public final class JImTextureID {
 		return createJImTextureID("Failed to create texture!", texture);
 	}
 
+	/**
+	 * @param nativeObjectPtr existing texture id, like {@code GLuint} in glfw
+	 * @param width           size, used in {@link JImGui#image(JImTextureID)}
+	 * @param height          size, used in {@link JImGui#image(JImTextureID)}
+	 * @return created texture
+	 */
+	public static @NotNull JImTextureID fromExistingID(long nativeObjectPtr, int width, int height) {
+		return new JImTextureID(nativeObjectPtr, width, height);
+	}
+
 	private static native long[] createTextureFromFile(byte @NotNull [] fileName);
 	private static native long[] createTextureFromBytes(byte @NotNull [] rawData, int size);
 }
