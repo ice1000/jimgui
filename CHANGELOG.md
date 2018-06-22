@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.5
+
 + Added `JImTexture.fromBytes` for in-memory image loading
 + Added factory for `JImGui` which takes a `long` as the native object pointer
   + This requires you to manually manage the release and initialization of GLFW/DirectX9
