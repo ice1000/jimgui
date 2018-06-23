@@ -14,10 +14,12 @@ public class JniLoaderExTest {
 	}
 
 	@Test
-	public void testInit() {
-		new Thread(() -> {
+	public void testInit() throws InterruptedException {
+		Thread hello_world = new Thread(() -> {
 			JniLoaderEx.loadGlfw();
 			JImGuiUtil.runWithinPer(8000, 15, imGui -> imGui.text("Hello World"));
-		}).start();
+		});
+		hello_world.start();
+		hello_world.join();
 	}
 }
