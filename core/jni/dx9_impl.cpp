@@ -125,6 +125,11 @@ struct NativeObject {
 };
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer(jint width, jint height, Ptr<jbyte> title) -> jlong {
+	return 0;
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
 	__JNI__FUNCTION__INIT__

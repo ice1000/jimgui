@@ -35,6 +35,9 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas);
 
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer(jint width, jint height, Ptr<jbyte> title) -> jlong;
+
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
 	JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(nativeObjectPtr);
@@ -63,6 +66,20 @@ Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong ptr, jlong colorPt
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(JNIEnv *, jclass, jlong nativeObjectPtr, jlong fontAtlas) {
 	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(nativeObjectPtr, fontAtlas);
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(JNIEnv *env,
+                                                           jclass,
+                                                           jint w,
+                                                           jint h,
+                                                           jbyteArray _title) -> jlong {
+	__JNI__FUNCTION__INIT__
+	__get(Byte, title)
+	auto ret = JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer(w, h, title);
+	__release(Byte, title)
+	__JNI__FUNCTION__CLEAN__
+	return ret;
 }
 
 #ifdef __cplusplus

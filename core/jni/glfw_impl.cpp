@@ -46,6 +46,11 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer(jint width, jint height, Ptr<jbyte> title) -> jlong {
+	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), nullptr, nullptr));
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
                                                            jclass,
                                                            jbyteArray _fileName) -> jlongArray {
