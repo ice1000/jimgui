@@ -115,7 +115,6 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	glfwMakeContextCurrent(window);
 	// Enable vsync
 	glfwSwapInterval(1);
-	gl3wInit();
 
 	// Setup Dear ImGui binding
 	auto ptr = PTR_C2J(window);
@@ -125,6 +124,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
+	gl3wInit();
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));

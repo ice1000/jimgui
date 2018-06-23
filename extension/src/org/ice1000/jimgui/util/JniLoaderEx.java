@@ -16,6 +16,7 @@ public final class JniLoaderEx {
 		else if (JniLoader.X86)
 			// TODO
 			throw new UnsupportedOperationException("Windows X86 GLFW backend is unavailable yet.");
+			// NativeUtil.loadLibraryFromJar("jimgui32-glfw.dll", JniLoaderEx.class);
 		else NativeUtil.loadLibraryFromJar("jimgui-glfw.dll", JniLoaderEx.class);
 	}
 
