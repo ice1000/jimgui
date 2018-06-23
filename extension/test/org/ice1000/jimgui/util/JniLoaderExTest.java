@@ -15,9 +15,9 @@ public class JniLoaderExTest {
 
 	@Test
 	public void testInit() {
-		JniLoaderEx.loadGlfw();
-		JImGuiUtil.runWithinPer(8000, 15, imGui -> {
-			imGui.text("Hello World");
-		});
+		new Thread(() -> {
+			JniLoaderEx.loadGlfw();
+			JImGuiUtil.runWithinPer(8000, 15, imGui -> imGui.text("Hello World"));
+		}).start();
 	}
 }
