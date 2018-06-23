@@ -34,15 +34,15 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 	// NPOT check
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
-	glGenTextures(1, tex);
-	glBindTexture(GL_TEXTURE_2D, *tex);
-	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	gl3wGenTextures(1, tex);
+	gl3wBindTexture(GL_TEXTURE_2D, *tex);
+	// gl3wPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+	gl3wTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	gl3wGenerateMipmap(GL_TEXTURE_2D);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 }
 
 JNIEXPORT auto JNICALL
