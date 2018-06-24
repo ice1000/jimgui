@@ -50,6 +50,9 @@ jobs:
       - store_artifacts:
           path: kotlin-dsl/build/libs
 
+      - store_artifacts:
+          path: extension/build/libs
+
       - run:
           name: Run tests
           command: bash gradlew test --info --stacktrace --no-daemon
