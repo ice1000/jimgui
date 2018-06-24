@@ -31,5 +31,5 @@ public class GlfwUtil {
 		return createWindowPointer0(w, h, getBytes(title), anotherWindow);
 	}
 
-	public static native long createWindowPointer0(int w, int h, byte[] title, long anotherWindow);
+	private static native long createWindowPointer0(int w, int h, byte[] title, long anotherWindow);
 }
