@@ -27,19 +27,19 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	public JImGui(int width, int height, @NotNull String title) {
-		this(allocateNativeObjects(width, height, 0, getBytes(title)));
+		this(allocateNativeObjects(width, height, 0, getBytes(title), 0));
 	}
 
 	public JImGui(int width, int height) {
 		this(width, height, "ImGui window created by JImGui");
 	}
 
-	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas) {
-		this(width, height, fontAtlas, "ImGui window created by JImGui");
+	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title) {
+		this(width, height, fontAtlas, title, 0);
 	}
 
-	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title) {
-		this(allocateNativeObjects(width, height, fontAtlas.nativeObjectPtr, getBytes(title)));
+	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title, long anotherWindow) {
+		this(allocateNativeObjects(width, height, fontAtlas.nativeObjectPtr, getBytes(title), anotherWindow));
 	}
 
 	private JImGui(long nativeObjectPtr) {
@@ -532,7 +532,11 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	//region Private native interfaces
-	private static native long allocateNativeObjects(int width, int height, long fontAtlas, byte @NotNull [] title);
+	private static native long allocateNativeObjects(int width,
+	                                                 int height,
+	                                                 long fontAtlas,
+	                                                 byte @NotNull [] title,
+	                                                 long anotherWindow);
 	protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void deallocateGuiFramework(long nativeObjectPtr);
