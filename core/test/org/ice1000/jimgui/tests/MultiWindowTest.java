@@ -18,11 +18,12 @@ public class MultiWindowTest {
 	}
 
 	@Test
-	public void testSandbox() throws NoSuchFieldException, IllegalAccessException {
+	public void testSandbox() throws @NotNull NoSuchFieldException, @NotNull IllegalAccessException {
 		main();
 	}
 
-	public static void main(String @NotNull ... args) throws NoSuchFieldException, IllegalAccessException {
+	public static void main(String @NotNull ... args)
+			throws @NotNull NoSuchFieldException, @NotNull IllegalAccessException {
 		JniLoader.load();
 		JImGui gui = new JImGui();
 		Field declaredField = JImGui.class.getDeclaredField("nativeObjectPtr");

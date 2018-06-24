@@ -16,6 +16,8 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  */
 @SuppressWarnings("WeakerAccess")
 public class JImGui extends JImGuiGen implements DeallocatableObject {
+	public static final @NotNull String DEFAULT_TITLE = "ImGui window created by JImGui";
+
 	/** package-private by design */
 	long nativeObjectPtr;
 	private @NotNull JImVec4 background;
@@ -31,7 +33,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	public JImGui(int width, int height) {
-		this(width, height, "ImGui window created by JImGui");
+		this(width, height, DEFAULT_TITLE);
 	}
 
 	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title) {
