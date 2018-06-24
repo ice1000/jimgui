@@ -46,8 +46,11 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer(jint width, jint height, Ptr<jbyte> title) -> jlong {
-	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), nullptr, nullptr));
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
+                                                                   jint height,
+                                                                   Ptr<jbyte> title,
+                                                                   jlong anotherWindow) -> jlong {
+	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), nullptr, PTR_J2C(GLFWwindow, anotherWindow)));
 }
 
 JNIEXPORT auto JNICALL
@@ -103,7 +106,8 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
-		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
+		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title, jlong anotherWindow) -> jlong {
+	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -114,7 +118,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 #endif
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
-	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), nullptr, nullptr);
+	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), nullptr, share);
 	__release(Byte, title)
 	__JNI__FUNCTION__CLEAN__
 	glfwMakeContextCurrent(window);

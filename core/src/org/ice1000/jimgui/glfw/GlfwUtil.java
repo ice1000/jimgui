@@ -18,8 +18,18 @@ public class GlfwUtil {
 	 * @see org.ice1000.jimgui.JImGui#fromExistingPointer(long)
 	 */
 	public static long createWindowPointer(int w, int h, @NotNull String title) {
-		return createWindowPointer0(w, h, getBytes(title));
+		return createWindowPointer(w, h, title, 0);
 	}
 
-	public static native long createWindowPointer0(int w, int h, byte[] title);
+	/**
+	 * With another already created GLFW window
+	 *
+	 * @return newly created window pointer, 0 if it's not windows
+	 * @see org.ice1000.jimgui.JImGui#fromExistingPointer(long)
+	 */
+	public static long createWindowPointer(int w, int h, @NotNull String title, long anotherWindow) {
+		return createWindowPointer0(w, h, getBytes(title), anotherWindow);
+	}
+
+	public static native long createWindowPointer0(int w, int h, byte[] title, long anotherWindow);
 }
