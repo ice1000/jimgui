@@ -10,11 +10,13 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
+import static org.junit.Assume.assumeTrue;
 
 public class MultiWindowTest {
 	@BeforeClass
 	public static void setup() {
 		useAlternativeJniLibAndCheckHeadless();
+		assumeTrue(JniLoader.Linux || JniLoader.OSX);
 	}
 
 	@Test
