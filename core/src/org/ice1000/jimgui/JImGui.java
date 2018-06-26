@@ -2,6 +2,7 @@ package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImTextEditFlags;
+import org.ice1000.jimgui.glfw.GlfwUtil;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

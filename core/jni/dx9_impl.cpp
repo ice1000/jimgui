@@ -133,11 +133,6 @@ JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_gl3wInit() -> jint {
-	return 0;
-}
-
-JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *env,
                                                      jclass,
                                                      jint width,
