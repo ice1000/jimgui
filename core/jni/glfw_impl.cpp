@@ -26,7 +26,7 @@
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
 static void glfw_error_callback(int error, Ptr<const char> description) {
-	fprintf(stderr, "ImGui Error %d: %s\n", error, description);
+	fprintf(stderr, "JImGui Error %d: %s\n", error, description);
 }
 
 // See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
@@ -34,11 +34,11 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 	// NPOT check
 	// if ((x & (x - 1)) != 0 || (y & (y - 1)) != 0)
 	// 	fprintf(stderr, "WARNING: texture %s is not power-of-2 dimensions\n", fileName);
-	gl3wGenTextures(1, tex);
-	gl3wBindTexture(GL_TEXTURE_2D, *tex);
-	// gl3wPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-	gl3wTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	gl3wGenerateMipmap(GL_TEXTURE_2D);
+	glGenTextures(1, tex);
+	glBindTexture(GL_TEXTURE_2D, *tex);
+	// glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	glGenerateMipmap(GL_TEXTURE_2D);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -118,7 +118,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 #endif
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
-	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), nullptr, share);
+	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), glfwGetWindowMonitor(share), share);
 	__release(Byte, title)
 	__JNI__FUNCTION__CLEAN__
 	glfwMakeContextCurrent(window);
@@ -181,7 +181,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 	glfwGetFramebufferSize(window, &display_w, &display_h);
 	glViewport(0, 0, display_w, display_h);
 	glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	glfwMakeContextCurrent(window);
