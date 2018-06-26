@@ -50,7 +50,12 @@ JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
                                                                    Ptr<jbyte> title,
                                                                    jlong anotherWindow) -> jlong {
-	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), nullptr, PTR_J2C(GLFWwindow, anotherWindow)));
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
+	auto monitor = share != nullptr ? glfwGetWindowMonitor(share) : nullptr;
+	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), monitor, share));
 }
 
 JNIEXPORT auto JNICALL
@@ -118,7 +123,8 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 #endif
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
-	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), glfwGetWindowMonitor(share), share);
+	auto monitor = share != nullptr ? glfwGetWindowMonitor(share) : nullptr;
+	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), monitor, share);
 	__release(Byte, title)
 	__JNI__FUNCTION__CLEAN__
 	glfwMakeContextCurrent(window);
