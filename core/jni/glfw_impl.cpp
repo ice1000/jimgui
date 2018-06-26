@@ -46,6 +46,11 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_gl3wInit() -> jint {
+	return gl3wInit();
+}
+
+JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
                                                                    Ptr<jbyte> title,
@@ -139,7 +144,6 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
-	gl3wInit();
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));

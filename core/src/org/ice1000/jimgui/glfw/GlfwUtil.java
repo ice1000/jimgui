@@ -23,6 +23,13 @@ public class GlfwUtil {
 	}
 
 	/**
+	 * Should be called before {@link JImGui#fromExistingPointer(long)}
+	 *
+	 * @return opengl version, usually useless
+	 */
+	public static native int gl3wInit();
+
+	/**
 	 * Will not initialize GLFW
 	 *
 	 * @param anotherWindow the pointer to the former-created window
