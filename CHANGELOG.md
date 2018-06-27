@@ -9,7 +9,7 @@
 + Renamed some factories of `JImTexture`
 + Added `windowDrawListAddLine`, `windowDrawListAddImage`
 + Added `inputText` with its flags class
-+ Added support for co-working with other standalone GLFW applications
++ Added support for co-working with other standalone GLFW applications (currently not working on Windows)
 + Added `org.ice1000.jimgui.glfw.GlfwUtil`
 
 ## v0.4
