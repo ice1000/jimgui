@@ -1,5 +1,4 @@
 import com.jfrog.bintray.gradle.*
-import org.codehaus.plexus.util.Os
 
 plugins {
 	java
@@ -47,13 +46,8 @@ allprojects {
 subprojects {
 	apply {
 		plugin("maven")
-		plugin("java")
 		plugin("maven-publish")
 		plugin("com.jfrog.bintray")
-	}
-
-	if (Os.isFamily(Os.FAMILY_MAC)) tasks.withType<Test> {
-		jvmArgs("-XstartOnFirstThread")
 	}
 
 	bintray {
