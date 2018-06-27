@@ -43,9 +43,13 @@ This project is created for a code editor which is another project currently not
 + [ ] Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI
-+ [X] WindowsXP+ native library with directX9 implementation
-  + [X] 32-bit hosted on AppVeyor
-  + [X] 64-bit hosted on AppVeyor
++ [X] WindowsXP+ native library
+  + [X] with glfw + opengl3 implementation
+    + [ ] 32-bit hosted on ?
+    + [X] 64-bit hosted on my laptop
+  + [X] with directX9 implementation
+    + [X] 32-bit hosted on AppVeyor
+    + [X] 64-bit hosted on AppVeyor
 + [X] MacOS native library with Cocoa, glut as additions to Linux implementation
   + [X] hosted on @zxj5470 's Mac laptop
 
