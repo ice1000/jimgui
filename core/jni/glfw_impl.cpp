@@ -72,6 +72,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 	__JNI__FUNCTION__CLEAN__
 	if (!imageData) texture = 0;
 	else initTexture(imageData, &texture, width, height);
+	stbi_image_free(imageData);
 #define RET_LEN 3
 	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
@@ -98,6 +99,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
 	__JNI__FUNCTION__CLEAN__
 	if (!imageData) texture = 0;
 	else initTexture(imageData, &texture, width, height);
+	stbi_image_free(imageData);
 #define RET_LEN 3
 	auto ret = new jlong[RET_LEN];
 	ret[0] = static_cast<jlong> (texture);
