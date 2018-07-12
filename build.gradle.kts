@@ -3,7 +3,7 @@ import com.jfrog.bintray.gradle.*
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.2.50" apply false
+	kotlin("jvm") version "1.2.41" apply false
 	id("com.jfrog.bintray") version "1.7.3"
 	id("de.undercouch.download") version "3.4.2" apply false
 	id("org.sonarqube") version "2.6.2"
