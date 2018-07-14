@@ -33,7 +33,6 @@ public class MultiWindowTest {
 		long nativeObjectPtr = (Long) declaredField.get(gui);
 		JImGui gui1 = JImGui.fromExistingPointer(GlfwUtil.createWindowPointer(500, 500, "Hello World", nativeObjectPtr));
 		gui.initBeforeMainLoop();
-		gui1.initBeforeMainLoop();
 		while (!gui.windowShouldClose() || !gui1.windowShouldClose()) {
 			gui.initNewFrame();
 			gui.text("This is gui");

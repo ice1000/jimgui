@@ -85,7 +85,7 @@ public class Main {
 
 ```groovy
 dependencies {
-  String jimgui_version = 'v0.5'
+  String jimgui_version = 'v0.6'
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
@@ -95,7 +95,7 @@ dependencies {
 
 ```scala
 dependencies {
-  val jimguiVersion = "v0.5"
+  val jimguiVersion = "v0.6"
   compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -108,7 +108,7 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.5</version>
+  <version>v0.6</version>
   <type>pom</type>
 </dependency>
 ```
