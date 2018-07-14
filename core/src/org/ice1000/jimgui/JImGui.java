@@ -31,6 +31,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public JImGui(int width, int height, @NotNull String title) {
 		this(allocateNativeObjects(width, height, 0, getBytes(title), 0));
+		setupImguiSpecificObjects(nativeObjectPtr, 0);
 	}
 
 	public JImGui(int width, int height) {
@@ -43,6 +44,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public JImGui(int width, int height, @NotNull JImFontAtlas fontAtlas, @NotNull String title, long anotherWindow) {
 		this(allocateNativeObjects(width, height, fontAtlas.nativeObjectPtr, getBytes(title), anotherWindow));
+		setupImguiSpecificObjects(nativeObjectPtr, fontAtlas.nativeObjectPtr);
 	}
 
 	private JImGui(long nativeObjectPtr) {

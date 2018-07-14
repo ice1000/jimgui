@@ -24,6 +24,7 @@ public class Issue14 {
 					18, fonts.getGlyphRangesForChineseSimplifiedCommon());
 
 			long latestRefresh = System.currentTimeMillis();
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
 				//if (currentTimeMillis - initialTime > 8000) break;

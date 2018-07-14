@@ -28,6 +28,7 @@ public class JImGuiUtil {
 	public static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long end = System.currentTimeMillis() + millis;
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				imGui.initNewFrame();
 				runnable.accept(imGui);
@@ -38,6 +39,7 @@ public class JImGuiUtil {
 
 	public static void run(@NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
 				imGui.initNewFrame();
 				runnable.accept(imGui);
@@ -49,6 +51,7 @@ public class JImGuiUtil {
 	public static void runPer(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
@@ -70,6 +73,7 @@ public class JImGuiUtil {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + limit;
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;
@@ -90,6 +94,7 @@ public class JImGuiUtil {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long millis = millisSupplier.getAsLong();
+			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
 				long currentTimeMillis = System.currentTimeMillis();
 				long deltaTime = currentTimeMillis - latestRefresh;

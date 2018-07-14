@@ -26,6 +26,7 @@ public class EditorTest {
 			long lastMovedTime = 0;
 			JImStyle style = gui.getStyle();
 			style.setItemSpacingX(2f);
+			gui.initBeforeMainLoop();
 			while (!gui.windowShouldClose()) {
 				long deltaTime = (long) (io.getDeltaTime() * 1000);
 				Thread.sleep(LIMIT - deltaTime < 0 ? 0 : (LIMIT - deltaTime));
