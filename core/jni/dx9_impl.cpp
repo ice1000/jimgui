@@ -35,8 +35,11 @@
 #endif
 
 // Data
-static LPDIRECT3DDEVICE9 g_pd3dDevice = NULL;
+static LPDIRECT3DDEVICE9 g_pd3dDevice = nullptr;
 static D3DPRESENT_PARAMETERS g_d3dpp;
+static HWND hwnd;
+static MSG msg;
+static LPDIRECT3D9 pD3D;
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 static auto WINDOW_ID = "JIMGUI_WINDOW";
 
@@ -104,26 +107,6 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
 	return _ret;
 }
 
-struct NativeObject {
-	HWND hwnd;
-	MSG msg;
-	WNDCLASSEX wc;
-	LPDIRECT3D9 pD3D;
-
-	NativeObject(jint width, jint height, Ptr<const char> title) : wc(
-			{
-					sizeof(WNDCLASSEX),
-					CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-					_T(WINDOW_ID), NULL
-			}) {
-		RegisterClassEx(&wc);
-		ZeroMemory(&msg, sizeof(msg));
-		hwnd = CreateWindow(
-				_T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-				100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
-	};
-};
-
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
@@ -140,72 +123,73 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *env,
                                                      jlong fontAtlas,
                                                      jbyteArray _title,
                                                      jlong anotherWindow) -> jlong {
+	// Create application window
+	auto *wc = new WNDCLASSEX{sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr,
+	                          nullptr, nullptr, nullptr, _T(WINDOW_ID), nullptr};
+
+	RegisterClassEx(wc);
+	auto style = WS_OVERLAPPEDWINDOW;
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
 
-	// Create application window
-	auto object = new NativeObject(width, height, STR_J2C(title));
+	hwnd = CreateWindow(_T(WINDOW_ID), _T(STR_J2C(title)), style, 100, 100, width, height, nullptr, nullptr,
+	                    wc->hInstance, nullptr);
 
 	__release(Byte, title);
 	__JNI__FUNCTION__CLEAN__
 
-	// Initialize Direct3D
-	LPDIRECT3D9 pD3D;
-	if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
-		UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
+	if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
+		UnregisterClass(_T(WINDOW_ID), wc->hInstance);
 		return NULL;
 	}
-	object->pD3D = pD3D;
 	ZeroMemory(&g_d3dpp, sizeof(g_d3dpp));
 	g_d3dpp.Windowed = TRUE;
 	g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	g_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
 	g_d3dpp.EnableAutoDepthStencil = TRUE;
 	g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-	g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE; // Present with vsync
-	//g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE; // Present without vsync, maximum unthrottled framerate
+	g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;
+	// Present with vsync
+	// g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	// Present without vsync, maximum unthrottled framerate
 
 	// Create the D3DDevice
-	if (pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
-	                       object->hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0) {
+	if (pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp,
+	                       &g_pd3dDevice) < 0) {
 		pD3D->Release();
-		UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
+		UnregisterClass(_T(WINDOW_ID), wc->hInstance);
 		return NULL;
 	}
-
-	// Setup Dear ImGui binding
-	auto ptr = PTR_C2J(object);
-	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(ptr, fontAtlas);
-
-	ShowWindow(object->hwnd, SW_SHOWDEFAULT);
-	UpdateWindow(object->hwnd);
-	return ptr;
+	return PTR_C2J(wc);
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
-	auto *object = PTR_J2C(NativeObject, nativeObjectPtr);
+JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong) {
+	ShowWindow(hwnd, SW_SHOWDEFAULT);
+	UpdateWindow(hwnd);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong, jlong fontAtlas) {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
 	ImGuiIO &io = ImGui::GetIO();
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	ImGui_ImplWin32_Init(object->hwnd);
+	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX9_Init(g_pd3dDevice);
 }
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
-	auto object = PTR_J2C(NativeObject, nativeObjectPtr);
-	return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
+	return static_cast<jboolean> (msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
-	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-	while (object->msg.message != WM_QUIT && PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
-		TranslateMessage(&object->msg);
-		DispatchMessage(&object->msg);
+JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong) {
+	while (msg.message != WM_QUIT && PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 	ImGui_ImplDX9_NewFrame();
 	ImGui_ImplWin32_NewFrame();
@@ -249,12 +233,12 @@ JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjec
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr) {
-	auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
 	if (g_pd3dDevice) g_pd3dDevice->Release();
-	if (object->pD3D) object->pD3D->Release();
-	DestroyWindow(object->hwnd);
-	UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
-	delete object;
+	if (pD3D) pD3D->Release();
+	DestroyWindow(hwnd);
+	UnregisterClass(_T(WINDOW_ID), wc->hInstance);
+	delete wc;
 }
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {

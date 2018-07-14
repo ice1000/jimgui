@@ -117,11 +117,21 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
+	// Decide GL+GLSL versions
+#if __APPLE__
+	// GL 3.2 + GLSL 150
+	const char* glsl_version = "#version 150";
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#if __APPLE__
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
+#else
+	// GL 3.0 + GLSL 130
+	const char *glsl_version = "#version 130";
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
@@ -129,14 +139,16 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), monitor, share);
 	__release(Byte, title)
 	__JNI__FUNCTION__CLEAN__
+	if (!window) return 0L;
 	glfwMakeContextCurrent(window);
 	// Enable vsync
 	glfwSwapInterval(1);
+	return PTR_C2J(window);
+}
 
-	// Setup Dear ImGui binding
-	auto ptr = PTR_C2J(window);
-	JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(ptr, fontAtlas);
-	return ptr;
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong) {
+	// Do nothing
 }
 
 JNIEXPORT void JNICALL

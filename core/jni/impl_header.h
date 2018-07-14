@@ -35,6 +35,9 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas);
 
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong nativeObjectPtr);
+
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
@@ -84,6 +87,11 @@ Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(JNIEnv *env,
 	__release(Byte, title)
 	__JNI__FUNCTION__CLEAN__
 	return ret;
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_initBeforeMainLoop(JNIEnv *, jclass, jlong nativeObjectPtr) {
+	JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(nativeObjectPtr);
 }
 
 #ifdef __cplusplus
