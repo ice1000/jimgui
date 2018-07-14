@@ -66,19 +66,20 @@ val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val github = "https://raw.githubusercontent.com"
-val imguiGitHub = "$github/ocornut/imgui/master"
-val imguiExamples = "$imguiGitHub/examples"
+val coding = "https://coding.net/u/ice1000/p"
+val imguiCoding = "$coding/imgui/git/raw/master"
+val imguiExamples = "$imguiCoding/examples"
 
 val downloadImgui = task<Download>("downloadImgui") {
 	group = downloadAll.group
-	src("$imguiGitHub/imgui.cpp")
-	src("$imguiGitHub/imgui.h")
-	src("$imguiGitHub/imgui_draw.cpp")
-	src("$imguiGitHub/imgui_demo.cpp")
-	src("$imguiGitHub/imgui_internal.h")
-	src("$imguiGitHub/stb_rect_pack.h")
-	src("$imguiGitHub/stb_textedit.h")
-	src("$imguiGitHub/stb_truetype.h")
+	src("$imguiCoding/imgui.cpp")
+	src("$imguiCoding/imgui.h")
+	src("$imguiCoding/imgui_draw.cpp")
+	src("$imguiCoding/imgui_demo.cpp")
+	src("$imguiCoding/imgui_internal.h")
+	src("$imguiCoding/stb_rect_pack.h")
+	src("$imguiCoding/stb_textedit.h")
+	src("$imguiCoding/stb_truetype.h")
 	src("$github/nothings/stb/master/stb_image.h")
 	dest(imguiDir)
 	overwrite(false)

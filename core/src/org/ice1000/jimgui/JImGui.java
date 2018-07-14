@@ -213,6 +213,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 	//endregion
 
+	public void initBeforeMainLoop() {
+		initBeforeMainLoop(nativeObjectPtr);
+	}
+
 	/** alias to {@link JImGuiGen#textUnformatted(String)} */
 	public void text(@NotNull String text) {
 		textUnformatted(text);
@@ -541,6 +545,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                                                 byte @NotNull [] title,
 	                                                 long anotherWindow);
 	protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
+	private static native void initBeforeMainLoop(long nativeObjectPtr);
 	private static native void deallocateNativeObjects(long nativeObjectPtr);
 	private static native void deallocateGuiFramework(long nativeObjectPtr);
 	private static native void initNewFrame(long nativeObjectPtr);
