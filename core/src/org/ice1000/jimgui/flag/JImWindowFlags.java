@@ -20,9 +20,9 @@ public interface JImWindowFlags {
 	int NoCollapse = 1 << 5;
 	/** Resize every window to its content every frame */
 	int AlwaysAutoResize = 1 << 6;
-	/** Show borders around windows and items (OBSOLETE! Use e.g. style.FrameBorderSize=1.0f to enable borders). */
-	@Deprecated
-	int ShowBorders = 1 << 7;
+	//** Show borders around windows and items (OBSOLETE! Use e.g. style.FrameBorderSize=1.0f to enable borders). */
+	//@Deprecated
+	//int ShowBorders = 1 << 7;
 	/** Never load/save settings in .ini file */
 	int NoSavedSettings = 1 << 8;
 	/** Disable catching mouse or keyboard inputs, hovering test with pass through. */

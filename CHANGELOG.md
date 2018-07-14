@@ -1,5 +1,10 @@
 ## Unreleased
 
++ Added `imGui.initBeforeMainLoop`
++ Updated enums and flags
++ Used a more complete list of keys
++ Migrated to my fork of imgui's newest release
+
 ## v0.5
 
 + Added `org.ice1000.jimgui.util.JniLoaderEx`, allowing Windows to use the glfw implementation

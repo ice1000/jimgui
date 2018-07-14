@@ -4,7 +4,8 @@ package org.ice1000.jimgui.flag;
  * Flags for {@link org.ice1000.jimgui.JImGuiGen#isItemHovered(int)}, {@link org.ice1000.jimgui.JImGuiGen#isWindowHovered(int)}
  *
  * @author ice1000
- * @apiNote If you are trying to check whether your mouse should be dispatched to imgui or to your app, you should use the 'io.WantCaptureMouse' boolean for that. Please read the FAQ!
+ * @apiNote if you are trying to check whether your mouse should be dispatched to imgui or to your app, you should use the 'io.WantCaptureMouse' boolean for that. Please read the FAQ!
+ * @apiNote windows with the ImGuiWindowFlags_NoInputs flag are ignored by IsWindowHovered() calls.
  * @since v0.1
  */
 public interface JImHoveredFlags {
@@ -28,6 +29,8 @@ public interface JImHoveredFlags {
 	int AllowWhenBlockedByActiveItem = 1 << 5;
 	/** Return true even if the position is overlapped by another window */
 	int AllowWhenOverlapped = 1 << 6;
+	/** Return true even if the item is disabled */
+	int AllowWhenDisabled = 1 << 7;
 	int RectOnly = AllowWhenBlockedByPopup | AllowWhenBlockedByActiveItem | AllowWhenOverlapped;
 	int RootAndChildWindows = RootWindow | ChildWindows;
 }

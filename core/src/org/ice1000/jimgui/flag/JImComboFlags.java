@@ -7,6 +7,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImComboFlags {
+	int Nothing = 0;
 	/** Align the popup toward the left by default */
 	int PopupAlignLeft = 1;
 	/**

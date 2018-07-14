@@ -55,13 +55,15 @@ open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
 			"ScrollbarGrabHovered", "ScrollbarGrabActive", "CheckMark", "SliderGrab", "SliderGrabActive", "Button",
 			"ButtonHovered", "ButtonActive", "Header", "HeaderHovered", "HeaderActive", "Separator", "SeparatorHovered",
 			"SeparatorActive", "ResizeGrip", "ResizeGripHovered", "ResizeGripActive", "PlotLines", "PlotLinesHovered",
-			"PlotHistogram", "PlotHistogramHovered", "TextSelectedBg", "ModalWindowDarkening", "DragDropTarget",
-			"NavHighlight", "NavWindowingHighlight")
+			"PlotHistogram", "PlotHistogramHovered", "TextSelectedBg", "DragDropTarget",
+			"NavHighlight", "NavWindowListHighlight", "NavWindowListDimBg", "ModalWindowDimBg")
 }
 
 open class GenDefaultKeysTask : GenEnumTask<String>("JImDefaultKeys") {
 	override val list = listOf(
 			"Tab", "LeftArrow", "RightArrow", "UpArrow", "DownArrow", "PageUp", "PageDown",
-			"Home", "End", "Insert", "Delete", "Backspace", "Space", "Enter", "Escape", "A",
-			"C", "V", "X", "Y", "Z")
+			"Home", "End", "Insert", "Delete", "Backspace", "Space", "Enter", "Escape",
+			"LeftShift", "RightShift", "LeftCtrl", "RightCtrl", "LeftAlt", "RightAlt",
+			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+			"A", "B", "C", "D", "E", "F", "G", "Q", "R", "S", "V", "W", "X", "Y", "Z")
 }
