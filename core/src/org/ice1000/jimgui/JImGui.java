@@ -2,7 +2,6 @@ package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImTextEditFlags;
-import org.ice1000.jimgui.glfw.GlfwUtil;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -217,6 +216,37 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public void initBeforeMainLoop() {
 		initBeforeMainLoop(nativeObjectPtr);
+	}
+
+	public float getPlatformWindowSizeX() {
+		return getPlatformWindowSizeX(nativeObjectPtr);
+	}
+	public float getPlatformWindowSizeY() {
+		return getPlatformWindowSizeY(nativeObjectPtr);
+	}
+	public float getPlatformWindowPosX() {
+		return getPlatformWindowPosX(nativeObjectPtr);
+	}
+	public float getPlatformWindowPosY() {
+		return getPlatformWindowPosY(nativeObjectPtr);
+	}
+	public void setPlatformWindowSizeX(float newVal) {
+		setPlatformWindowSizeX(nativeObjectPtr, newVal);
+	}
+	public void setPlatformWindowSizeY(float newVal) {
+		setPlatformWindowSizeY(nativeObjectPtr, newVal);
+	}
+	public void setPlatformWindowSize(float newX, float newY) {
+		setPlatformWindowSize(nativeObjectPtr, newX, newY);
+	}
+	public void setPlatformWindowPosX(float newVal) {
+		setPlatformWindowPosX(nativeObjectPtr, newVal);
+	}
+	public void setPlatformWindowPosY(float newVal) {
+		setPlatformWindowPosY(nativeObjectPtr, newVal);
+	}
+	public void setPlatformWindowPos(float newX, float newY) {
+		setPlatformWindowPos(nativeObjectPtr, newX, newY);
 	}
 
 	/** alias to {@link JImGuiGen#textUnformatted(String)} */
@@ -561,6 +591,16 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native long getOverlayDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
+	private static native float getPlatformWindowSizeX(long nativeObjectPtr);
+	private static native float getPlatformWindowSizeY(long nativeObjectPtr);
+	private static native float getPlatformWindowPosX(long nativeObjectPtr);
+	private static native float getPlatformWindowPosY(long nativeObjectPtr);
+	private static native void setPlatformWindowSizeX(long nativeObjectPtr, float newVal);
+	private static native void setPlatformWindowSizeY(long nativeObjectPtr, float newVal);
+	private static native void setPlatformWindowSize(long nativeObjectPtr, float newX, float newY);
+	private static native void setPlatformWindowPosX(long nativeObjectPtr, float newVal);
+	private static native void setPlatformWindowPosY(long nativeObjectPtr, float newVal);
+	private static native void setPlatformWindowPos(long nativeObjectPtr, float newX, float newY);
 	private static native void loadIniSettingsFromMemory(final byte @NotNull [] data);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();
 	private static native byte @NotNull [] getClipboardText0();
