@@ -268,6 +268,111 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObjectPtr) -> float {
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	RECT rect{};
+	GetWindowRect(hwnd, &rect);
+	return static_cast<float>(rect.right - rect.left);
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObjectPtr) -> float {
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	RECT rect{};
+	GetWindowRect(hwnd, &rect);
+	return static_cast<float>(rect.bottom - rect.top);
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectPtr) -> float {
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	RECT rect{};
+	GetWindowRect(hwnd, &rect);
+	return static_cast<float>(rect.left);
+}
+
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectPtr) -> float {
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	RECT rect{};
+	GetWindowRect(hwnd, &rect);
+	return static_cast<float>(rect.top);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong nativeObjectPtr, float newValue) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			0,
+			0,
+			static_cast<int>(newValue),
+			0,
+			SWP_NOMOVE);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(jlong nativeObjectPtr, float newValue) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			0,
+			0,
+			0,
+			static_cast<int>(newValue),
+			SWP_NOMOVE);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(jlong nativeObjectPtr, float newValue) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			static_cast<int>(newValue),
+			0,
+			0,
+			0,
+			SWP_NOMOVE);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(jlong nativeObjectPtr, float newValue) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			0,
+			static_cast<int>(newValue),
+			0,
+			0,
+			SWP_NOMOVE);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			static_cast<int>(newX),
+			static_cast<int>(newY),
+			0,
+			0,
+			SWP_NOMOVE);
+
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPtr, float newX, float newY) {
+	SetWindowPos(
+			hwnd,
+			nullptr,
+			0,
+			0,
+			static_cast<int>(newX),
+			static_cast<int>(newY),
+			SWP_NOMOVE);
+}
+
 #ifndef WIN32
 #pragma clang diagnostic pop
 #endif
