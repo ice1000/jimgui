@@ -270,7 +270,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObjectPtr) -> float {
-	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
 	RECT rect{};
 	GetWindowRect(hwnd, &rect);
 	return static_cast<float>(rect.right - rect.left);
@@ -278,7 +278,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObject
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObjectPtr) -> float {
-	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
 	RECT rect{};
 	GetWindowRect(hwnd, &rect);
 	return static_cast<float>(rect.bottom - rect.top);
@@ -286,7 +286,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObject
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectPtr) -> float {
-	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
 	RECT rect{};
 	GetWindowRect(hwnd, &rect);
 	return static_cast<float>(rect.left);
@@ -294,14 +294,14 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectP
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectPtr) -> float {
-	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (object);
+	auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
 	RECT rect{};
 	GetWindowRect(hwnd, &rect);
 	return static_cast<float>(rect.top);
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong nativeObjectPtr, float newValue) {
+JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong, float newValue) {
 	SetWindowPos(
 			hwnd,
 			nullptr,
