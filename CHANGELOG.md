@@ -1,5 +1,9 @@
 ## Unreleased
 
++ Added accessors to platform window size/pos
+
+## v0.6 (accidentally deleted)
+
 + Added `imGui.initBeforeMainLoop`
 + Updated enums and flags
 + Used a more complete list of keys

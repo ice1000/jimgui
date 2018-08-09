@@ -14,10 +14,10 @@ Linux Build | Windows Build
   [2]: https://ci.appveyor.com/api/projects/status/le5v5lne7au0lnn2?svg=true
   [3]: https://ci.appveyor.com/project/ice1000/jimgui
 
-Cross-platform pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.<br/>
+Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.<br/>
 Attention: this project is actually using a [modified version](https://coding.net/u/ice1000/p/imgui) of dear-imugi.
 
-This project is created for a code editor which is another project currently not open-sourced.
+This project is created for a code editor and a game engine, both not open-sourced currently.
 
 For mac, you should add `-XstartOnFirstThread` JVM argument.
 
@@ -35,6 +35,7 @@ For mac, you should add `-XstartOnFirstThread` JVM argument.
 + [X] `ImGuiFontAtlas` properties getter/setter/function/javadoc generation
 + [X] `ImGui*Flags` copy-pasted constant/javadoc
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
++ [X] Functions to access and modify platform window size/pos
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
   + [X] Generate functions with `MagicConstant` annotation
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
