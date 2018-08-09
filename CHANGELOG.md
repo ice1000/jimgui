@@ -1,6 +1,7 @@
 ## Unreleased
 
 + Added accessors to platform window size/pos
++ Added new color styles
 
 ## v0.6 (accidentally deleted)
 

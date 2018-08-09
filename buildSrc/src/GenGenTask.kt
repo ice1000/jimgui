@@ -41,6 +41,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("styleColorsClassic", stylePtr("style", true)),
 			Fun("styleColorsLight", stylePtr("style", true)),
 			Fun("styleColorsLightGreen", stylePtr("style", true)),
+			Fun("styleColorsDarcula", bool("setupSpacing", true), stylePtr("style", true)),
+			Fun("styleColorsWindows", bool("setupSpacing", true), stylePtr("style", true)),
+			Fun("styleColorsHackEd", stylePtr("style", true)),
 
 			// Cursor / Layout
 			Fun("separator"),
