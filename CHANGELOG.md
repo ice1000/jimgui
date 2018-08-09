@@ -2,6 +2,7 @@
 
 + Added accessors to platform window size/pos
 + Added new color styles
++ Support `Ctrl` which works on Windows
 
 ## v0.6 (accidentally deleted)
 
