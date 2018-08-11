@@ -47,7 +47,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// My own extensions
 			Fun("emptyButton", "boolean", vec4("bounds")),
-			Fun("setDisableHighlight", boolean("newValue")),
+			Fun("setDisableHighlight", bool("newValue")),
 			Fun("getDisableHighlight", "boolean"),
 			Fun("dragVec4", string("label"), vec4("bounds"),
 					float("speed", 1), float("min", 0), float("max", 0)),

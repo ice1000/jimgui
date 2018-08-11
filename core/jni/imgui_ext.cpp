@@ -80,16 +80,8 @@ auto ImGui::EmptyButton(ComVec4 bounds) -> bool {
 			bounds.w < 0.00001f ? 0.00001f : bounds.w});
 }
 
-auto ImGui::DragVec2(RawStr name, RefVec2 val, float speed, float min, float max) -> void {
-	ImGui::DragFloat2(name, &val.x, speed, min, max);
-}
-
 auto ImGui::DragVec4(RawStr name, RefVec4 val, float speed, float min, float max) -> void {
 	ImGui::DragFloat4(name, &val.x, speed, min, max);
-}
-
-auto ImGui::SliderVec2(RawStr name, RefVec2 val, float min, float max) -> void {
-	ImGui::SliderFloat2(name, &val.x, min, max);
 }
 
 auto ImGui::SliderVec4(RawStr name, RefVec4 val, float min, float max) -> void {
@@ -104,14 +96,6 @@ auto ImGui::DragDouble(RawStr label,
                        RawStr format,
                        float power) -> bool {
 	return DragScalar(label, ImGuiDataType_Double, v, v_speed, &v_min, &v_max, format, power);
-}
-
-auto ImGui::Value(RawStr name, ComVec2 val) -> void {
-	ImGui::Text("%s: [%f, %f]", name, val.x, val.y);
-}
-
-auto ImGui::Value(RawStr name, ComVec4 val) -> void {
-	Text("%s: [%f, %f, %f, %f]", name, val.x, val.y, val.z, val.w);
 }
 
 auto ImGui::DialogBox(RawStr title,
