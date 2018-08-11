@@ -80,6 +80,7 @@ set(ALL_LIBRARIES
 		hand_written_bindings.cpp
 		overloads_helper.cpp
 		basics.hpp
+		imgui_ext.cpp
 		impl_header.h
 		cpp_interop.cpp)
 

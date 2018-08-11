@@ -35,7 +35,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 	override fun `c++`(cppCode: StringBuilder) =
 			trivialMethods.forEach { (name, type, params) -> `genC++Fun`(params, name, type, cppCode) }
 
-	private val trivialMethods = listOf(
+	private val trivialMethods = listOf<Fun>(
 			// Styles
 			Fun("styleColorsDark", stylePtr("style", true)),
 			Fun("styleColorsClassic", stylePtr("style", true)),
@@ -44,6 +44,28 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("styleColorsDarcula", bool("setupSpacing", true), stylePtr("style", true)),
 			Fun("styleColorsWindows", bool("setupSpacing", true), stylePtr("style", true)),
 			Fun("styleColorsHackEd", stylePtr("style", true)),
+
+			// My own extensions
+			Fun("emptyButton", "boolean", vec4("bounds")),
+			Fun("setDisableHighlight", boolean("newValue")),
+			Fun("getDisableHighlight", "boolean"),
+			Fun("dragVec4", string("label"), vec4("bounds"),
+					float("speed", 1), float("min", 0), float("max", 0)),
+			Fun("sliderVec4", string("label"), vec4("bounds"),
+					float("min", 0), float("max", 100)),
+			Fun("lineTo", pos("delta"), vec4("color"), thickness),
+			Fun("circle", float("radius"), vec4("color"), numSegments, thickness).apply {
+				document = "@param thickness if < 0, circle will be filled"
+			},
+			Fun("rect", size(), vec4("color"), rounding, thickness, roundingFlags).apply {
+				document = "@param thickness if < 0, circle will be filled"
+			},
+			Fun("dialogBox", string("title"), string("text"),
+					size("Window"), pOpen, float("percentageOnScreen", "0.2f")),
+			Fun("bufferingBar", float("value"), size(),
+					vec4("backgroundColor"), vec4("foregroundColor")),
+			Fun("spinner", float("radius"), thickness,
+					numSegments(30), vec4("color")),
 
 			// Cursor / Layout
 			Fun("separator"),

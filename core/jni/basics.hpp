@@ -10,6 +10,14 @@
 template<typename T>
 using Ptr = T *;
 
+template<typename T>
+using Com = T const &;
+
+template<typename T>
+using Ref = T &;
+
+using RawStr = Ptr<const char>;
+
 #define __JNI__FUNCTION__INIT__ \
 jboolean *option = nullptr;
 

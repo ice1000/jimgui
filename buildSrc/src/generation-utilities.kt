@@ -186,6 +186,7 @@ const val CXX_PREFIX = """///
 #endif
 
 #include <imgui.h>
+#include "imgui_ext.h"
 #include "basics.hpp"
 #include "overloads_helper.hpp"
 #ifdef __cplusplus
