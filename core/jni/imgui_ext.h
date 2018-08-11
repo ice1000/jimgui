@@ -71,7 +71,7 @@ namespace ImGui {
 	auto Circle(float radius, ComVec4 color, int num_segments = 12, float thickness = 1.0f) -> void;
 	/// if @param thickness < 0, circle will be filled
 	auto Circle(float radius, int num_segments = 12, float thickness = 1.0f) -> void;
-	size_t BeginRotate() noexcept { return ImGui::GetWindowDrawList()->VtxBuffer.Size; }
+	size_t BeginRotate() noexcept;
 	auto RotationCenter(size_t rotation_start_index) -> ImVec2;
 	auto EndRotate(float rad, size_t rotation_start_index, ImVec2 center) -> void;
 	auto EndRotate(float rad, size_t rotation_start_index) -> void;

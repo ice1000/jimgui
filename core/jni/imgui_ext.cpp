@@ -212,3 +212,7 @@ auto ImGui::SetDisableHighlight(bool newValue) -> void {
 auto ImGui::GetDisableHighlight() -> bool {
 	return ImGui::GetCurrentContext()->NavDisableHighlight;
 }
+
+size_t ImGui::BeginRotate() noexcept {
+	return ImGui::GetWindowDrawList()->VtxBuffer.Size;
+}
