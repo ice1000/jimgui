@@ -47,7 +47,10 @@ else ()
 		find_library(COCOA_LIBRARY Cocoa)
 		find_library(GLUT_LIBRARY GLUT)
 		find_library(OpenGL_LIBRARY OpenGL)
+
 		mark_as_advanced(COCOA_LIBRARY GLUT_LIBRARY OpenGL_LIBRARY)
+
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -standard")
 		set(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
 		list(APPEND TARGET_LINK_LIBS ${EXTRA_LIBS})
 	endif ()

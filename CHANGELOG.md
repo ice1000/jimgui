@@ -3,6 +3,8 @@
 + Added accessors to platform window size/pos
 + Added new color styles
 + Support `Ctrl` which works on Windows
++ Added my custom extensions (shape widgets, bufferingBar, spinner, dragVec4, sliderVec4)
++ Customizable highlight
 
 ## v0.6 (accidentally deleted)
 
