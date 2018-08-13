@@ -51,7 +51,7 @@ else ()
 		mark_as_advanced(COCOA_LIBRARY GLUT_LIBRARY OpenGL_LIBRARY)
 
 		# Fix _CVDisplayLinkRelease
-		set(CMAKE_SHARED_LINK_FLAGS "${CMAKE_CXX_FLAGS} -framework IOKit")
+		set(CMAKE_SHARED_LINK_FLAGS "${CMAKE_SHARED_LINK_FLAGS} -framework IOKit -framework CoreVideo")
 		set(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
 		list(APPEND TARGET_LINK_LIBS ${EXTRA_LIBS})
 	endif ()
