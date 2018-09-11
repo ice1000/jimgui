@@ -64,8 +64,12 @@ Remember to add jcenter to your repositories.
 ## Code example
 
 ```java
+import org.ice1000.jimgui.JImGui;
+import org.ice1000.jimgui.util.JniLoader;
+
 public class Main {
 	public static void main(String... args){
+		JniLoader.load();
 		try (JImGui imGui = new JImGui()) {
 			// load fonts, global initializations, etc.
 			imGui.initBeforeMainLoop();
@@ -85,8 +89,14 @@ public class Main {
 ## Gradle
 
 ```groovy
+// ...
+repositories {
+    // ... 
+    jcenter()
+}
+// ...
 dependencies {
-  String jimgui_version = 'v0.6'
+  String jimgui_version = 'v0.7'
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
@@ -96,7 +106,7 @@ dependencies {
 
 ```scala
 dependencies {
-  val jimguiVersion = "v0.6"
+  val jimguiVersion = "v0.7"
   compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -109,7 +119,7 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.6</version>
+  <version>v0.7</version>
   <type>pom</type>
 </dependency>
 ```
