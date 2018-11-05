@@ -81,7 +81,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			BPPT("MouseDownOwned", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
 			BPPT("FontAllowUserScaling"),
 			BPPT("ConfigMacOSXBehaviors"),
-			BPPT("ConfigCursorBlink"),
+			BPPT("ConfigInputTextCursorBlink"),
 			BPPT("MouseDrawCursor"),
 			BPPT("KeyCtrl"),
 			BPPT("KeyShift"),

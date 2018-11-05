@@ -417,7 +417,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isItemClicked", "boolean", int("mouseButton", default = 0)),
 			Fun("isItemVisible", "boolean"),
 			Fun("isItemDeactivated", "boolean"),
-			Fun("isItemDeactivatedAfterChange", "boolean"),
+			Fun("isItemDeactivatedAfterEdit", "boolean"),
 			Fun("isAnyItemHovered", "boolean"),
 			Fun("isAnyItemActive", "boolean"),
 			Fun("isAnyItemFocused", "boolean"),
@@ -429,7 +429,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Scrolling
 			Fun("setScrollX", float("scrollX")),
 			Fun("setScrollY", float("scrollY")),
-			Fun("setScrollHere", float("centerYRatio")),
+			Fun("setScrollHereY", float("centerYRatio")),
 			Fun("setScrollFromPosY", float("posY"), float("centerYRatio")),
 			Fun("getScrollX", "float"),
 			Fun("getScrollY", "float"),

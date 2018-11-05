@@ -78,7 +78,7 @@ val downloadImgui = task<Download>("downloadImgui") {
 	src("$imguiCoding/imgui_demo.cpp")
 	src("$imguiCoding/imgui_widgets.cpp")
 	src("$imguiCoding/imgui_internal.h")
-	src("$imguiCoding/imstb_rect_pack.h")
+	src("$imguiCoding/imstb_rectpack.h")
 	src("$imguiCoding/imstb_textedit.h")
 	src("$imguiCoding/imstb_truetype.h")
 	src("$github/nothings/stb/master/stb_image.h")
