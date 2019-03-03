@@ -25,6 +25,18 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
+#if __APPLE__
+	// GL 3.2 + GLSL 150
+	#define GLSL_VERSION "#version 150"
+	#define OPENGL_MAJOR_VERSION 3
+	#define OPENGL_MINOR_VERSION 2
+#else
+	// GL 3.0 + GLSL 130
+	#define GLSL_VERSION "#version 130"
+	#define OPENGL_MAJOR_VERSION  3
+	#define OPENGL_MINOR_VERSION 2
+#endif
+
 static void glfw_error_callback(int error, Ptr<const char> description) {
 	fprintf(stderr, "JImGui Error %d: %s\n", error, description);
 }
@@ -117,21 +129,12 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
-	// Decide GL+GLSL versions
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
+	if (OPENGL_MAJOR_VERSION >= 3 && OPENGL_MINOR_VERSION >= 2)
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
 #if __APPLE__
-	// GL 3.2 + GLSL 150
-	const char* glsl_version = "#version 150";
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
-#else
-	// GL 3.0 + GLSL 130
-	const char *glsl_version = "#version 130";
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-	//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
@@ -161,7 +164,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObj
 	// Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
-	ImGui_ImplOpenGL3_Init();
+	ImGui_ImplOpenGL3_Init(GLSL_VERSION);
 }
 
 JNIEXPORT void JNICALL
