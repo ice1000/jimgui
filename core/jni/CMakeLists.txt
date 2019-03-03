@@ -69,6 +69,7 @@ link_directories(imgui impl)
 set(ALL_LIBRARIES
 		imgui
 		imgui/imgui.cpp
+		imgui/imgui_widgets.cpp
 		imgui/imgui_draw.cpp
 		imgui/imgui_demo.cpp
 		${IMGUI_IMPL}
