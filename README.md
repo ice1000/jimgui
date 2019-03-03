@@ -89,6 +89,7 @@ public class Main {
 ## Gradle
 
 ```groovy
+import org.gradle.internal.os.OperatingSystem
 // ...
 repositories {
     // ... 
@@ -100,6 +101,13 @@ dependencies {
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
+// ...
+run {
+  if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
+    jvmArgs "-XstartOnFirstThread"
+  }
+}
+
 ```
 
 ## Gradle Kotlin DSL
