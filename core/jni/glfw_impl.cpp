@@ -33,8 +33,8 @@
 #else
 	// GL 3.0 + GLSL 130
 	#define GLSL_VERSION "#version 130"
-	#define OPENGL_MAJOR_VERSION  3
-	#define OPENGL_MINOR_VERSION 2
+	#define OPENGL_MAJOR_VERSION 3
+	#define OPENGL_MINOR_VERSION 0
 #endif
 
 static void glfw_error_callback(int error, Ptr<const char> description) {
