@@ -3,9 +3,9 @@ import com.jfrog.bintray.gradle.*
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.2.70" apply false
+	kotlin("jvm") version "1.3.30" apply false
 	id("com.jfrog.bintray") version "1.7.3"
-	id("de.undercouch.download") version "3.4.2" apply false
+	id("de.undercouch.download") version "3.4.3" apply false
 }
 
 var isCI: Boolean by extra
@@ -35,7 +35,7 @@ allprojects {
 
 	val sourcesJar = task<Jar>("sourcesJar") {
 		group = tasks["jar"].group
-		from(java.sourceSets["main"].allSource)
+		from(sourceSets["main"].allJava)
 		classifier = "sources"
 	}
 
@@ -69,7 +69,7 @@ subprojects {
 
 	publishing {
 		(publications) {
-			"mavenJava"(MavenPublication::class) {
+			create<MavenPublication>("maven") {
 				from(components["java"])
 				groupId = project.group.toString()
 				artifactId = "${rootProject.name}-${project.name}"

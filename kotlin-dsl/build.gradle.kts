@@ -6,14 +6,14 @@ plugins {
 	kotlin("jvm")
 }
 
-java.sourceSets {
-	"main" {
+sourceSets {
+	main {
 		java.setSrcDirs(listOf("src"))
 		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("src")) }
 		resources.setSrcDirs(emptyList<Any>())
 	}
 
-	"test" {
+	test {
 		java.setSrcDirs(listOf("test"))
 		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("test")) }
 		resources.setSrcDirs(listOf("testRes"))

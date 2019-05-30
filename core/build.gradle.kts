@@ -66,8 +66,9 @@ val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
 val genImguiStyle = task<GenStyleTask>("genImguiStyle")
 
 val github = "https://raw.githubusercontent.com"
+/// It was my own fork, but now I'm using the official one
 val coding = "https://coding.net/u/ice1000/p"
-val imguiCoding = "$coding/imgui/git/raw/master"
+val imguiCoding = "$github/ocornut/imgui/master"
 val imguiExamples = "$imguiCoding/examples"
 
 val downloadImgui = task<Download>("downloadImgui") {
@@ -125,11 +126,11 @@ val downloadIce1000 = task<Download>("downloadIce1000") {
 
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 val cmakeWin64 = task<Exec>("cmakeWin64") {
-	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 15 2017 Win64" else "Unix Makefiles")
+	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 16 2019 Win64" else "Unix Makefiles")
 }
 
 val cmake = task<Exec>("cmake") {
-	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 15 2017" else "Unix Makefiles")
+	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 16 2019" else "Unix Makefiles")
 }
 
 val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }
@@ -169,13 +170,13 @@ cmakeWin64.dependsOn(compileJava, downloadAll)
 processResources.dependsOn(compileCxx)
 processTestResources.dependsOn(downloadFiraCode, downloadIce1000)
 
-java.sourceSets {
-	"main" {
+sourceSets {
+	main {
 		java.setSrcDirs(listOf("src", "gen"))
 		resources.setSrcDirs(listOf(res))
 	}
 
-	"test" {
+	test {
 		java.setSrcDirs(listOf("test"))
 		resources.setSrcDirs(listOf("testRes"))
 	}
