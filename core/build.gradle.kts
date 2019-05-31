@@ -36,6 +36,10 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 	group = compileCxx.group
 	workingDir(workingDir)
 	commandLine(*commandLine)
+	outputs.dir(workingDir)
+	inputs.files(jniDir.listFiles().filter { it.name.endsWith("cpp") })
+	inputs.dir(jniDir.resolve("imgui"))
+	inputs.dir(jniDir.resolve("impl"))
 	doLast {
 		workingDir.walk()
 				.filter { it.extension in nativeLibraryExtensions }
@@ -49,6 +53,10 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 fun Exec.configureCMake(workingDir: File, generator: String, vararg additional: String) {
 	group = compileCxx.group
 	workingDir(workingDir)
+	outputs.dir(workingDir)
+	inputs.dir(jniDir.resolve("imgui"))
+	inputs.dir(jniDir.resolve("impl"))
+	inputs.file(jniDir.resolve("CMakeLists.txt"))
 	commandLine("cmake", "-DCMAKE_BUILD_TYPE=Release", "-G", generator, *additional, workingDir.parent)
 	doFirst { workingDir.mkdirs() }
 }
