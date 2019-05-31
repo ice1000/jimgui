@@ -29,7 +29,9 @@ jobs:
       - run:
           name: Install cmake
           command: |
-            wget -qO- "https://cmake.org/files/v3.14/cmake-3.14.3-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C ~/.local
+            mkdir -p cmake-3.14
+            wget -qO- "https://cmake.org/files/v3.14/cmake-3.14.3-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C cmake-3.14
+            export PATH=`pwd`/cmake-3.14/bin:$PATH
 
       # Download and cache dependencies
       - restore_cache:
