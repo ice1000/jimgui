@@ -163,17 +163,17 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	/**
 	 * Call this only if you expect a nullable result.
 	 *
-	 * @return same as {@link #getOverlayDrawList()}
+	 * @return same as {@link #getForegroundDrawList()}
 	 */
 	@Contract(pure = true)
-	public @Nullable JImDrawList findOverlayDrawList() {
-		long drawListNativeObjectPtr = getOverlayDrawListNativeObjectPtr();
+	public @Nullable JImDrawList findForegroundDrawList() {
+		long drawListNativeObjectPtr = getForegroundDrawListNativeObjectPtr();
 		return drawListNativeObjectPtr == 0 ? null : new JImDrawList(drawListNativeObjectPtr);
 	}
 
 	@Contract(pure = true)
-	public @NotNull JImDrawList getOverlayDrawList() {
-		@Nullable JImDrawList windowDrawList = findOverlayDrawList();
+	public @NotNull JImDrawList getForegroundDrawList() {
+		@Nullable JImDrawList windowDrawList = findForegroundDrawList();
 		if (null == windowDrawList) alreadyDisposed();
 		return windowDrawList;
 	}
@@ -588,7 +588,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                                       boolean selected,
 	                                       boolean enabled);
 	private static native long getWindowDrawListNativeObjectPtr();
-	private static native long getOverlayDrawListNativeObjectPtr();
+	private static native long getForegroundDrawListNativeObjectPtr();
 	private static native boolean windowShouldClose(long nativeObjectPtr);
 	private static native void render(long nativeObjectPtr, long colorPtr);
 	private static native float getPlatformWindowSizeX(long nativeObjectPtr);

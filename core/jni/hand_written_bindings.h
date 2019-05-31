@@ -36,7 +36,7 @@ JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr() -> jlong;
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr() -> jlong;
+JavaCritical_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr() -> jlong;
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong;

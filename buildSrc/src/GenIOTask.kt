@@ -96,7 +96,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			BPPT("NavVisible"))
 
 	private val primitiveMembers = listOf(
-			PPT("short", "InputCharacter$", isArray = true),
+			PPT("int", "InputQueueCharacter$", isArray = true),
 			PPT("float", "NavInput$", isArray = true),
 			PPT("float", "MouseClickedTime", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
 			PPT("float", "MouseDownDuration", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
@@ -125,8 +125,8 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	private val imVec2Members = listOf(
 			"DisplayFramebufferScale",
-			"DisplayVisibleMin",
-			"DisplayVisibleMax",
+			// "DisplayVisibleMin",
+			// "DisplayVisibleMax",
 			"DisplaySize",
 			"MousePos",
 			"MouseDelta",

@@ -46,10 +46,10 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 	}
 }
 
-fun Exec.configureCMake(workingDir: File, generator: String) {
+fun Exec.configureCMake(workingDir: File, generator: String, vararg additional: String) {
 	group = compileCxx.group
 	workingDir(workingDir)
-	commandLine("cmake", "-DCMAKE_BUILD_TYPE=Release", "-G", generator, workingDir.parent)
+	commandLine("cmake", "-DCMAKE_BUILD_TYPE=Release", "-G", generator, *additional, workingDir.parent)
 	doFirst { workingDir.mkdirs() }
 }
 
@@ -126,7 +126,9 @@ val downloadIce1000 = task<Download>("downloadIce1000") {
 
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 val cmakeWin64 = task<Exec>("cmakeWin64") {
-	configureCMake(`cmake-build-win64`, if (isWindows) "Visual Studio 16 2019 Win64" else "Unix Makefiles")
+	if (isWindows)
+		configureCMake(`cmake-build-win64`, "Visual Studio 16 2019", "-A", "x64")
+	else configureCMake(`cmake-build-win64`, "Unix Makefiles")
 }
 
 val cmake = task<Exec>("cmake") {

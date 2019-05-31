@@ -40,10 +40,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("styleColorsDark", stylePtr("style", true)),
 			Fun("styleColorsClassic", stylePtr("style", true)),
 			Fun("styleColorsLight", stylePtr("style", true)),
-			Fun("styleColorsLightGreen", stylePtr("style", true)),
-			Fun("styleColorsDarcula", bool("setupSpacing", true), stylePtr("style", true)),
-			Fun("styleColorsWindows", bool("setupSpacing", true), stylePtr("style", true)),
-			Fun("styleColorsHackEd", stylePtr("style", true)),
+			// Fun("styleColorsLightGreen", stylePtr("style", true)),
+			// Fun("styleColorsDarcula", bool("setupSpacing", true), stylePtr("style", true)),
+			// Fun("styleColorsWindows", bool("setupSpacing", true), stylePtr("style", true)),
+			// Fun("styleColorsHackEd", stylePtr("style", true)),
 
 			// My own extensions
 			Fun("emptyButton", "boolean", vec4("bounds")),
@@ -92,8 +92,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getFrameHeightWithSpacing", "float"),
 
 			// Demo, Debug, Information
-			/*Fun("showUserGuide"),*/
-			/*Fun("showDemoWindow", pOpen),*/
+			Fun("showUserGuide"),
+			Fun("showDemoWindow", pOpen),
+			Fun("showAboutWindow", pOpen),
 			Fun("showMetricsWindow", pOpen),
 			Fun("showFontSelector", label),
 			Fun("showStyleSelector", label),
@@ -106,7 +107,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "Default")),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
-			Fun("getContentRegionAvailWidth", "float"),
+			// Fun("getContentRegionAvailWidth", "float"),
 			Fun("getWindowContentRegionWidth", "float"),
 
 			Fun("setNextWindowPos", pos, cond, pos("windowPosPivot", default = "0,0")),
@@ -283,7 +284,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("treePop"),
 			Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
-			Fun("setNextTreeNodeOpen", bool("isOpen"), cond),
+			Fun("SetNextItemOpen", bool("isOpen"), cond),
 			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
 
 			// Widgets: Color Editor/Picker

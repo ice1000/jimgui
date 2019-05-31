@@ -50,13 +50,13 @@ Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(Ptr<JNIEnv>, jcl
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr() -> jlong {
-	return PTR_C2J(ImGui::GetOverlayDrawList());
+JavaCritical_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr() -> jlong {
+	return PTR_C2J(ImGui::GetForegroundDrawList());
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
-	return JavaCritical_org_ice1000_jimgui_JImGui_getOverlayDrawListNativeObjectPtr();
+Java_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
+	return JavaCritical_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr();
 }
 
 JNIEXPORT auto JNICALL
@@ -171,7 +171,7 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcharArray {
 	__JNI__FUNCTION__INIT__
-	auto *inputShorts = ImGui::GetIO().InputCharacters;
+	ImVector<ImWchar> inputShorts = ImGui::GetIO().InputQueueCharacters;
 	auto *inputStr = new jchar[17];
 	jsize len;
 	for (int i = 0;; ++i) {

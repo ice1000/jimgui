@@ -52,6 +52,8 @@ cmake-build-debug/
 cmake-build-release/
 cmake-build/
 cmake-build-win64/
+CMakeCache.txt
+CMakeFiles
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
