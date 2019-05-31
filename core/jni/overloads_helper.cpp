@@ -34,7 +34,7 @@ auto ImGui::RadioButton0(const char *label, bool active) -> bool {
 	return RadioButton(label, active);
 }
 
-auto ImGui::ListBoxHeader0(Ptr<const char> label, const ImVec2 &size = ImVec2(0,0)) -> bool {
+auto ImGui::ListBoxHeader0(Ptr<const char> label, const ImVec2 &size) -> bool {
 	return ListBoxHeader(label, size);
 }
 

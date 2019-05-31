@@ -203,11 +203,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					int("popupMaxHeightInItems", default = -1)),
 
 			// Widgets: List Boxes
-			Fun("listBoxHeader0", "boolean", label,
+			Fun("listBoxHeader0", "boolean", label, size(),
 					document = "Use if you want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
 			Fun("listBoxHeader", "boolean", label,
 					int("itemsCount"), int("heightInItems", default = -1),
-					document = "Use if Popyou want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
+					document = "Use if you want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
 			Fun("listBoxFooter"),
 
 			// Widgets: Drags
@@ -365,9 +365,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getColumnsCount", "int"),
 
 			// Tab Bars, Tabs
-			Fun("beginTabBar", "boolean", stringID, flags("TabBar", default = "Default")),
+			Fun("beginTabBar", "boolean", stringID, flags("TabBar", default = "None")),
 			Fun("endTabBar"),
-			Fun("beginTabItem", "boolean", label, pOpenNull, flags("TabItem", default = "Default")),
+			Fun("beginTabItem", "boolean", label, pOpenNull, flags("TabItem", default = "None")),
 			Fun("endTabItem"),
 			Fun("setTabItemClosed", string("tabOrDockedWindowLabel")),
 
