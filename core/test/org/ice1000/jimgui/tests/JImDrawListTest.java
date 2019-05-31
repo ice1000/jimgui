@@ -29,7 +29,7 @@ public class JImDrawListTest {
 		JImGuiUtil.runWithinPer(5000, 15, imGui -> {
 			JImDrawList windowDrawList = imGui.findWindowDrawList();
 			assertNotNull(windowDrawList);
-			JImDrawList overlayDrawList = imGui.findOverlayDrawList();
+			JImDrawList overlayDrawList = imGui.findForegroundDrawList();
 			assertNotNull(overlayDrawList);
 			float cursorPosX = imGui.getWindowPosX();
 			float cursorPosY = imGui.getWindowPosY();

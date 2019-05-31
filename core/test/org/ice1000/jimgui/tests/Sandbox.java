@@ -137,7 +137,7 @@ public class Sandbox {
 			imGui.newLine();
 			try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
 			     MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
-			     MutableJImVec4 green = JImVec4.fromJFX(javafx.scene.paint.Color.GREEN)) {
+			     MutableJImVec4 green = JImVec4.fromAWT(java.awt.Color.GREEN)) {
 				imGui.textColored(red, "Woa!");
 				imGui.textColored(imGui.getStyle().getColor(JImStyleColors.TextSelectedBg), "Woa!");
 				imGui.separator();
