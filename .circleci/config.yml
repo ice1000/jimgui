@@ -31,7 +31,6 @@ jobs:
           command: |
             mkdir -p cmake-3.14
             wget -qO- "https://cmake.org/files/v3.14/cmake-3.14.3-Linux-x86_64.tar.gz" | tar --strip-components=1 -xz -C cmake-3.14
-            export PATH=`pwd`/cmake-3.14/bin:$PATH
 
       # Download and cache dependencies
       - restore_cache:
@@ -49,7 +48,7 @@ jobs:
 
       - run:
           name: Build all projects
-          command: bash gradlew assemble --info --stacktrace --no-daemon
+          command: PATH=`pwd`/cmake-3.14/bin:$PATH bash gradlew assemble --info --stacktrace --no-daemon
 
       - store_artifacts:
           path: core/build/libs
