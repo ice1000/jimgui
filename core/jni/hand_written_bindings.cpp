@@ -172,13 +172,10 @@ JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcharArray {
 	__JNI__FUNCTION__INIT__
 	ImVector<ImWchar> inputShorts = ImGui::GetIO().InputQueueCharacters;
-	auto *inputStr = new jchar[17];
-	jsize len;
-	for (int i = 0;; ++i) {
-		if (!inputShorts[i]) {
-			len = i;
-			break;
-		} else inputStr[i] = static_cast<jchar> (inputShorts[i]);
+	jsize len = inputShorts.size();
+	auto *inputStr = new jchar[len];
+	for (int i = 0; i < len; ++i) {
+		inputStr[i] = static_cast<jchar> (inputShorts[i]);
 	}
 	__init(Char, inputStr, len);
 	__JNI__FUNCTION__CLEAN__
