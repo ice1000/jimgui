@@ -93,9 +93,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
 			// Demo, Debug, Information
 			Fun("showUserGuide"),
-			Fun("showDemoWindow", pOpen),
-			Fun("showAboutWindow", pOpen),
-			Fun("showMetricsWindow", pOpen),
+			Fun("showDemoWindow", pOpenNull),
+			Fun("showAboutWindow", pOpenNull),
+			Fun("showMetricsWindow", pOpenNull),
 			Fun("showFontSelector", label),
 			Fun("showStyleSelector", label),
 			Fun("showStyleEditor", stylePtr("ref", nullable = true)),
@@ -365,7 +365,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getColumnsCount", "int"),
 
 			// Tab Bars, Tabs
+			Fun("beginTabBar", "boolean", stringID, flags("TabBar", default = "Default")),
 			Fun("endTabBar"),
+			Fun("beginTabItem", "boolean", label, pOpenNull, flags("TabItem", default = "Default")),
 			Fun("endTabItem"),
 			Fun("setTabItemClosed", string("tabOrDockedWindowLabel")),
 
