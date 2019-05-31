@@ -202,6 +202,14 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					string("itemsSeparatedByZeros"),
 					int("popupMaxHeightInItems", default = -1)),
 
+			// Widgets: List Boxes
+			Fun("listBoxHeader0", "boolean", label,
+					document = "Use if you want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
+			Fun("listBoxHeader", "boolean", label,
+					int("itemsCount"), int("heightInItems", default = -1),
+					document = "Use if Popyou want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
+			Fun("listBoxFooter"),
+
 			// Widgets: Drags
 			Fun("dragFloat", "boolean", label,
 					floatPtr("value"),
@@ -310,12 +318,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					boolPtr("selected"),
 					flags(from = "Selectable", default = "Nothing"),
 					size(default = "0,0")),
-			Fun("listBoxHeader", "boolean", string("label"), size()),
-			Fun("listBoxHeader0", "boolean",
-					string("label"),
-					int("itemsCount"),
-					int("heightInItems", default = -1)),
-			Fun("listBoxFooter"),
 
 			// Tooltips
 			Fun("setTooltip", text),
@@ -362,6 +364,11 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("setColumnOffset", int("columnIndex"), float("offsetX")),
 			Fun("getColumnsCount", "int"),
 
+			// Tab Bars, Tabs
+			Fun("endTabBar"),
+			Fun("endTabItem"),
+			Fun("setTabItemClosed", string("tabOrDockedWindowLabel")),
+
 			// Logging/Capture: all text output from interface is captured to tty/file/clipboard.
 			Fun("logToTTY", int("maxDepth", default = -1)),
 			Fun("logToFile",
@@ -382,6 +389,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Parameters stacks (current window)
 			Fun("pushItemWidth", float("itemWidth")),
 			Fun("popItemWidth"),
+			Fun("setNextItemWidth", float("itemWidth")),
 			Fun("calcItemWidth", "float"),
 			Fun("pushTextWrapPos", float("wrapPosX", default = 0)),
 			Fun("popTextWrapPos"),

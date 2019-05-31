@@ -4,10 +4,6 @@
 
 #include "overloads_helper.hpp"
 
-auto ImGui::ListBoxHeader0(Ptr<const char> label, int items_count, int height_in_items) -> bool {
-	return ListBoxHeader(label, items_count, height_in_items);
-}
-
 auto ImGui::Selectable0(Ptr<const char> label, bool selected, ImGuiSelectableFlags flags, const ImVec2 &size) -> bool {
 	return Selectable(label, selected, flags, size);
 }
@@ -36,6 +32,10 @@ ColorRelated(Picker4)
 
 auto ImGui::RadioButton0(const char *label, bool active) -> bool {
 	return RadioButton(label, active);
+}
+
+auto ImGui::ListBoxHeader0(Ptr<const char> label, const ImVec2 &size = ImVec2(0,0)) -> bool {
+	return ListBoxHeader(label, size);
 }
 
 #undef ColorRelated

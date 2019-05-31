@@ -61,7 +61,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: bash gradlew test --info --stacktrace --no-daemon
+          command: PATH=`pwd`/cmake-3.14/bin:$PATH bash gradlew test --info --stacktrace --no-daemon
 
       - run:
           name: Save test results

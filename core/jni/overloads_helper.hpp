@@ -9,7 +9,6 @@
 #include "basics.hpp"
 
 namespace ImGui {
-	auto ListBoxHeader0(Ptr<const char> label, int items_count, int height_in_items) -> bool;
 	auto Selectable0(Ptr<const char> label, bool selected = false, ImGuiSelectableFlags flags = 0, const ImVec2 &size = ImVec2(0, 0)) -> bool;
 	auto PushStyleVarImVec2(ImGuiStyleVar idx, const ImVec2 &val) -> void;
 	auto PushStyleVarFloat(ImGuiStyleVar idx, float val) -> void;
@@ -21,6 +20,7 @@ namespace ImGui {
 	auto ColorPicker3(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto ColorPicker4(Ptr<const char> label, ImVec4 &col, ImGuiColorEditFlags flags = 0) -> bool;
 	auto RadioButton0(Ptr<const char> label, bool active) -> bool;
+    auto ListBoxHeader0(Ptr<const char> label, const ImVec2 &size = ImVec2(0,0)) -> bool;
 }
 
 #endif //JIMGUI_GENERATED_HELPER_H
