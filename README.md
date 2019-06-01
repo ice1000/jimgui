@@ -86,6 +86,10 @@ public class Main {
 }
 ```
 
+Notice that jimgui uses a not-very-efficient way to convert `java.lang.String`
+into byte arrays that C++ is happy with.
+You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`.
+
 ## Gradle
 
 ```groovy

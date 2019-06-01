@@ -8,6 +8,7 @@ import org.jetbrains.annotations.TestOnly;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.LongSupplier;
 
 /**
@@ -113,7 +114,24 @@ public class JImGuiUtil {
 	}
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
-	public static @Nullable byte[] getBytes(@Nullable String text) {
+	private static @Nullable byte[] getBytesDefaultImpl(@Nullable String text) {
 		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
+	}
+
+	private static @Nullable Function<String, byte[]> STRING_TO_BYTES = null;
+
+	/**
+	 * Customize your string-to-bytes function.
+	 * Because the default implementation is not very efficient.
+	 *
+	 * @param stringToBytes your conversion function.
+	 */
+	public static void setStringToBytes(@NotNull Function<@Nullable String, byte @Nullable []> stringToBytes) {
+		STRING_TO_BYTES = stringToBytes;
+	}
+
+	@Contract(value = "!null -> !null; null -> null", pure = true)
+	public static @Nullable byte[] getBytes(@Nullable String text) {
+		return STRING_TO_BYTES != null ? STRING_TO_BYTES.apply(text) : getBytesDefaultImpl(text);
 	}
 }
