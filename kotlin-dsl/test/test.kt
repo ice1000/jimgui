@@ -1,11 +1,10 @@
 package test
 
-import org.ice1000.jimgui.JImGuiGen
-import org.ice1000.jimgui.JImGuiGen.*
+import org.ice1000.jimgui.JImGuiGen.popID
 import org.ice1000.jimgui.dsl.*
 import org.ice1000.jimgui.util.JniLoader
 
-fun main(args: Array<String>) {
+fun main() {
 	JniLoader.load()
 	runPer(15) {
 		pushID("WtfID")

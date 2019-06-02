@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.ice1000.jimgui.flag.JImTabItemFlags;
 import org.ice1000.jimgui.flag.JImTextEditFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
@@ -513,6 +514,11 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	                        boolean selected,
 	                        boolean enabled) {
 		return menuItem(getBytes(label), getBytes(shortcut), selected, enabled);
+	}
+
+	public boolean beginTabItem(@NotNull String label,
+	                            @MagicConstant(flagsFromClass = JImTabItemFlags.class) int flags) {
+		return beginTabItem(getBytes(label), 0, flags);
 	}
 
 	/**

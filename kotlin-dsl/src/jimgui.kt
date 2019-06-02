@@ -49,6 +49,17 @@ inline fun JImGuiContext.tabItem(
 	}
 }
 
+inline fun JImGuiContext.tabItem(
+		label: String,
+		@MagicConstant(flagsFromClass = JImTabItemFlags::class)
+		flags: Flags = 0,
+		block: JImGuiBlock) {
+	if (beginTabItem(label, flags)) {
+		block()
+		endTabItem()
+	}
+}
+
 inline fun JImGuiContext.collapsingHeader(
 		label: String,
 		pOpen: NativeBool,
