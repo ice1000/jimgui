@@ -6,6 +6,8 @@ package org.ice1000.jimgui.dsl
 import org.ice1000.jimgui.JImGuiGen.*
 import org.ice1000.jimgui.JImStyleVar
 import org.ice1000.jimgui.NativeBool
+import org.ice1000.jimgui.flag.JImTabBarFlags
+import org.ice1000.jimgui.flag.JImTabItemFlags
 import org.ice1000.jimgui.flag.JImTreeNodeFlags
 import org.ice1000.jimgui.flag.JImWindowFlags
 import org.intellij.lang.annotations.MagicConstant
@@ -21,6 +23,29 @@ inline fun JImGuiContext.menuBar(block: JImGuiBlock) {
 	if (beginMenuBar()) {
 		block()
 		endMenuBar()
+	}
+}
+
+inline fun JImGuiContext.tabBar(
+		stringId: StrID,
+		@MagicConstant(flagsFromClass = JImTabBarFlags::class)
+		flags: Flags = 0,
+		block: JImGuiBlock) {
+	if (beginTabBar(stringId, flags)) {
+		block()
+		endTabBar()
+	}
+}
+
+inline fun JImGuiContext.tabItem(
+		label: String,
+		pOpen: NativeBool,
+		@MagicConstant(flagsFromClass = JImTabItemFlags::class)
+		flags: Flags = 0,
+		block: JImGuiBlock) {
+	if (beginTabItem(label, pOpen, flags)) {
+		block()
+		endTabItem()
 	}
 }
 
