@@ -13,7 +13,7 @@ isCI = !System.getenv("CI").isNullOrBlank()
 
 allprojects {
 	group = "org.ice1000.jimgui"
-	version = "v0.8"
+	version = "v0.8.1"
 
 	apply { plugin("java") }
 
