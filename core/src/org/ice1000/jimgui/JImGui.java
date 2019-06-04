@@ -29,7 +29,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		this(1280, 720);
 	}
 
-	public JImGui(String title) {
+	public JImGui(@NotNull String title) {
 		this(1280, 720, title);
 	}
 
