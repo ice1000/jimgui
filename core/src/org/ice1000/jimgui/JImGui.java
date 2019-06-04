@@ -29,6 +29,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		this(1280, 720);
 	}
 
+	public JImGui(@NotNull String title) {
+		this(1280, 720, title);
+	}
+
 	public JImGui(int width, int height, @NotNull String title) {
 		this(allocateNativeObjects(width, height, 0, getBytes(title), 0));
 		setupImguiSpecificObjects(nativeObjectPtr, 0);
