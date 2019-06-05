@@ -1,5 +1,7 @@
 # jimgui
 
+[![Join the chat at https://gitter.im/imgui-java/community](https://badges.gitter.im/imgui-java/community.svg)](https://gitter.im/imgui-java/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Download][badge-img]][badge-link]
  
   [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
