@@ -136,30 +136,38 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
 	               name: String,
 	               comment: String?) {
 		val capitalName = name.capitalize()
-		javaCode.javadoc(capitalName).append('\t').append(visibility)
+		javaCode.javadoc(capitalName, comment).append('\t').append(visibility)
 		if (isStatic(params)) {
 			javaCode.append(" final ").append(type(type)).append(' ').append(name).append('(')
-			params.forEachIndexed { index, param ->
-				if (index != 0) javaCode.append(",")
-				javaCode.append(param.javaDefault())
-			}
+			params.joinTo(javaCode) { it.javaDefault() }
 			javaCode.append("){")
 			if (type != null) javaCode.append("return ")
 			javaCode.append(name).append('(')
 			params.joinTo(javaCode) { it.javaExpr() }
-			javaCode.append(");}").append(eol).append("\tprotected static native ")
+			javaCode.append(");}").append(eol)
+			if (params.any { param -> param is StringParam && param !is SizedStringParam && param.default == null }) {
+				javaCode.javadoc(capitalName, comment).append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
+				params.joinTo(javaCode) { it.javaDefaultStr() }
+				javaCode.append("){")
+				if (type != null) javaCode.append("return ")
+				javaCode.append(name).append('(')
+				params.joinTo(javaCode) { it.javaExprStr() }
+				javaCode.append(");}").append(eol)
+			}
+			javaCode.append("\tprotected static native ")
 		} else javaCode.append(" static native ")
 		javaCode.append(type(type)).append(' ').append(name).append('(')
 		params.joinTo(javaCode) { it.java() }
 		javaCode.append(");").append(eol)
 		val defaults = ArrayList<String>(params.size)
 		params.asReversed().forEachIndexed inner@{ index, param ->
-			val default = param.default?.toString() ?: kotlin.run {
+			// println("param: ${param.javaClass}, default = ${param.default}")
+			val default = param.default?.toString() ?: run {
 				defaults += param.javaExpr()
 				return
 			}
 			defaults += default
-			javaCode.javadoc(capitalName).append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
+			javaCode.javadoc(capitalName, comment).append("\tpublic ").append(type(type)).append(' ').append(name).append('(')
 			val newParams = params.dropLast(index + 1)
 			newParams.joinTo(javaCode) { it.javaDefault() }
 			javaCode.append("){")
