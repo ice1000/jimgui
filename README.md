@@ -16,8 +16,7 @@ Linux Build | Windows Build
   [2]: https://ci.appveyor.com/api/projects/status/le5v5lne7au0lnn2?svg=true
   [3]: https://ci.appveyor.com/project/ice1000/jimgui
 
-Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.<br/>
-Attention: this project is actually using a [modified version](https://coding.net/u/ice1000/p/imgui) of dear-imugi.
+Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
 This project is created for a code editor and a game engine, both not open-sourced currently.
 
