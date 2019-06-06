@@ -50,8 +50,8 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
 			Fun.private("setFallbackChar", p("wChar", "int"), nativeObjectPtr),
 			Fun.private("isLoaded", "boolean", nativeObjectPtr),
 			Fun.private("growIndex", int("newSize"), nativeObjectPtr),
-			Fun.private("addGlyph", int("dst"), int("src"), bool("overwriteDst", default = true), nativeObjectPtr),
-			Fun.private("addRemapChar", p("wChar", "int"), float("x0"), float("y0"), float("x1"), float("y1"),
+			Fun.private("addRemapChar", int("dst"), int("src"), bool("overwriteDst", default = true), nativeObjectPtr),
+			Fun.private("addGlyph", p("wChar", "int"), float("x0"), float("y0"), float("x1"), float("y1"),
 					float("u0"), float("v0"), float("u1"), float("v1"), float("advanceX"), nativeObjectPtr),
 			Fun.private("buildLookupTable", nativeObjectPtr),
 			Fun.private("renderChar", drawListPtr("drawList"), float("size"), pos(), u32, p("c", "short"), nativeObjectPtr))

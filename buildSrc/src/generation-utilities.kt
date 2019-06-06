@@ -168,7 +168,9 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 }
 
 fun StringBuilder.javadoc(name: String): StringBuilder {
-	GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
+	GenGenTask.parser.map[name]?.let { javadoc ->
+		append("\t/**").append(javadoc).appendln("*/")
+	}
 	return this
 }
 
