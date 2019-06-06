@@ -82,6 +82,8 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			BPPT("FontAllowUserScaling"),
 			BPPT("ConfigMacOSXBehaviors"),
 			BPPT("ConfigInputTextCursorBlink"),
+			BPPT("ConfigWindowsResizeFromEdges"),
+			BPPT("ConfigWindowsMoveFromTitleBarOnly"),
 			BPPT("MouseDrawCursor"),
 			BPPT("KeyCtrl"),
 			BPPT("KeyShift"),
