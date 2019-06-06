@@ -69,7 +69,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	private val functions = listOf(
 			Fun("addInputCharactersUTF8", string("characters")),
 			Fun("clearInputCharacters"),
-			Fun("addInputCharacter", p("character", "short")))
+			Fun("addInputCharacter", int("character")))
 
 	private val stringMembers = listOf("IniFilename", "LogFilename")
 

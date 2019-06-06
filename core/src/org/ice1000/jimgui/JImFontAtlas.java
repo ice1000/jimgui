@@ -91,6 +91,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen implements Deallocata
 	 *                   {@link JImFontAtlas#getGlyphRangesForDefault()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForJapanese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForCyrillic()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForVietnamese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForThai()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForKorean()}
 	 * @return the font
@@ -109,6 +110,7 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen implements Deallocata
 	 *                   {@link JImFontAtlas#getGlyphRangesForDefault()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForJapanese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForCyrillic()},
+	 *                   {@link JImFontAtlas#getGlyphRangesForVietnamese()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForThai()},
 	 *                   {@link JImFontAtlas#getGlyphRangesForKorean()}
 	 * @return the font
@@ -153,6 +155,11 @@ public final class JImFontAtlas extends JImGuiFontAtlasGen implements Deallocata
 	@Contract(pure = true)
 	public @NotNull NativeShort getGlyphRangesForCyrillic() {
 		return new NativeShort(super.getGlyphRangesCyrillic());
+	}
+	/** Do NOT deallocate the returned pointer */
+	@Contract(pure = true)
+	public @NotNull NativeShort getGlyphRangesForVietnamese() {
+		return new NativeShort(super.getGlyphRangesVietnamese());
 	}
 	/** Do NOT deallocate the returned pointer */
 	@Contract(pure = true)
