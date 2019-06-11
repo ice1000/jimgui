@@ -1,7 +1,6 @@
 # jimgui
 
 [![Join the chat at https://gitter.im/imgui-java/community](https://badges.gitter.im/imgui-java/community.svg)](https://gitter.im/imgui-java/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Download][badge-img]][badge-link]
  
   [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
@@ -20,7 +19,7 @@ Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/o
 
 This project is created for a code editor and a game engine, both not open-sourced currently.
 
-For mac, you should add `-XstartOnFirstThread` JVM argument.
+For macOS users, add `-XstartOnFirstThread` JVM argument when running programs built with jimgui.
 
 # Demo
 
@@ -30,10 +29,8 @@ For mac, you should add `-XstartOnFirstThread` JVM argument.
 # Progress
 
 + [X] `ImGui` namespace getter/setter/function/javadoc generation
-+ [X] `ImGuiIO` properties getter/setter/function/javadoc generation
-+ [X] `ImGuiFont` properties getter/setter/function/javadoc generation
-+ [X] `ImGuiStyle` properties getter/setter/function/javadoc generation
-+ [X] `ImGuiFontAtlas` properties getter/setter/function/javadoc generation
++ [X] `ImGuiFontAtlas`/`ImGuiStyle`/`ImGuiFont`/`ImGuiIO`/`ImGuiDrawList`
+       properties getter/setter/function/javadoc generation
 + [X] `ImGui*Flags` copy-pasted constant/javadoc
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
 + [X] Functions to access and modify platform window size/pos
@@ -104,7 +101,7 @@ repositories {
 }
 // ...
 dependencies {
-  String jimgui_version = 'v0.8.1'
+  String jimgui_version = 'v0.9'
   compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
   compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
@@ -121,7 +118,7 @@ run {
 
 ```scala
 dependencies {
-  val jimguiVersion = "v0.8.1"
+  val jimguiVersion = "v0.9"
   compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -134,21 +131,21 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.8.1</version>
+  <version>v0.9</version>
   <type>pom</type>
 </dependency>
 ```
 
 # Build
 
-First you need to make sure you have `cmake` newer than 3.5 and the following software installed:
+First you need to make sure you have `cmake` newer than 3.14 and the following software installed:
 
 + For Linux
 	+ `make`
 	+ `pkg-config`
 	+ `libglfw3-dev`
 + For Windows (\>= XP)
-	+ Visual Studio 2017 with `msbuild`
+	+ Visual Studio 2019 with `msbuild`
 	+ DirectX 9 Libraries (should be pre-installed on Windows or with Visual Studio)
 	+ DirectX SDK
 + For Mac OS X
