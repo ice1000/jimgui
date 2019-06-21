@@ -570,6 +570,15 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return menuItem(label, null, selected);
 	}
 
+	/**
+	 * @param label    label text
+	 * @param selected like checkbox
+	 * @return true when activated.
+	 */
+	public boolean menuItem(@NotNull JImStr label, boolean selected) {
+		return menuItem(label.bytes, null, selected, true);
+	}
+
 	public boolean inputText(@NotNull String label,
 	                         @NotNull byte[] buffer,
 	                         @MagicConstant(flagsFromClass = JImTextEditFlags.class) int flags) {

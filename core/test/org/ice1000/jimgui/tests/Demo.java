@@ -15,6 +15,11 @@ import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHe
 
 public class Demo {
 	private static final float DISTANCE = 10.0f;
+	private static final @NotNull JImStr CUSTOM = new JImStr("Custom");
+	private static final @NotNull JImStr TOP_LEFT = new JImStr("Top-left");
+	private static final @NotNull JImStr TOP_RIGHT = new JImStr("Top-right");
+	private static final @NotNull JImStr BOTTOM_LEFT = new JImStr("Bottom-left");
+	private static final @NotNull JImStr BOTTOM_RIGHT = new JImStr("Bottom-right");
 	private static int corner = 0;
 
 	@BeforeClass
@@ -286,11 +291,11 @@ public class Demo {
 				imGui.text("Mouse Position: (" + imGui.getIO().getMousePosX() + ", " + imGui.getIO().getMousePosY() + ")");
 			else imGui.text("Mouse Position: <invalid>");
 			if (imGui.beginPopupContextWindow()) {
-				if (imGui.menuItem("Custom", corner == -1)) corner = -1;
-				if (imGui.menuItem("Top-left", corner == 0)) corner = 0;
-				if (imGui.menuItem("Top-right", corner == 1)) corner = 1;
-				if (imGui.menuItem("Bottom-left", corner == 2)) corner = 2;
-				if (imGui.menuItem("Bottom-right", corner == 3)) corner = 3;
+				if (imGui.menuItem(CUSTOM, corner == -1)) corner = -1;
+				if (imGui.menuItem(TOP_LEFT, corner == 0)) corner = 0;
+				if (imGui.menuItem(TOP_RIGHT, corner == 1)) corner = 1;
+				if (imGui.menuItem(BOTTOM_LEFT, corner == 2)) corner = 2;
+				if (imGui.menuItem(BOTTOM_RIGHT, corner == 3)) corner = 3;
 				if (openPtr.accessValue() && imGui.menuItem("Close")) openPtr.modifyValue(false);
 				imGui.endPopup();
 			}

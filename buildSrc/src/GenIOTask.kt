@@ -69,7 +69,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	private val functions = listOf(
 			Fun("addInputCharactersUTF8", string("characters")),
 			Fun("clearInputCharacters"),
-			Fun("addInputCharacter", p("character", "short")))
+			Fun("addInputCharacter", int("character")))
 
 	private val stringMembers = listOf("IniFilename", "LogFilename")
 
@@ -82,6 +82,8 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			BPPT("FontAllowUserScaling"),
 			BPPT("ConfigMacOSXBehaviors"),
 			BPPT("ConfigInputTextCursorBlink"),
+			BPPT("ConfigWindowsResizeFromEdges"),
+			BPPT("ConfigWindowsMoveFromTitleBarOnly"),
 			BPPT("MouseDrawCursor"),
 			BPPT("KeyCtrl"),
 			BPPT("KeyShift"),

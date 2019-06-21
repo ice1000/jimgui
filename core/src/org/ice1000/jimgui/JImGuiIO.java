@@ -23,7 +23,7 @@ public final class JImGuiIO extends JImGuiIOGen {
 	}
 
 	public void addInputCharacter(char character) {
-		addInputCharacter((short) character);
+		addInputCharacter((int) character);
 	}
 
 	public @NotNull JImFontAtlas getFonts() {

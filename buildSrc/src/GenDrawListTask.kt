@@ -108,6 +108,8 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 					pos("rectMin"), pos("rectMax"), rounding,
 					roundingFlags, nativeObjectPtr),
 
+			Fun.private("addDrawCmd", nativeObjectPtr),
+
 			// Channels
 			Fun.private("channelsSplit", int("channelsCount"), nativeObjectPtr),
 			Fun.private("channelsMerge", nativeObjectPtr),

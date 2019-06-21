@@ -99,7 +99,9 @@ data class BPPT(val name: String,
 sealed class Param {
 	abstract fun java(): String
 	open fun javaDefault(): String = java()
+	open fun javaDefaultStr(): String = javaDefault()
 	abstract fun javaExpr(): String
+	open fun javaExprStr(): String = javaExpr()
 	abstract fun `c++`(): String
 	open fun `c++Critical`(): String = `c++`()
 	abstract fun `c++Expr`(): String
@@ -125,7 +127,9 @@ open class StringParam(val name: String,
                        override val default: Any?) : Param() {
 	override fun java() = "byte[] $name"
 	override fun javaDefault() = "$annotation String $name"
+	override fun javaDefaultStr() = "$annotation JImStr $name"
 	override fun javaExpr() = "getBytes($name)"
+	override fun javaExprStr() = "$name.bytes"
 	override fun `c++`() = "jbyteArray _$name"
 	override fun `c++Critical`() = "jint ${name}Len, Ptr<jbyte> $name"
 	override fun `c++Expr`() = "STR_J2C($name)"
@@ -167,8 +171,10 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 	override fun `c++Expr`() = "ImVec2($nameX, $nameY)"
 }
 
-fun StringBuilder.javadoc(name: String): StringBuilder {
-	GenGenTask.parser.map[name]?.let { javadoc -> append("\t/**").append(javadoc).appendln("*/") }
+fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder {
+	(default ?: GenGenTask.parser.map[name])?.let { javadoc ->
+		append("\t/**").append(javadoc).appendln("*/")
+	}
 	return this
 }
 
