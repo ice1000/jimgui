@@ -5,6 +5,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImBackendFlags {
+	int Nothing = 0;
 	/** Back-end supports and has a connected gamepad. */
 	int HasGamepad = 1;
 	/** Back-end supports reading GetMouseCursor() to change the OS cursor shape. */
@@ -14,4 +15,31 @@ public interface JImBackendFlags {
 	 * (only used if {@link JImConfigFlags#NavEnableSetMousePos} is set).
 	 */
 	int HasSetMousePos = 1 << 2;
+
+	enum Type implements Flag {
+		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(JImBackendFlags.Nothing),
+		/** @see JImBackendFlags#Nothing */
+		Nothing(JImBackendFlags.Nothing),
+		/** @see JImBackendFlags#HasGamepad */
+		HasGamepad(JImBackendFlags.HasGamepad),
+		/** @see JImBackendFlags#HasMouseCursors */
+		HasMouseCursors(JImBackendFlags.HasMouseCursors),
+		/** @see JImBackendFlags#HasSetMousePos */
+		HasSetMousePos(JImBackendFlags.HasSetMousePos);
+
+		public final int flag;
+
+		Type(int flag) {
+			this.flag = flag;
+		}
+
+		@Override
+		public int get() {
+			return flag;
+		}
+	}
 }

@@ -42,4 +42,60 @@ public interface JImTextEditFlags {
 	int NoUndoRedo = 1 << 16;
 	/** Allow 0123456789.+*-/eE(Scientific notation input) */
 	int CharsScientific = 1 << 17;
+
+	enum Type implements Flag {
+		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(JImTextEditFlags.Nothing),
+		Nothing(JImTextEditFlags.Nothing),
+		/** @see JImTextEditFlags#CharsDecimal */
+		CharsDecimal(JImTextEditFlags.CharsDecimal),
+		/** @see JImTextEditFlags#CharsHexadecimal */
+		CharsHexadecimal(JImTextEditFlags.CharsHexadecimal),
+		/** @see JImTextEditFlags#CharsUppercase */
+		CharsUppercase(JImTextEditFlags.CharsUppercase),
+		/** @see JImTextEditFlags#CharsNoBlank */
+		CharsNoBlank(JImTextEditFlags.CharsNoBlank),
+		/** @see JImTextEditFlags#AutoSelectAll */
+		AutoSelectAll(JImTextEditFlags.AutoSelectAll),
+		/** @see JImTextEditFlags#EnterReturnsTrue */
+		EnterReturnsTrue(JImTextEditFlags.EnterReturnsTrue),
+		/** @see JImTextEditFlags#CallbackCompletion */
+		CallbackCompletion(JImTextEditFlags.CallbackCompletion),
+		/** @see JImTextEditFlags#CallbackHistory */
+		CallbackHistory(JImTextEditFlags.CallbackHistory),
+		/** @see JImTextEditFlags#CallbackAlways */
+		CallbackAlways(JImTextEditFlags.CallbackAlways),
+		/** @see JImTextEditFlags#CallbackCharFilter */
+		CallbackCharFilter(JImTextEditFlags.CallbackCharFilter),
+		/** @see JImTextEditFlags#AllowTabInput */
+		AllowTabInput(JImTextEditFlags.AllowTabInput),
+		/** @see JImTextEditFlags#CtrlEnterForNewLine */
+		CtrlEnterForNewLine(JImTextEditFlags.CtrlEnterForNewLine),
+		/** @see JImTextEditFlags#NoHorizontalScroll */
+		NoHorizontalScroll(JImTextEditFlags.NoHorizontalScroll),
+		/** @see JImTextEditFlags#AlwaysInsertMode */
+		AlwaysInsertMode(JImTextEditFlags.AlwaysInsertMode),
+		/** @see JImTextEditFlags#ReadOnly */
+		ReadOnly(JImTextEditFlags.ReadOnly),
+		/** @see JImTextEditFlags#Password */
+		Password(JImTextEditFlags.Password),
+		/** @see JImTextEditFlags#NoUndoRedo */
+		NoUndoRedo(JImTextEditFlags.NoUndoRedo),
+		/** @see JImTextEditFlags#CharsScientific */
+		CharsScientific(JImTextEditFlags.CharsScientific);
+
+		public final int flag;
+
+		Type(int flag) {
+			this.flag = flag;
+		}
+
+		@Override
+		public int get() {
+			return flag;
+		}
+	}
 }

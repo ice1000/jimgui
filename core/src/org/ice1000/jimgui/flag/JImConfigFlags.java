@@ -7,6 +7,7 @@ import org.ice1000.jimgui.JImGuiIOGen;
  * @since v0.1
  */
 public interface JImConfigFlags {
+	int Nothing = 0;
 	/**
 	 * Master keyboard navigation enable flag.
 	 * initNewFrame() will automatically fill getIO().NavInputs[] based on getIO().KeysDown[].
@@ -42,4 +43,40 @@ public interface JImConfigFlags {
 	int IsSRGB = 1 << 20;
 	/** Application is using a touch screen instead of a mouse. */
 	int IsTouchScreen = 1 << 21;
+
+	enum Type implements Flag {
+		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(JImConfigFlags.Nothing),
+		Nothing(JImConfigFlags.Nothing),
+		/** @see JImConfigFlags#NavEnableKeyboard */
+		NavEnableKeyboard(JImConfigFlags.NavEnableKeyboard),
+		/** @see JImConfigFlags#NavEnableGamepad */
+		NavEnableGamepad(JImConfigFlags.NavEnableGamepad),
+		/** @see JImConfigFlags#NavEnableSetMousePos */
+		NavEnableSetMousePos(JImConfigFlags.NavEnableSetMousePos),
+		/** @see JImConfigFlags#NavNoCaptureKeyboard */
+		NavNoCaptureKeyboard(JImConfigFlags.NavNoCaptureKeyboard),
+		/** @see JImConfigFlags#NoMouse */
+		NoMouse(JImConfigFlags.NoMouse),
+		/** @see JImConfigFlags#NoMouseCursorChange */
+		NoMouseCursorChange(JImConfigFlags.NoMouseCursorChange),
+		/** @see JImConfigFlags#IsSRGB */
+		IsSRGB(JImConfigFlags.IsSRGB),
+		/** @see JImConfigFlags#IsTouchScreen */
+		IsTouchScreen(JImConfigFlags.IsTouchScreen);
+
+		public final int flag;
+
+		Type(int flag) {
+			this.flag = flag;
+		}
+
+		@Override
+		public int get() {
+			return flag;
+		}
+	}
 }

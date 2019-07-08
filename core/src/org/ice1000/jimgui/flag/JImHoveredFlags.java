@@ -9,6 +9,7 @@ package org.ice1000.jimgui.flag;
  * @since v0.1
  */
 public interface JImHoveredFlags {
+	int Nothing = 0;
 	/**
 	 * Return true if directly over the item/window,
 	 * not obstructed by another window,
@@ -33,4 +34,44 @@ public interface JImHoveredFlags {
 	int AllowWhenDisabled = 1 << 7;
 	int RectOnly = AllowWhenBlockedByPopup | AllowWhenBlockedByActiveItem | AllowWhenOverlapped;
 	int RootAndChildWindows = RootWindow | ChildWindows;
+
+	enum Type implements Flag {
+		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(JImHoveredFlags.Nothing),
+		Nothing(JImHoveredFlags.Nothing),
+		/** @see JImHoveredFlags#Default */
+		Default(JImHoveredFlags.Default),
+		/** @see JImHoveredFlags#ChildWindows */
+		ChildWindows(JImHoveredFlags.ChildWindows),
+		/** @see JImHoveredFlags#RootWindow */
+		RootWindow(JImHoveredFlags.RootWindow),
+		/** @see JImHoveredFlags#AnyWindow */
+		AnyWindow(JImHoveredFlags.AnyWindow),
+		/** @see JImHoveredFlags#AllowWhenBlockedByPopup */
+		AllowWhenBlockedByPopup(JImHoveredFlags.AllowWhenBlockedByPopup),
+		/** @see JImHoveredFlags#AllowWhenBlockedByActiveItem */
+		AllowWhenBlockedByActiveItem(JImHoveredFlags.AllowWhenBlockedByActiveItem),
+		/** @see JImHoveredFlags#AllowWhenOverlapped */
+		AllowWhenOverlapped(JImHoveredFlags.AllowWhenOverlapped),
+		/** @see JImHoveredFlags#AllowWhenDisabled */
+		AllowWhenDisabled(JImHoveredFlags.AllowWhenDisabled),
+		/** @see JImHoveredFlags#RectOnly */
+		RectOnly(JImHoveredFlags.RectOnly),
+		/** @see JImHoveredFlags#RootAndChildWindows */
+		RootAndChildWindows(JImHoveredFlags.RootAndChildWindows);
+
+		public final int flag;
+
+		Type(int flag) {
+			this.flag = flag;
+		}
+
+		@Override
+		public int get() {
+			return flag;
+		}
+	}
 }
