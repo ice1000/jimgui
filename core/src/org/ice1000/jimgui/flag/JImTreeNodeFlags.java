@@ -7,6 +7,7 @@ import org.ice1000.jimgui.JImGuiGen;
  * @since v0.1
  */
 public interface JImTreeNodeFlags {
+	int Nothing = 0;
 	/** Draw as selected */
 	int Selected = 1;
 	/** Full colored frame (e.g. for {@link JImTreeNodeFlags#CollapsingHeader}) */
@@ -42,4 +43,50 @@ public interface JImTreeNodeFlags {
 	 */
 	int NavLeftJumpsBackHere = 1 << 13;
 	int CollapsingHeader = Framed | NoAutoOpenOnLog;
+
+	enum Type implements Flag {
+		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(JImTreeNodeFlags.Nothing),
+		Nothing(JImTreeNodeFlags.Nothing),
+		/** @see JImTreeNodeFlags#Selected */
+		Selected(JImTreeNodeFlags.Selected),
+		/** @see JImTreeNodeFlags#Framed */
+		Framed(JImTreeNodeFlags.Framed),
+		/** @see JImTreeNodeFlags#AllowItemOverlap */
+		AllowItemOverlap(JImTreeNodeFlags.AllowItemOverlap),
+		/** @see JImTreeNodeFlags#NoTreePushOnOpen */
+		NoTreePushOnOpen(JImTreeNodeFlags.NoTreePushOnOpen),
+		/** @see JImTreeNodeFlags#NoAutoOpenOnLog */
+		NoAutoOpenOnLog(JImTreeNodeFlags.NoAutoOpenOnLog),
+		/** @see JImTreeNodeFlags#DefaultOpen */
+		DefaultOpen(JImTreeNodeFlags.DefaultOpen),
+		/** @see JImTreeNodeFlags#OpenOnDoubleClick */
+		OpenOnDoubleClick(JImTreeNodeFlags.OpenOnDoubleClick),
+		/** @see JImTreeNodeFlags#OpenOnArrow */
+		OpenOnArrow(JImTreeNodeFlags.OpenOnArrow),
+		/** @see JImTreeNodeFlags#Leaf */
+		Leaf(JImTreeNodeFlags.Leaf),
+		/** @see JImTreeNodeFlags#Bullet */
+		Bullet(JImTreeNodeFlags.Bullet),
+		/** @see JImTreeNodeFlags#FramePadding */
+		FramePadding(JImTreeNodeFlags.FramePadding),
+		/** @see JImTreeNodeFlags#NavLeftJumpsBackHere */
+		NavLeftJumpsBackHere(JImTreeNodeFlags.NavLeftJumpsBackHere),
+		/** @see JImTreeNodeFlags#CollapsingHeader */
+		CollapsingHeader(JImTreeNodeFlags.CollapsingHeader);
+
+		public final int flag;
+
+		Type(int flag) {
+			this.flag = flag;
+		}
+
+		@Override
+		public int get() {
+			return flag;
+		}
+	}
 }
