@@ -3,7 +3,7 @@ import com.jfrog.bintray.gradle.*
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.3.30" apply false
+	kotlin("jvm") version "1.3.40" apply false
 	id("com.jfrog.bintray") version "1.7.3"
 	id("de.undercouch.download") version "3.4.3" apply false
 }

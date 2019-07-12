@@ -89,7 +89,9 @@ set(ALL_LIBRARIES
 		impl_header.h
 		cpp_interop.cpp)
 
-if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+message(STATUS "CMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}")
+# -A x64
+if (${CMAKE_GENERATOR_PLATFORM} MATCHES "x64")
 	message(STATUS "64 bit architecture")
 	add_library(jimgui SHARED ${ALL_LIBRARIES})
 	target_link_libraries(jimgui ${TARGET_LINK_LIBS})
