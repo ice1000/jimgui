@@ -1,7 +1,10 @@
 package org.ice1000.jimgui.flag;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public interface Flag {
@@ -13,12 +16,8 @@ public interface Flag {
      * @param flags to check if flag is contained within
      * @return boolean true of flag was found
      */
-    static boolean hasFlag(int flag, Flag... flags) {
-        for (int i = 0; i < flags.length; i++) {
-            Flag value = flags[i];
-            if (value.get() == flag) return true;
-        }
-        return false;
+    static boolean hasFlag(int flag, @NotNull Flag @NotNull ... flags) {
+        return Arrays.stream(flags).anyMatch(value -> value.get() == flag);
     }
 
     // Slot enum[0], emum[1] for flags should be nothing and no flag found
@@ -33,7 +32,7 @@ public interface Flag {
      * @param <E> the Flag which extends Enum
      * @return the Flag which is the flag int value
      */
-    static <E extends Flag> E reverseLookup(Class<E> enumType, int flag) {
+    static <E extends @NotNull Flag> @NotNull E reverseLookup(@NotNull Class<@NotNull E> enumType, int flag) {
         E[] enumConstants = enumType.getEnumConstants();
         for (int i = 1; i < enumConstants.length; i++) {
             E enumConstant = enumConstants[i];
@@ -53,7 +52,7 @@ public interface Flag {
      * @param <E> the Flag which extends Enum
      * @return the flags which is the flags int values
      */
-    static <E extends Flag> E[] getAsFlags(Class<E> enumType, int flags) {
+    static <E extends @NotNull Flag> @NotNull E @NotNull [] getAsFlags(@NotNull Class<@NotNull E> enumType, int flags) {
         List<E> setFlags = new ArrayList<>();
         E[] enumConstants = enumType.getEnumConstants();
         for (int i = 1; i < enumConstants.length; i++) {
@@ -72,10 +71,9 @@ public interface Flag {
      * @param flagSelection Flags
      * @return value of all the flags set
      */
-    static int getAsValue(Flag... flagSelection){
+    static int getAsValue(@NotNull Flag @NotNull... flagSelection){
         int flags = 0;
-        for (int i = 0; i < flagSelection.length; i++) {
-            Flag flag = flagSelection[i];
+        for (Flag flag : flagSelection) {
             flags |= flag.get();
         }
         return flags;

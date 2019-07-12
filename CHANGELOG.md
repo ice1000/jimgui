@@ -1,5 +1,17 @@
 ## Unreleased
 
++ Kotlin 1.3.40
++ Update flags API (by @Mr00Anderson)
+
+## v0.8
+
++ `JImStr`
++ Tab API, and more from most recent imgui
+
+## v0.7
+
++ Upgrade Windows build to Visual Studio 2019
++ Make native build gradle tasks incremental
 + Added accessors to platform window size/pos
 + Added new color styles
 + Support `Ctrl` which works on Windows
