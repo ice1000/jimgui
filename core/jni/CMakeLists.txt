@@ -99,6 +99,12 @@ set(ALL_LIBRARIES
 message(STATUS "CMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}")
 # -A x64
 if (${CMAKE_GENERATOR_PLATFORM} MATCHES "x64")
+	set(64BIT true)
+endif ()
+if ("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+	set(64BIT true)
+endif ()
+if (${64BIT})
 	message(STATUS "64 bit architecture")
 	add_library(jimgui SHARED ${ALL_LIBRARIES})
 	target_link_libraries(jimgui ${TARGET_LINK_LIBS})
