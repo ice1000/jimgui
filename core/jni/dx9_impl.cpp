@@ -58,12 +58,10 @@ JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
                                                            jclass,
                                                            jbyteArray _fileName) -> jlongArray {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	LPDIRECT3DTEXTURE9 texture;
 	auto success = loadTexture(STR_J2C(fileName), texture);
 	__release(Byte, fileName)
-	__JNI__FUNCTION__CLEAN__
 	if (!success) return nullptr;
 	D3DSURFACE_DESC desc;
 	texture->GetLevelDesc(0, &desc);
@@ -85,12 +83,10 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
                                                             jclass,
                                                             jbyteArray _rawData,
                                                             jint size) -> jlongArray {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, rawData)
 	LPDIRECT3DTEXTURE9 texture;
 	auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
 	__release(Byte, rawData)
-	__JNI__FUNCTION__CLEAN__
 	if (!success) return nullptr;
 	D3DSURFACE_DESC desc;
 	texture->GetLevelDesc(0, &desc);
@@ -129,15 +125,12 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *env,
 
 	RegisterClassEx(wc);
 	auto style = WS_OVERLAPPEDWINDOW;
-	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
 
 	hwnd = CreateWindow(_T(WINDOW_ID), _T(STR_J2C(title)), style, 100, 100, width, height, nullptr, nullptr,
 	                    wc->hInstance, nullptr);
 
 	__release(Byte, title);
-	__JNI__FUNCTION__CLEAN__
-
 	if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
 		UnregisterClass(_T(WINDOW_ID), wc->hInstance);
 		return NULL;

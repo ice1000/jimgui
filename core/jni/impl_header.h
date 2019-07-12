@@ -161,11 +161,9 @@ Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(JNIEnv *env,
                                                            jint h,
                                                            jbyteArray _title,
                                                            jlong anotherWindow) -> jlong {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
 	auto ret = JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(w, h, title, anotherWindow);
 	__release(Byte, title)
-	__JNI__FUNCTION__CLEAN__
 	return ret;
 }
 

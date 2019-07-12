@@ -18,12 +18,6 @@ using Ref = T &;
 
 using RawStr = Ptr<const char>;
 
-#define __JNI__FUNCTION__INIT__ \
-jboolean *option = nullptr;
-
-#define __JNI__FUNCTION__CLEAN__ \
-delete option;
-
 #define __release(type, name) \
 if (_ ## name != nullptr) env->Release ## type ## ArrayElements(_ ## name, name, JNI_OK);
 
@@ -31,7 +25,7 @@ if (_ ## name != nullptr) env->Release ## type ## ArrayElements(_ ## name, name,
 env->Release ## type ## ArrayElements(_ ## name, name, JNI_ABORT);
 
 #define __get(type, name) \
-auto name = _ ## name == nullptr ? nullptr : env->Get ## type ## ArrayElements(_ ## name, option);
+auto name = _ ## name == nullptr ? nullptr : env->Get ## type ## ArrayElements(_ ## name, nullptr);
 
 #define __new(type, name, len) \
 auto _ ## name = env->New ## type ## Array(len);

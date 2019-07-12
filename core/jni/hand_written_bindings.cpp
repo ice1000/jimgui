@@ -110,24 +110,20 @@ JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 		Ptr<JNIEnv> env, jclass, jbyteArray _path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, path)
 	auto res = JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(-1, path, size, config, range,
 	                                                                            nativeObjectPtr);
 	__release(Byte, path)
-	__JNI__FUNCTION__CLEAN__
 	return res;
 }
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImFont_getDebugName0(Ptr<JNIEnv> env, jclass, jlong nativeObjectPtr) -> jbyteArray {
-	__JNI__FUNCTION__INIT__
 	auto *font = PTR_J2C(ImFont, nativeObjectPtr);
 	auto debugName = font->GetDebugName();
 	auto len = static_cast<jsize> (strlen(debugName));
 	auto *data = PTR_J2C(const jbyte, debugName);
 	__init(Byte, data, len);
-	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
 
@@ -170,7 +166,6 @@ JImIOMouseArrayAccessor(DragMaxDistanceAbs)
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcharArray {
-	__JNI__FUNCTION__INIT__
 	ImVector<ImWchar> inputShorts = ImGui::GetIO().InputQueueCharacters;
 	jsize len = inputShorts.size();
 	auto *inputStr = new jchar[len];
@@ -178,7 +173,6 @@ Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcha
 		inputStr[i] = static_cast<jchar> (inputShorts[i]);
 	}
 	__init(Char, inputStr, len);
-	__JNI__FUNCTION__CLEAN__
 	delete[] inputStr;
 	return _inputStr;
 }
@@ -240,7 +234,6 @@ Java_org_ice1000_jimgui_JImGui_plotLines(Ptr<JNIEnv> env,
                                          jfloat scaleMax,
                                          jfloat graphWidth,
                                          jfloat graphHeight) {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Float, values);
 	__get(Byte, overlayText);
@@ -259,8 +252,7 @@ Java_org_ice1000_jimgui_JImGui_plotLines(Ptr<JNIEnv> env,
 	__release(Byte, label);
 	__release(Float, values);
 	__release(Byte, overlayText);
-	__JNI__FUNCTION__CLEAN__
-}
+	}
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_plotHistogram(jint,
@@ -297,7 +289,6 @@ Java_org_ice1000_jimgui_JImGui_plotHistogram(Ptr<JNIEnv> env,
                                              jfloat scaleMax,
                                              jfloat graphWidth,
                                              jfloat graphHeight) {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Float, values);
 	__get(Byte, overlayText);
@@ -316,8 +307,7 @@ Java_org_ice1000_jimgui_JImGui_plotHistogram(Ptr<JNIEnv> env,
 	__release(Byte, label);
 	__release(Float, values);
 	__release(Byte, overlayText);
-	__JNI__FUNCTION__CLEAN__
-}
+	}
 
 JNIEXPORT auto  JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_inputText(jint,
@@ -337,13 +327,11 @@ Java_org_ice1000_jimgui_JImGui_inputText(Ptr<JNIEnv> env,
                                          jbyteArray _buffer,
                                          jint bufferLen,
                                          jint flags) -> jboolean {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, label)
 	__get(Byte, buffer)
 	auto ret = JavaCritical_org_ice1000_jimgui_JImGui_inputText(-1, label, -1, buffer, bufferLen, flags);
 	__release(Byte, label)
 	__release(Byte, buffer)
-	__JNI__FUNCTION__CLEAN__
 	return ret;
 }
 
@@ -442,34 +430,28 @@ JIMVEC4_SETTER(w, W)
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_loadIniSettingsFromMemory(Ptr<JNIEnv> env, jclass, jbyteArray _data) {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, data)
 	const auto *ini_data = STR_J2C(data);
 	auto ini_size = static_cast<size_t>(__len(data));
 	ImGui::LoadIniSettingsFromMemory(ini_data, ini_size);
 	__abort(Byte, data)
-	__JNI__FUNCTION__CLEAN__
-}
+	}
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(Ptr<JNIEnv> env, jclass) -> jbyteArray {
-	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::SaveIniSettingsToMemory();
 	auto len = static_cast<jsize> (strlen(ini_data));
 	auto *data = PTR_J2C(const jbyte, ini_data);
 	__init(Byte, data, len);
-	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_getClipboardText0(Ptr<JNIEnv> env, jclass) -> jbyteArray {
-	__JNI__FUNCTION__INIT__
 	auto ini_data = ImGui::GetClipboardText();
 	auto len = static_cast<jsize> (strlen(ini_data));
 	auto *data = PTR_J2C(const jbyte, ini_data);
 	__init(Byte, data, len);
-	__JNI__FUNCTION__CLEAN__
 	return _data;
 }
 
@@ -491,13 +473,11 @@ Java_org_ice1000_jimgui_JImGui_menuItem(Ptr<JNIEnv> env,
                                         jbyteArray _shortcut,
                                         jboolean selected,
                                         jboolean enabled) -> jboolean {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, label);
 	__get(Byte, shortcut);
 	auto res = JavaCritical_org_ice1000_jimgui_JImGui_menuItem(-1, label, -1, shortcut, selected, enabled);
 	__release(Byte, label);
 	__release(Byte, shortcut);
-	__JNI__FUNCTION__CLEAN__
 	return static_cast<jboolean>(res ? JNI_TRUE : JNI_FALSE);
 }
 

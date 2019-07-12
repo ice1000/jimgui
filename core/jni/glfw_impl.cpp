@@ -74,14 +74,12 @@ JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
                                                            jclass,
                                                            jbyteArray _fileName) -> jlongArray {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	GLuint texture = 0;
 	int width, height, channels;
 	int forceChannels = 4;
 	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, forceChannels);
 	__release(Byte, fileName)
-	__JNI__FUNCTION__CLEAN__
 	if (!imageData) texture = 0;
 	else initTexture(imageData, &texture, width, height);
 	stbi_image_free(imageData);
@@ -101,14 +99,12 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
                                                             jclass,
                                                             jbyteArray _rawData,
                                                             jint size) -> jlongArray {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, rawData)
 	GLuint texture = 0;
 	int width, height, channels;
 	int forceChannels = 4;
 	auto *imageData = stbi_load_from_memory(PTR_J2C(stbi_uc, rawData), size, &width, &height, &channels, forceChannels);
 	__release(Byte, rawData)
-	__JNI__FUNCTION__CLEAN__
 	if (!imageData) texture = 0;
 	else initTexture(imageData, &texture, width, height);
 	stbi_image_free(imageData);
@@ -136,12 +132,10 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 #endif
-	__JNI__FUNCTION__INIT__
 	__get(Byte, title)
 	auto monitor = share != nullptr ? glfwGetWindowMonitor(share) : nullptr;
 	Ptr<GLFWwindow> window = glfwCreateWindow(width, height, STR_J2C(title), monitor, share);
 	__release(Byte, title)
-	__JNI__FUNCTION__CLEAN__
 	if (!window) return 0L;
 	glfwMakeContextCurrent(window);
 	// Enable vsync

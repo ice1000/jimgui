@@ -59,7 +59,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // see https://github.com/Microsoft/DirectXTex/blob/94b06c90728a08c1eab43a190fe0376e8426cb1d/DDSTextureLoader/DDSTextureLoader.cpp#L914-L1145
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, fileName)
 	int width, height, channels;
 	auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, 4);
@@ -108,7 +107,6 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 	ret[3] = static_cast<jlong> (channels);
 	__init(Long, ret, 4);
 	delete[] ret;
-	__JNI__FUNCTION__CLEAN__
 	return _ret;
 }
 
@@ -224,14 +222,11 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 		JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
-	__JNI__FUNCTION__INIT__
 	__get(Byte, title);
 
 	// Create application window
 	auto object = new NativeObject(width, height, reinterpret_cast<Ptr<const char>> (title));
 	__release(Byte, title);
-	__JNI__FUNCTION__CLEAN__
-
 	// Initialize Direct3D
 	if (CreateDeviceD3D(object->hwnd) < 0) {
 		CleanupDeviceD3D();
