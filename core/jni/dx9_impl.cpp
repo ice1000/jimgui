@@ -17,6 +17,7 @@
 
 #include <basics.hpp>
 #include <impl_header.h>
+#include <win32_impl.h>
 
 // for Linux editing experience
 #ifndef WIN32
