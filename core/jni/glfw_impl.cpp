@@ -57,6 +57,22 @@ void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 }
 
+namespace jimgui {
+	void setWindowBounds(Ptr<GLFWwindow> window, const ImVec4& bounds) {
+		glfwSetWindowPos(window, static_cast<int>(bounds.x), static_cast<int>(bounds.y));
+		glfwSetWindowSize(window, static_cast<int>(bounds.z), static_cast<int>(bounds.w));
+	}
+
+	ImVec4 getWindowBounds(Ptr<GLFWwindow> window) {
+		int x, y, xPlusW, yPlusH;
+		glfwGetWindowFrameSize(window, &x, &y, &xPlusW, &yPlusH);
+		return {
+				static_cast<float>(x), static_cast<float>(y),
+				static_cast<float>(xPlusW - x), static_cast<float>(yPlusH - y)
+		};
+	}
+}
+
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
