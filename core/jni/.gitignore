@@ -5,4 +5,5 @@ impl
 cmake-build-debug/
 cmake-build-release/
 generated*.cpp
+cmake-build-debug-visual-studio
 #basics.hpp
