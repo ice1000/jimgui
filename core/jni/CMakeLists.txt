@@ -22,7 +22,7 @@ if (WIN32)
 	include_directories(${DIRECTX_INCLUDE_DIRS})
 	include_directories("${DXSDK_DIRS}\\Include")
 
-	set(IMGUI_IMPL impl/imgui_impl_dx9.cpp impl/imgui_impl_win32.cpp dx9_impl.cpp)
+	set(IMGUI_IMPL win32_impl.cpp impl/imgui_impl_dx9.cpp impl/imgui_impl_win32.cpp dx9_impl.cpp)
 	set(TARGET_LINK_LIBS d3d9)
 	list(APPEND TARGET_LINK_LIBS ${DIRECTX_D3DX9_LIBRARIES})
 else ()

@@ -178,8 +178,10 @@ fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder 
 	return this
 }
 
-const val JNI_FUNCTION_INIT = "__JNI__FUNCTION__INIT__ "
-const val JNI_FUNCTION_CLEAN = " __JNI__FUNCTION__CLEAN__"
+// const val JNI_FUNCTION_INIT = "__JNI__FUNCTION__INIT__ "
+// const val JNI_FUNCTION_CLEAN = " __JNI__FUNCTION__CLEAN__"
+const val JNI_FUNCTION_INIT = ""
+const val JNI_FUNCTION_CLEAN = ""
 
 @Language("C++")
 const val CXX_PREFIX = """///
