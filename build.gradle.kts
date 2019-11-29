@@ -3,9 +3,9 @@ import com.jfrog.bintray.gradle.*
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.3.40" apply false
-	id("com.jfrog.bintray") version "1.7.3"
-	id("de.undercouch.download") version "3.4.3" apply false
+	kotlin("jvm") version "1.3.60" apply false
+	id("com.jfrog.bintray") version "1.8.4"
+	id("de.undercouch.download") version "4.0.2" apply false
 }
 
 var isCI: Boolean by extra
@@ -13,7 +13,7 @@ isCI = !System.getenv("CI").isNullOrBlank()
 
 allprojects {
 	group = "org.ice1000.jimgui"
-	version = "v0.8.1"
+	version = "v0.10"
 
 	apply { plugin("java") }
 

@@ -21,6 +21,7 @@ public final class JniLoader {
 			|| "Windows 8.1".equals(OsName)
 			|| OsName.startsWith("Windows Server 2012");
 	public static final boolean Windows10 = "Windows 10".equals(OsName)
+			|| OsName.startsWith("Windows Server 2019")
 			|| OsName.startsWith("Windows Server 2016");
 	public static final boolean OSX = "Mac OS X".equals(OsName);
 	private static boolean isLoaded = false;

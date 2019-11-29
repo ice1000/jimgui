@@ -79,6 +79,10 @@ public interface JImTreeNodeFlags {
 		Bullet(JImTreeNodeFlags.Bullet),
 		/** @see JImTreeNodeFlags#FramePadding */
 		FramePadding(JImTreeNodeFlags.FramePadding),
+		/** @see JImTreeNodeFlags#SpanAllAvailWidth */
+		SpanAllAvailWidth(JImTreeNodeFlags.SpanAllAvailWidth),
+		/** @see JImTreeNodeFlags#SpanFullWidth */
+		SpanFullWidth(JImTreeNodeFlags.SpanFullWidth),
 		/** @see JImTreeNodeFlags#NavLeftJumpsBackHere */
 		NavLeftJumpsBackHere(JImTreeNodeFlags.NavLeftJumpsBackHere),
 		/** @see JImTreeNodeFlags#CollapsingHeader */

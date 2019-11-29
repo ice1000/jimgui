@@ -30,6 +30,8 @@ public interface JImSelectableFlags {
 		SpanAllColumns(JImSelectableFlags.SpanAllColumns),
 		/** @see JImSelectableFlags#AllowDoubleClick */
 		AllowDoubleClick(JImSelectableFlags.AllowDoubleClick);
+		/** @see JImSelectableFlags#AllowItemOverlap */
+		AllowItemOverlap(JImSelectableFlags.AllowItemOverlap);
 
 		public final int flag;
 
