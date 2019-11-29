@@ -59,6 +59,8 @@ subprojects {
 			githubRepo = "ice1000/jimgui"
 			publicDownloadNumbers = true
 			vcsUrl = "https://github.com/ice1000/jimgui.git"
+			setLicenses("Apache-2.0")
+			setLabels("binding", "imgui", "kotlin")
 			version.apply {
 				vcsTag = "${project.version}"
 				name = vcsTag
@@ -68,19 +70,30 @@ subprojects {
 	}
 
 	publishing {
-		(publications) {
+		publications {
 			create<MavenPublication>("maven") {
 				from(components["java"])
 				groupId = project.group.toString()
 				artifactId = "${rootProject.name}-${project.name}"
 				version = project.version.toString()
 				artifact(tasks["sourcesJar"])
-				pom.withXml {
-					val root = asNode()
-					root.appendNode("description", "Pure Java binding for dear-imgui")
-					root.appendNode("name", project.name)
-					root.appendNode("url", "https://github.com/ice1000/jimgui")
-					root.children().last()
+				pom {
+					description.set("Pure Java binding for dear-imgui")
+					name.set(project.name)
+					url.set("https://github.com/ice1000/jimgui")
+					licenses {
+						license {
+							name.set("The Apache License, Version 2.0")
+							url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+						}
+					}
+					developers {
+						developer {
+							id.set("ice1000")
+							name.set("Tesla Ice Zhang")
+							email.set("ice1000kotlin@foxmail.com")
+						}
+					}
 				}
 			}
 		}
