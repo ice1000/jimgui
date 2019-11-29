@@ -43,6 +43,8 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 	private val booleanMembers = listOf("AntiAliasedLines", "AntiAliasedFill")
 	private val functions = listOf(Fun("scaleAllSizes", float("scaleFactor"), nativeObjectPtr))
 	private val primitiveMembers = listOf(
+			"int" to "WindowMenuButtonPosition",
+			"int" to "ColorButtonPosition",
 			"float" to "Alpha",
 			"float" to "WindowRounding",
 			"float" to "WindowBorderSize",

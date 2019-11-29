@@ -33,15 +33,21 @@ public interface JImTreeNodeFlags {
 	int Bullet = 1 << 9;
 	/** Use this (even for an unframed text node) to vertically align text baseline to regular widget height. Equivalent to calling AlignTextToFramePadding(). */
 	int FramePadding = 1 << 10;
-	//** FIXME: TODO: Extend hit box horizontally even if not framed */
-	// int SpanAllAvailWidth = 1 << 11;
-	//** FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible */
-	// int NoScrollOnOpen = 1 << 12;
+	/**
+	 * Extend hit box to the right-most edge, even if not framed.
+	 * This is not the default in order to allow adding other items on the same line.
+	 * In the future we may refactor the hit system to be front-to-back, allowing natural overlaps and then this can become the default.
+	 **/
+	int SpanAllAvailWidth = 1 << 11;
+	/** Extend hit box to the left-most and right-most edges (bypass the indented area). */
+	int SpanFullWidth = 1 << 12;
 	/**
 	 * (WIP) Nav: left direction may move to this {@link JImGuiGen#treeNode(String)} from any of its child
 	 * (items submitted between {@link JImGuiGen#treeNode(String)} and {@link JImGuiGen#treePop()})
 	 */
 	int NavLeftJumpsBackHere = 1 << 13;
+	//** FIXME: TODO: Disable automatic scroll on TreePop() if node got just open and contents is not visible */
+	// int NoScrollOnOpen = 1 << 14;
 	int CollapsingHeader = Framed | NoAutoOpenOnLog;
 
 	enum Type implements Flag {

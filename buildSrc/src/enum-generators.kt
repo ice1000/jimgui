@@ -62,7 +62,7 @@ open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
 open class GenDefaultKeysTask : GenEnumTask<String>("JImDefaultKeys") {
 	override val list = listOf(
 			"Tab", "LeftArrow", "RightArrow", "UpArrow", "DownArrow", "PageUp", "PageDown",
-			"Home", "End", "Insert", "Delete", "Backspace", "Space", "Enter", "Escape",
+			"Home", "End", "Insert", "Delete", "Backspace", "Space", "Enter", "Escape", "KeyPadEnter",
 			"LeftShift", "RightShift", "LeftCtrl", "RightCtrl", "Ctrl", "LeftAlt", "RightAlt",
 			"_0", "_1", "_2", "_3", "_4", "_5", "_6", "_7", "_8", "_9",
 			"A", "B", "C", "D", "E", "F", "G", "Q", "R", "S", "V", "W", "X", "Y", "Z")

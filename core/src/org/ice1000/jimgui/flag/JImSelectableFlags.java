@@ -12,6 +12,10 @@ public interface JImSelectableFlags {
 	int SpanAllColumns = 1 << 1;
 	/** Generate press events on double clicks too */
 	int AllowDoubleClick = 1 << 2;
+	/** Cannot be selected, display grayed out text */
+	int Disabled = 1 << 3;
+	/** (WIP) Hit testing to allow subsequent widgets to overlap this one */
+	int AllowItemOverlap = 1 << 4;
 
 	enum Type implements Flag {
 		/**

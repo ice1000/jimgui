@@ -1,8 +1,8 @@
 # jimgui
 
 [![Join the chat at https://gitter.im/imgui-java/community](https://badges.gitter.im/imgui-java/community.svg)](https://gitter.im/imgui-java/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Download][badge-img]][badge-link]
- 
+[![Version][badge-img]][badge-link]
+
   [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
   [badge-link]: https://bintray.com/ice1000/ice1000/jimgui
 
@@ -18,6 +18,7 @@ Linux Build | Windows Build
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
 This project is created for a code editor and a game engine, both not open-sourced currently.
+You can find jimgui on [Maven Repositories](https://mvnrepository.com/artifact/org.ice1000.jimgui).
 
 For macOS users, add `-XstartOnFirstThread` JVM argument when running programs built with jimgui.
 
@@ -96,7 +97,7 @@ which is supposed to be created as global constants.
 import org.gradle.internal.os.OperatingSystem
 // ...
 repositories {
-    // ... 
+    // ...
     jcenter()
 }
 // ...
