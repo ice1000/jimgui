@@ -29,7 +29,9 @@ public interface JImSelectableFlags {
 		/** @see JImSelectableFlags#SpanAllColumns */
 		SpanAllColumns(JImSelectableFlags.SpanAllColumns),
 		/** @see JImSelectableFlags#AllowDoubleClick */
-		AllowDoubleClick(JImSelectableFlags.AllowDoubleClick);
+		AllowDoubleClick(JImSelectableFlags.AllowDoubleClick),
+		/** @see JImSelectableFlags#Disabled */
+		Disabled(JImSelectableFlags.Disabled),
 		/** @see JImSelectableFlags#AllowItemOverlap */
 		AllowItemOverlap(JImSelectableFlags.AllowItemOverlap);
 
