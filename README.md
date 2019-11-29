@@ -91,6 +91,16 @@ You can customize the string-to-bytes function yourself by using `org.ice1000.ji
 or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`,
 which is supposed to be created as global constants.
 
+## Using Unicode strings
+
+You can use `ImGuiFontAtlas` in order to extend glyph ranges for your font, which is needed if you want to display Unicode characters.
+You can find more info about glyph ranges at the [dear-imgui repository](https://github.com/ocornut/imgui).
+
+Notice that in order to display Unicode characters you need to have your Java sources encoded and compiled as UTF-8. To compile the sources as UTF-8, add the following line to your `build.gradle`:
+```java
+compileJava.options.encoding = 'UTF-8'
+```
+
 ## Gradle
 
 ```groovy
