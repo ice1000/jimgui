@@ -60,6 +60,8 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			Fun.private("addTriangleFilled", pos("a"), pos("b"), pos("c"), u32, nativeObjectPtr),
 			Fun.private("addCircle", pos("centre"), float("radius"), u32, numSegments, thickness, nativeObjectPtr),
 			Fun.private("addCircleFilled", pos("centre"), float("radius"), u32, numSegments, nativeObjectPtr),
+			Fun.private("addNgon", pos("centre"), float("radius"), u32, numSegments, thickness, nativeObjectPtr),
+			Fun.private("addNgonFilled", pos("centre"), float("radius"), u32, numSegments, nativeObjectPtr),
 			Fun.protected("addText",
 					font(), float("fontSize"), pos, u32,
 					stringSized("text"),

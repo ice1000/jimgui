@@ -347,7 +347,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("beginPopupContextVoid", "boolean", nStringID, int("mouseButton", default = 1)),
 			Fun("beginPopupModal", "boolean", string("name"), pOpen, windowFlags),
 			Fun("endPopup"),
-			Fun("openPopupOnItemClick", "boolean", nStringID, int("mouseButton", default = 1)),
+			Fun("openPopupOnItemClick", nStringID, int("mouseButton", default = 1)),
 			Fun("isPopupOpen", "boolean", stringID),
 			Fun("closeCurrentPopup"),
 
@@ -448,6 +448,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getScrollX", "float"),
 			Fun("getScrollY", "float"),
 			Fun("getScrollMaxX", "float"),
-			Fun("getScrollMaxY", "float")
+			Fun("getScrollMaxY", "float"),
 	)
 }

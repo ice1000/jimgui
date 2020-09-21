@@ -62,6 +62,11 @@ public interface JImColorEditFlags {
 	 */
 	int NoDragDrop = 1 << 9;
 
+	/**
+	 * {@link org.ice1000.jimgui.JImGuiGen#colorButton(String, JImVec4)}: disable border (which is enforced by default)
+	 */
+	int NoBorder = 1 << 10;
+
 	// user options
 
 	/**

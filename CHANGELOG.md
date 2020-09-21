@@ -1,5 +1,10 @@
 ## Unreleased
 
++ Kotlin 1.4.10
++ Gradle and gradle plugins upgrade
+
+## v0.9
+
 + Kotlin 1.3.40
 + Update flags API (by @Mr00Anderson)
 

@@ -9,6 +9,7 @@ public interface JImTabItemFlags {
     int SetSelected = 1 << 1;
     int NoCloseWithMiddleMouseButton = 1 << 2;
     int NoPushId = 1 << 3;
+    int NoTooltip = 1 << 4;
 
     enum Type implements Flag {
         /**
@@ -24,7 +25,9 @@ public interface JImTabItemFlags {
         /** @see JImTabItemFlags#NoCloseWithMiddleMouseButton */
         NoCloseWithMiddleMouseButton(JImTabItemFlags.NoCloseWithMiddleMouseButton),
         /** @see JImTabItemFlags#NoPushId */
-        NoPushId(JImTabItemFlags.NoPushId);
+        NoPushId(JImTabItemFlags.NoPushId),
+        /** @see JImTabItemFlags#NoTooltip */
+        NoTooltip(JImTabItemFlags.NoTooltip);
 
         public final int flag;
 

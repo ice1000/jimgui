@@ -64,3 +64,4 @@
 
 //---- Use 32-bit vertex indices (default is 16-bit) to allow meshes with more than 64K vertices. Render function needs to support it.
 #define ImDrawIdx unsigned int
+#define IMGUI_USE_WCHAR32 true

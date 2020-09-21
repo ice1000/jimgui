@@ -60,8 +60,14 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 			"float" to "ScrollbarRounding",
 			"float" to "GrabMinSize",
 			"float" to "GrabRounding",
+			"float" to "LogSliderDeadzone",
+			"float" to "TabRounding",
+			"float" to "TabBorderSize",
+			"float" to "TabMinWidthForUnselectedCloseButton",
 			"float" to "MouseCursorScale",
-			"float" to "CurveTessellationTol")
+			"float" to "CurveTessellationTol",
+			"float" to "CircleSegmentMaxError",
+		)
 
 	private val imVec2Members = listOf(
 			"WindowPadding",
@@ -72,7 +78,8 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 			"ItemInnerSpacing",
 			"TouchExtraPadding",
 			"ButtonTextAlign",
+			"SelectableTextAlign",
 			"DisplayWindowPadding",
-			"DisplaySafeAreaPadding"
+			"DisplaySafeAreaPadding",
 	)
 }
