@@ -195,6 +195,6 @@ sourceSets {
 }
 
 dependencies {
-	compile(group = "org.jetbrains", name = "annotations", version = "16.0.1")
-	testCompile(group = "junit", name = "junit", version = "4.12")
+	implementation(group = "org.jetbrains", name = "annotations", version = "20.1.0")
+	testImplementation(group = "junit", name = "junit", version = "4.12")
 }
