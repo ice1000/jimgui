@@ -1,4 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+gradle.properties
+
 ### Java template
 # Compiled class file
 *.class
