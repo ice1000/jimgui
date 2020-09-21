@@ -31,6 +31,9 @@ allprojects {
 			isDebug = !isCI
 			compilerArgs.add("-Xlint:unchecked")
 		}
+		manifest {
+			attributes("Automatic-Module-Name" to "ice1000.jimgui")
+		}
 	}
 
 	val sourcesJar = task<Jar>("sourcesJar") {
