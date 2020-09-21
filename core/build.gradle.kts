@@ -140,7 +140,9 @@ val cmakeWin64 = task<Exec>("cmakeWin64") {
 }
 
 val cmake = task<Exec>("cmake") {
-	configureCMake(`cmake-build`, if (isWindows) "Visual Studio 16 2019" else "Unix Makefiles")
+	if (isWindows)
+		configureCMake(`cmake-build`, "Visual Studio 16 2019", "-A", "Win32")
+	else configureCMake(`cmake-build`, "Unix Makefiles")
 }
 
 val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }
