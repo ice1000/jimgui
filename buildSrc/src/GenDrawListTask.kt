@@ -118,8 +118,10 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			Fun.private("channelsSetCurrent", int("channelsIndex"), nativeObjectPtr),
 
 			// Internal helpers
-			Fun.private("clear", nativeObjectPtr),
-			Fun.private("clearFreeMemory", nativeObjectPtr),
+			// Fun.private("clear", nativeObjectPtr),
+			// Fun.private("clearFreeMemory", nativeObjectPtr),
+
+			// Advanced: Primitives allocations
 			Fun.private("primReserve", int("idxCount"), int("vtxCount"), nativeObjectPtr),
 			Fun.private("primRect", pos("a"), pos("b"),
 					u32, nativeObjectPtr),
@@ -134,8 +136,8 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 			Fun.private("primWriteVtx", pos, pos("uv"), u32, nativeObjectPtr),
 			Fun.private("primWriteIdx", int("idx"), nativeObjectPtr),
 			Fun.private("primVtx", pos, pos("uv"), u32, nativeObjectPtr),
-			Fun.private("updateClipRect", nativeObjectPtr),
-			Fun.private("updateTextureID", nativeObjectPtr)
+			// Fun.private("updateClipRect", nativeObjectPtr),
+			// Fun.private("updateTextureID", nativeObjectPtr),
 	)
 
 	private val primitiveMembers = listOf(PPT("int", "Flags",
