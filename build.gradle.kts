@@ -32,6 +32,14 @@ allprojects {
 			compilerArgs.add("-Xlint:unchecked")
 		}
 	}
+		
+	tasks.jar {
+		manifest {
+			attributes(
+				 "Automatic-Module-Name" to "ice1000.jimgui"
+			)
+		}
+	}
 
 	val sourcesJar = task<Jar>("sourcesJar") {
 		group = tasks["jar"].group
