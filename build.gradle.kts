@@ -3,9 +3,9 @@ import com.jfrog.bintray.gradle.*
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.3.60" apply false
-	id("com.jfrog.bintray") version "1.8.4"
-	id("de.undercouch.download") version "4.0.2" apply false
+	kotlin("jvm") version "1.4.10" apply false
+	id("com.jfrog.bintray") version "1.8.5"
+	id("de.undercouch.download") version "4.1.1" apply false
 }
 
 var isCI: Boolean by extra
