@@ -31,8 +31,13 @@ allprojects {
 			isDebug = !isCI
 			compilerArgs.add("-Xlint:unchecked")
 		}
+	}
+		
+	tasks.jar {
 		manifest {
-			attributes("Automatic-Module-Name" to "ice1000.jimgui")
+			attributes(
+				 "Automatic-Module-Name" to "ice1000.jimgui"
+			)
 		}
 	}
 
