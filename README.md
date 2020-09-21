@@ -165,7 +165,7 @@ First you need to make sure you have `cmake` newer than 3.14 and the following s
 + For Windows (\>= XP)
 	+ Visual Studio 2019 with `msbuild` (needs to be on PATH)
 	+ DirectX 9 Libraries (should be pre-installed on Windows or with Visual Studio)
-	+ [DirectX SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812))
+	+ [DirectX SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
 + For Mac OS X
 	+ Everything needed on Linux
 	+ `Cocoa`
