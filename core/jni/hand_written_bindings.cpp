@@ -93,11 +93,11 @@ ALLOCATE_AND_DEALLOCATE(ImFontAtlas, JImFontAtlas)
 
 #undef ALLOCATE_AND_DEALLOCATE
 
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImFont_setDisplayOffset(Ptr<JNIEnv>, jobject, jfloat newX, jfloat newY) {
-	ImGui::GetFont()->DisplayOffset.x = newX;
-	ImGui::GetFont()->DisplayOffset.y = newY;
-}
+// JNIEXPORT void JNICALL
+// Java_org_ice1000_jimgui_JImFont_setDisplayOffset(Ptr<JNIEnv>, jobject, jfloat newX, jfloat newY) {
+// 	ImGui::GetFont()->DisplayOffset.x = newX;
+// 	ImGui::GetFont()->DisplayOffset.y = newY;
+// }
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(

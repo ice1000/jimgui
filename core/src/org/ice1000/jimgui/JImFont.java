@@ -36,7 +36,7 @@ public final class JImFont extends JImGuiFontGen {
 		return new JImFontConfig(getConfigData(nativeObjectPtr));
 	}
 
-	public native void setDisplayOffset(float newX, float newY);
+	// public native void setDisplayOffset(float newX, float newY);
 
 	@Contract
 	private static native byte[] getDebugName0(long nativeObjectPtr);
