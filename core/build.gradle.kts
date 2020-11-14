@@ -77,7 +77,7 @@ val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
 val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
-val imguiExamples = "$imguiCoding/examples"
+val imguiExamples = "$imguiCoding/backends"
 
 val downloadImgui = task<Download>("downloadImgui") {
 	group = downloadAll.group
