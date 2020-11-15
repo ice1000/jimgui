@@ -114,7 +114,7 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 			PPT("int", "KeyMap", isArray = true),
 			PPT("int", "ConfigFlags", "@MagicConstant(flagsFromClass = JImConfigFlags.class)"),
 			PPT("int", "BackendFlags", "@MagicConstant(flagsFromClass = JImBackendFlags.class)"),
-			PPT("float", "ConfigWindowsMemoryCompactTimer"),
+			PPT("float", "ConfigMemoryCompactTimer"),
 			PPT("float", "MouseDoubleClickTime"),
 			PPT("float", "MouseDoubleClickMaxDist"),
 			PPT("float", "KeyRepeatDelay"),
