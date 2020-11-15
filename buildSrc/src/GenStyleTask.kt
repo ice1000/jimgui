@@ -63,7 +63,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
 			"float" to "LogSliderDeadzone",
 			"float" to "TabRounding",
 			"float" to "TabBorderSize",
-			"float" to "TabMinWidthForUnselectedCloseButton",
+			"float" to "TabMinWidthForCloseButton",
 			"float" to "MouseCursorScale",
 			"float" to "CurveTessellationTol",
 			"float" to "CircleSegmentMaxError",
