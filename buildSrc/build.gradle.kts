@@ -20,4 +20,4 @@ sourceSets {
 }
 
 repositories { jcenter() }
-dependencies { compile(kotlin("stdlib-jdk8")) }
+dependencies { implementation(kotlin("stdlib-jdk8")) }

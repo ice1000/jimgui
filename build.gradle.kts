@@ -32,7 +32,7 @@ allprojects {
 			compilerArgs.add("-Xlint:unchecked")
 		}
 	}
-		
+
 	tasks.jar {
 		manifest {
 			attributes(

@@ -61,17 +61,20 @@ fun Exec.configureCMake(workingDir: File, generator: String, vararg additional: 
 	doFirst { workingDir.mkdirs() }
 }
 
-val genImguiIO = task<GenIOTask>("genImguiIO")
-val genImgui = task<GenGenTask>("genImgui")
-val genNativeTypes = task<GenNativeTypesTask>("genNativeTypes")
-val genImguiStyleVar = task<GenStyleVarsTask>("genImguiStyleVar")
-val genImguiStyleColor = task<GenStyleColorsTask>("genImguiStyleColor")
-val genImguiDefaultKeys = task<GenDefaultKeysTask>("genImguiDefaultKeys")
-val genImguiFont = task<GenFontTask>("genImguiFont")
-val genImguiFontAtlas = task<GenFontAtlasTask>("genImguiFontAtlas")
-val genImguiFontConfig = task<GenFontConfigTask>("genImguiFontConfig")
-val genImguiDrawList = task<GenDrawListTask>("genImguiDrawList")
-val genImguiStyle = task<GenStyleTask>("genImguiStyle")
+val genImgui = tasks.register<GenGenTask>("genImgui") {
+	dependsOn(downloadImgui)
+}
+
+val genImguiIO = tasks.register<GenIOTask>("genImguiIO")
+val genNativeTypes = tasks.register<GenNativeTypesTask>("genNativeTypes")
+val genImguiStyleVar = tasks.register<GenStyleVarsTask>("genImguiStyleVar")
+val genImguiStyleColor = tasks.register<GenStyleColorsTask>("genImguiStyleColor")
+val genImguiDefaultKeys = tasks.register<GenDefaultKeysTask>("genImguiDefaultKeys")
+val genImguiFont = tasks.register<GenFontTask>("genImguiFont")
+val genImguiFontAtlas = tasks.register<GenFontAtlasTask>("genImguiFontAtlas")
+val genImguiFontConfig = tasks.register<GenFontConfigTask>("genImguiFontConfig")
+val genImguiDrawList = tasks.register<GenDrawListTask>("genImguiDrawList")
+val genImguiStyle = tasks.register<GenStyleTask>("genImguiStyle")
 
 val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
@@ -79,7 +82,7 @@ val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
 val imguiExamples = "$imguiCoding/backends"
 
-val downloadImgui = task<Download>("downloadImgui") {
+val downloadImgui = tasks.register<Download>("downloadImgui") {
 	group = downloadAll.group
 	src("$imguiCoding/imgui.cpp")
 	src("$imguiCoding/imgui.h")
@@ -95,7 +98,7 @@ val downloadImgui = task<Download>("downloadImgui") {
 	overwrite(false)
 }
 
-val downloadImpl = task<Download>("downloadImpl") {
+val downloadImpl = tasks.register<Download>("downloadImpl") {
 	group = downloadAll.group
 	src("$imguiExamples/imgui_impl_glfw.h")
 	src("$imguiExamples/imgui_impl_glfw.cpp")
@@ -110,7 +113,7 @@ val downloadImpl = task<Download>("downloadImpl") {
 	overwrite(false)
 }
 
-val downloadImplGL = task<Download>("downloadImplGL") {
+val downloadImplGL = tasks.register<Download>("downloadImplGL") {
 	group = downloadAll.group
 	src("$github/covscript/covscript-imgui/master/include/GL/gl3w.h")
 	src("$github/covscript/covscript-imgui/master/include/GL/glcorearb.h")
@@ -118,14 +121,14 @@ val downloadImplGL = task<Download>("downloadImplGL") {
 	overwrite(false)
 }
 
-val downloadFiraCode = task<Download>("downloadFiraCode") {
+val downloadFiraCode = tasks.register<Download>("downloadFiraCode") {
 	group = downloadAll.group
 	src("$github/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
 	dest(file("testRes/font/FiraCode-Regular.ttf"))
 	overwrite(false)
 }
 
-val downloadIce1000 = task<Download>("downloadIce1000") {
+val downloadIce1000 = tasks.register<Download>("downloadIce1000") {
 	group = downloadAll.group
 	src("https://pic4.zhimg.com/61984a25d44df15b857475e7f7b1c7e3_xl.jpg")
 	dest(file("testRes/pics/ice1000.png"))
@@ -133,40 +136,52 @@ val downloadIce1000 = task<Download>("downloadIce1000") {
 }
 
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
-val cmakeWin64 = task<Exec>("cmakeWin64") {
+val cmakeWin64 = tasks.register<Exec>("cmakeWin64") {
 	if (isWindows)
 		configureCMake(`cmake-build-win64`, "Visual Studio 16 2019", "-A", "x64")
 	else configureCMake(`cmake-build-win64`, "Unix Makefiles")
+	dependsOn(compileJava, downloadAll)
 }
 
-val cmake = task<Exec>("cmake") {
+val cmake = tasks.register<Exec>("cmake") {
 	if (isWindows)
 		configureCMake(`cmake-build`, "Visual Studio 16 2019", "-A", "Win32")
 	else configureCMake(`cmake-build`, "Unix Makefiles")
+	dependsOn(compileJava, downloadAll)
 }
 
-val make = task<Exec>("make") { configureCxxBuild(`cmake-build`, "make", "-f", "Makefile") }
-val msbuild = task<Exec>("msbuild") { configureCxxBuild(`cmake-build`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release") }
-val msbuildWin64 = task<Exec>("msbuildWin64") { configureCxxBuild(`cmake-build-win64`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release") }
+val make = tasks.register<Exec>("make") {
+	dependsOn(cmake)
+	configureCxxBuild(`cmake-build`, "make", "-f", "Makefile")
+}
 
-val clearGenerated = task<Delete>("clearGenerated") {
+val msbuild = tasks.register<Exec>("msbuild") {
+	dependsOn(cmake)
+	configureCxxBuild(`cmake-build`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release")
+}
+
+val msbuildWin64 = tasks.register<Exec>("msbuildWin64") {
+	dependsOn(cmakeWin64)
+	configureCxxBuild(`cmake-build-win64`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release")
+}
+
+val clearGenerated = tasks.register<Delete>("clearGenerated") {
 	group = clean.group
 	delete(projectDir.resolve("gen"), javahDir, *jniDir.listFiles { f: File -> f.name.startsWith("generated") })
 }
 
-val clearCMake = task<Delete>("clearCMake") {
+val clearCMake = tasks.register<Delete>("clearCMake") {
 	group = clean.group
 	delete(`cmake-build-win64`, `cmake-build`)
 }
 
-val clearDownloaded = task<Delete>("clearDownloaded") {
+val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
 	group = clean.group
 	delete(imguiDir, implDir)
 }
 
 compileJava.options.compilerArgs = listOf("-h", javahDir.toString())
 
-genImgui.dependsOn(downloadImgui)
 downloadAll.dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys,
@@ -174,11 +189,6 @@ compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImgu
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
 if (isWindows) compileCxx.dependsOn(msbuild, msbuildWin64)
 else compileCxx.dependsOn(make)
-make.dependsOn(cmake)
-msbuild.dependsOn(cmake)
-msbuildWin64.dependsOn(cmakeWin64)
-cmake.dependsOn(compileJava, downloadAll)
-cmakeWin64.dependsOn(compileJava, downloadAll)
 processResources.dependsOn(compileCxx)
 processTestResources.dependsOn(downloadFiraCode, downloadIce1000)
 
