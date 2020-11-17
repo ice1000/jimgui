@@ -9,11 +9,8 @@ plugins {
 
 val isCI: Boolean by rootProject.extra
 
-val classes = tasks["classes"]!!
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"] as Delete
-val processResources = tasks["processResources"]!!
-val processTestResources = tasks["processTestResources"]!!
 val downloadAll = task("downloadAll") {
 	group = "download"
 	description = "Virtual task representing all downloading tasks"
@@ -180,7 +177,7 @@ val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
 	delete(imguiDir, implDir)
 }
 
-compileJava.options.compilerArgs = listOf("-h", javahDir.toString())
+compileJava.options.compilerArgs = listOf("-h", "$javahDir")
 
 downloadAll.dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
@@ -189,18 +186,22 @@ compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImgu
 clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
 if (isWindows) compileCxx.dependsOn(msbuild, msbuildWin64)
 else compileCxx.dependsOn(make)
-processResources.dependsOn(compileCxx)
-processTestResources.dependsOn(downloadFiraCode, downloadIce1000)
+tasks.named("processResources") {
+	dependsOn(compileCxx)
+}
+tasks.named("processTestResources") {
+	dependsOn(downloadFiraCode, downloadIce1000)
+}
 
 sourceSets {
 	main {
-		java.setSrcDirs(listOf("src", "gen"))
-		resources.setSrcDirs(listOf(res))
+		java.srcDirs("src", "gen")
+		resources.srcDir(res)
 	}
 
 	test {
-		java.setSrcDirs(listOf("test"))
-		resources.setSrcDirs(listOf("testRes"))
+		java.srcDir("test")
+		resources.srcDir("testRes")
 	}
 }
 

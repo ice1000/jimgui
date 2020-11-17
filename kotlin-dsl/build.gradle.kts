@@ -6,17 +6,19 @@ plugins {
 	kotlin("jvm")
 }
 
+kotlin {
+	sourceSets["main"].kotlin.srcDir("src")
+	sourceSets["test"].kotlin.srcDir("test")
+}
+
 sourceSets {
 	main {
-		java.setSrcDirs(listOf("src"))
-		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("src")) }
-		resources.setSrcDirs(emptyList<Any>())
+		java.srcDir("src")
 	}
 
 	test {
-		java.setSrcDirs(listOf("test"))
-		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("test")) }
-		resources.setSrcDirs(listOf("testRes"))
+		java.srcDir("test")
+		resources.srcDir("testRes")
 	}
 }
 
@@ -26,7 +28,9 @@ val downloadIce1000 = tasks.register<Download>("downloadIce1000") {
 	overwrite(false)
 }
 
-tasks["processTestResources"].dependsOn(downloadIce1000)
+tasks.named("processTestResources") {
+	dependsOn(downloadIce1000)
+}
 repositories { jcenter() }
 
 dependencies {

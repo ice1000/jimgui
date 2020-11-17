@@ -9,13 +9,6 @@ sourceSets {
 	main {
 		java.setSrcDirs(listOf("src"))
 		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(listOf("src")) }
-		resources.setSrcDirs(emptyList<Any>())
-	}
-
-	test {
-		java.setSrcDirs(emptyList<Any>())
-		withConvention(KotlinSourceSet::class) { kotlin.setSrcDirs(emptyList<Any>()) }
-		resources.setSrcDirs(emptyList<Any>())
 	}
 }
 
