@@ -22,7 +22,7 @@ allprojects {
 		jcenter()
 	}
 
-	tasks.withType<JavaCompile> {
+	tasks.withType<JavaCompile>().configureEach {
 		sourceCompatibility = "1.8"
 		targetCompatibility = "1.8"
 		options.apply {
@@ -41,7 +41,7 @@ allprojects {
 		}
 	}
 
-	val sourcesJar = task<Jar>("sourcesJar") {
+	val sourcesJar = tasks.register<Jar>("sourcesJar") {
 		group = tasks["jar"].group
 		from(sourceSets["main"].allJava)
 		classifier = "sources"

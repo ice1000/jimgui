@@ -8,6 +8,6 @@ sourceSets {
 }
 repositories { jcenter() }
 dependencies {
-	compile(project(":core"))
-	testCompile(group = "junit", name = "junit", version = "4.12")
+	implementation(project(":core"))
+	testImplementation(group = "junit", name = "junit", version = "4.12")
 }
