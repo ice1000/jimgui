@@ -7,17 +7,6 @@ plugins {
 	id("de.undercouch.download")
 }
 
-val compileJava = tasks["compileJava"] as JavaCompile
-val clean = tasks["clean"] as Delete
-val downloadAll = task("downloadAll") {
-	group = "download"
-	description = "Virtual task representing all downloading tasks"
-}
-val compileCxx = task("compileCxx") {
-	group = compileJava.group
-	description = "Virtual task representing all C++ compilation tasks"
-}
-
 val jniDir = projectDir.resolve("jni").absoluteFile!!
 val imguiDir = jniDir.resolve("imgui")
 val implDir = jniDir.resolve("impl")
@@ -26,9 +15,26 @@ val `cmake-build` = jniDir.resolve("cmake-build")
 val javahDir = jniDir.resolve("javah")
 val res = projectDir.resolve("res")
 
+tasks.compileJava {
+	options.compilerArgs = listOf("-h", "$javahDir")
+}
+
+val clean = tasks.named<Delete>("clean")
+val cleanGroup = clean.get().group
+val downloadGroup = "download"
+val compileGroup = "native compile"
+val downloadAll = tasks.register("downloadAll") {
+	group = downloadGroup
+	description = "Virtual task representing all downloading tasks"
+}
+val compileCxx = tasks.register("compileCxx") {
+	group = compileGroup
+	description = "Virtual task representing all C++ compilation tasks"
+}
+
 val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
-	group = compileCxx.group
+	group = compileGroup
 	workingDir(workingDir)
 	commandLine(*commandLine)
 	outputs.dir(workingDir)
@@ -46,7 +52,7 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 }
 
 fun Exec.configureCMake(workingDir: File, generator: String, vararg additional: String) {
-	group = compileCxx.group
+	group = compileGroup
 	workingDir(workingDir)
 	outputs.dir(workingDir)
 	inputs.dir(jniDir.resolve("imgui"))
@@ -78,7 +84,7 @@ val imguiCoding = "$github/ocornut/imgui/master"
 val imguiExamples = "$imguiCoding/backends"
 
 val downloadImgui = tasks.register<Download>("downloadImgui") {
-	group = downloadAll.group
+	group = downloadGroup
 	src("$imguiCoding/imgui.cpp")
 	src("$imguiCoding/imgui.h")
 	src("$imguiCoding/imgui_draw.cpp")
@@ -94,7 +100,7 @@ val downloadImgui = tasks.register<Download>("downloadImgui") {
 }
 
 val downloadImpl = tasks.register<Download>("downloadImpl") {
-	group = downloadAll.group
+	group = downloadGroup
 	src("$imguiExamples/imgui_impl_glfw.h")
 	src("$imguiExamples/imgui_impl_glfw.cpp")
 	src("$imguiExamples/imgui_impl_opengl3.h")
@@ -109,7 +115,7 @@ val downloadImpl = tasks.register<Download>("downloadImpl") {
 }
 
 val downloadImplGL = tasks.register<Download>("downloadImplGL") {
-	group = downloadAll.group
+	group = downloadGroup
 	src("$github/covscript/covscript-imgui/master/include/GL/gl3w.h")
 	src("$github/covscript/covscript-imgui/master/include/GL/glcorearb.h")
 	dest(implDir.resolve("GL"))
@@ -117,14 +123,14 @@ val downloadImplGL = tasks.register<Download>("downloadImplGL") {
 }
 
 val downloadFiraCode = tasks.register<Download>("downloadFiraCode") {
-	group = downloadAll.group
+	group = downloadGroup
 	src("$github/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
 	dest(file("testRes/font/FiraCode-Regular.ttf"))
 	overwrite(false)
 }
 
 val downloadIce1000 = tasks.register<Download>("downloadIce1000") {
-	group = downloadAll.group
+	group = downloadGroup
 	src("https://pic4.zhimg.com/61984a25d44df15b857475e7f7b1c7e3_xl.jpg")
 	dest(file("testRes/pics/ice1000.png"))
 	overwrite(false)
@@ -135,14 +141,14 @@ val cmakeWin64 = tasks.register<Exec>("cmakeWin64") {
 	if (isWindows)
 		configureCMake(`cmake-build-win64`, "Visual Studio 16 2019", "-A", "x64")
 	else configureCMake(`cmake-build-win64`, "Unix Makefiles")
-	dependsOn(compileJava, downloadAll)
+	dependsOn(tasks.compileJava, downloadAll)
 }
 
 val cmake = tasks.register<Exec>("cmake") {
 	if (isWindows)
 		configureCMake(`cmake-build`, "Visual Studio 16 2019", "-A", "Win32")
 	else configureCMake(`cmake-build`, "Unix Makefiles")
-	dependsOn(compileJava, downloadAll)
+	dependsOn(tasks.compileJava, downloadAll)
 }
 
 val make = tasks.register<Exec>("make") {
@@ -161,29 +167,36 @@ val msbuildWin64 = tasks.register<Exec>("msbuildWin64") {
 }
 
 val clearGenerated = tasks.register<Delete>("clearGenerated") {
-	group = clean.group
+	group = cleanGroup
 	delete(projectDir.resolve("gen"), javahDir, *jniDir.listFiles { f: File -> f.name.startsWith("generated") })
 }
 
 val clearCMake = tasks.register<Delete>("clearCMake") {
-	group = clean.group
+	group = cleanGroup
 	delete(`cmake-build-win64`, `cmake-build`)
 }
 
 val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
-	group = clean.group
+	group = cleanGroup
 	delete(imguiDir, implDir)
 }
 
-compileJava.options.compilerArgs = listOf("-h", "$javahDir")
-
-downloadAll.dependsOn(downloadImplGL, downloadImpl, downloadImgui)
-compileJava.dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
+downloadAll.configure {
+	dependsOn(downloadImplGL, downloadImpl, downloadImgui)
+}
+tasks.compileJava {
+	dependsOn(genImguiIO, genImguiFont, genImguiStyle, genImgui, genImguiDrawList,
 		genNativeTypes, genImguiStyleVar, genImguiDefaultKeys,
 		genImguiStyleColor, genImguiFontAtlas, genImguiFontConfig)
-clean.dependsOn(clearCMake, clearDownloaded, clearGenerated)
-if (isWindows) compileCxx.dependsOn(msbuild, msbuildWin64)
-else compileCxx.dependsOn(make)
+}
+
+clean.configure {
+	dependsOn(clearCMake, clearDownloaded, clearGenerated)
+}
+compileCxx.configure {
+	if (isWindows) dependsOn(msbuild, msbuildWin64)
+	else dependsOn(make)
+}
 tasks.named("processResources") {
 	dependsOn(compileCxx)
 }
