@@ -1,5 +1,4 @@
 import de.undercouch.gradle.tasks.download.Download
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 plugins {
 	id("de.undercouch.download")

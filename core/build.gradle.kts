@@ -7,8 +7,6 @@ plugins {
 	id("de.undercouch.download")
 }
 
-val isCI: Boolean by rootProject.extra
-
 val compileJava = tasks["compileJava"] as JavaCompile
 val clean = tasks["clean"] as Delete
 val downloadAll = task("downloadAll") {
@@ -39,11 +37,11 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 	inputs.dir(jniDir.resolve("impl"))
 	doLast {
 		workingDir.walk()
-				.filter { it.extension in nativeLibraryExtensions }
-				.forEach {
-					println("Found native library $it")
-					it.copyTo(res.resolve("native").resolve(it.name), overwrite = true)
-				}
+			.filter { it.extension in nativeLibraryExtensions }
+			.forEach {
+				println("Found native library $it")
+				it.copyTo(res.resolve("native").resolve(it.name), overwrite = true)
+			}
 	}
 }
 

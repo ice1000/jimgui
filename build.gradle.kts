@@ -8,8 +8,7 @@ plugins {
 	id("de.undercouch.download") version "4.1.1" apply false
 }
 
-var isCI: Boolean by extra
-isCI = !System.getenv("CI").isNullOrBlank()
+val isCI = !System.getenv("CI").isNullOrBlank()
 
 allprojects {
 	group = "org.ice1000.jimgui"
@@ -77,30 +76,28 @@ subprojects {
 		}
 	}
 
-	publishing {
-		publications {
-			create<MavenPublication>("maven") {
-				from(components["java"])
-				groupId = project.group.toString()
-				artifactId = "${rootProject.name}-${project.name}"
-				version = project.version.toString()
-				artifact(tasks["sourcesJar"])
-				pom {
-					description.set("Pure Java binding for dear-imgui")
-					name.set(project.name)
-					url.set("https://github.com/ice1000/jimgui")
-					licenses {
-						license {
-							name.set("The Apache License, Version 2.0")
-							url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-						}
+	publishing.publications {
+		create<MavenPublication>("maven") {
+			from(components["java"])
+			groupId = "${project.group}"
+			artifactId = "${rootProject.name}-${project.name}"
+			version = "${project.version}"
+			artifact(tasks.named("sourcesJar"))
+			pom {
+				description.set("Pure Java binding for dear-imgui")
+				name.set(project.name)
+				url.set("https://github.com/ice1000/jimgui")
+				licenses {
+					license {
+						name.set("The Apache License, Version 2.0")
+						url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
 					}
-					developers {
-						developer {
-							id.set("ice1000")
-							name.set("Tesla Ice Zhang")
-							email.set("ice1000kotlin@foxmail.com")
-						}
+				}
+				developers {
+					developer {
+						id.set("ice1000")
+						name.set("Tesla Ice Zhang")
+						email.set("ice1000kotlin@foxmail.com")
 					}
 				}
 			}
