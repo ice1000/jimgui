@@ -41,7 +41,7 @@ allprojects {
 	}
 
 	val sourcesJar = tasks.register<Jar>("sourcesJar") {
-		group = tasks["jar"].group
+		group = tasks.jar.get().group
 		from(sourceSets["main"].allJava)
 		classifier = "sources"
 	}

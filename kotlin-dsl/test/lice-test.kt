@@ -16,7 +16,7 @@ import org.lice.parse.Lexer
 import org.lice.parse.Parser
 import java.awt.Color
 
-fun main(args: Array<String>) {
+fun main() {
 	JniLoader.load()
 	val sourceCode = JImGuiContext::class.java
 			.getResource("/bizarre.lice").readText()
@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
 			}
 			is ExpressionNode -> {
 				colorizeAST(root.node)
-				root.params.forEach { colorizeAST(it) }
+				root.params.forEach(::colorizeAST)
 			}
 			is SymbolNode -> if (root.name.startsWith("def") ||
 					root.name == "lazy" ||

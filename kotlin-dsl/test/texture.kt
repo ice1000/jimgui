@@ -8,7 +8,7 @@ import org.ice1000.jimgui.util.JniLoader
 
 class PlaceHolder
 
-fun main(args: Array<String>) {
+fun main() {
 	JniLoader.load()
 	JImGui().use { imGui ->
 		var latestRefresh = System.currentTimeMillis()

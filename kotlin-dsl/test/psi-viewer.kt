@@ -4,7 +4,7 @@ import org.ice1000.jimgui.dsl.runPer
 import org.ice1000.jimgui.dsl.treeNode
 import org.ice1000.jimgui.util.JniLoader
 
-fun main(args: Array<String>) {
+fun main() {
 	JniLoader.load()
 	runPer(15) {
 		"Psi Viewer" {
