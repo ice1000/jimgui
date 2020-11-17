@@ -73,7 +73,7 @@ public class Main {
 			// load fonts, global initializations, etc.
 			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
-				// some drawing-irrelated initializations
+				// some drawing-unrelated initializations
 				// mostly do nothing here
 				imGui.initNewFrame();
 				// draw your widgets here, like this
@@ -112,9 +112,9 @@ repositories {
 }
 // ...
 dependencies {
-  String jimgui_version = 'v0.9'
-  compile "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
-  compile "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
+  String jimgui_version = 'v0.10'
+  implementation "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
+  implementation "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
 }
 // ...
 run {
@@ -129,9 +129,9 @@ run {
 
 ```scala
 dependencies {
-  val jimguiVersion = "v0.9"
-  compile("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
-  compile("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+  val jimguiVersion = "v0.10"
+  implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
+  implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
 ```
 
@@ -149,7 +149,7 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.9</version>
+  <version>v0.10</version>
   <type>pom</type>
 </dependency>
 ```
