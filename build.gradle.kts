@@ -1,9 +1,7 @@
-import com.jfrog.bintray.gradle.*
-
 plugins {
 	java
 	`maven-publish`
-	kotlin("jvm") version "1.4.10" apply false
+	kotlin("jvm") version "1.4.20" apply false
 	id("com.jfrog.bintray") version "1.8.5"
 	id("de.undercouch.download") version "4.1.1" apply false
 }
@@ -43,7 +41,7 @@ allprojects {
 	val sourcesJar = tasks.register<Jar>("sourcesJar") {
 		group = tasks.jar.get().group
 		from(sourceSets["main"].allJava)
-		classifier = "sources"
+		archiveClassifier.set("sources")
 	}
 
 	artifacts { add("archives", sourcesJar) }
