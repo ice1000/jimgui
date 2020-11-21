@@ -1,6 +1,6 @@
 package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flag.JImMouseIndexes;
+import org.ice1000.jimgui.flag.JImMouseButton;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,10 +13,10 @@ public final class JImGuiIO extends JImGuiIOGen {
 	JImGuiIO() {
 	}
 
-	public native float getMouseClickedPosX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
-	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
-	public native float getMouseDragMaxDistanceAbsX(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
-	public native float getMouseDragMaxDistanceAbsY(@MagicConstant(valuesFromClass = JImMouseIndexes.class) int index);
+	public native float getMouseClickedPosX(@MagicConstant(valuesFromClass = JImMouseButton.class) int index);
+	public native float getMouseClickedPosY(@MagicConstant(valuesFromClass = JImMouseButton.class) int index);
+	public native float getMouseDragMaxDistanceAbsX(@MagicConstant(valuesFromClass = JImMouseButton.class) int index);
+	public native float getMouseDragMaxDistanceAbsY(@MagicConstant(valuesFromClass = JImMouseButton.class) int index);
 
 	public @NotNull String getInputString() {
 		return new String(getInputChars());

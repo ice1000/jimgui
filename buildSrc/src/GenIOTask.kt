@@ -4,6 +4,8 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 
+private const val MOUSE_INDICES = "@MagicConstant(valuesFromClass = JImMouseButton.class)"
+
 /**
  * @author ice1000
  */
@@ -75,10 +77,10 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 
 	private val booleanMembers = listOf(
 			BPPT("Key\$Down", isArray = true),
-			BPPT("MouseClicked", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			BPPT("MouseDoubleClicked", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			BPPT("MouseReleased", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			BPPT("MouseDownOwned", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
+			BPPT("MouseClicked", isArray = true, annotation = MOUSE_INDICES),
+			BPPT("MouseDoubleClicked", isArray = true, annotation = MOUSE_INDICES),
+			BPPT("MouseReleased", isArray = true, annotation = MOUSE_INDICES),
+			BPPT("MouseDownOwned", isArray = true, annotation = MOUSE_INDICES),
 			BPPT("FontAllowUserScaling"),
 			BPPT("ConfigMacOSXBehaviors"),
 			BPPT("ConfigInputTextCursorBlink"),
@@ -100,10 +102,10 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
 	private val primitiveMembers = listOf(
 			PPT("int", "InputQueueCharacter$", isArray = true),
 			PPT("float", "NavInput$", isArray = true),
-			PPT("float", "MouseClickedTime", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			PPT("float", "MouseDownDuration", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			PPT("float", "MouseDownDurationPrev", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
-			PPT("float", "MouseDragMaxDistanceSqr", isArray = true, annotation = "@MagicConstant(valuesFromClass = JImMouseIndexes.class)"),
+			PPT("float", "MouseClickedTime", isArray = true, annotation = MOUSE_INDICES),
+			PPT("float", "MouseDownDuration", isArray = true, annotation = MOUSE_INDICES),
+			PPT("float", "MouseDownDurationPrev", isArray = true, annotation = MOUSE_INDICES),
+			PPT("float", "MouseDragMaxDistanceSqr", isArray = true, annotation = MOUSE_INDICES),
 			PPT("float", "KeysDownDuration", isArray = true),
 			PPT("float", "KeysDownDurationPrev", isArray = true),
 			PPT("float", "NavInputsDownDuration", isArray = true),

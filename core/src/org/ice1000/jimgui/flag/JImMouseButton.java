@@ -4,7 +4,7 @@ package org.ice1000.jimgui.flag;
  * @author ice1000
  * @since v0.1
  */
-public interface JImMouseIndexes {
+public interface JImMouseButton {
 	int Left = 0;
 	int Right = 1;
 	int Middle = 2;
@@ -17,16 +17,16 @@ public interface JImMouseIndexes {
 		 * Return the Nothing or Default flag to prevent errors.
 		 */
 		NoSuchFlag(-1),
-		/** @see JImMouseIndexes#Left */
-		Left(JImMouseIndexes.Left),
-		/** @see JImMouseIndexes#Right */
-		Right(JImMouseIndexes.Right),
-		/** @see JImMouseIndexes#Middle */
-		Middle(JImMouseIndexes.Middle),
-		/** @see JImMouseIndexes#ExtraA */
-		ExtraA(JImMouseIndexes.ExtraA),
-		/** @see JImMouseIndexes#ExtraB */
-		ExtraB(JImMouseIndexes.ExtraB);
+		/** @see JImMouseButton#Left */
+		Left(JImMouseButton.Left),
+		/** @see JImMouseButton#Right */
+		Right(JImMouseButton.Right),
+		/** @see JImMouseButton#Middle */
+		Middle(JImMouseButton.Middle),
+		/** @see JImMouseButton#ExtraA */
+		ExtraA(JImMouseButton.ExtraA),
+		/** @see JImMouseButton#ExtraB */
+		ExtraB(JImMouseButton.ExtraB);
 
 		public final int flag;
 

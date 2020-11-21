@@ -2,7 +2,7 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.JImGuiIO;
-import org.ice1000.jimgui.flag.JImMouseIndexes;
+import org.ice1000.jimgui.flag.JImMouseButton;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +47,7 @@ public class JImGuiTest {
 	public static void main(String @NotNull ... args) {
 		JniLoader.load();
 		JImGuiUtil.runPer(15, imGui -> {
-			if (imGui.isMouseClicked(JImMouseIndexes.Left)) imGui.text("Mouse clicked!");
+			if (imGui.isMouseClicked(JImMouseButton.Left)) imGui.text("Mouse clicked!");
 			imGui.text(imGui.getClipboardText());
 		});
 	}

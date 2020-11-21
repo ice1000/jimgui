@@ -66,7 +66,7 @@ public class JImFlagsTest {
 
     @Test
     public void mouseIndexesFlags() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
-        checkFlags(JImMouseIndexes.Type.values(), JImMouseIndexes.class, -1);
+        checkFlags(JImMouseButton.Type.values(), JImMouseButton.class, -1);
     }
 
     @Test
