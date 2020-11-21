@@ -49,12 +49,12 @@ For macOS users, add `-XstartOnFirstThread` JVM argument when running programs b
 + [X] WindowsXP+ native library
   + [X] with glfw + opengl3 implementation
     + [ ] 32-bit hosted on ?
-    + [X] 64-bit hosted on my laptop
+    + [ ] 64-bit hosted on ?
   + [X] with directX9 implementation
-    + [X] 32-bit hosted on AppVeyor
-    + [X] 64-bit hosted on AppVeyor
+    + [X] 32-bit hosted on my laptop
+    + [X] 64-bit hosted on my laptop
 + [X] MacOS native library with Cocoa, glut as additions to Linux implementation
-  + [X] hosted on @zxj5470 's Mac laptop
+  + [X] hosted on @newk5 's VM
 
 # Usage
 

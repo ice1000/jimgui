@@ -1,5 +1,5 @@
 /*
- * Use https://jsfiddle.net/r2kw9v6b/29/
+ * Use http://62.171.186.248:8080
  */
 package org.ice1000.gradle
 
