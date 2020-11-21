@@ -87,6 +87,16 @@ open class GenBackendFlags : GenFlagTask(
 		"RendererHasVtxOffset" to "1 << 3",
 )
 
+open class GenSliderFlags : GenFlagTask(
+		"JImSliderFlags",
+		"None" to "0",
+		"AlwaysClamp" to "1 << 4",
+		"Logarithmic" to "1 << 5",
+		"NoRoundToFormat" to "1 << 6",
+		"NoInput" to "1 << 7",
+		"InvalidMask_" to "0x7000000F",
+)
+
 open class GenComboFlags : GenFlagTask(
 		"JImComboFlags",
 		"None" to "0",
