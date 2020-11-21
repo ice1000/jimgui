@@ -1,7 +1,24 @@
 ## Unreleased
 
+(thanks very much again to @newk5)
+
++ Kotlin 1.4.20
++ Now the flags classes are generated, and updates on flags are addressed
++ Added a tabButton API
++ Addressed the SliderFlags change, added Popup flags
++ Removed TextEdit flags because they are actually just InputText flags
++ Fixed sliderInt not working issue
++ Some `Nothing` are renamed to `None`
++ `MouseIndexes` are renamed to `MouseButton`
+
+## v0.11
+
+(thanks very much to @newk5)
+
 + Kotlin 1.4.10
 + Gradle and gradle plugins upgrade
++ Many polishing towards the library
++ Minor new APIs added
 
 ## v0.9
 
