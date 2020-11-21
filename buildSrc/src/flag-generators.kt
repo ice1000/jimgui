@@ -1,3 +1,6 @@
+/*
+ * Use https://jsfiddle.net/r2kw9v6b/29/
+ */
 package org.ice1000.gradle
 
 import org.gradle.api.tasks.TaskAction
@@ -111,6 +114,48 @@ open class GenComboFlags : GenFlagTask(
 		"HeightLargest" to "1 << 4",
 		"NoArrowButton" to "1 << 5",
 		"NoPreview" to "1 << 6",
+)
+
+open class GenFontAtlasFlags : GenFlagTask(
+		"JImFontAtlasFlags",
+		"None" to "0",
+		"NoPowerOfTwoHeight" to "1 << 0",
+		"NoMouseCursors" to "1 << 1",
+		"NoBakedLines" to "1 << 2",
+)
+
+open class GenWindowFlags : GenFlagTask(
+		"JImWindowFlags",
+		"Nothing" to "0",
+		"NoTitleBar" to "1 << 0",
+		"NoResize" to "1 << 1",
+		"NoMove" to "1 << 2",
+		"NoScrollbar" to "1 << 3",
+		"NoScrollWithMouse" to "1 << 4",
+		"NoCollapse" to "1 << 5",
+		"AlwaysAutoResize" to "1 << 6",
+		"NoBackground" to "1 << 7",
+		"NoSavedSettings" to "1 << 8",
+		"NoMouseInputs" to "1 << 9",
+		"MenuBar" to "1 << 10",
+		"HorizontalScrollbar" to "1 << 11",
+		"NoFocusOnAppearing" to "1 << 12",
+		"NoBringToFrontOnFocus" to "1 << 13",
+		"AlwaysVerticalScrollbar" to "1 << 14",
+		"AlwaysHorizontalScrollbar" to "1<< 15",
+		"AlwaysUseWindowPadding" to "1 << 16",
+		"NoNavInputs" to "1 << 18",
+		"NoNavFocus" to "1 << 19",
+		"UnsavedDocument" to "1 << 20",
+		"NoNav" to "NoNavInputs | NoNavFocus",
+		"NoDecoration" to "NoTitleBar | NoResize | NoScrollbar | NoCollapse",
+		"NoInputs" to "NoMouseInputs | NoNavInputs | NoNavFocus",
+		"NavFlattened" to "1 << 23",
+		"ChildWindow" to "1 << 24",
+		"Tooltip" to "1 << 25",
+		"Popup" to "1 << 26",
+		"Modal" to "1 << 27",
+		"ChildMenu" to "1 << 28",
 )
 
 open class GenMouseButton : GenFlagTask(
