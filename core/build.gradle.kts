@@ -36,19 +36,21 @@ val compileCxx = tasks.register("compileCxx") {
 	description = "Virtual task representing all C++ compilation tasks"
 }
 
+inline fun <reified Task : GenJavaTask> g() = tasks.register<Task>(Task::class.simpleName!!.decapitalize())
 val generations = arrayOf(
-		tasks.register<GenIOTask>("genImguiIO"),
-		tasks.register<GenNativeTypesTask>("genNativeTypes"),
-		tasks.register<GenStyleVarsTask>("genImguiStyleVar"),
-		tasks.register<GenStyleColorsTask>("genImguiStyleColor"),
-		tasks.register<GenDefaultKeysTask>("genImguiDefaultKeys"),
-		tasks.register<GenFontTask>("genImguiFont"),
-		tasks.register<GenFontAtlasTask>("genImguiFontAtlas"),
-		tasks.register<GenFontConfigTask>("genImguiFontConfig"),
-		tasks.register<GenDrawListTask>("genImguiDrawList"),
-		tasks.register<GenStyleTask>("genImguiStyle"),
-		tasks.register<GenTabBarFlags>("genTabBarFlags"),
-		tasks.register<GenBackendFlags>("genBackendFlags"),
+		g<GenIOTask>(),
+		g<GenNativeTypesTask>(),
+		g<GenStyleVarsTask>(),
+		g<GenStyleColorsTask>(),
+		g<GenDefaultKeysTask>(),
+		g<GenFontTask>(),
+		g<GenFontAtlasTask>(),
+		g<GenFontConfigTask>(),
+		g<GenDrawListTask>(),
+		g<GenStyleTask>(),
+		g<GenTabBarFlags>(),
+		g<GenBackendFlags>(),
+		g<GenColorEditFlags>(),
 		tasks.register<GenGenTask>("genImgui") {
 			dependsOn(downloadImgui)
 		})

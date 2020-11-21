@@ -49,6 +49,35 @@ open class GenTabBarFlags : GenFlagTask(
 		"FittingPolicyDefault" to "FittingPolicyResizeDown",
 )
 
+open class GenColorEditFlags : GenFlagTask(
+		"JImColorEditFlags",
+		"Nothing" to "0", // special -- the C++ version is `None`
+		"NoAlpha" to "1 << 1",
+		"NoPicker" to "1 << 2",
+		"NoOptions" to "1 << 3",
+		"NoSmallPreview" to "1 << 4",
+		"NoInputs" to "1 << 5",
+		"NoTooltip" to "1 << 6",
+		"NoLabel" to "1 << 7",
+		"NoSidePreview" to "1 << 8",
+		"NoDragDrop" to "1 << 9",
+		"NoBorder" to "1 << 10",
+		"AlphaBar" to "1 << 16",
+		"AlphaPreview" to "1 << 17",
+		"AlphaPreviewHalf" to "1 << 18",
+		"HDR" to "1 << 19",
+		"DisplayRGB" to "1 << 20",
+		"DisplayHSV" to "1 << 21",
+		"DisplayHex" to "1 << 22",
+		"Uint8" to "1 << 23",
+		"Float" to "1 << 24",
+		"PickerHueBar" to "1 << 25",
+		"PickerHueWheel" to "1 << 26",
+		"InputRGB" to "1 << 27",
+		"InputHSV" to "1 << 28",
+		"OptionsDefault" to "Uint8 | InputRGB | PickerHueBar",
+)
+
 open class GenBackendFlags : GenFlagTask(
 		"JImBackendFlags",
 		"None" to "0",
