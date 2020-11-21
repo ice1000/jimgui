@@ -2,10 +2,8 @@ package org.ice1000.gradle
 
 import org.gradle.api.tasks.TaskAction
 
-abstract class GenFlagTask(className: String)
+abstract class GenFlagTask(className: String, private vararg val list: Pair<String, String>)
 	: GenJavaTask(className, packageName = "org.ice1000.jimgui.flags"), Runnable {
-	abstract val list: List<Pair<String, String>>
-
 	@TaskAction
 	override fun run() = buildString {
 		append(prefixInterfacedJava)
@@ -35,18 +33,26 @@ abstract class GenFlagTask(className: String)
 	}
 }
 
-open class GenTabBarFlags : GenFlagTask("JImTabBarFlags") {
-	override val list = listOf(
-			"None" to "0",
-			"Reorderable" to "1",
-			"AutoSelectNewTabs" to "1 << 1",
-			"TabListPopupButton" to "1 << 2",
-			"NoCloseWithMiddleMouseButton" to "1 << 3",
-			"NoTabListScrollingButtons" to "1 << 4",
-			"NoTooltip" to "1 << 5",
-			"FittingPolicyResizeDown" to "1 << 6",
-			"FittingPolicyScroll" to "1 << 7",
-			"FittingPolicyMask" to "FittingPolicyResizeDown | FittingPolicyScroll",
-			"FittingPolicyDefault" to "FittingPolicyResizeDown",
-	)
-}
+open class GenTabBarFlags : GenFlagTask(
+		"JImTabBarFlags",
+		"None" to "0",
+		"Reorderable" to "1",
+		"AutoSelectNewTabs" to "1 << 1",
+		"TabListPopupButton" to "1 << 2",
+		"NoCloseWithMiddleMouseButton" to "1 << 3",
+		"NoTabListScrollingButtons" to "1 << 4",
+		"NoTooltip" to "1 << 5",
+		"FittingPolicyResizeDown" to "1 << 6",
+		"FittingPolicyScroll" to "1 << 7",
+		"FittingPolicyMask" to "FittingPolicyResizeDown | FittingPolicyScroll",
+		"FittingPolicyDefault" to "FittingPolicyResizeDown",
+)
+
+open class GenBackendFlags : GenFlagTask(
+		"JImBackendFlags",
+		"None" to "0",
+		"HasGamepad" to "1 << 0",
+		"HasMouseCursors" to "1 << 1",
+		"HasSetMousePos" to "1 << 2",
+		"RendererHasVtxOffset" to "1 << 3",
+)
