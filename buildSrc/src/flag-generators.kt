@@ -3,9 +3,10 @@ package org.ice1000.gradle
 import org.gradle.api.tasks.TaskAction
 
 abstract class GenFlagTask(className: String, private vararg val list: Pair<String, String>)
-	: GenJavaTask(className, packageName = "org.ice1000.jimgui.flags"), Runnable {
+	: GenJavaTask(className, packageName = "org.ice1000.jimgui.flag"), Runnable {
 	@TaskAction
 	override fun run() = buildString {
+		GenGenTask.checkParserInitialized(project)
 		append(prefixInterfacedJava)
 		list.forEach { (name, value) ->
 			val keyName = "${className.replace("JIm", "imGui")}_$name"
