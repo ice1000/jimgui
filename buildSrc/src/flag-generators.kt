@@ -87,6 +87,18 @@ open class GenBackendFlags : GenFlagTask(
 		"RendererHasVtxOffset" to "1 << 3",
 )
 
+open class GenComboFlags : GenFlagTask(
+		"JImComboFlags",
+		"None" to "0",
+		"PopupAlignLeft" to "1 << 0",
+		"HeightSmall" to "1 << 1",
+		"HeightRegular" to "1 << 2",
+		"HeightLarge" to "1 << 3",
+		"HeightLargest" to "1 << 4",
+		"NoArrowButton" to "1 << 5",
+		"NoPreview" to "1 << 6",
+)
+
 open class GenMouseButton : GenFlagTask(
 		"JImMouseButton",
 		"Left" to "0",

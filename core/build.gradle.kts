@@ -52,6 +52,7 @@ val generations = arrayOf(
 		g<GenBackendFlags>(),
 		g<GenColorEditFlags>(),
 		g<GenMouseButton>(),
+		g<GenComboFlags>(),
 		tasks.register<GenGenTask>("genImgui") {
 			dependsOn(downloadImgui)
 		})
