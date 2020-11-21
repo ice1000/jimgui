@@ -108,9 +108,9 @@ repositories {
 }
 // ...
 dependencies {
-  String jimgui_version = 'v0.10'
-  implementation "org.ice1000.jimgui:core:$jimgui_version" // basic functionality
-  implementation "org.ice1000.jimgui:kotlin-dsl:$jimgui_version" // kotlin dsl wrapper
+  String jimguiVersion = 'v0.11'
+  implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
+  implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
 // ...
 run {
@@ -125,7 +125,7 @@ run {
 
 ```scala
 dependencies {
-  val jimguiVersion = "v0.10"
+  val jimguiVersion = "v0.11"
   implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -145,7 +145,7 @@ dependencies {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.10</version>
+  <version>v0.11</version>
   <type>pom</type>
 </dependency>
 ```
