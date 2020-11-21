@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.11
+
 (thanks very much again to @newk5)
 
 + Kotlin 1.4.20
@@ -11,14 +13,13 @@
 + Some `Nothing` are renamed to `None`
 + `MouseIndexes` are renamed to `MouseButton`
 
-## v0.11
-
-(thanks very much to @newk5)
+## v0.10
 
 + Kotlin 1.4.10
 + Gradle and gradle plugins upgrade
 + Many polishing towards the library
 + Minor new APIs added
++ The library now works on Ubuntu 16.04 (thanks to @newk5)
 
 ## v0.9
 
