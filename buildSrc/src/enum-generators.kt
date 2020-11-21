@@ -48,7 +48,9 @@ open class GenStyleVarsTask : GenEnumTask<Pair<String, String>>("JImStyleVars") 
 			"ScrollbarRounding" to "Float",
 			"GrabMinSize" to "Float",
 			"GrabRounding" to "Float",
+			"TabRounding" to "Float",
 			"ButtonTextAlign" to "Void",
+			"SelectableTextAlign" to "Void",
 	)
 
 	override fun StringBuilder.genStatement(index: Int, element: Pair<String, String>) {
@@ -98,6 +100,11 @@ open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
 			"ResizeGrip",
 			"ResizeGripHovered",
 			"ResizeGripActive",
+			"Tab",
+			"TabHovered",
+			"TabActive",
+			"TabUnfocused",
+			"TabUnfocusedActive",
 			"PlotLines",
 			"PlotLinesHovered",
 			"PlotHistogram",
@@ -105,8 +112,8 @@ open class GenStyleColorsTask : GenEnumTask<String>("JImStyleColors") {
 			"TextSelectedBg",
 			"DragDropTarget",
 			"NavHighlight",
-			"NavWindowListHighlight",
-			"NavWindowListDimBg",
+			"NavWindowingHighlight",
+			"NavWindowingDimBg",
 			"ModalWindowDimBg",
 	)
 }
