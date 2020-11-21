@@ -36,7 +36,11 @@ val compileCxx = tasks.register("compileCxx") {
 	description = "Virtual task representing all C++ compilation tasks"
 }
 
-inline fun <reified Task : GenJavaTask> g() = tasks.register<Task>(Task::class.simpleName!!.decapitalize())
+inline fun <reified Task : GenJavaTask> g() =
+		tasks.register<Task>(Task::class.simpleName!!.decapitalize()) {
+			dependsOn(downloadImgui)
+		}
+
 val generations = arrayOf(
 		g<GenIOTask>(),
 		g<GenNativeTypesTask>(),
@@ -54,9 +58,7 @@ val generations = arrayOf(
 		g<GenMouseButton>(),
 		g<GenComboFlags>(),
 		g<GenSliderFlags>(),
-		tasks.register<GenGenTask>("genImgui") {
-			dependsOn(downloadImgui)
-		})
+		g<GenGenTask>())
 
 val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
