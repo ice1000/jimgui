@@ -27,7 +27,9 @@ val downloadGroup = "download"
 val downloadAll = tasks.register("downloadAll") {
 	group = downloadGroup
 	description = "Virtual task representing all downloading tasks"
-	doLast { projectDir.resolve("javadoc.log").writeText(GenGenTask.parser.map.entries.joinToString("\n") { (k, v) -> "$k:${escapeStringCharacters(v)}" }) }
+	val log = projectDir.resolve("javadoc.log")
+	outputs.file(log)
+	doLast { log.writeText(GenGenTask.parser.map.entries.joinToString("\n") { (k, v) -> "$k:${escapeStringCharacters(v)}" }) }
 }
 val compileCxx = tasks.register("compileCxx") {
 	group = "native compile"
