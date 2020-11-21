@@ -116,7 +116,7 @@ public class JImFlagsTest {
         for (Field declaredField : declaredFields) {
             String name = declaredField.getName();
             boolean foundFlag = false;
-            for (Enum flag : flags) {
+            for (Enum<?> flag : flags) {
                 if (flag.name().equals(name)) {
                     foundFlag = true;
                     break;
@@ -127,7 +127,7 @@ public class JImFlagsTest {
 
         // Start at one, since the first value should be no such flag
         for (int i = 1; i < flags.length; i++) {
-            Enum enumFlag = flags[i];
+            Enum<?> enumFlag = flags[i];
             Flag flagType = (Flag) enumFlag;
             int flagTypeInt = flagType.get();
 

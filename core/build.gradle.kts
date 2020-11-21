@@ -1,5 +1,6 @@
 import de.undercouch.gradle.tasks.download.Download
 import org.ice1000.gradle.*
+import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil.escapeStringCharacters
 
 plugins {
 	java
@@ -26,6 +27,7 @@ val downloadGroup = "download"
 val downloadAll = tasks.register("downloadAll") {
 	group = downloadGroup
 	description = "Virtual task representing all downloading tasks"
+	doLast { projectDir.resolve("javadoc.log").writeText(GenGenTask.parser.map.entries.joinToString("\n") { (k, v) -> "$k:${escapeStringCharacters(v)}" }) }
 }
 val compileCxx = tasks.register("compileCxx") {
 	group = "native compile"
