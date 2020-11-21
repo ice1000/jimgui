@@ -9,8 +9,8 @@ class ImGuiHeaderParser(imguiHeader: File) {
 	val map: MutableMap<String, String> = hashMapOf()
 
 	init {
-		imguiHeader.bufferedReader().use {
-			it.lineSequence()
+		imguiHeader.bufferedReader().use { reader ->
+			reader.lineSequence()
 					.dropWhile { it != "namespace ImGui" }
 					.map { it.trimStart() }
 					.map { it.removePrefix("IMGUI_API ") }

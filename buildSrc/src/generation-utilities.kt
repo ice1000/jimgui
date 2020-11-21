@@ -55,11 +55,13 @@ fun flags(from: String? = null, default: String? = null, name: String = "flags")
  * @property type String? null -> void
  * @property param List<out Param>
  */
-data class Fun(val name: String,
-               val type: String?,
-               val param: List<Param>,
-               var visibility: String = "public",
-               var document: String? = null) {
+data class Fun(
+		val name: String,
+		val type: String?,
+		val param: List<Param>,
+		var visibility: String = "public",
+		var document: String? = null,
+) {
 	constructor(name: String, type: String?, vararg param: Param) :
 			this(name, type, param.toList())
 
@@ -81,20 +83,24 @@ data class Fun(val name: String,
 }
 
 /** Property */
-data class PPT(@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
-               val type: String,
-               val name: String,
-               val annotation: String = "",
-               val isArray: Boolean = false,
-               val jvmName: String = name.decapitalize().replace("$", ""),
-               val `c++Name`: String = name.replace('$', 's'))
+data class PPT(
+		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
+		val type: String,
+		val name: String,
+		val annotation: String = "",
+		val isArray: Boolean = false,
+		val jvmName: String = name.decapitalize().replace("$", ""),
+		val `c++Name`: String = name.replace('$', 's'),
+)
 
 /** Boolean property */
-data class BPPT(val name: String,
-                val isArray: Boolean = false,
-                val annotation: String = "",
-                val jvmName: String = name.decapitalize().replace("$", ""),
-                val `c++Name`: String = name.replace('$', 's'))
+data class BPPT(
+		val name: String,
+		val isArray: Boolean = false,
+		val annotation: String = "",
+		val jvmName: String = name.decapitalize().replace("$", ""),
+		val `c++Name`: String = name.replace('$', 's'),
+)
 
 sealed class Param {
 	abstract fun java(): String
@@ -111,20 +117,24 @@ sealed class Param {
 	open val default: Any? get() = null
 }
 
-data class SimpleParam(val name: String,
-                       @MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
-                       val type: String,
-                       override val default: Any?,
-                       val annotation: String = "") : Param() {
+data class SimpleParam(
+		val name: String,
+		@MagicConstant(stringValues = ["int", "float", "double", "short", "byte", "char", "boolean"])
+		val type: String,
+		override val default: Any?,
+		val annotation: String = "",
+) : Param() {
 	override fun java() = "$annotation$type $name"
 	override fun javaExpr() = name
 	override fun `c++`() = "j$type $name"
 	override fun `c++Expr`() = name
 }
 
-open class StringParam(val name: String,
-                       val annotation: String = "@NotNull",
-                       override val default: Any?) : Param() {
+open class StringParam(
+		val name: String,
+		val annotation: String = "@NotNull",
+		override val default: Any?,
+) : Param() {
 	override fun java() = "byte[] $name"
 	override fun javaDefault() = "$annotation String $name"
 	override fun javaDefaultStr() = "$annotation JImStr $name"
@@ -136,9 +146,11 @@ open class StringParam(val name: String,
 	override fun surrounding() = "__get(Byte, $name)" to "__release(Byte, $name)"
 }
 
-class SizedStringParam(name: String,
-                       annotation: String = "@NotNull",
-                       default: Any?) : StringParam(name, annotation, default) {
+class SizedStringParam(
+		name: String,
+		annotation: String = "@NotNull",
+		default: Any?,
+) : StringParam(name, annotation, default) {
 	override fun javaExpr() = "$name.getBytes(StandardCharsets.UTF_8)"
 	override fun `c++Expr`() = "STR_J2C($name), STR_J2C($name + __len($name))"
 	override fun `c++CriticalExpr`() = "STR_J2C($name), STR_J2C($name + ${name}Len)"
@@ -152,11 +164,13 @@ data class ImVec4Param(val name: String, override val default: Any?) : Param() {
 	override fun `c++Expr`() = "*PTR_J2C(ImVec4, $name)"
 }
 
-data class PointerParam(val name: String,
-                        val jvmType: String,
-                        val nativeType: String,
-                        val annotation: String = "@NotNull",
-                        override val default: Any? = null) : Param() {
+data class PointerParam(
+		val name: String,
+		val jvmType: String,
+		val nativeType: String,
+		val annotation: String = "@NotNull",
+		override val default: Any? = null,
+) : Param() {
 	override fun java() = "long $name"
 	override fun javaDefault() = "@NotNull $jvmType $name"
 	override fun javaExpr() = "$name.nativeObjectPtr"

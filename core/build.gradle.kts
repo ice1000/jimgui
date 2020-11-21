@@ -38,7 +38,7 @@ fun Exec.configureCxxBuild(workingDir: File, vararg commandLine: String) {
 	workingDir(workingDir)
 	commandLine(*commandLine)
 	outputs.dir(workingDir)
-	inputs.files(jniDir.listFiles().filter { it.name.endsWith("cpp") })
+	inputs.files(jniDir.listFiles().orEmpty().filter { it.name.endsWith("cpp") })
 	inputs.dir(jniDir.resolve("imgui"))
 	inputs.dir(jniDir.resolve("impl"))
 	doLast {
@@ -168,7 +168,7 @@ val msbuildWin64 = tasks.register<Exec>("msbuildWin64") {
 
 val clearGenerated = tasks.register<Delete>("clearGenerated") {
 	group = cleanGroup
-	delete(projectDir.resolve("gen"), javahDir, *jniDir.listFiles { f: File -> f.name.startsWith("generated") })
+	delete(projectDir.resolve("gen"), javahDir, *jniDir.listFiles { f: File -> f.name.startsWith("generated") }.orEmpty())
 }
 
 val clearCMake = tasks.register<Delete>("clearCMake") {
