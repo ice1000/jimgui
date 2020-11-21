@@ -186,6 +186,19 @@ open class GenHoveredFlags : GenFlagTask(
 		"RootAndChildWindows" to "RootWindow | ChildWindows",
 )
 
+open class GenTabItemFlags : GenFlagTask(
+		"JImTabItemFlags",
+		"None" to "0",
+		"UnsavedDocument" to "1 << 0",
+		"SetSelected" to "1 << 1",
+		"NoCloseWithMiddleMouseButton" to "1 << 2",
+		"NoPushId" to "1 << 3",
+		"NoTooltip" to "1 << 4",
+		"NoReorder" to "1 << 5",
+		"Leading" to "1 << 6",
+		"Trailing" to "1 << 7",
+)
+
 open class GenFocusedFlags : GenFlagTask(
 		"JImFocusedFlags",
 		"None" to "0",

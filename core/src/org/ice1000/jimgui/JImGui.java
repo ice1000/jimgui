@@ -2,7 +2,7 @@ package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImTabItemFlags;
-import org.ice1000.jimgui.flag.JImTextEditFlags;
+import org.ice1000.jimgui.flag.JImInputTextFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -581,7 +581,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	public boolean inputText(@NotNull String label,
 	                         @NotNull byte[] buffer,
-	                         @MagicConstant(flagsFromClass = JImTextEditFlags.class) int flags) {
+	                         @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
 		return inputText(getBytes(label), buffer, buffer.length, flags);
 	}
 

@@ -374,6 +374,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("endTabBar"),
 			Fun("beginTabItem", "boolean", label, pOpenNull, flags("TabItem", default = "None")),
 			Fun("endTabItem"),
+			Fun("tabItemButton", "boolean", label, flags("TabItem", default = "None")),
 			Fun("setTabItemClosed", string("tabOrDockedWindowLabel")),
 
 			// Logging/Capture: all text output from interface is captured to tty/file/clipboard.

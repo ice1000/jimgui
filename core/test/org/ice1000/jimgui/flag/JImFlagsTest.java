@@ -85,11 +85,6 @@ public class JImFlagsTest {
     }
 
     @Test
-    public void textEditFlags() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
-        checkFlags(JImTextEditFlags.Type.values(), JImTextEditFlags.class);
-    }
-
-    @Test
     public void treeNodeFlags() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
         checkFlags(JImTreeNodeFlags.Type.values(), JImTreeNodeFlags.class);
     }
