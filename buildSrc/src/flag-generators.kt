@@ -83,6 +83,10 @@ open class GenColorEditFlags : GenFlagTask(
 		"InputRGB" to "1 << 27",
 		"InputHSV" to "1 << 28",
 		"OptionsDefault" to "Uint8 | InputRGB | PickerHueBar",
+		"_DisplayMask" to "DisplayRGB | DisplayHSV | DisplayHex",
+		"_DataTypeMask" to "Uint8 | Float",
+		"_PickerMask" to "PickerHueWheel | PickerHueBar",
+		"_InputMask" to "InputRGB | InputHSV",
 )
 
 open class GenBackendFlags : GenFlagTask(
@@ -92,6 +96,15 @@ open class GenBackendFlags : GenFlagTask(
 		"HasMouseCursors" to "1 << 1",
 		"HasSetMousePos" to "1 << 2",
 		"RendererHasVtxOffset" to "1 << 3",
+)
+
+open class GenCond : GenFlagTask(
+		"JImCond",
+		"None" to "0",
+		"Always" to "1 << 0",
+		"Once" to "1 << 1",
+		"FirstUseEver" to "1 << 2",
+		"Appearing" to "1 << 3",
 )
 
 open class GenSliderFlags : GenFlagTask(
@@ -180,6 +193,29 @@ open class GenFocusedFlags : GenFlagTask(
 		"RootWindow" to "1 << 1",
 		"AnyWindow" to "1 << 2",
 		"RootAndChildWindows" to "RootWindow | ChildWindows",
+)
+
+open class GenConfigFlags : GenFlagTask(
+		"JImConfigFlags",
+		"None" to "0",
+		"NavEnableKeyboard" to "1 << 0",
+		"NavEnableGamepad" to "1 << 1",
+		"NavEnableSetMousePos" to "1 << 2",
+		"NavNoCaptureKeyboard" to "1 << 3",
+		"NoMouse" to "1 << 4",
+		"NoMouseCursorChange" to "1 << 5",
+		"IsSRGB" to "1 << 20",
+		"IsTouchScreen" to "1 << 21",
+)
+
+open class GenButtonFlags : GenFlagTask(
+		"JImButtonFlags",
+		"None" to "0",
+		"MouseButtonLeft" to "1 << 0",
+		"MouseButtonRight" to "1 << 1",
+		"MouseButtonMiddle" to "1 << 2",
+		"MouseButtonMask_" to "MouseButtonLeft | MouseButtonRight | MouseButtonMiddle",
+		"MouseButtonDefault_" to "MouseButtonLeft",
 )
 
 open class GenSelectableFlags : GenFlagTask(

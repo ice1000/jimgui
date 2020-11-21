@@ -56,15 +56,15 @@ namespace ImGui {
 	auto EmptyButton(ComVec4 bounds) -> bool;
 	auto SetDisableHighlight(bool newValue) -> void;
 	auto GetDisableHighlight() -> bool;
-	auto DragVec4(RawStr name, RefVec4 val, float speed = 1, float min = 0, float max = 0) -> void;
-	auto SliderVec4(RawStr name, RefVec4 val, float min = 0, float max = 100) -> void;
+	auto DragVec4(RawStr name, RefVec4 val, float speed = 1, float min = 0, float max = 0, ImGuiSliderFlags flags = 0) -> void;
+	auto SliderVec4(RawStr name, RefVec4 val, float min = 0, float max = 100, ImGuiSliderFlags flags = 0) -> void;
 	auto DragDouble(RawStr label,
 	                Ptr<double> v,
 	                float v_speed = 1.0f,
 	                double v_min = .0,
 	                double v_max = .0,
 	                RawStr format = "%.6lf",
-	                float power = 1.0f) -> bool;
+	                ImGuiSliderFlags flags = 0) -> bool;
 	auto LineTo(ComVec2 delta, ComVec4 color, float thickness = 1.0f) -> void;
 	auto LineTo(ComVec2 delta, float thickness = 1.0f) -> void;
 	/// if @param thickness < 0, circle will be filled

@@ -2,7 +2,7 @@ package org.ice1000.jimgui.tests;
 
 import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
-import org.ice1000.jimgui.flag.JImCondition;
+import org.ice1000.jimgui.flag.JImCond;
 import org.ice1000.jimgui.flag.JImDirection;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.ice1000.jimgui.util.JImGuiUtil;
@@ -111,7 +111,7 @@ public class Demo {
 			if (noResize.accessValue()) windowFlags |= JImWindowFlags.NoResize;
 			if (noCollapse.accessValue()) windowFlags |= JImWindowFlags.NoCollapse;
 			if (noNav.accessValue()) windowFlags |= JImWindowFlags.NoNav;
-			imGui.setNextWindowSize(550, 680, JImCondition.FirstUseEver);
+			imGui.setNextWindowSize(550, 680, JImCond.FirstUseEver);
 			imGui.begin(windowName, pOpen, windowFlags);
 
 			//imGui.pushItemWidth(imGui.getWindowWidth() * 0.65f);    // 2/3 of the space for widget and 1/3 for labels
@@ -273,7 +273,7 @@ public class Demo {
 		float windowPosPivotX = (corner & 1) > 0 ? 1.0f : 0.0f;
 		float windowPosPivotY = (corner & 2) > 0 ? 1.0f : 0.0f;
 		if (corner != -1)
-			imGui.setNextWindowPos(windowPosX, windowPosY, JImCondition.Always, windowPosPivotX, windowPosPivotY);
+			imGui.setNextWindowPos(windowPosX, windowPosY, JImCond.Always, windowPosPivotX, windowPosPivotY);
 		imGui.setNextWindowBgAlpha(.3f);
 		if (imGui.begin("Example: Fixed Overlay",
 				openPtr,
@@ -338,17 +338,17 @@ public class Demo {
 		// You can use the "##" and "###" markers to manipulate the display/ID.
 
 		// Using "##" to display same title but have unique identifier.
-		imGui.setNextWindowPos(100, 100, JImCondition.FirstUseEver);
+		imGui.setNextWindowPos(100, 100, JImCond.FirstUseEver);
 		imGui.begin("Same title as another window##1");
 		imGui.text("This is window 1.\nMy title is the same as window 2, but my identifier is unique.");
 		imGui.end();
 
-		imGui.setNextWindowPos(100, 200, JImCondition.FirstUseEver);
+		imGui.setNextWindowPos(100, 200, JImCond.FirstUseEver);
 		imGui.begin("Same title as another window##2");
 		imGui.text("This is window 2.\nMy title is the same as window 1, but my identifier is unique.");
 		imGui.end();
 
-		imGui.setNextWindowPos(100, 300, JImCondition.FirstUseEver);
+		imGui.setNextWindowPos(100, 300, JImCond.FirstUseEver);
 		long millis = System.currentTimeMillis();
 		// Using "###" to display a changing title but keep a static identifier "Animated title"
 		imGui.begin("Animated title " +

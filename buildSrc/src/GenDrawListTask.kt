@@ -101,7 +101,7 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
 					numSegments(10), nativeObjectPtr),
 			Fun.private("pathArcToFast",
 					pos("centre"), float("radius"),
-					float("aMinOf12"), float("aMaxOf12"), nativeObjectPtr),
+					int("aMinOf12"), int("aMaxOf12"), nativeObjectPtr),
 			Fun.private("pathBezierCurveTo",
 					pos("p1"), pos("p2"), pos("p3"),
 					numSegments(0),

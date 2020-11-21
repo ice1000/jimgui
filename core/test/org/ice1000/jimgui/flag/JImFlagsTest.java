@@ -21,7 +21,7 @@ public class JImFlagsTest {
 
     @Test
     public void conditionFlags() throws NoSuchFieldException, InstantiationException, IllegalAccessException {
-        checkFlags(JImCondition.Type.values(), JImCondition.class);
+        checkFlags(JImCond.Type.values(), JImCond.class);
     }
 
     @Test
