@@ -6,6 +6,8 @@ import java.io.File
 
 private val nativeLibraryExtensions = listOf("so", "dll", "dylib")
 val isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+const val Makefiles = "Unix Makefiles"
+const val VS2019 = "Visual Studio 16 2019"
 
 abstract class NativeBuildTask : Exec() {
 	lateinit var jniDir: File

@@ -1,7 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.ice1000.gradle.*
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	java
@@ -41,16 +39,17 @@ val genImgui = tasks.register<GenGenTask>("genImgui") {
 	dependsOn(downloadImgui)
 }
 
-val genImguiIO = tasks.register<GenIOTask>("genImguiIO")
-val genNativeTypes = tasks.register<GenNativeTypesTask>("genNativeTypes")
-val genImguiStyleVar = tasks.register<GenStyleVarsTask>("genImguiStyleVar")
-val genImguiStyleColor = tasks.register<GenStyleColorsTask>("genImguiStyleColor")
-val genImguiDefaultKeys = tasks.register<GenDefaultKeysTask>("genImguiDefaultKeys")
-val genImguiFont = tasks.register<GenFontTask>("genImguiFont")
-val genImguiFontAtlas = tasks.register<GenFontAtlasTask>("genImguiFontAtlas")
-val genImguiFontConfig = tasks.register<GenFontConfigTask>("genImguiFontConfig")
-val genImguiDrawList = tasks.register<GenDrawListTask>("genImguiDrawList")
-val genImguiStyle = tasks.register<GenStyleTask>("genImguiStyle")
+val generations = arrayOf(
+		tasks.register<GenIOTask>("genImguiIO"),
+		tasks.register<GenNativeTypesTask>("genNativeTypes"),
+		tasks.register<GenStyleVarsTask>("genImguiStyleVar"),
+		tasks.register<GenStyleColorsTask>("genImguiStyleColor"),
+		tasks.register<GenDefaultKeysTask>("genImguiDefaultKeys"),
+		tasks.register<GenFontTask>("genImguiFont"),
+		tasks.register<GenFontAtlasTask>("genImguiFontAtlas"),
+		tasks.register<GenFontConfigTask>("genImguiFontConfig"),
+		tasks.register<GenDrawListTask>("genImguiDrawList"),
+		tasks.register<GenStyleTask>("genImguiStyle"))
 
 val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
@@ -113,17 +112,15 @@ val downloadIce1000 = tasks.register<Download>("downloadIce1000") {
 
 val cmakeWin64 = tasks.register<CMake>("cmakeWin64") {
 	preconfigure()
-	if (isWindows)
-		cmake(`cmake-build-win64`, "Visual Studio 16 2019", "-A", "x64")
-	else cmake(`cmake-build-win64`, "Unix Makefiles")
+	if (isWindows) cmake(`cmake-build-win64`, VS2019, "-A", "x64")
+	else cmake(`cmake-build-win64`, Makefiles)
 	dependsOn(tasks.compileJava, downloadAll)
 }
 
 val cmake = tasks.register<CMake>("cmake") {
 	preconfigure()
-	if (isWindows)
-		cmake(`cmake-build`, "Visual Studio 16 2019", "-A", "Win32")
-	else cmake(`cmake-build`, "Unix Makefiles")
+	if (isWindows) cmake(`cmake-build`, VS2019, "-A", "Win32")
+	else cmake(`cmake-build`, Makefiles)
 	dependsOn(tasks.compileJava, downloadAll)
 }
 
@@ -164,19 +161,7 @@ downloadAll.configure {
 	dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 }
 tasks.compileJava {
-	dependsOn(
-			genImguiIO,
-			genImguiFont,
-			genImguiStyle,
-			genImgui,
-			genImguiDrawList,
-			genNativeTypes,
-			genImguiStyleVar,
-			genImguiDefaultKeys,
-			genImguiStyleColor,
-			genImguiFontAtlas,
-			genImguiFontConfig
-	)
+	dependsOn(genImgui, *generations)
 }
 
 clean.configure {
