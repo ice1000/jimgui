@@ -47,6 +47,7 @@ val generations = arrayOf(
 		tasks.register<GenFontConfigTask>("genImguiFontConfig"),
 		tasks.register<GenDrawListTask>("genImguiDrawList"),
 		tasks.register<GenStyleTask>("genImguiStyle"),
+		tasks.register<GenTabBarFlags>("genTabBarFlags"),
 		tasks.register<GenGenTask>("genImgui") {
 			dependsOn(downloadImgui)
 		})

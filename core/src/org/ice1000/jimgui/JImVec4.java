@@ -31,7 +31,7 @@ public class JImVec4 implements DeallocatableObject {
 
 	@Contract
 	public JImVec4(float x, float y, float z, float w) {
-		nativeObjectPtr = allocateNativeObjects(x, y, z, w);
+		this(allocateNativeObjects(x, y, z, w));
 	}
 
 	/** Don't call this unless necessary. */

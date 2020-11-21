@@ -6,17 +6,15 @@ abstract class GenEnumTask<T>(className: String) : GenJavaTask(className), Runna
 	abstract val list: List<T>
 
 	@TaskAction
-	override fun run() {
-		buildString {
-			append(prefixInterfacedJava)
-			list.forEachIndexed { index, element ->
-				append('\t')
-				genStatement(index, element)
-				appendln(";")
-			}
-			appendln('}')
-		}.let { targetJavaFile.writeText(it) }
-	}
+	override fun run() = buildString {
+		append(prefixInterfacedJava)
+		list.forEachIndexed { index, element ->
+			append('\t')
+			genStatement(index, element)
+			appendln(";")
+		}
+		appendln('}')
+	}.let { targetJavaFile.writeText(it) }
 
 	open fun StringBuilder.genStatement(index: Int, element: T) {
 		append("int ")

@@ -3,20 +3,23 @@ package org.ice1000.gradle
 import org.gradle.api.DefaultTask
 import org.intellij.lang.annotations.Language
 
-open class GenJavaTask(val className: String, val since: String = "v0.1") : DefaultTask() {
-	init {
-		group = "code generation"
-	}
-
-	@JvmField
+open class GenJavaTask(
+		val className: String,
+		val since: String = "v0.1",
+		private val packageName: String = "org.ice1000.jimgui",
+		relativePath: String = packageName.replace('.', '/')
+) : DefaultTask() {
 	val targetJavaFile = project
 			.projectDir
 			.resolve("gen")
-			.resolve("org")
-			.resolve("ice1000")
-			.resolve("jimgui")
+			.resolve(relativePath)
 			.resolve("$className.java")
 			.absoluteFile
+
+	init {
+		group = "code generation"
+		targetJavaFile.parentFile.mkdirs()
+	}
 
 	@Language("Text")
 	open val userCode = """/** package-private by design */
@@ -25,8 +28,9 @@ open class GenJavaTask(val className: String, val since: String = "v0.1") : Defa
 
 	protected val prefixJava
 		@Language("JAVA", suffix = "}")
-		get() = """package org.ice1000.jimgui;
+		get() = """package $packageName;
 
+import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.*;
 import org.ice1000.jimgui.cpp.*;
 import org.intellij.lang.annotations.*;
@@ -47,8 +51,9 @@ $userCode
 
 	protected val prefixInterfacedJava
 		@Language("JAVA", suffix = "}")
-		get() = """package org.ice1000.jimgui;
+		get() = """package $packageName;
 
+import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.*;
 import org.ice1000.jimgui.cpp.*;
 import org.intellij.lang.annotations.*;
