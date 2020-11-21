@@ -20,7 +20,9 @@ Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/o
 This project is created for a code editor and a game engine, both not open-sourced currently.
 You can find jimgui on [Maven Repositories](https://mvnrepository.com/artifact/org.ice1000.jimgui).
 
-For macOS users, add `-XstartOnFirstThread` JVM argument when running programs built with jimgui.
+For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when running applications built with jimgui.
+Note that jimgui uses a not-very-efficient way to convert `java.lang.String` into byte arrays that C++ is happy with.
+You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`, or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
 
 # Demo
 
@@ -84,12 +86,6 @@ public class Main {
 	}
 }
 ```
-
-Notice that jimgui uses a not-very-efficient way to convert `java.lang.String`
-into byte arrays that C++ is happy with.
-You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`,
-or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`,
-which is supposed to be created as global constants.
 
 ## Using Unicode strings
 
