@@ -86,3 +86,12 @@ open class GenBackendFlags : GenFlagTask(
 		"HasSetMousePos" to "1 << 2",
 		"RendererHasVtxOffset" to "1 << 3",
 )
+
+open class GenMouseButton : GenFlagTask(
+		"JImMouseButton",
+		"Left" to "0",
+		"Right" to "1",
+		"Middle" to "2",
+		"ExtraA" to "3",
+		"ExtraB" to "4",
+)
