@@ -196,6 +196,7 @@ public class Demo {
 					imGui.radioButton("radio b", e, 1);
 					imGui.sameLine();
 					imGui.radioButton("radio c", e, 2);
+					imGui.text("radio selection: " + e);
 
 					for (int i = 0; i < 7; i++) {
 						if (i > 0) imGui.sameLine();

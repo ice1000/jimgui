@@ -272,7 +272,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					intPtr("value"),
 					int("valueMin", default = 0),
 					int("valueMax", default = 0),
-					string("format", default = "FLOAT_FMT")),
+					string("format", default = "INT_FMT")),
 			Fun("vSliderFloat", "boolean", label, size(),
 					floatPtr("value"),
 					float("valueMin", default = 0),
@@ -283,7 +283,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					intPtr("value"),
 					int("valueMin", default = 0),
 					int("valueMax", default = 0),
-					string("format", default = "FLOAT_FMT")),
+					string("format", default = "INT_FMT")),
 
 			// Widgets: Trees
 			Fun("treeNode", "boolean", label),
