@@ -14,17 +14,14 @@ val `cmake-build` = jni.resolve("cmake-build")
 val javahDir = jni.resolve("javah")
 val res = projectDir.resolve("res")
 
-fun NativeBuildTask.preconfigure() {
+fun NativeBuildTask.preconfigure(vararg deps: TaskProvider<*>) {
 	jniDir = jni
 	resDir = res
-}
-
-tasks.compileJava {
-	options.compilerArgs = listOf("-h", "$javahDir")
+	dependsOn(*deps)
 }
 
 val clean = tasks.named<Delete>("clean")
-val cleanGroup = clean.get().group
+val cleanGroup = "build"
 val downloadGroup = "download"
 val downloadAll = tasks.register("downloadAll") {
 	group = downloadGroup
@@ -33,10 +30,6 @@ val downloadAll = tasks.register("downloadAll") {
 val compileCxx = tasks.register("compileCxx") {
 	group = "native compile"
 	description = "Virtual task representing all C++ compilation tasks"
-}
-
-val genImgui = tasks.register<GenGenTask>("genImgui") {
-	dependsOn(downloadImgui)
 }
 
 val generations = arrayOf(
@@ -49,7 +42,10 @@ val generations = arrayOf(
 		tasks.register<GenFontAtlasTask>("genImguiFontAtlas"),
 		tasks.register<GenFontConfigTask>("genImguiFontConfig"),
 		tasks.register<GenDrawListTask>("genImguiDrawList"),
-		tasks.register<GenStyleTask>("genImguiStyle"))
+		tasks.register<GenStyleTask>("genImguiStyle"),
+		tasks.register<GenGenTask>("genImgui") {
+			dependsOn(downloadImgui)
+		})
 
 val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
@@ -111,34 +107,27 @@ val downloadIce1000 = tasks.register<Download>("downloadIce1000") {
 }
 
 val cmakeWin64 = tasks.register<CMake>("cmakeWin64") {
-	preconfigure()
-	if (isWindows) cmake(`cmake-build-win64`, VS2019, "-A", "x64")
-	else cmake(`cmake-build-win64`, Makefiles)
-	dependsOn(tasks.compileJava, downloadAll)
+	preconfigure(tasks.compileJava, downloadAll)
+	simple(`cmake-build-win64`, "x64")
 }
 
 val cmake = tasks.register<CMake>("cmake") {
-	preconfigure()
-	if (isWindows) cmake(`cmake-build`, VS2019, "-A", "Win32")
-	else cmake(`cmake-build`, Makefiles)
-	dependsOn(tasks.compileJava, downloadAll)
+	preconfigure(tasks.compileJava, downloadAll)
+	simple(`cmake-build`, "Win32")
 }
 
 val make = tasks.register<CxxCompile>("make") {
-	preconfigure()
-	dependsOn(cmake)
+	preconfigure(cmake)
 	cxx(`cmake-build`, "make", "-f", "Makefile")
 }
 
 val msbuild = tasks.register<CxxCompile>("msbuild") {
-	preconfigure()
-	dependsOn(cmake)
+	preconfigure(cmake)
 	cxx(`cmake-build`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release")
 }
 
 val msbuildWin64 = tasks.register<CxxCompile>("msbuildWin64") {
-	preconfigure()
-	dependsOn(cmakeWin64)
+	preconfigure(cmakeWin64)
 	cxx(`cmake-build-win64`, "msbuild", "jimgui.sln", "/t:Build", "/p:Configuration=Release")
 }
 
@@ -161,7 +150,8 @@ downloadAll.configure {
 	dependsOn(downloadImplGL, downloadImpl, downloadImgui)
 }
 tasks.compileJava {
-	dependsOn(genImgui, *generations)
+	options.compilerArgs = listOf("-h", "$javahDir")
+	dependsOn(*generations)
 }
 
 clean.configure {

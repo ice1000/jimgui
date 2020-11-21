@@ -1,10 +1,10 @@
 plugins { java }
 sourceSets {
 	main {
-		java.setSrcDirs(listOf("src"))
-		resources.setSrcDirs(listOf("res"))
+		java.srcDir("src")
+		resources.srcDir("res")
 	}
-	test { java.setSrcDirs(listOf("test")) }
+	test { java.srcDir("test") }
 }
 repositories { jcenter() }
 dependencies {

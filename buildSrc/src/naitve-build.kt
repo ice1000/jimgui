@@ -19,13 +19,20 @@ abstract class NativeBuildTask : Exec() {
 }
 
 open class CMake : NativeBuildTask() {
+	var cmakePath = "cmake"
+
+	fun simple(workingDir: File, arch: String) {
+		if (isWindows) cmake(workingDir, VS2019, "-A", arch)
+		else cmake(workingDir, Makefiles)
+	}
+
 	fun cmake(workingDir: File, generator: String, vararg additional: String) {
 		workingDir(workingDir)
 		outputs.dir(workingDir)
 		inputs.dir(jniDir.resolve("imgui"))
 		inputs.dir(jniDir.resolve("impl"))
 		inputs.file(jniDir.resolve("CMakeLists.txt"))
-		commandLine("cmake", "-DCMAKE_BUILD_TYPE=Release", "-G", generator, *additional, workingDir.parent)
+		commandLine(cmakePath, "-DCMAKE_BUILD_TYPE=Release", "-G", generator, *additional, workingDir.parent)
 		doFirst { workingDir.mkdirs() }
 	}
 }
