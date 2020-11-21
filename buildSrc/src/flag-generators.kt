@@ -144,6 +144,54 @@ open class GenTreeNodeFlags : GenFlagTask(
 		"CollapsingHeader" to "Framed | NoTreePushOnOpen | NoAutoOpenOnLog",
 )
 
+open class GenPopupFlags : GenFlagTask(
+		"JImPopupFlags",
+		"None" to "0",
+		"MouseButtonLeft" to "0",
+		"MouseButtonRight" to "1",
+		"MouseButtonMiddle" to "2",
+		"MouseButtonMask" to "0x1F",
+		"MouseButtonDefault" to "1",
+		"NoOpenOverExistingPopup" to "1 << 5",
+		"NoOpenOverItems" to "1 << 6",
+		"AnyPopupId" to "1 << 7",
+		"AnyPopupLevel" to "1 << 8",
+		"AnyPopup" to "AnyPopupId | AnyPopupLevel",
+)
+
+open class GenHoveredFlags : GenFlagTask(
+		"JImHoveredFlags",
+		"None" to "0",
+		"ChildWindows" to "1 << 0",
+		"RootWindow" to "1 << 1",
+		"AnyWindow" to "1 << 2",
+		"AllowWhenBlockedByPopup" to "1 << 3",
+		"AllowWhenBlockedByActiveItem" to "1 << 5",
+		"AllowWhenOverlapped" to "1 << 6",
+		"AllowWhenDisabled" to "1 << 7",
+		"RectOnly" to "AllowWhenBlockedByPopup | AllowWhenBlockedByActiveItem | AllowWhenOverlapped",
+		"RootAndChildWindows" to "RootWindow | ChildWindows",
+)
+
+open class GenFocusedFlags : GenFlagTask(
+		"JImFocusedFlags",
+		"None" to "0",
+		"ChildWindows" to "1 << 0",
+		"RootWindow" to "1 << 1",
+		"AnyWindow" to "1 << 2",
+		"RootAndChildWindows" to "RootWindow | ChildWindows",
+)
+
+open class GenSelectableFlags : GenFlagTask(
+		"JImSelectableFlags",
+		"None" to "0",
+		"DontClosePopups" to "1 << 0",
+		"SpanAllColumns" to "1 << 1",
+		"AllowDoubleClick" to "1 << 2",
+		"Disabled" to "1 << 3",
+		"AllowItemOverlap" to "1 << 4",
+)
+
 open class GenInputTextFlags : GenFlagTask(
 		"JImInputTextFlags",
 		"Nothing" to "0",

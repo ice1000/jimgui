@@ -103,8 +103,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Windows Utilities
 			Fun("isWindowAppearing", "boolean"),
 			Fun("isWindowCollapsed", "boolean"),
-			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "Default")),
-			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "Default")),
+			Fun("isWindowFocused", "boolean", flags(from = "Focused", default = "None")),
+			Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "None")),
 			Fun("getWindowWidth", "float"),
 			Fun("getWindowHeight", "float"),
 			// Fun("getContentRegionAvailWidth", "float"),
@@ -311,12 +311,12 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("selectable0", "boolean",
 					label,
 					bool("selected", default = false),
-					flags(from = "Selectable", default = "Nothing"),
+					flags(from = "Selectable", default = "None"),
 					size(default = "0,0")),
 			Fun("selectable", "boolean",
 					label,
 					boolPtr("selected"),
-					flags(from = "Selectable", default = "Nothing"),
+					flags(from = "Selectable", default = "None"),
 					size(default = "0,0")),
 
 			// Tooltips
@@ -422,7 +422,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("saveIniSettingsToDisk", string("iniFileName")),
 
 			// Utilities
-			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "Default")),
+			Fun("isItemHovered", "boolean", flags(from = "Hovered", default = "None")),
 			Fun("isItemActive", "boolean"),
 			Fun("isItemFocused", "boolean"),
 			Fun("isItemClicked", "boolean", int("mouseButton", default = 0)),

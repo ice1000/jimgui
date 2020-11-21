@@ -62,6 +62,10 @@ val generations = arrayOf(
 		g<GenWindowFlags>(),
 		g<GenInputTextFlags>(),
 		g<GenTreeNodeFlags>(),
+		g<GenSelectableFlags>(),
+		g<GenPopupFlags>(),
+		g<GenFocusedFlags>(),
+		g<GenHoveredFlags>(),
 		g<GenGenTask>())
 
 val github = "https://raw.githubusercontent.com"
