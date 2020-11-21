@@ -124,6 +124,53 @@ open class GenFontAtlasFlags : GenFlagTask(
 		"NoBakedLines" to "1 << 2",
 )
 
+open class GenTreeNodeFlags : GenFlagTask(
+		"JImTreeNodeFlags",
+		"Nothing" to "0",
+		"Selected" to "1 << 0",
+		"Framed" to "1 << 1",
+		"AllowItemOverlap" to "1 << 2",
+		"NoTreePushOnOpen" to "1 << 3",
+		"NoAutoOpenOnLog" to "1 << 4",
+		"DefaultOpen" to "1 << 5",
+		"OpenOnDoubleClick" to "1 << 6",
+		"OpenOnArrow" to "1 << 7",
+		"Leaf" to "1 << 8",
+		"Bullet" to "1 << 9",
+		"FramePadding" to "1 << 10",
+		"SpanAvailWidth" to "1 << 11",
+		"SpanFullWidth" to "1 << 12",
+		"NavLeftJumpsBackHere" to "1 << 13",
+		"CollapsingHeader" to "Framed | NoTreePushOnOpen | NoAutoOpenOnLog",
+)
+
+open class GenInputTextFlags : GenFlagTask(
+		"JImInputTextFlags",
+		"Nothing" to "0",
+		"CharsDecimal" to "1 << 0",
+		"CharsHexadecimal" to "1 << 1",
+		"CharsUppercase" to "1 << 2",
+		"CharsNoBlank" to "1 << 3",
+		"AutoSelectAll" to "1 << 4",
+		"EnterReturnsTrue" to "1 << 5",
+		"CallbackCompletion" to "1 << 6",
+		"CallbackHistory" to "1 << 7",
+		"CallbackAlways" to "1 << 8",
+		"CallbackCharFilter" to "1 << 9",
+		"AllowTabInput" to "1 << 10",
+		"CtrlEnterForNewLine" to "1 << 11",
+		"NoHorizontalScroll" to "1 << 12",
+		"AlwaysInsertMode" to "1 << 13",
+		"ReadOnly" to "1 << 14",
+		"Password" to "1 << 15",
+		"NoUndoRedo" to "1 << 16",
+		"CharsScientific" to "1 << 17",
+		"CallbackResize" to "1 << 18",
+		"CallbackEdit" to "1 << 19",
+		"Multiline" to "1 << 20",
+		"NoMarkEdited" to "1 << 21",
+)
+
 open class GenWindowFlags : GenFlagTask(
 		"JImWindowFlags",
 		"Nothing" to "0",
