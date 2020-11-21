@@ -17,6 +17,7 @@ abstract class GenFlagTask(className: String, private vararg val list: Pair<Stri
 			appendln(";")
 		}
 		appendln("\tenum Type implements Flag {")
+		preType()
 		list.forEach { (name, _) ->
 			append("\t\t").append(name).append("(").append(className).append(".").append(name).appendln("),")
 		}
@@ -25,6 +26,9 @@ abstract class GenFlagTask(className: String, private vararg val list: Pair<Stri
 				.appendln("\t\t@Override public int get() { return flag; }")
 		appendln("\t}").appendln('}')
 	}.let { targetJavaFile.writeText(it) }
+
+	open fun StringBuilder.preType() {
+	}
 
 	private fun StringBuilder.genStatement(name: String, value: String) {
 		append("int ")
@@ -116,4 +120,12 @@ open class GenMouseButton : GenFlagTask(
 		"Middle" to "2",
 		"ExtraA" to "3",
 		"ExtraB" to "4",
-)
+) {
+	override fun StringBuilder.preType() {
+		appendln("""		/**
+		 * Used for reverse lookup results and enum comparison.
+		 * Return the Nothing or Default flag to prevent errors.
+		 */
+		NoSuchFlag(-1),""")
+	}
+}
