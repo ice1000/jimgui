@@ -103,7 +103,7 @@ public class Demo {
 			}
 
 			// Demonstrate the various window flags. Typically you would just use the default.
-			int windowFlags = JImWindowFlags.Nothing;
+			int windowFlags = JImWindowFlags.None;
 			if (noTitlebar.accessValue()) windowFlags |= JImWindowFlags.NoTitleBar;
 			if (noScrollbar.accessValue()) windowFlags |= JImWindowFlags.NoScrollbar;
 			if (!noMenu.accessValue()) windowFlags |= JImWindowFlags.MenuBar;

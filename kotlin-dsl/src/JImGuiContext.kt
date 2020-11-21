@@ -17,7 +17,7 @@ class JImGuiContext(
 
 	inline operator fun String.invoke(pOpen: NativeBool,
 	                                  @MagicConstant(flagsFromClass = JImWindowFlags::class)
-	                                  flags: Flags = JImWindowFlags.Nothing,
+	                                  flags: Flags = JImWindowFlags.None,
 	                                  block: JImGuiBlock) {
 		begin(this@invoke, pOpen, flags)
 		block()

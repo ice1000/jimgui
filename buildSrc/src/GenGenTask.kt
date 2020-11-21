@@ -246,16 +246,16 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					floatPtr("value"), float("step", default = 0),
 					float("stepFast", default = 0),
 					string("format", default = "FLOAT_FMT"),
-					flags("InputText", default = "Nothing")),
+					flags("InputText", default = "None")),
 			Fun("inputInt", "boolean", label,
 					intPtr("value"), int("step", default = 1),
 					int("stepFast", default = 100),
-					flags("InputText", default = "Nothing")),
+					flags("InputText", default = "None")),
 			Fun("inputDouble", "boolean", label,
 					doublePtr("value"), double("step", default = 0),
 					double("stepFast", default = 0),
 					string("format", default = "DOUBLE_FMT"),
-					flags("InputText", default = "Nothing")),
+					flags("InputText", default = "None")),
 
 			// Widgets: Sliders
 			Fun("sliderFloat", "boolean", label,
@@ -296,15 +296,15 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
 
 			// Widgets: Color Editor/Picker
-			Fun("colorEdit3", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorEdit4", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorEdit3", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "None")),
+			Fun("colorEdit4", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "None")),
 			Fun("colorButton", "boolean",
 					string("descriptionID"),
 					vec4("color"),
-					flags(from = "ColorEdit", default = "Nothing"),
+					flags(from = "ColorEdit", default = "None"),
 					size(default = "0,0")),
-			Fun("colorPicker3", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
-			Fun("colorPicker4", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "Nothing")),
+			Fun("colorPicker3", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "None")),
+			Fun("colorPicker4", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "None")),
 			Fun("setColorEditOptions", flags(from = "ColorEdit")),
 
 			// Widgets: Selectable / Lists

@@ -32,7 +32,7 @@ val cond = int("condition", "JImCondition.Always", "@MagicConstant(valuesFromCla
 val nativeObjectPtr = p("nativeObjectPtr", "long", default = "this.nativeObjectPtr")
 val label = string("label")
 val text = string("text")
-val windowFlags = flags(from = "Window", default = "Nothing")
+val windowFlags = flags(from = "Window", default = "None")
 val treeNodeFlags = flags(from = "TreeNode", default = "Selected")
 val mouseButton = int("button", default = "JImMouseButton.Left", annotation = "@MagicConstant(valuesFromClass = JImMouseButton.class)")
 val pOpen = boolPtr("openPtr")

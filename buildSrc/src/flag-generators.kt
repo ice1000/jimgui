@@ -58,7 +58,7 @@ open class GenTabBarFlags : GenFlagTask(
 
 open class GenColorEditFlags : GenFlagTask(
 		"JImColorEditFlags",
-		"Nothing" to "0", // special -- the C++ version is `None`
+		"None" to "0",
 		"NoAlpha" to "1 << 1",
 		"NoPicker" to "1 << 2",
 		"NoOptions" to "1 << 3",
@@ -126,7 +126,7 @@ open class GenFontAtlasFlags : GenFlagTask(
 
 open class GenTreeNodeFlags : GenFlagTask(
 		"JImTreeNodeFlags",
-		"Nothing" to "0",
+		"None" to "0",
 		"Selected" to "1 << 0",
 		"Framed" to "1 << 1",
 		"AllowItemOverlap" to "1 << 2",
@@ -194,7 +194,7 @@ open class GenSelectableFlags : GenFlagTask(
 
 open class GenInputTextFlags : GenFlagTask(
 		"JImInputTextFlags",
-		"Nothing" to "0",
+		"None" to "0",
 		"CharsDecimal" to "1 << 0",
 		"CharsHexadecimal" to "1 << 1",
 		"CharsUppercase" to "1 << 2",
@@ -221,7 +221,7 @@ open class GenInputTextFlags : GenFlagTask(
 
 open class GenWindowFlags : GenFlagTask(
 		"JImWindowFlags",
-		"Nothing" to "0",
+		"None" to "0",
 		"NoTitleBar" to "1 << 0",
 		"NoResize" to "1 << 1",
 		"NoMove" to "1 << 2",
@@ -264,7 +264,7 @@ open class GenMouseButton : GenFlagTask(
 	override fun StringBuilder.preType() {
 		appendln("""		/**
 		 * Used for reverse lookup results and enum comparison.
-		 * Return the Nothing or Default flag to prevent errors.
+		 * Return the None or Default flag to prevent errors.
 		 */
 		NoSuchFlag(-1),""")
 	}

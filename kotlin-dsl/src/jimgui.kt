@@ -91,7 +91,7 @@ inline fun JImGuiContext.menu(label: String, enabled: Boolean = true, block: JIm
 inline fun JImGuiContext.popup(
 		id: StrID,
 		@MagicConstant(flagsFromClass = JImWindowFlags::class)
-		flags: Flags = JImWindowFlags.Nothing,
+		flags: Flags = JImWindowFlags.None,
 		block: JImGuiBlock) {
 	if (beginPopup(id, flags)) {
 		block()
@@ -136,7 +136,7 @@ inline fun JImGuiContext.child(
 		height: Float = 0f,
 		border: Boolean = false,
 		@MagicConstant(flagsFromClass = JImWindowFlags::class)
-		flags: Flags = JImWindowFlags.Nothing,
+		flags: Flags = JImWindowFlags.None,
 		block: JImGuiBlock) {
 	if (beginChild(id, width, height, border, flags)) {
 		block()
