@@ -101,10 +101,14 @@ compileJava.options.encoding = 'UTF-8'
 
 ```groovy
 import org.gradle.internal.os.OperatingSystem
+plugins {
+  // needed for configuring `run`
+  id 'application'
+}
 // ...
 repositories {
-    // ...
-    jcenter()
+  // ...
+  jcenter()
 }
 // ...
 dependencies {
@@ -118,7 +122,6 @@ run {
     jvmArgs "-XstartOnFirstThread"
   }
 }
-
 ```
 
 ## Gradle Kotlin DSL
