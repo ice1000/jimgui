@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.ice1000.jimgui.tests.JImGuiTest.useAlternativeJniLibAndCheckHeadless;
 
-public class SliderTest {
+public class Issue52 {
 	@BeforeClass
 	public static void setup() {
 		useAlternativeJniLibAndCheckHeadless();
