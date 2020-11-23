@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
 
-import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.LongSupplier;
@@ -15,9 +14,9 @@ import java.util.function.LongSupplier;
  * @author ice1000
  * @since v0.1
  */
-public final class JImGuiUtil {
+public interface JImGuiUtil {
 	/** defined in C++ float.h */
-	public static final float FLT_MAX = 3.402823466e+38F;
+	float FLT_MAX = 3.402823466e+38F;
 
 	/**
 	 * Run a GUI in a limited time period.
@@ -26,7 +25,7 @@ public final class JImGuiUtil {
 	 * @param runnable the task executed in each refreshing
 	 */
 	@TestOnly
-	public static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
+	static void runWithin(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long end = System.currentTimeMillis() + millis;
 			imGui.initBeforeMainLoop();
@@ -38,7 +37,7 @@ public final class JImGuiUtil {
 		}
 	}
 
-	public static void run(@NotNull Consumer<@NotNull JImGui> runnable) {
+	static void run(@NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
@@ -49,7 +48,7 @@ public final class JImGuiUtil {
 		}
 	}
 
-	public static void runPer(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
+	static void runPer(long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			imGui.initBeforeMainLoop();
@@ -70,7 +69,7 @@ public final class JImGuiUtil {
 	}
 
 	@TestOnly
-	public static void runWithinPer(long limit, long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
+	static void runWithinPer(long limit, long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long end = System.currentTimeMillis() + limit;
@@ -91,7 +90,7 @@ public final class JImGuiUtil {
 		}
 	}
 
-	public static void runPer(@NotNull LongSupplier millisSupplier, @NotNull Consumer<@NotNull JImGui> runnable) {
+	static void runPer(@NotNull LongSupplier millisSupplier, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();
 			long millis = millisSupplier.getAsLong();
@@ -113,25 +112,18 @@ public final class JImGuiUtil {
 		}
 	}
 
-	@Contract(value = "!null -> !null; null -> null", pure = true)
-	private static byte @Nullable [] getBytesDefaultImpl(@Nullable String text) {
-		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
-	}
-
-	private static @Nullable Function<String, byte[]> STRING_TO_BYTES = null;
-
 	/**
 	 * Customize your string-to-bytes function.
 	 * Because the default implementation is not very efficient.
 	 *
 	 * @param stringToBytes your conversion function.
 	 */
-	public static void setStringToBytes(@NotNull Function<@Nullable String, byte @Nullable []> stringToBytes) {
-		STRING_TO_BYTES = stringToBytes;
+	static void setStringToBytes(@NotNull Function<@Nullable String, byte @Nullable []> stringToBytes) {
+		SharedState.STRING_TO_BYTES = stringToBytes;
 	}
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
-	public static byte @Nullable [] getBytes(@Nullable String text) {
-		return STRING_TO_BYTES != null ? STRING_TO_BYTES.apply(text) : getBytesDefaultImpl(text);
+	static byte @Nullable [] getBytes(@Nullable String text) {
+		return SharedState.STRING_TO_BYTES != null ? SharedState.STRING_TO_BYTES.apply(text) : SharedState.getBytesDefaultImpl(text);
 	}
 }

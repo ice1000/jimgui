@@ -4,30 +4,29 @@ package org.ice1000.jimgui.util;
  * @author ice1000
  */
 @SuppressWarnings("WeakerAccess")
-public final class JniLoader {
-	public static final String OsName = System.getProperty("os.name");
-	public static final String ArchitectureName = System.getProperty("os.arch");
-	public static final boolean X86 = "x86".equals(ArchitectureName);
-	public static final boolean Linux = "Linux".equals(OsName);
+public interface JniLoader {
+	String OsName = System.getProperty("os.name");
+	String ArchitectureName = System.getProperty("os.arch");
+	boolean X86 = "x86".equals(ArchitectureName);
+	boolean Linux = "Linux".equals(OsName);
 	// I want to use osName.startsWith("Windows 9")...
-	public static final boolean Windows95 = "Windows 95".equals(OsName);
-	public static final boolean Windows98 = "Windows 98".equals(OsName);
-	public static final boolean Windows200X = OsName.startsWith("Windows 200");
-	public static final boolean WindowsXP = "Windows XP".equals(OsName);
-	public static final boolean WindowsVista = "Windows Vista".equals(OsName);
-	public static final boolean Windows7 = "Windows 7".equals(OsName)
+	boolean Windows95 = "Windows 95".equals(OsName);
+	boolean Windows98 = "Windows 98".equals(OsName);
+	boolean Windows200X = OsName.startsWith("Windows 200");
+	boolean WindowsXP = "Windows XP".equals(OsName);
+	boolean WindowsVista = "Windows Vista".equals(OsName);
+	boolean Windows7 = "Windows 7".equals(OsName)
 			|| OsName.startsWith("Windows Server 2008");
-	public static final boolean Windows8 = "Windows 8".equals(OsName)
+	boolean Windows8 = "Windows 8".equals(OsName)
 			|| "Windows 8.1".equals(OsName)
 			|| OsName.startsWith("Windows Server 2012");
-	public static final boolean Windows10 = "Windows 10".equals(OsName)
+	boolean Windows10 = "Windows 10".equals(OsName)
 			|| OsName.startsWith("Windows Server 2019")
 			|| OsName.startsWith("Windows Server 2016");
-	public static final boolean OSX = "Mac OS X".equals(OsName);
-	private static boolean isLoaded = false;
+	boolean OSX = "Mac OS X".equals(OsName);
 
-	public static void load() {
-		if (isLoaded) return;
+	static void load() {
+		if (SharedState.isLoaded) return;
 		String libraryName;
 		// Supported OS
 		if (Linux) libraryName = X86 ? "libjimgui32.so" : "libjimgui.so";
@@ -39,6 +38,6 @@ public final class JniLoader {
 		else throw new UnsupportedOperationException("Unknown OS " + OsName +
 					", please submit issue to https://github.com/ice1000/jimgui/issues");
 		NativeUtil.loadLibraryFromJar(libraryName, NativeUtil.class);
-		isLoaded = true;
+		SharedState.isLoaded = true;
 	}
 }
