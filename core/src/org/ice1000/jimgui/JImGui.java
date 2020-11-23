@@ -3,6 +3,7 @@ package org.ice1000.jimgui;
 import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImTabItemFlags;
 import org.ice1000.jimgui.flag.JImInputTextFlags;
+import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -259,6 +260,14 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		textUnformatted(text);
 	}
 
+	public boolean begin(@NotNull JImStr str, NativeBool openPtr, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
+		return begin(str.bytes, openPtr.nativeObjectPtr, flags);
+	}
+
+	public boolean begin(@NotNull JImStr str) {
+		return begin(str.bytes, 0, JImWindowFlags.None);
+	}
+
 	public void textColored(@NotNull JImVec4 color, @NotNull String text) {
 		pushStyleColor(JImStyleColors.Text, color);
 		textUnformatted(text);
@@ -283,7 +292,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param valuesOffset offset in [values]
 	 * @param valuesLength length in [values]
 	 */
-	public void plotLines(@NotNull String label, @NotNull float[] values, int valuesOffset, int valuesLength) {
+	public void plotLines(@NotNull String label, float @NotNull [] values, int valuesOffset, int valuesLength) {
 		plotLines(getBytes(label), values, valuesOffset, valuesLength, null, FLT_MAX, FLT_MAX, 0, 0);
 	}
 
@@ -291,7 +300,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param label  label text
 	 * @param values plot values
 	 */
-	public void plotLines(@NotNull String label, @NotNull float[] values) {
+	public void plotLines(@NotNull String label, float @NotNull [] values) {
 		plotLines(label, values, 0, values.length);
 	}
 
@@ -303,7 +312,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param overlayText  tooltip text when plot is hovered
 	 */
 	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
+	                      float @NotNull [] values,
 	                      int valuesOffset,
 	                      int valuesLength,
 	                      @NotNull String overlayText) {
@@ -315,7 +324,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param values      plot values
 	 * @param overlayText tooltip text when plot is hovered
 	 */
-	public void plotLines(@NotNull String label, @NotNull float[] values, @NotNull String overlayText) {
+	public void plotLines(@NotNull String label, float @NotNull [] values, @NotNull String overlayText) {
 		plotLines(label, values, 0, 0, overlayText);
 	}
 
@@ -327,7 +336,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param overlayText  tooltip text when plot is hovered
 	 */
 	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
+	                      float @NotNull [] values,
 	                      int valuesOffset,
 	                      int valuesLength,
 	                      @NotNull String overlayText,
@@ -344,7 +353,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param overlayText  tooltip text when plot is hovered
 	 */
 	public void plotLines(@NotNull String label,
-	                      @NotNull float[] values,
+	                      float @NotNull [] values,
 	                      int valuesOffset,
 	                      int valuesLength,
 	                      @NotNull String overlayText,
@@ -367,7 +376,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param label  label text
 	 * @param values plot values
 	 */
-	public void plotHistogram(@NotNull String label, @NotNull float[] values) {
+	public void plotHistogram(@NotNull String label, float @NotNull [] values) {
 		plotHistogram(getBytes(label), values, 0, values.length, null, FLT_MAX, FLT_MAX, 0, 0);
 	}
 
@@ -376,7 +385,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param values      plot values
 	 * @param overlayText tooltip text when plot is hovered
 	 */
-	public void plotHistogram(@NotNull String label, @NotNull float[] values, @NotNull String overlayText) {
+	public void plotHistogram(@NotNull String label, float @NotNull [] values, @NotNull String overlayText) {
 		plotHistogram(label, values, 0, values.length, overlayText);
 	}
 
@@ -388,7 +397,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param overlayText  tooltip text when plot is hovered
 	 */
 	public void plotHistogram(@NotNull String label,
-	                          @NotNull float[] values,
+	                          float @NotNull [] values,
 	                          int valuesOffset,
 	                          int valuesLength,
 	                          @NotNull String overlayText) {
@@ -403,7 +412,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	 * @param overlayText  tooltip text when plot is hovered
 	 */
 	public void plotHistogram(@NotNull String label,
-	                          @NotNull float[] values,
+	                          float @NotNull [] values,
 	                          int valuesOffset,
 	                          int valuesLength,
 	                          @NotNull String overlayText,
@@ -414,7 +423,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 
 	// TODO doc
 	public void plotHistogram(@NotNull String label,
-	                          @NotNull float[] values,
+	                          float @NotNull [] values,
 	                          int valuesOffset,
 	                          int valuesLength,
 	                          @NotNull String overlayText,
@@ -580,13 +589,13 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	}
 
 	public boolean inputText(@NotNull String label,
-	                         @NotNull byte[] buffer,
+	                         byte @NotNull [] buffer,
 	                         @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
 		return inputText(getBytes(label), buffer, buffer.length, flags);
 	}
 
-	public boolean inputText(@NotNull String label, @NotNull byte[] buffer) {
-		return inputText(label, buffer, 0);
+	public boolean inputText(@NotNull String label, byte @NotNull [] buffer) {
+		return inputText(label, buffer, JImInputTextFlags.None);
 	}
 
 	//region Private native interfaces

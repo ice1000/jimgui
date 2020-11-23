@@ -114,7 +114,7 @@ public class JImGuiUtil {
 	}
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
-	private static @Nullable byte[] getBytesDefaultImpl(@Nullable String text) {
+	private static byte @Nullable [] getBytesDefaultImpl(@Nullable String text) {
 		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
 	}
 
@@ -131,7 +131,7 @@ public class JImGuiUtil {
 	}
 
 	@Contract(value = "!null -> !null; null -> null", pure = true)
-	public static @Nullable byte[] getBytes(@Nullable String text) {
+	public static byte @Nullable [] getBytes(@Nullable String text) {
 		return STRING_TO_BYTES != null ? STRING_TO_BYTES.apply(text) : getBytesDefaultImpl(text);
 	}
 }
