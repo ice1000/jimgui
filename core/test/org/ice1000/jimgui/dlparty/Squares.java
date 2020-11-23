@@ -15,7 +15,7 @@ public class Squares implements TestBed {
 				d.addRectFilled(
 						a.x + (c.x - k * sx) * sz.x, a.y + (c.y - k * sy) * sz.y,
 						a.x + (c.x + k * sx) * sz.x, a.y + (c.y + k * sy) * sz.y,
-						IM_COL32((int) (ty * 200), (int) (tx * 255), 100, 255));
+						IM_COL32(ty * 200, tx * 255, 100, 255));
 			}
 	}
 

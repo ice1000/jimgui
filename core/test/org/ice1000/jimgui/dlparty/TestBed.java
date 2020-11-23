@@ -17,12 +17,19 @@ public interface TestBed {
 		return ColorUtil.colorU32(red, green, blue, alpha);
 	}
 
+	default int IM_COL32(float red, float green, float blue, float alpha) {
+		return ColorUtil.colorU32((int) red, (int) green, (int) blue, (int) alpha);
+	}
+
 	final class ImVec2 {
 		public float x;
 		public float y;
 
-		@Contract(pure = true)
-		public ImVec2(float x, float y) {
+		@Contract(pure = true) public ImVec2(@NotNull ImVec2 vec2) {
+			this(vec2.x, vec2.y);
+		}
+
+		@Contract(pure = true) public ImVec2(float x, float y) {
 			this.x = x;
 			this.y = y;
 		}
@@ -34,13 +41,16 @@ public interface TestBed {
 		public float z;
 		public float w;
 
-		@Contract(pure = true)
-		public ImVec4(float x, float y, float z, float w) {
+		@Contract(pure = true) public ImVec4(float x, float y, float z, float w) {
 			this.x = x;
 			this.y = y;
 			this.z = z;
 			this.w = w;
 		}
+	}
+
+	static void launch(TestBed bed) {
+		bed.launch();
 	}
 
 	default void launch() {
