@@ -30,12 +30,12 @@ allprojects {
 		}
 	}
 
+	if (org.ice1000.gradle.isMac) tasks.withType<JavaExec>().configureEach {
+		jvmArgs("-XstartOnFirstThread")
+	}
+
 	tasks.jar {
-		manifest {
-			attributes(
-				 "Automatic-Module-Name" to "ice1000.jimgui"
-			)
-		}
+		manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
 	}
 
 	val sourcesJar = tasks.register<Jar>("sourcesJar") {

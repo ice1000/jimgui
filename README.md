@@ -34,7 +34,7 @@ You can customize the string-to-bytes function yourself by using `org.ice1000.ji
 + [X] `ImGui` namespace getter/setter/function/javadoc generation
 + [X] `ImGuiFontAtlas`/`ImGuiStyle`/`ImGuiFont`/`ImGuiIO`/`ImGuiDrawList`
        properties getter/setter/function/javadoc generation
-+ [X] `ImGui*Flags` copy-pasted constant/javadoc
++ [X] `ImGui*Flags` constant/javadoc generation
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
 + [X] Functions to access and modify platform window size/pos
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
@@ -69,21 +69,22 @@ import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.util.JniLoader;
 
 public class Main {
-	public static void main(String... args){
-		JniLoader.load();
-		try (JImGui imGui = new JImGui()) {
-			// load fonts, global initializations, etc.
-			imGui.initBeforeMainLoop();
-			while (!imGui.windowShouldClose()) {
-				// some drawing-unrelated initializations
-				// mostly do nothing here
-				imGui.initNewFrame();
-				// draw your widgets here, like this
-				imGui.text("Hello, World!");
-				imGui.render();
-			}
-		}
-	}
+  public static void main(String... args){
+    JniLoader.load();
+    try (JImGui imGui = new JImGui()) {
+      // load fonts, global initializations, etc.
+      imGui.initBeforeMainLoop();
+      while (!imGui.windowShouldClose()) {
+        // some drawing-unrelated initializations
+        // mostly do nothing here
+        imGui.initNewFrame();
+        // draw your widgets here, like this
+        imGui.text("Hello, World!");
+        imGui.render();
+        // mostly do nothing here
+      }
+    }
+  }
 }
 ```
 
@@ -93,18 +94,15 @@ You can use `ImGuiFontAtlas` in order to extend glyph ranges for your font, whic
 You can find more info about glyph ranges at the [dear-imgui repository](https://github.com/ocornut/imgui).
 
 Notice that in order to display Unicode characters you need to have your Java sources encoded and compiled as UTF-8. To compile the sources as UTF-8, add the following line to your `build.gradle`:
-```java
+
+```groovy
 compileJava.options.encoding = 'UTF-8'
 ```
 
 ## Gradle
 
 ```groovy
-import org.gradle.internal.os.OperatingSystem
-plugins {
-  // needed for configuring `run`
-  id 'application'
-}
+import org.apache.tools.ant.taskdefs.condition.Os
 // ...
 repositories {
   // ...
@@ -117,20 +115,23 @@ dependencies {
   implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
 // ...
-run {
-  if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
-    jvmArgs "-XstartOnFirstThread"
-  }
+tasks.withType(JavaExec).configureEach {
+  if (Os.isFamily(Os.FAMILY_MAC)) jvmArgs "-XstartOnFirstThread"
 }
 ```
 
 ## Gradle Kotlin DSL
 
-```scala
+```kotlin
+import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
   val jimguiVersion = "v0.11"
   implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+}
+
+tasks.withType<JavaExec>().configureEach {
+  if (Os.isFamily(Os.FAMILY_MAC)) jvmArgs("-XstartOnFirstThread")
 }
 ```
 
