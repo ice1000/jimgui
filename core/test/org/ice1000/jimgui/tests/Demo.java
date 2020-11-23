@@ -408,6 +408,7 @@ public class Demo {
 		imGui.unindent();
 	}
 
+	@SuppressWarnings("AccessStaticViaInstance")
 	private static void showHelpMarker(@NotNull JImGui imGui, @NotNull String description) {
 		imGui.textDisabled("(?)");
 		if (imGui.isItemHovered()) {
