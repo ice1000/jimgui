@@ -3,9 +3,6 @@ package org.ice1000.jimgui.dlparty;
 import org.ice1000.jimgui.JImDrawList;
 import org.jetbrains.annotations.NotNull;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 public class Curves implements TestBed {
 	@Override
 	public void fx(@NotNull JImDrawList d, ImVec2 a, ImVec2 b, ImVec2 sz, ImVec4 mouse, float t0) {

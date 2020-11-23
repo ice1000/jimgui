@@ -3,9 +3,6 @@ package org.ice1000.jimgui.dlparty;
 import org.ice1000.jimgui.JImDrawList;
 import org.jetbrains.annotations.NotNull;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 public class MatrixEffect implements TestBed {
 	static int S = 0x1234;
 	static float t0 = -1;
@@ -45,7 +42,7 @@ public class MatrixEffect implements TestBed {
 			char c = (char) (64 | M.c % 42);
 			for (int j = 0; j < M.h; j++, c = (char) (64 | (c ^ M.c + M.h ^ j) % 42))
 				for (int f = (j + 1 == M.h) ? 13 : 4 + (M.c & 1); f-- != 0; )
-					d.addText(13 * (i ? Z : -Z), a.x - (sz.x * .5f * ZI) + x * 8 * Z + (float) sin(j + t * f), a.y - (sz.y * .5f * ZI) + (M.y + j) * 13 * Z + (float) cos(x * f - t), 0x3c68bb5b, String.valueOf(c));
+					d.addText(13 * (i ? Z : -Z), a.x - (sz.x * .5f * ZI) + x * 8 * Z + sin(j + t * f), a.y - (sz.y * .5f * ZI) + (M.y + j) * 13 * Z + (float) cos(x * f - t), 0x3c68bb5b, String.valueOf(c));
 			S |= ((S & 1) ^ ((S & 8) >> 2)) << 16;
 			S >>= 1;
 		}

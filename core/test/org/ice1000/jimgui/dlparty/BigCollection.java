@@ -37,6 +37,8 @@ public class BigCollection {
 					new Squares(),
 					new ThunderStorm(),
 					new TinyLoadingScreen(),
+					new Blobs(),
+					new ThreeDCube(),
 					new QuickSortVisualization()
 			).map(Case::new).collect(Collectors.toList());
 			imGui.initBeforeMainLoop();
@@ -47,11 +49,11 @@ public class BigCollection {
 				for (Case toy : toys) {
 					if (x + sizeX > windowSizeX) {
 						x = 0;
-						y += sizeY + 10;
+						y += sizeY + 20;
 					}
 					imGui.setNextWindowPos(x, y);
 					toy.work(imGui);
-					x += sizeX;
+					x += sizeX + 10;
 				}
 				imGui.render();
 			}

@@ -14,6 +14,18 @@ import org.jetbrains.annotations.NotNull;
 public interface TestBed {
 	void fx(@NotNull JImDrawList d, ImVec2 a, ImVec2 b, ImVec2 sz, ImVec4 mouse, float t);
 
+	default float sin(float x) {
+		return (float) StrictMath.sin(x);
+	}
+
+	default float cos(float x) {
+		return (float) StrictMath.cos(x);
+	}
+
+	default float pow(float x, float y) {
+		return (float) StrictMath.pow(x, y);
+	}
+
 	default int IM_COL32(int red, int green, int blue, int alpha) {
 		return ColorUtil.colorU32(red, green, blue, alpha);
 	}

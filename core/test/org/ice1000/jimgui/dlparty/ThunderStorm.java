@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-import static java.lang.Math.*;
+import static java.lang.Math.min;
 
 public class ThunderStorm extends JImGuiGen implements TestBed {
 	private float fl;

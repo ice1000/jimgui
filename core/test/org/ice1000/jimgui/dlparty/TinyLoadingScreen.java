@@ -16,7 +16,7 @@ public class TinyLoadingScreen implements TestBed {
 		for (float B = b.x, i = 0.f, o = s.y / 8; i < 8; ++i, B = b.x) {
 			float w = (i / 7) * .2f, x = max(t - z - w, 0.f);
 			if (t - z < w + 1)
-				B = a.x + (x < .5f ? 8 * x * x * x * x : min(1 - (float) pow(-2 * x + 2, 4.f) / 2, 1.f)) * s.x;
+				B = a.x + (x < .5f ? 8 * x * x * x * x : min(1 - pow(-2 * x + 2, 4.f) / 2, 1.f)) * s.x;
 			d.addRectFilled(a.x, a.y + o * i, B, a.y + o * i + o, c);
 		}
 	}
