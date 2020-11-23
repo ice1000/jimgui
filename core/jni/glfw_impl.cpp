@@ -78,9 +78,10 @@ JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
                                                                    Ptr<jbyte> title,
                                                                    jlong anotherWindow) -> jlong {
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
+	if (OPENGL_MAJOR_VERSION >= 3 && OPENGL_MINOR_VERSION >= 2)
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
 	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	auto monitor = share != nullptr ? glfwGetWindowMonitor(share) : nullptr;
 	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), monitor, share));
