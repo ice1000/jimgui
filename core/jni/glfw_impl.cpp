@@ -41,6 +41,13 @@ static void glfw_error_callback(int error, Ptr<const char> description) {
 	fprintf(stderr, "JImGui Error %d: %s\n", error, description);
 }
 
+void setupGlfw() {
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
+	if (OPENGL_MAJOR_VERSION >= 3 && OPENGL_MINOR_VERSION >= 2)
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+}
+
 // See https://github.com/capnramses/antons_opengl_tutorials_book/blob/master/09_texture_mapping/main.cpp
 void initTexture(Ptr<void> imageData, Ptr<GLuint> tex, int x, int y) {
 	// NPOT check
@@ -78,19 +85,18 @@ JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
                                                                    jint height,
                                                                    Ptr<jbyte> title,
                                                                    jlong anotherWindow) -> jlong {
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
-	if (OPENGL_MAJOR_VERSION >= 3 && OPENGL_MINOR_VERSION >= 2)
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+	setupGlfw();
 	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	auto monitor = share != nullptr ? glfwGetWindowMonitor(share) : nullptr;
 	return PTR_C2J(glfwCreateWindow(width, height, STR_J2C(title), monitor, share));
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
-                                                           jclass,
-                                                           jbyteArray _fileName) -> jlongArray {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(
+	Ptr<JNIEnv> env,
+	jclass,
+	jbyteArray _fileName
+) -> jlongArray {
 	__get(Byte, fileName)
 	GLuint texture = 0;
 	int width, height, channels;
@@ -112,10 +118,12 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
-                                                            jclass,
-                                                            jbyteArray _rawData,
-                                                            jint size) -> jlongArray {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
+	Ptr<JNIEnv> env,
+	jclass,
+	jbyteArray _rawData,
+	jint size
+) -> jlongArray {
 	__get(Byte, rawData)
 	GLuint texture = 0;
 	int width, height, channels;
@@ -142,10 +150,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 	auto *share = PTR_J2C(GLFWwindow, anotherWindow);
 	glfwSetErrorCallback(glfw_error_callback);
 	if (!glfwInit()) return 0L;
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_MAJOR_VERSION);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_MINOR_VERSION);
-	if (OPENGL_MAJOR_VERSION >= 3 && OPENGL_MINOR_VERSION >= 2)
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
+	setupGlfw();
 #if __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 #endif
