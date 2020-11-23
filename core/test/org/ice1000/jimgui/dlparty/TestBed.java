@@ -21,6 +21,10 @@ public interface TestBed {
 		return ColorUtil.colorU32((int) red, (int) green, (int) blue, (int) alpha);
 	}
 
+	default int IM_COL32(double red, double green, double blue, double alpha) {
+		return ColorUtil.colorU32((int) red, (int) green, (int) blue, (int) alpha);
+	}
+
 	final class ImVec2 {
 		public float x;
 		public float y;
