@@ -1,4 +1,4 @@
-package org.ice1000.jimgui.dlparty;
+package dlparty;
 
 import org.ice1000.jimgui.JImDrawList;
 import org.jetbrains.annotations.NotNull;

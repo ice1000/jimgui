@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil.escapeStri
 
 plugins {
 	java
+	`java-library`
 	id("de.undercouch.download")
 }
 
@@ -206,6 +207,6 @@ sourceSets {
 }
 
 dependencies {
-	implementation(group = "org.jetbrains", name = "annotations", version = "20.1.0")
+	api(group = "org.jetbrains", name = "annotations", version = "20.1.0")
 	testImplementation(group = "junit", name = "junit", version = "4.12")
 }

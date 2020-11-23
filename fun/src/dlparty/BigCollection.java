@@ -1,4 +1,4 @@
-package org.ice1000.jimgui.dlparty;
+package dlparty;
 
 import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.JImStr;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.ice1000.jimgui.dlparty.TestBed.sizeX;
-import static org.ice1000.jimgui.dlparty.TestBed.sizeY;
+import static dlparty.TestBed.sizeX;
+import static dlparty.TestBed.sizeY;
 
 public class BigCollection {
 	public static class Case {
