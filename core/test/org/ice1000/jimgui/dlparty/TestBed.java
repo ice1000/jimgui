@@ -5,12 +5,17 @@ import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.JImGuiIO;
 import org.ice1000.jimgui.JImStr;
 import org.ice1000.jimgui.flag.JImMouseButton;
+import org.ice1000.jimgui.util.ColorUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public interface TestBed {
 	void fx(@NotNull JImDrawList d, ImVec2 a, ImVec2 b, ImVec2 sz, ImVec4 mouse, float t);
+
+	default int IM_COL32(int red, int green, int blue, int alpha) {
+		return ColorUtil.colorU32(red, green, blue, alpha);
+	}
 
 	final class ImVec2 {
 		public float x;
@@ -35,16 +40,6 @@ public interface TestBed {
 			this.y = y;
 			this.z = z;
 			this.w = w;
-		}
-	}
-
-	final class Empty implements TestBed {
-		@Override
-		public void fx(@NotNull JImDrawList d, ImVec2 a, ImVec2 b, ImVec2 sz, ImVec4 mouse, float t) {
-		}
-
-		public static void main(String[] args) {
-			new Empty().launch();
 		}
 	}
 
