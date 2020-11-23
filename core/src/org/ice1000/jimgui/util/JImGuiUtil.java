@@ -15,7 +15,7 @@ import java.util.function.LongSupplier;
  * @author ice1000
  * @since v0.1
  */
-public class JImGuiUtil {
+public final class JImGuiUtil {
 	/** defined in C++ float.h */
 	public static final float FLT_MAX = 3.402823466e+38F;
 

@@ -39,14 +39,10 @@ import java.nio.file.*;
  * @see <a href="https://github.com/adamheinrich/native-utils">https://github.com/adamheinrich/native-utils</a>
  */
 @SuppressWarnings("WeakerAccess")
-public final class NativeUtil {
-	public static final @NotNull String NATIVE_FOLDER_PATH_PREFIX = "jimgui";
-	public static final @NotNull String TEM_DIR = System.getProperty("java.io.tmpdir");
-	public static final boolean isPosixCompliant = isPosixCompliant();
-
-	/** Private constructor - this class will never be instanced */
-	private NativeUtil() {
-	}
+public interface NativeUtil {
+	@NotNull String NATIVE_FOLDER_PATH_PREFIX = "jimgui";
+	@NotNull String TEM_DIR = System.getProperty("java.io.tmpdir");
+	boolean isPosixCompliant = isPosixCompliant();
 
 	/**
 	 * Loads library from current JAR archive
@@ -62,7 +58,7 @@ public final class NativeUtil {
 	 *                                       (restriction of {@link File#createTempFile(String, String)}).
 	 * @throws UnsupportedOperationException if {@link UnsatisfiedLinkError} is thrown.
 	 */
-	public static void loadLibraryFromJar(@NotNull String fileName, @NotNull Class<?> callerClass) {
+	static void loadLibraryFromJar(@NotNull String fileName, @NotNull Class<?> callerClass) {
 		// Prepare temporary file
 		File temporaryDir = createTempDirectory();
 		temporaryDir.deleteOnExit();
@@ -93,7 +89,7 @@ public final class NativeUtil {
 		}
 	}
 
-	private static boolean isPosixCompliant() {
+	static boolean isPosixCompliant() {
 		try {
 			return FileSystems.getDefault().supportedFileAttributeViews().contains("posix");
 		} catch (FileSystemNotFoundException | ProviderNotFoundException | SecurityException e) {
@@ -101,7 +97,7 @@ public final class NativeUtil {
 		}
 	}
 
-	private static @NotNull File createTempDirectory() {
+	static @NotNull File createTempDirectory() {
 		File generatedDir = new File(TEM_DIR, NativeUtil.NATIVE_FOLDER_PATH_PREFIX + System.currentTimeMillis());
 		if (!generatedDir.mkdir())
 			throw new IllegalStateException("Failed to create temp directory " + generatedDir.getName());
