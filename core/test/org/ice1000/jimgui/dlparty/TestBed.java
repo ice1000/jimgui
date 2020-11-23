@@ -38,6 +38,16 @@ public interface TestBed {
 		return ColorUtil.colorU32((int) red, (int) green, (int) blue, (int) alpha);
 	}
 
+	final class Pair<A, B> {
+		public A first;
+		public B second;
+
+		public Pair(A first, B second) {
+			this.first = first;
+			this.second = second;
+		}
+	}
+
 	final class ImVec2 {
 		public float x;
 		public float y;
@@ -49,6 +59,14 @@ public interface TestBed {
 		@Contract(pure = true) public ImVec2(float x, float y) {
 			this.x = x;
 			this.y = y;
+		}
+
+		public ImVec2 add(ImVec2 o) {
+			return new ImVec2(x + o.x, y + o.y);
+		}
+
+		public ImVec2 sub(ImVec2 o) {
+			return new ImVec2(x - o.x, y - o.y);
 		}
 	}
 
