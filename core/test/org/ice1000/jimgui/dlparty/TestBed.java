@@ -5,6 +5,7 @@ import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.JImGuiIO;
 import org.ice1000.jimgui.JImStr;
 import org.ice1000.jimgui.flag.JImMouseButton;
+import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.ice1000.jimgui.util.ColorUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.Contract;
@@ -76,7 +77,7 @@ public interface TestBed {
 
 	@SuppressWarnings("AccessStaticViaInstance")
 	default void testBed(@NotNull JImGui imGui, @NotNull JImStr title) {
-		if (imGui.begin(title)) {
+		if (imGui.begin(title, JImWindowFlags.NoResize)) {
 			JImGuiIO io = imGui.getIO();
 			JImDrawList drawList = imGui.getWindowDrawList();
 			imGui.invisibleButton("canvas", sizeX, sizeY);

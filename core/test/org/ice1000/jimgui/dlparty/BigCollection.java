@@ -5,8 +5,12 @@ import org.ice1000.jimgui.JImStr;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.ice1000.jimgui.dlparty.TestBed.sizeX;
+import static org.ice1000.jimgui.dlparty.TestBed.sizeY;
 
 public class BigCollection {
 	public static class Case {
@@ -25,19 +29,30 @@ public class BigCollection {
 
 	public static void main(String[] args) {
 		JniLoader.load();
-		try (JImGui imGui = new JImGui(800, 600, "FX")) {
-			List<Case> toys = Arrays.asList(
-					new Case(new Curves()),
-					new Case(new Circles()),
-					new Case(new MatrixEffect()),
-					new Case(new Squares()),
-					new Case(new ThunderStorm()),
-					new Case(new TinyLoadingScreen())
-			);
+		try (JImGui imGui = new JImGui(1200, 1000, "FX")) {
+			List<Case> toys = Stream.of(
+					new Curves(),
+					new Circles(),
+					new MatrixEffect(),
+					new Squares(),
+					new ThunderStorm(),
+					new TinyLoadingScreen(),
+					new QuickSortVisualization()
+			).map(Case::new).collect(Collectors.toList());
 			imGui.initBeforeMainLoop();
 			while (!imGui.windowShouldClose()) {
 				imGui.initNewFrame();
-				for (Case toy : toys) toy.work(imGui);
+				float x = 0, y = 0;
+				float windowSizeX = imGui.getPlatformWindowSizeX();
+				for (Case toy : toys) {
+					if (x + sizeX > windowSizeX) {
+						x = 0;
+						y += sizeY + 10;
+					}
+					imGui.setNextWindowPos(x, y);
+					toy.work(imGui);
+					x += sizeX;
+				}
 				imGui.render();
 			}
 		}

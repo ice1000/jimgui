@@ -268,6 +268,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		return begin(str.bytes, 0, JImWindowFlags.None);
 	}
 
+	public boolean begin(@NotNull JImStr str, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
+		return begin(str.bytes, 0, flags);
+	}
+
 	public void textColored(@NotNull JImVec4 color, @NotNull String text) {
 		pushStyleColor(JImStyleColors.Text, color);
 		textUnformatted(text);
