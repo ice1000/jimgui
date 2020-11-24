@@ -42,6 +42,8 @@ public class BigCollection {
 					new InterwebBlogosphere(),
 					// new Mosaic(),
 					new Plasma(),
+					new PossiblyAShrub(),
+					new DrivingGame(),
 					new TixyLand(),
 					new Guitar(),
 					new QuickSortVisualization()

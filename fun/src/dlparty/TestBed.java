@@ -96,6 +96,10 @@ public interface TestBed {
 		public ImVec2 mul(float i) {
 			return new ImVec2(x * i, y * i);
 		}
+
+		public ImVec2 div(float i) {
+			return new ImVec2(x / 2, y / 2);
+		}
 	}
 
 	final class ImVec4 {
