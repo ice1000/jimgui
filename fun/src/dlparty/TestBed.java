@@ -38,6 +38,22 @@ public interface TestBed {
 		return ColorUtil.colorU32((int) red, (int) green, (int) blue, (int) alpha);
 	}
 
+	default ImVec2 ImClamp(ImVec2 v, ImVec2 mn, ImVec2 mx) {
+		return new ImVec2((v.x < mn.x) ? mn.x : Math.min(v.x, mx.x), (v.y < mn.y) ? mn.y : Math.min(v.y, mx.y));
+	}
+
+	default ImVec2 ImLerp(ImVec2 a, ImVec2 b, float t) {
+		return new ImVec2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
+	}
+
+	default ImVec2 ImLerp(ImVec2 a, ImVec2 b, ImVec2 t) {
+		return new ImVec2(a.x + (b.x - a.x) * t.x, a.y + (b.y - a.y) * t.y);
+	}
+
+	default ImVec4 ImLerp(ImVec4 a, ImVec4 b, float t) {
+		return new ImVec4(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, a.z + (b.z - a.z) * t, a.w + (b.w - a.w) * t);
+	}
+
 	final class Pair<A, B> {
 		public A first;
 		public B second;
