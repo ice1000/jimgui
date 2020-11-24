@@ -44,6 +44,7 @@ public class BigCollection {
 					// new Mosaic(),
 					new Plasma(),
 					new PossiblyAShrub(),
+					new DoomFire(),
 					new BouncingBalls(),
 					new DrivingGame(),
 					new TixyLand(),
