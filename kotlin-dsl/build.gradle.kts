@@ -1,4 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
 	id("de.undercouch.download")
@@ -8,6 +9,10 @@ plugins {
 kotlin {
 	sourceSets["main"].kotlin.srcDir("src")
 	sourceSets["test"].kotlin.srcDir("test")
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+	kotlinOptions.jvmTarget = "1.8"
 }
 
 sourceSets {
