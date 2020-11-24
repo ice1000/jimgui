@@ -46,6 +46,10 @@ public interface TestBed {
 		return a + (b - a) * t;
 	}
 
+	default float ImClamp(float v, float mn, float mx) {
+		return (v < mn) ? mn : Math.min(v, mx);
+	}
+
 	default ImVec2 ImLerp(ImVec2 a, ImVec2 b, float t) {
 		return new ImVec2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
 	}

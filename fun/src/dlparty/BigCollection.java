@@ -29,7 +29,7 @@ public class BigCollection {
 
 	public static void main(String[] args) {
 		JniLoader.load();
-		try (JImGui imGui = new JImGui(1200, 1000, "FX")) {
+		try (JImGui imGui = new JImGui(1600, 1000, "FX")) {
 			List<Case> toys = Stream.of(
 					new Curves(),
 					new Circles(),
@@ -41,6 +41,8 @@ public class BigCollection {
 					new ThreeDCube(),
 					new InterwebBlogosphere(),
 					// new Mosaic(),
+					new Plasma(),
+					new TixyLand(),
 					new Guitar(),
 					new QuickSortVisualization()
 			).map(Case::new).collect(Collectors.toList());
