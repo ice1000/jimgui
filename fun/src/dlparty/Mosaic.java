@@ -25,12 +25,12 @@ public class Mosaic implements TestBed {
 				float ry = y - 45;
 				double an = Math.atan2(rx, ry);
 				an = an < 0 ? (Math.PI * 2 + an) : an;
-				float len = (rx * rx + ry * ry + 0.1f) + t;
+				float len = (rx * rx + ry * ry + 0.1f) + t * 4;
 				float n0 = noise((float) an);
 				float n1 = noise(len);
 				float al = n0 + n1;
 				ImVec2 v = a.add(new ImVec2(x, y).mul(4));
-				int c = ThunderStorm.white(al);
+				int c = ThunderStorm.white(al % 1f);
 				d.addRectFilled(v.x, v.y, v.x + 4, v.y + 4, c);
 			}
 	}
