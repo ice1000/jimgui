@@ -40,6 +40,7 @@ public class BigCollection {
 					new Blobs(),
 					new ThreeDCube(),
 					new InterwebBlogosphere(),
+					new Mosaic(),
 					new QuickSortVisualization()
 			).map(Case::new).collect(Collectors.toList());
 			imGui.initBeforeMainLoop();

@@ -2,6 +2,7 @@ package dlparty;
 
 import org.ice1000.jimgui.JImDrawList;
 import org.ice1000.jimgui.JImGuiGen;
+import org.ice1000.jimgui.util.ColorUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -27,14 +28,14 @@ public class ThunderStorm extends JImGuiGen implements TestBed {
 			int ty = h % (int) sz.y;
 			if (f < 1) {
 				float py = ty - 1000 * (1 - f);
-				d.addLine(a.x + tx, a.y + py, a.x + tx, a.y + min(py + 10, ty),  -1);
+				d.addLine(a.x + tx, a.y + py, a.x + tx, a.y + min(py + 10, ty), -1);
 			} else if (f < 1.2f)
 				d.addCircle(a.x + tx, a.y + ty, (f - 1) * 10 + h % 5, white(1 - (f - 1) * 5.f));
 		}
 	}
 
-	private int white(float wh) {
-		return IM_COL32(255, 255, 255, 255 * Math.max(wh, 0));
+	public static int white(float wh) {
+		return ColorUtil.colorU32(255, 255, 255, (int) (255 * Math.max(wh, 0)));
 	}
 
 	public static void main(String[] args) {

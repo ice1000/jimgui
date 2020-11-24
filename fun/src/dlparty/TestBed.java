@@ -42,6 +42,10 @@ public interface TestBed {
 		return new ImVec2((v.x < mn.x) ? mn.x : Math.min(v.x, mx.x), (v.y < mn.y) ? mn.y : Math.min(v.y, mx.y));
 	}
 
+	default float ImLerp(float a, float b, float t) {
+		return a + (b - a) * t;
+	}
+
 	default ImVec2 ImLerp(ImVec2 a, ImVec2 b, float t) {
 		return new ImVec2(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t);
 	}
@@ -83,6 +87,10 @@ public interface TestBed {
 
 		public ImVec2 sub(ImVec2 o) {
 			return new ImVec2(x - o.x, y - o.y);
+		}
+
+		public ImVec2 mul(float i) {
+			return new ImVec2(x * i, y * i);
 		}
 	}
 
