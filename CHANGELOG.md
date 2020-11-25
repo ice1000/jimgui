@@ -1,5 +1,9 @@
 ## Unreleased
 
+## v0.11.1
+
+Note that this is a pre-release created just for fun.
+
 + Few more variations of `imGui.begin`
 + A new subproject `fun`
 
