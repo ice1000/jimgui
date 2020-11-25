@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Few more variations of `imGui.begin`
++ A new subproject `fun`
+
 ## v0.11
 
 (thanks very much again to @newk5)

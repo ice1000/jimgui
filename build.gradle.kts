@@ -10,7 +10,7 @@ val isCI = !System.getenv("CI").isNullOrBlank()
 
 allprojects {
 	group = "org.ice1000.jimgui"
-	version = "v0.11"
+	version = "v0.11.1"
 
 	apply { plugin("java") }
 
