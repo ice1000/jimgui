@@ -114,6 +114,7 @@ namespace ImGui {
 	               ComVec2 windowSize,
 	               Ptr<bool> pOpen = nullptr,
 	               float percentageOnScreen = .2f) -> void;
+	auto ToggleButton(RawStr str_id, Ptr<bool> v) -> void;
 }
 
 #endif //HUGE_IMGUI_EXT_H

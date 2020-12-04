@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Added `imgui.toggleButton`
+
 ## v0.11.1
 
 Note that this is a pre-release created just for fun.

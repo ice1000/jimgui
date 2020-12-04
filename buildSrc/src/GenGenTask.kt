@@ -66,6 +66,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 					vec4("backgroundColor"), vec4("foregroundColor")),
 			Fun("spinner", float("radius"), thickness,
 					numSegments(30), vec4("color")),
+			Fun("toggleButton", stringID, pOpen),
 
 			// Cursor / Layout
 			Fun("separator"),
