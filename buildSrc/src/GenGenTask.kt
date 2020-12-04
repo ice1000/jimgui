@@ -150,7 +150,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("getID", "int", stringSized("stringID")),
 
 			// Windows
-			Fun("begin", "boolean", string("name"), pOpen, windowFlags),
+			Fun("begin", "boolean", string("name"), pOpenNull, windowFlags),
 			Fun("end"),
 			Fun("beginChild", "boolean",
 					int("id"),
@@ -299,7 +299,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			// Fun("treeAdvanceToLabelPos"),
 			Fun("getTreeNodeToLabelSpacing", "float"),
 			Fun("SetNextItemOpen", bool("isOpen"), cond),
-			Fun("collapsingHeader", "boolean", label, pOpen, treeNodeFlags),
+			Fun("collapsingHeader", "boolean", label, pOpenNull, treeNodeFlags),
 
 			// Widgets: Color Editor/Picker
 			Fun("colorEdit3", "boolean", label, vec4("color"), flags(from = "ColorEdit", default = "None")),

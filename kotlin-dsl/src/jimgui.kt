@@ -69,8 +69,8 @@ inline fun JImGuiContext.collapsingHeader(
 	if (collapsingHeader(label, pOpen, flags)) block()
 }
 
-inline fun JImGuiContext.collapsingHeader(label: String, block: JImGuiBlock) {
-	if (collapsingHeader(label)) block()
+inline fun JImGuiContext.collapsingHeader(label: String, pOpen: NativeBool, block: JImGuiBlock) {
+	if (collapsingHeader(label, pOpen)) block()
 }
 
 inline fun JImGuiContext.button(

@@ -260,6 +260,10 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 		textUnformatted(text);
 	}
 
+	public void text(@NotNull JImStr text) {
+		textUnformatted(text.bytes);
+	}
+
 	public boolean begin(@NotNull JImStr str, NativeBool openPtr, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
 		return begin(str.bytes, openPtr.nativeObjectPtr, flags);
 	}
