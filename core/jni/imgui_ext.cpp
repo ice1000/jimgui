@@ -8,7 +8,7 @@
 auto ImGui::LineTo(ComVec2 delta, ComVec4 color, const float thickness) -> void {
 	ImGuiWindow *window = GetCurrentWindow();
 	if (window->SkipItems) return;
-	auto &cursorPos = window->DC.CursorPos;
+	auto &&cursorPos = ImGui::GetCursorScreenPos();
 	ImRect bb{cursorPos, cursorPos + delta};
 	ItemSize(bb);
 	if (!ItemAdd(bb, 0)) return;
@@ -26,7 +26,7 @@ auto ImGui::Rect(ComVec2 size,
                  const int rounding_corners_flags) -> void {
 	ImGuiWindow *window = GetCurrentWindow();
 	if (window->SkipItems) return;
-	auto &cursorPos = window->DC.CursorPos;
+	auto &&cursorPos = ImGui::GetCursorScreenPos();
 	ImRect bb{cursorPos, cursorPos + size};
 	ItemSize(bb);
 	if (!ItemAdd(bb, 0)) return;
@@ -146,7 +146,7 @@ auto ImGui::Spinner(float radius, float thickness, int num_segments, ComVec4 col
 
 	auto &g = *GImGui;
 	const auto &style = g.Style;
-	auto &&pos = ImGui::GetCursorPos();
+	auto &&pos = ImGui::GetCursorScreenPos();
 	ImVec2 size{radius * 2, radius * 2};
 	const ImRect bb{pos, pos + size};
 	ItemSize(bb);
@@ -174,7 +174,7 @@ auto ImGui::BufferingBar(float value, ComVec2 size, ComVec4 bg_col, ComVec4 fg_c
 
 	auto &g = *GImGui;
 	const auto &style = g.Style;
-	auto &&pos = ImGui::GetCursorPos();
+	auto &&pos = ImGui::GetCursorScreenPos();
 	const ImRect bb{pos, pos + size};
 	ItemSize(bb);
 	if (!ItemAdd(bb, 0))
