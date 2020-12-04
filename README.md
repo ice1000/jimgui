@@ -29,22 +29,36 @@ You can customize the string-to-bytes function yourself by using `org.ice1000.ji
 + [Partly re-implementation of imgui_demo.cpp](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [A sample text editor](core/test/org/ice1000/jimgui/tests/EditorTest.java)
 
-# Progress
+# Contents
+
+## Bindings to official features
 
 + [X] `ImGui` namespace getter/setter/function/javadoc generation
 + [X] `ImGuiFontAtlas`/`ImGuiStyle`/`ImGuiFont`/`ImGuiIO`/`ImGuiDrawList`
        properties getter/setter/function/javadoc generation
 + [X] `ImGui*Flags` constant/javadoc generation
 + [X] `ImStyleVar` keys using generic parameter as type constraint (type safe!)
+
+## Extra convenience provided
+
 + [X] Functions to access and modify platform window size/pos
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
   + [X] Generate functions with `MagicConstant` annotation
++ [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
++ [X] A few extensions, including `emptyButton`, `dragVec4`, `sliderVec4`, `lineTo`, `circle`,
+      `bufferingBar`, `dialogBox`, `spinner` (Android style!), `toggleButton` (iOS style!),
+      mostly from the issues and the communities.
+
+## C++ interoperability
+
 + [X] Native value pointer (`bool *`, `int *`, `float *`) wrappers, providing `accessValue` and `modifyValue`
 + [X] `ImVec4` wrapper with optional mutability
-+ [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
 + [X] `ImTextureID` wrapper with platform-dependent implementations
   + [X] `LPDIRECT3DTEXTURE9` on WindowsXP+
   + [X] `GLuint` on MacOS/Linux
+
+## Backends and platforms
+
 + [ ] Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI

@@ -1,6 +1,9 @@
 ## Unreleased
 
 + Added `imgui.toggleButton`
++ Added `imgui.text(JImStr)`
++ Fixed a serious problem with nullable `pOpen`s
++ Fix a lot of problems with my own extensions
 
 ## v0.11.1
 
