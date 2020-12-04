@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.11.2
+
 + Added `imgui.toggleButton`
 + Added `imgui.text(JImStr)`
 + Fixed a serious problem with nullable `pOpen`s

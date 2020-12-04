@@ -28,6 +28,7 @@ You can customize the string-to-bytes function yourself by using `org.ice1000.ji
 
 + [Partly re-implementation of imgui_demo.cpp](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [A sample text editor](core/test/org/ice1000/jimgui/tests/EditorTest.java)
++ [DrawList party](fun/src/dlparty/BigCollection.java), with a [YouTube video](https://youtu.be/ojgWnelaRfw)
 
 # Contents
 
@@ -124,7 +125,7 @@ repositories {
 }
 // ...
 dependencies {
-  String jimguiVersion = 'v0.11'
+  String jimguiVersion = 'v0.11.2'
   implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
   implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
@@ -139,7 +140,7 @@ tasks.withType(JavaExec).configureEach {
 ```kotlin
 import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
-  val jimguiVersion = "v0.11"
+  val jimguiVersion = "v0.11.2"
   implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
   implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
@@ -163,7 +164,7 @@ tasks.withType<JavaExec>().configureEach {
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
   <artifactId>core</artifactId>
-  <version>v0.11</version>
+  <version>v0.11.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -182,9 +183,7 @@ First you need to make sure you have `cmake` newer than 3.14 and the following s
 	+ [DirectX SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
 + For Mac OS X
 	+ Everything needed on Linux
-	+ `Cocoa`
-	+ `GLUT`
-	+ `OpenGL`
+	+ Frameworks including `Cocoa`, `GLUT`, `OpenGL`
 	+ Run with JVM Argument: `-XstartOnFirstThread`
 		+ You can use `export _JAVA_OPTIONS='-XstartOnFirstThread'`.
 
