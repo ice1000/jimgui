@@ -30,8 +30,8 @@ public class PlatformWindowTest {
 		JImGuiUtil.runWithinPer(50000, 16, gui -> {
 			if (!init[0]) {
 				init[0] = true;
-				size.modifyValue(gui.getPlatformWindowSizeX());
-				pos.modifyValue(gui.getPlatformWindowPosX());
+				size.modifyValue(Math.min(900, gui.getPlatformWindowSizeX()));
+				pos.modifyValue(Math.min(900, gui.getPlatformWindowPosX()));
 			}
 			gui.sliderFloat("Size", size, 0, 1000);
 			gui.sliderFloat("Pos", pos, 0, 1000);
