@@ -2,7 +2,6 @@ package org.ice1000.jimgui.features;
 
 import org.ice1000.jimgui.JImStr;
 import org.ice1000.jimgui.JImVec4;
-import org.ice1000.jimgui.MutableJImVec4;
 import org.ice1000.jimgui.NativeBool;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;

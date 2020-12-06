@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Fixed completely broken `NativeDouble`, `NativeShort` and `NativeLong`
+
 ## v0.11.2
 
 + Added `imgui.toggleButton`
