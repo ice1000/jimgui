@@ -302,7 +302,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectP
 			static_cast<int>(newY),
 			0,
 			0,
-			SWP_NOMOVE | SWP_NOZORDER);
+			SWP_NOSIZE | SWP_NOZORDER);
 }
 
 JNIEXPORT void JNICALL
@@ -314,7 +314,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPt
 			0,
 			static_cast<int>(newX),
 			static_cast<int>(newY),
-			SWP_NOSIZE | SWP_NOZORDER);
+			SWP_NOMOVE | SWP_NOZORDER);
 }
 
 #ifndef WIN32

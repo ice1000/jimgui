@@ -86,6 +86,7 @@ val downloadImgui = tasks.register<Download>("downloadImgui") {
 	src("$imguiCoding/imgui_draw.cpp")
 	src("$imguiCoding/imgui_demo.cpp")
 	src("$imguiCoding/imgui_widgets.cpp")
+	src("$imguiCoding/imgui_tables.cpp")
 	src("$imguiCoding/imgui_internal.h")
 	src("$imguiCoding/imstb_rectpack.h")
 	src("$imguiCoding/imstb_textedit.h")
