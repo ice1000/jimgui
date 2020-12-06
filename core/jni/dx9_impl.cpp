@@ -294,54 +294,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectP
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong, float newValue) {
-	SetWindowPos(
-			hwnd,
-			nullptr,
-			0,
-			0,
-			static_cast<int>(newValue),
-			0,
-			SWP_NOMOVE);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(jlong nativeObjectPtr, float newValue) {
-	SetWindowPos(
-			hwnd,
-			nullptr,
-			0,
-			0,
-			0,
-			static_cast<int>(newValue),
-			SWP_NOMOVE);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(jlong nativeObjectPtr, float newValue) {
-	SetWindowPos(
-			hwnd,
-			nullptr,
-			static_cast<int>(newValue),
-			0,
-			0,
-			0,
-			SWP_NOMOVE);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(jlong nativeObjectPtr, float newValue) {
-	SetWindowPos(
-			hwnd,
-			nullptr,
-			0,
-			static_cast<int>(newValue),
-			0,
-			0,
-			SWP_NOMOVE);
-}
-
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY) {
 	SetWindowPos(
 			hwnd,
@@ -350,8 +302,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectP
 			static_cast<int>(newY),
 			0,
 			0,
-			SWP_NOMOVE);
-
+			SWP_NOMOVE | SWP_NOZORDER);
 }
 
 JNIEXPORT void JNICALL
@@ -363,7 +314,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPt
 			0,
 			static_cast<int>(newX),
 			static_cast<int>(newY),
-			SWP_NOMOVE);
+			SWP_NOSIZE | SWP_NOZORDER);
 }
 
 #ifndef WIN32

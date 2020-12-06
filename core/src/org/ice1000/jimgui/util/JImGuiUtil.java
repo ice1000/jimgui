@@ -1,10 +1,7 @@
 package org.ice1000.jimgui.util;
 
 import org.ice1000.jimgui.JImGui;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
+import org.jetbrains.annotations.*;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -69,6 +66,7 @@ public interface JImGuiUtil {
 	}
 
 	@TestOnly
+	@ApiStatus.Internal
 	static void runWithinPer(long limit, long millis, @NotNull Consumer<@NotNull JImGui> runnable) {
 		try (JImGui imGui = new JImGui()) {
 			long latestRefresh = System.currentTimeMillis();

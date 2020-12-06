@@ -261,38 +261,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectP
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong nativeObjectPtr, float newValue) {
-	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
-	int w, h;
-	glfwGetWindowSize(window, &w, &h);
-	glfwSetWindowSize(window, static_cast<int>(newValue), h);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(jlong nativeObjectPtr, float newValue) {
-	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
-	int w, h;
-	glfwGetWindowSize(window, &w, &h);
-	glfwSetWindowSize(window, w, static_cast<int>(newValue));
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(jlong nativeObjectPtr, float newValue) {
-	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
-	int w, h;
-	glfwGetWindowPos(window, &w, &h);
-	glfwSetWindowPos(window, static_cast<int>(newValue), h);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(jlong nativeObjectPtr, float newValue) {
-	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
-	int w, h;
-	glfwGetWindowPos(window, &w, &h);
-	glfwSetWindowPos(window, w, static_cast<int>(newValue));
-}
-
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY) {
 	auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
 	glfwSetWindowSize(window, static_cast<int>(newX), static_cast<int>(newY));

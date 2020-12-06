@@ -53,14 +53,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectP
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectPtr) -> float;
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(jlong nativeObjectPtr, float newValue);
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(jlong nativeObjectPtr, float newValue);
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(jlong nativeObjectPtr, float newValue);
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(jlong nativeObjectPtr, float newValue);
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY);
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPtr, float newX, float newY);
@@ -91,27 +83,6 @@ Java_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(JNIEnv *,
                                                      jclass,
                                                      jlong nativeObjectPtr) -> float {
 	return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(nativeObjectPtr);
-}
-
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeX(nativeObjectPtr, newValue);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSizeY(nativeObjectPtr, newValue);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosX(nativeObjectPtr, newValue);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(JNIEnv *, jclass, jlong nativeObjectPtr, jfloat newValue) {
-	JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPosY(nativeObjectPtr, newValue);
 }
 
 JNIEXPORT void JNICALL

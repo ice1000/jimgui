@@ -5,6 +5,7 @@ import org.ice1000.jimgui.flag.JImTabItemFlags;
 import org.ice1000.jimgui.flag.JImInputTextFlags;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -236,20 +237,12 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	public float getPlatformWindowPosY() {
 		return getPlatformWindowPosY(nativeObjectPtr);
 	}
-	public void setPlatformWindowSizeX(float newVal) {
-		setPlatformWindowSizeX(nativeObjectPtr, newVal);
-	}
-	public void setPlatformWindowSizeY(float newVal) {
-		setPlatformWindowSizeY(nativeObjectPtr, newVal);
-	}
+	@Deprecated @ApiStatus.ScheduledForRemoval public void setPlatformWindowSizeX(float newVal) { }
+	@Deprecated @ApiStatus.ScheduledForRemoval public void setPlatformWindowSizeY(float newVal) { }
+	@Deprecated @ApiStatus.ScheduledForRemoval public void setPlatformWindowPosX(float newVal) { }
+	@Deprecated @ApiStatus.ScheduledForRemoval public void setPlatformWindowPosY(float newVal) { }
 	public void setPlatformWindowSize(float newX, float newY) {
 		setPlatformWindowSize(nativeObjectPtr, newX, newY);
-	}
-	public void setPlatformWindowPosX(float newVal) {
-		setPlatformWindowPosX(nativeObjectPtr, newVal);
-	}
-	public void setPlatformWindowPosY(float newVal) {
-		setPlatformWindowPosY(nativeObjectPtr, newVal);
 	}
 	public void setPlatformWindowPos(float newX, float newY) {
 		setPlatformWindowPos(nativeObjectPtr, newX, newY);
@@ -631,11 +624,7 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
 	private static native float getPlatformWindowSizeY(long nativeObjectPtr);
 	private static native float getPlatformWindowPosX(long nativeObjectPtr);
 	private static native float getPlatformWindowPosY(long nativeObjectPtr);
-	private static native void setPlatformWindowSizeX(long nativeObjectPtr, float newVal);
-	private static native void setPlatformWindowSizeY(long nativeObjectPtr, float newVal);
 	private static native void setPlatformWindowSize(long nativeObjectPtr, float newX, float newY);
-	private static native void setPlatformWindowPosX(long nativeObjectPtr, float newVal);
-	private static native void setPlatformWindowPosY(long nativeObjectPtr, float newVal);
 	private static native void setPlatformWindowPos(long nativeObjectPtr, float newX, float newY);
 	private static native void loadIniSettingsFromMemory(final byte @NotNull [] data);
 	private static native byte @NotNull [] saveIniSettingsToMemory0();

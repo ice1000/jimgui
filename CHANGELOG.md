@@ -1,6 +1,9 @@
 ## Unreleased
 
 + Fixed completely broken `NativeDouble`, `NativeShort` and `NativeLong`
++ Remove `setPlatformWindowSize[XY]` and `setPlatformWindowPos[XY]`,
+  use the two-arg version `setPlatformWindowSize` and `setPlatformWindowPos` instead
++ Fix a bug in Windows' setPlatformWindowPos
 
 ## v0.11.2
 

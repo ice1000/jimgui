@@ -25,10 +25,9 @@ public class PlatformWindowTest {
 		NativeFloat nativeFloat = new NativeFloat();
 		JImGuiUtil.runWithinPer(10000, 16, gui -> {
 			gui.sliderFloat("Value", nativeFloat, 0, 1000);
-			if (gui.button("Set Window X"))
-				gui.setPlatformWindowSizeX(nativeFloat.accessValue());
-			if (gui.button("Set Window Y"))
-				gui.setPlatformWindowSizeY(nativeFloat.accessValue());
+			if (gui.button("Set Window")) {
+				gui.setPlatformWindowSize(nativeFloat.accessValue(), nativeFloat.accessValue());
+			}
 		});
 		nativeFloat.deallocateNativeObject();
 	}
