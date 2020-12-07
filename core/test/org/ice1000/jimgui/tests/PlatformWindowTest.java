@@ -1,5 +1,6 @@
 package org.ice1000.jimgui.tests;
 
+import org.ice1000.jimgui.NativeBool;
 import org.ice1000.jimgui.NativeFloat;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
@@ -26,6 +27,8 @@ public class PlatformWindowTest {
 		JniLoader.load();
 		NativeFloat size = new NativeFloat();
 		NativeFloat pos = new NativeFloat();
+		NativeBool resize = new NativeBool();
+		NativeBool repos = new NativeBool();
 		final boolean[] init = {false};
 		JImGuiUtil.runWithinPer(50000, 16, gui -> {
 			if (!init[0]) {
@@ -35,11 +38,13 @@ public class PlatformWindowTest {
 			}
 			gui.sliderFloat("Size", size, 0, 1000);
 			gui.sliderFloat("Pos", pos, 0, 1000);
-			if (gui.button("Set Window Size")) {
+			gui.checkbox("Resize", resize);
+			gui.checkbox("Repos", repos);
+			if (resize.accessValue() || gui.button("Set Window Size")) {
 				float value = size.accessValue();
 				gui.setPlatformWindowSize(value, value);
 			}
-			if (gui.button("Set Window Pos")) {
+			if (repos.accessValue() || gui.button("Set Window Pos")) {
 				float value = pos.accessValue();
 				gui.setPlatformWindowSize(value, value);
 			}
