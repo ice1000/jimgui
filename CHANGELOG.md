@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Link CoreFoundation on macOS
+
 ## v0.11.3
 
 + Fixed completely broken `NativeDouble`, `NativeShort` and `NativeLong`
