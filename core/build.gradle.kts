@@ -72,6 +72,7 @@ val generations = arrayOf(
 		g<GenTabItemFlags>(),
 		g<GenTableFlags>(),
 		g<GenTableColumnFlags>(),
+		g<GenTableRowFlags>(),
 		g<GenCond>(),
 		g<GenGenTask>())
 

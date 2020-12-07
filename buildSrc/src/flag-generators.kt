@@ -369,6 +369,12 @@ open class GenTableColumnFlags : GenFlagTask(
 		"NoDirectResize" to "1 << 30",
 )
 
+open class GenTableRowFlags : GenFlagTask(
+		"JImTableRowFlags",
+		"None" to "0",
+		"Headers" to "1 << 0",
+)
+
 open class GenMouseButton : GenFlagTask(
 		"JImMouseButton",
 		"Left" to "0",

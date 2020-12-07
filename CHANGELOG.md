@@ -8,6 +8,7 @@
 + Fix a bug in Windows' `setPlatformWindowSize`
 + Sync to the latest imgui repo
   + Generate flags for tables
+  + Add most tables API
 
 ## v0.11.2
 

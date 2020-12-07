@@ -357,7 +357,37 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 			Fun("isPopupOpen", "boolean", stringID, rightPopupFlags),
 			Fun("closeCurrentPopup"),
 
-			// Columns
+			// Tables
+			// [BETA API] API may evolve!
+			// - Full-featured replacement for old Columns API.
+			Fun("beginTable", "boolean", stringID,
+					int("columnsCount"),
+					flags(from = "Table", default = "None"),
+					size("outerSize", default = "0,0"),
+					float("innerWidth", default = 0)),
+			Fun("endTable"),
+			Fun("tableNextRow",
+					flags(from = "TableRow", default = "None"),
+					float("minRowHeight", default = 0)),
+			Fun("tableNextColumn", "boolean"),
+			Fun("tableSetColumnIndex", "boolean", int("columnN")),
+			Fun("tableGetColumnIndex", "int"),
+			Fun("tableGetRowIndex", "int"),
+
+			// Tables: Headers & Columns declaration
+			Fun("tableSetupColumn",
+					label,
+					flags(from = "TableColumn", default = "None"),
+					float("initWidthOrWeight", default = -1),
+					int("userID", default = 0)),
+			Fun("tableSetupScrollFreeze", int("cols"), int("rows")),
+			Fun("tableHeadersRow"),
+			Fun("tableHeader", label),
+
+			// Tables: Miscellaneous functions
+			Fun("tableGetColumnCount", "int"),
+
+			// Columns (legacy)
 			Fun("columns",
 					int("count", default = 1),
 					nStringID,
