@@ -7,6 +7,7 @@
   use the two-arg version `setPlatformWindowSize` and `setPlatformWindowPos` instead
 + Fix a bug in Windows' `setPlatformWindowSize`
 + Sync to the latest imgui repo
+  + Generate flags for tables
 
 ## v0.11.2
 

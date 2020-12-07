@@ -70,6 +70,8 @@ val generations = arrayOf(
 		g<GenConfigFlags>(),
 		g<GenButtonFlags>(),
 		g<GenTabItemFlags>(),
+		g<GenTableFlags>(),
+		g<GenTableColumnFlags>(),
 		g<GenCond>(),
 		g<GenGenTask>())
 

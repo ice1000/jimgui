@@ -6,7 +6,7 @@ package org.ice1000.gradle
 import org.gradle.api.tasks.TaskAction
 
 abstract class GenFlagTask(className: String, private vararg val list: Pair<String, String>)
-	: GenJavaTask(className, packageName = "org.ice1000.jimgui.flag"), Runnable {
+	: GenJavaTask(className, packageName = "org.ice1000.jimgui.flag", since = "undecidable"), Runnable {
 	@TaskAction
 	override fun run() = buildString {
 		GenGenTask.checkParserInitialized(project)
@@ -300,6 +300,73 @@ open class GenWindowFlags : GenFlagTask(
 		"Popup" to "1 << 26",
 		"Modal" to "1 << 27",
 		"ChildMenu" to "1 << 28",
+)
+
+open class GenTableFlags : GenFlagTask(
+		"JImTableFlags",
+		"None" to "0",
+		"Resizable" to "1 << 0",
+		"Reorderable" to "1 << 1",
+		"Hideable" to "1 << 2",
+		"Sortable" to "1 << 3",
+		"MultiSortable" to "1 << 4",
+		"NoSavedSettings" to "1 << 5",
+		"ContextMenuInBody" to "1 << 6",
+		"RowBg" to "1 << 7",
+		"BordersInnerH" to "1 << 8",
+		"BordersOuterH" to "1 << 9",
+		"BordersInnerV" to "1 << 10",
+		"BordersOuterV" to "1 << 11",
+		"BordersH" to "BordersInnerH | BordersOuterH",
+		"BordersV" to "BordersInnerV | BordersOuterV",
+		"BordersInner" to "BordersInnerV | BordersInnerH",
+		"BordersOuter" to "BordersOuterV | BordersOuterH",
+		"Borders" to "BordersInner | BordersOuter",
+		"NoBordersInBody" to "1 << 12",
+		"NoBordersInBodyUntilResize" to "1 << 13",
+		"ColumnsWidthStretch" to "1 << 14",
+		"ColumnsWidthFixed" to "1 << 15",
+		"SameWidths" to "1 << 16",
+		"NoHeadersWidth" to "1 << 17",
+		"NoHostExtendY" to "1 << 18",
+		"NoKeepColumnsVisible" to "1 << 19",
+		"PreciseWidths" to "1 << 20",
+		"NoClip" to "1 << 21",
+		"PadOuterX" to "1 << 22",
+		"NoPadOuterX" to "1 << 23",
+		"NoPadInnerX" to "1 << 24",
+		"ScrollX" to "1 << 25",
+		"ScrollY" to "1 << 26",
+)
+
+open class GenTableColumnFlags : GenFlagTask(
+		"JImTableColumnFlags",
+		"None" to "0",
+		"DefaultHide" to "1 << 0",
+		"DefaultSort" to "1 << 1",
+		"WidthStretch" to "1 << 2",
+		"WidthFixed" to "1 << 3",
+		"WidthAutoResize" to "1 << 4",
+		"NoResize" to "1 << 5",
+		"NoReorder" to "1 << 6",
+		"NoHide" to "1 << 7",
+		"NoClip" to "1 << 8",
+		"NoSort" to "1 << 9",
+		"NoSortAscending" to "1 << 10",
+		"NoSortDescending" to "1 << 11",
+		"NoHeaderWidth" to "1 << 12",
+		"PreferSortAscending" to "1 << 13",
+		"PreferSortDescending" to "1 << 14",
+		"IndentEnable" to "1 << 15",
+		"IndentDisable" to "1 << 16",
+		"IsEnabled" to "1 << 20",
+		"IsVisible" to "1 << 21",
+		"IsSorted" to "1 << 22",
+		"IsHovered" to "1 << 23",
+		"WidthMask" to "WidthStretch | WidthFixed | WidthAutoResize",
+		"IndentMask" to "IndentEnable | IndentDisable",
+		"StatusMask" to "IsEnabled | IsVisible | IsSorted | IsHovered",
+		"NoDirectResize" to "1 << 30",
 )
 
 open class GenMouseButton : GenFlagTask(
