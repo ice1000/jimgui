@@ -30,7 +30,7 @@ public class PlatformWindowTest {
 		NativeBool resize = new NativeBool();
 		NativeBool repos = new NativeBool();
 		final boolean[] init = {false};
-		JImGuiUtil.runWithinPer(50000, 16, gui -> {
+		JImGuiUtil.runWithinPer(5000, 16, gui -> {
 			if (!init[0]) {
 				init[0] = true;
 				size.modifyValue(Math.min(900, gui.getPlatformWindowSizeX()));
