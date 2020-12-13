@@ -3,6 +3,7 @@
 + Link CoreFoundation on macOS
 + Tweak code style, use 2-spaces instead of tabs
 + New functions: `pushFont`
++ Adapt official TableFlags changes
 
 ## v0.11.3
 
