@@ -8,50 +8,19 @@ import org.intellij.lang.annotations.MagicConstant
 const val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
-fun configPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "JImFontConfig", "ImFontConfig", nullable)
+fun configPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImFontConfig", "ImFontConfig", nullable)
+fun fontPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImFont", "ImFont", nullable)
+fun stylePtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImStyle", "ImGuiStyle", nullable)
+fun drawListPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImDrawList", "ImDrawList", nullable)
+fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", nullable)
+fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", nullable)
+fun doublePtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", nullable)
 
-fun fontPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "JImFont", "ImFont", nullable)
+fun texture(name: String, nullable: Boolean = false) =
+    PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
 
-fun stylePtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "JImStyle", "ImGuiStyle", nullable)
-
-fun drawListPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "JImDrawList", "ImDrawList", nullable)
-
-fun boolPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "NativeBool", "bool", nullable)
-
-fun floatPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "NativeFloat", "float", nullable)
-
-fun doublePtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "NativeDouble", "double", nullable)
-
-fun texture(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
-
-fun intPtr(
-    name: String,
-    nullable: Boolean = false,
-) = PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
+fun intPtr(name: String, nullable: Boolean = false) =
+    PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
 
 fun int(
     name: String,
