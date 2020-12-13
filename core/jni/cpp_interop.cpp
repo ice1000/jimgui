@@ -78,56 +78,56 @@ NativeImpls(Long, jlong, long, 0)
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_NativeBool_accessValue(jlong nativeObjectPtr) -> jboolean {
-	auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
-	return static_cast<jboolean>(*nativeObject ? JNI_TRUE : JNI_FALSE);
+  auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
+  return static_cast<jboolean>(*nativeObject ? JNI_TRUE : JNI_FALSE);
 }
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_NativeBool_modifyValue(jlong nativeObjectPtr, jboolean newValue) {
-	auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
-	*nativeObject = static_cast<bool>(newValue);
+  auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
+  *nativeObject = static_cast<bool>(newValue);
 }
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_NativeBool_invertValue(jlong nativeObjectPtr) {
-	auto *nativeObject = PTR_J2C(bool, nativeObjectPtr);
-	*nativeObject = !*nativeObject;
+  auto *nativeObject = PTR_J2C(bool, nativeObjectPtr);
+  *nativeObject = !*nativeObject;
 }
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_NativeBool_allocateNativeObject() -> jlong {
-	return PTR_C2J(new bool(false));
+  return PTR_C2J(new bool(false));
 }
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(jlong nativeObjectPtr) {
-	auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
-	delete nativeObject;
+  auto nativeObject = PTR_J2C(bool, nativeObjectPtr);
+  delete nativeObject;
 }
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_NativeBool_accessValue(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-	return JavaCritical_org_ice1000_jimgui_NativeBool_accessValue(nativeObjectPtr);
+  return JavaCritical_org_ice1000_jimgui_NativeBool_accessValue(nativeObjectPtr);
 }
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_NativeBool_modifyValue(JNIEnv *, jclass, jlong nativeObjectPtr, jboolean newValue) {
-	JavaCritical_org_ice1000_jimgui_NativeBool_modifyValue(nativeObjectPtr, newValue);
+  JavaCritical_org_ice1000_jimgui_NativeBool_modifyValue(nativeObjectPtr, newValue);
 }
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_NativeBool_invertValue(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_NativeBool_invertValue(nativeObjectPtr);
+  JavaCritical_org_ice1000_jimgui_NativeBool_invertValue(nativeObjectPtr);
 }
 
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_NativeBool_allocateNativeObject(JNIEnv *, jclass) -> jlong {
-	return JavaCritical_org_ice1000_jimgui_NativeBool_allocateNativeObject();
+  return JavaCritical_org_ice1000_jimgui_NativeBool_allocateNativeObject();
 }
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(JNIEnv *, jclass, jlong nativeObjectPtr) {
-	JavaCritical_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(nativeObjectPtr);
+  JavaCritical_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(nativeObjectPtr);
 }
 
 }

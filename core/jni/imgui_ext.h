@@ -7,6 +7,7 @@
 
 #include <basics.hpp>
 #include <imgui.h>
+#include <string>
 
 using ComVec2 = Com<ImVec2>;
 using RefVec2 = Ref<ImVec2>;
@@ -66,6 +67,7 @@ namespace ImGui {
 	                RawStr format = "%.6lf",
 	                ImGuiSliderFlags flags = 0) -> bool;
 	auto LineTo(ComVec2 delta, ComVec4 color, float thickness = 1.0f) -> void;
+	auto InputText(const char* label, std::string* str, ImGuiInputTextFlags flags) -> bool;
 	auto LineTo(ComVec2 delta, float thickness = 1.0f) -> void;
 	/// if @param thickness < 0, circle will be filled
 	auto Circle(float radius, ComVec4 color, int num_segments = 12, float thickness = 1.0f) -> void;
