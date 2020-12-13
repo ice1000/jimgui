@@ -9,7 +9,7 @@ abstract class GenEnumTask<T>(className: String) : GenJavaTask(className), Runna
   override fun run() = buildString {
     append(prefixInterfacedJava)
     list.forEachIndexed { index, element ->
-      append('\t')
+      append("  ")
       genStatement(index, element)
       appendln(";")
     }

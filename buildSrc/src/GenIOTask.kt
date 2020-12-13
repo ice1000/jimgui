@@ -34,9 +34,9 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
       genJavaBooleanMember(javaCode, name, isArray, jvmName, annotation, `c++Name`)
     }
     stringMembers.forEach { name ->
-      javaCode.append("\tprivate static native void set").append(name).appendln("(byte[]newValue);")
+      javaCode.append("  private static native void set").append(name).appendln("(byte[]newValue);")
           .javadoc(name)
-          .append("\tpublic void set").append(name).append("(@NotNull String newValue){set").append(name)
+          .append("  public void set").append(name).append("(@NotNull String newValue){set").append(name)
           .appendln("(getBytes(newValue));}")
     }
   }

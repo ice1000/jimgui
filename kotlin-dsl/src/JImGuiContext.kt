@@ -8,7 +8,8 @@ import org.intellij.lang.annotations.MagicConstant
 class JImGuiContext(
     width: Int = 1280,
     height: Int = 720,
-    title: String = "Window created by JImGui Kotlin DSL") : JImGui(width, height, title) {
+    title: String = "Window created by JImGui Kotlin DSL",
+) : JImGui(width, height, title) {
   inline operator fun String.invoke(block: JImGuiBlock) {
     begin(this@invoke)
     block()
@@ -19,7 +20,8 @@ class JImGuiContext(
       pOpen: NativeBool,
       @MagicConstant(flagsFromClass = JImWindowFlags::class)
       flags: Flags = JImWindowFlags.None,
-      block: JImGuiBlock) {
+      block: JImGuiBlock,
+  ) {
     begin(this@invoke, pOpen, flags)
     block()
     end()

@@ -30,7 +30,8 @@ inline fun JImGuiContext.tabBar(
     stringId: StrID,
     @MagicConstant(flagsFromClass = JImTabBarFlags::class)
     flags: Flags = 0,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginTabBar(stringId, flags)) {
     block()
     endTabBar()
@@ -42,7 +43,8 @@ inline fun JImGuiContext.tabItem(
     pOpen: NativeBool,
     @MagicConstant(flagsFromClass = JImTabItemFlags::class)
     flags: Flags = 0,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginTabItem(label, pOpen, flags)) {
     block()
     endTabItem()
@@ -53,7 +55,8 @@ inline fun JImGuiContext.tabItem(
     label: String,
     @MagicConstant(flagsFromClass = JImTabItemFlags::class)
     flags: Flags = 0,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginTabItem(label, flags)) {
     block()
     endTabItem()
@@ -65,7 +68,8 @@ inline fun JImGuiContext.collapsingHeader(
     pOpen: NativeBool,
     @MagicConstant(flagsFromClass = JImTreeNodeFlags::class)
     flags: Flags = 0,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (collapsingHeader(label, pOpen, flags)) block()
 }
 
@@ -77,7 +81,8 @@ inline fun JImGuiContext.button(
     text: String,
     width: Float = 0f,
     height: Float = 0f,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (button(text, width, height)) block()
 }
 
@@ -92,7 +97,8 @@ inline fun JImGuiContext.popup(
     id: StrID,
     @MagicConstant(flagsFromClass = JImWindowFlags::class)
     flags: Flags = JImWindowFlags.None,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginPopup(id, flags)) {
     block()
     endPopup()
@@ -123,7 +129,8 @@ inline fun JImGuiContext.child(
     width: Float = 0f,
     height: Float = 0f,
     border: Boolean = false,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginChild0(strId, width, height, border)) {
     block()
     endChild()
@@ -137,7 +144,8 @@ inline fun JImGuiContext.child(
     border: Boolean = false,
     @MagicConstant(flagsFromClass = JImWindowFlags::class)
     flags: Flags = JImWindowFlags.None,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   if (beginChild(id, width, height, border, flags)) {
     block()
     endChild()
@@ -154,7 +162,8 @@ inline fun JImGuiContext.withStyle(
     styleVar: JImStyleVar<Void>,
     valueA: Float,
     valueB: Float,
-    block: JImGuiBlock) {
+    block: JImGuiBlock,
+) {
   pushStyleVar(styleVar, valueA, valueB)
   block()
   popStyleVar()
