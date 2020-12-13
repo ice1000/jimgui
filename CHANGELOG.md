@@ -4,6 +4,7 @@
 + Tweak code style, use 2-spaces instead of tabs
 + New functions: `pushFont`
 + Adapt official TableFlags changes
++ Allow deallocating native types multiple times
 
 ## v0.11.3
 

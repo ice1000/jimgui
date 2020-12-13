@@ -19,6 +19,7 @@ public final class NativeBool implements DeallocatableObject, Cloneable {
 
   @Override @Contract public void deallocateNativeObject() {
     deallocateNativeObject0(nativeObjectPtr);
+    nativeObjectPtr = 0;
   }
 
   @Contract(pure = true) public boolean accessValue() {
