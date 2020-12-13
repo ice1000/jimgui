@@ -4,31 +4,31 @@ import org.gradle.api.DefaultTask
 import org.intellij.lang.annotations.Language
 
 open class GenJavaTask(
-		val className: String,
-		val since: String = "v0.1",
-		private val packageName: String = "org.ice1000.jimgui",
-		relativePath: String = packageName.replace('.', '/')
+    val className: String,
+    val since: String = "v0.1",
+    private val packageName: String = "org.ice1000.jimgui",
+    relativePath: String = packageName.replace('.', '/')
 ) : DefaultTask() {
-	val targetJavaFile = project
-			.projectDir
-			.resolve("gen")
-			.resolve(relativePath)
-			.resolve("$className.java")
-			.absoluteFile
+  val targetJavaFile = project
+      .projectDir
+      .resolve("gen")
+      .resolve(relativePath)
+      .resolve("$className.java")
+      .absoluteFile
 
-	init {
-		group = "code generation"
-		targetJavaFile.parentFile.mkdirs()
-	}
+  init {
+    group = "code generation"
+    targetJavaFile.parentFile.mkdirs()
+  }
 
-	@Language("Text")
-	open val userCode = """/** package-private by design */
+  @Language("Text")
+  open val userCode = """/** package-private by design */
 	$className() { }
 """
 
-	protected val prefixJava
-		@Language("JAVA", suffix = "}")
-		get() = """package $packageName;
+  protected val prefixJava
+    @Language("JAVA", suffix = "}")
+    get() = """package $packageName;
 
 import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.*;
@@ -49,9 +49,9 @@ public class $className {
 $userCode
 """
 
-	protected val prefixInterfacedJava
-		@Language("JAVA", suffix = "}")
-		get() = """package $packageName;
+  protected val prefixInterfacedJava
+    @Language("JAVA", suffix = "}")
+    get() = """package $packageName;
 
 import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.flag.*;
@@ -71,5 +71,5 @@ import static org.ice1000.jimgui.util.JImGuiUtil.*;
 public interface $className {
 """
 
-	val eol: String = System.lineSeparator()
+  val eol: String = System.lineSeparator()
 }

@@ -13,11 +13,11 @@ import java.util.function.Function;
  * @since v0.12
  */
 class SharedState {
-	static boolean isLoaded = false;
-	static @Nullable Function<String, byte[]> STRING_TO_BYTES = null;
+  static boolean isLoaded = false;
+  static @Nullable Function<String, byte[]> STRING_TO_BYTES = null;
 
-	@Contract(value = "!null -> !null; null -> null", pure = true)
-	static byte @Nullable [] getBytesDefaultImpl(@Nullable String text) {
-		return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
-	}
+  @Contract(value = "!null -> !null; null -> null", pure = true)
+  static byte @Nullable [] getBytesDefaultImpl(@Nullable String text) {
+    return text != null ? (text + '\0').getBytes(StandardCharsets.UTF_8) : null;
+  }
 }

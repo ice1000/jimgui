@@ -8,30 +8,28 @@ import org.jetbrains.annotations.Contract;
  * @since v0.4
  */
 public final class JImFontConfig extends JImGuiFontConfigGen implements DeallocatableObject {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @param nativeObjectPtr native ImFont*
-	 */
-	@Contract(pure = true)
-	JImFontConfig(long nativeObjectPtr) {
-		super(nativeObjectPtr);
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @param nativeObjectPtr native ImFont*
+   */
+  @Contract(pure = true) JImFontConfig(long nativeObjectPtr) {
+    super(nativeObjectPtr);
+  }
 
-	/**
-	 * @apiNote Should call {@link JImFontConfig#deallocateNativeObject()}.
-	 * @see JImFont#getConfigData()
-	 */
-	@Contract
-	public JImFontConfig() {
-		this(allocateNativeObject());
-	}
+  /**
+   * @apiNote Should call {@link JImFontConfig#deallocateNativeObject()}.
+   * @see JImFont#getConfigData()
+   */
+  @Contract public JImFontConfig() {
+    this(allocateNativeObject());
+  }
 
-	private static native long allocateNativeObject();
-	private static native void deallocateNativeObject(long nativeObjectPtr);
+  private static native long allocateNativeObject();
 
-	@Override
-	public void deallocateNativeObject() {
-		deallocateNativeObject(nativeObjectPtr);
-	}
+  private static native void deallocateNativeObject(long nativeObjectPtr);
+
+  @Override public void deallocateNativeObject() {
+    deallocateNativeObject(nativeObjectPtr);
+  }
 }

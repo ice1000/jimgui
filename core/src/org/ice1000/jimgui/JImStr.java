@@ -15,24 +15,20 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @since 0.9
  */
 public final class JImStr {
-	public final byte[] bytes;
+  public final byte[] bytes;
 
-	public JImStr(@NotNull String source) {
-		bytes = getBytes(source);
-	}
+  public JImStr(@NotNull String source) {
+    bytes = getBytes(source);
+  }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    JImStr imStr = (JImStr) o;
+    return Arrays.equals(bytes, imStr.bytes);
+  }
 
-		JImStr imStr = (JImStr) o;
-
-		return Arrays.equals(bytes, imStr.bytes);
-	}
-
-	@Override
-	public int hashCode() {
-		return Arrays.hashCode(bytes);
-	}
+  @Override public int hashCode() {
+    return Arrays.hashCode(bytes);
+  }
 }

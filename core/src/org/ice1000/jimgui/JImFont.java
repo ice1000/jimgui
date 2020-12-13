@@ -9,37 +9,35 @@ import org.jetbrains.annotations.NotNull;
  * @since v0.1
  */
 public final class JImFont extends JImGuiFontGen {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @param nativeObjectPtr native ImFont*
-	 */
-	@Contract(pure = true)
-	JImFont(long nativeObjectPtr) {
-		super(nativeObjectPtr);
-	}
+  /**
+   * {@inheritDoc}
+   *
+   * @param nativeObjectPtr native ImFont*
+   */
+  @Contract(pure = true) JImFont(long nativeObjectPtr) {
+    super(nativeObjectPtr);
+  }
 
-	@Contract
-	public @NotNull String getDebugName() {
-		return new String(getDebugName0(nativeObjectPtr));
-	}
+  @Contract public @NotNull String getDebugName() {
+    return new String(getDebugName0(nativeObjectPtr));
+  }
 
-	public void setFallbackChar(char wChar) {
-		setFallbackChar((int) wChar);
-	}
+  public void setFallbackChar(char wChar) {
+    setFallbackChar((int) wChar);
+  }
 
-	public @NotNull JImFontAtlas getContainerAtlas() {
-		return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
-	}
+  public @NotNull JImFontAtlas getContainerAtlas() {
+    return new JImFontAtlas(getContainerFontAtlas(nativeObjectPtr));
+  }
 
-	public @NotNull JImFontConfig getConfigData() {
-		return new JImFontConfig(getConfigData(nativeObjectPtr));
-	}
+  public @NotNull JImFontConfig getConfigData() {
+    return new JImFontConfig(getConfigData(nativeObjectPtr));
+  }
+  // public native void setDisplayOffset(float newX, float newY);
 
-	// public native void setDisplayOffset(float newX, float newY);
+  @Contract private static native byte[] getDebugName0(long nativeObjectPtr);
 
-	@Contract
-	private static native byte[] getDebugName0(long nativeObjectPtr);
-	private static native long getContainerFontAtlas(long nativeObjectPtr);
-	private static native long getConfigData(long nativeObjectPtr);
+  private static native long getContainerFontAtlas(long nativeObjectPtr);
+
+  private static native long getConfigData(long nativeObjectPtr);
 }

@@ -9,11 +9,8 @@ import org.jetbrains.annotations.Contract;
  * @since v0.1
  */
 public interface DeallocatableObject extends AutoCloseable {
-	@Contract
-	void deallocateNativeObject();
-
-	@Override
-	default void close() {
-		deallocateNativeObject();
-	}
+  @Contract void deallocateNativeObject();
+  @Override default void close() {
+    deallocateNativeObject();
+  }
 }

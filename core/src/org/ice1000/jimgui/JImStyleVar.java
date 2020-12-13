@@ -8,11 +8,11 @@ package org.ice1000.jimgui;
  */
 @SuppressWarnings({"unused"})
 public final class JImStyleVar<T> {
-	/** package-private by design */
-	int nativeValue;
+  /** package-private by design */
+  int nativeValue;
 
-	/** package-private by design */
-	JImStyleVar(int nativeValue) {
-		this.nativeValue = nativeValue;
-	}
+  /** package-private by design */
+  JImStyleVar(int nativeValue) {
+    this.nativeValue = nativeValue;
+  }
 }

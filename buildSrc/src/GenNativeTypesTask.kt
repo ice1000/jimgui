@@ -3,24 +3,24 @@ package org.ice1000.gradle
 import org.gradle.api.tasks.TaskAction
 
 open class GenNativeTypesTask : GenJavaTask(""), Runnable {
-	@TaskAction
-	override fun run() {
-		val cppPackage = targetJavaFile.parentFile
-		cppPackage.mkdirs()
-		listOf(
-				"Int" to "int",
-				"Float" to "float",
-				"Double" to "double",
-				"Short" to "short",
-				// "Byte" to "byte",
-				// "Char" to "char",
-				"Long" to "long"
-		).forEach { (it, java) ->
-			cppPackage
-					.resolve("Native$it.java")
-					.apply { if (!exists()) createNewFile() }
-					//language=JAVA
-					.writeText("""
+  @TaskAction
+  override fun run() {
+    val cppPackage = targetJavaFile.parentFile
+    cppPackage.mkdirs()
+    listOf(
+        "Int" to "int",
+        "Float" to "float",
+        "Double" to "double",
+        "Short" to "short",
+        // "Byte" to "byte",
+        // "Char" to "char",
+        "Long" to "long"
+    ).forEach { (it, java) ->
+      cppPackage
+          .resolve("Native$it.java")
+          .apply { if (!exists()) createNewFile() }
+          //language=JAVA
+          .writeText("""
 package org.ice1000.jimgui;
 import org.ice1000.jimgui.cpp.*;
 import org.jetbrains.annotations.*;
@@ -67,6 +67,6 @@ public final class Native$it extends Number implements DeallocatableObject, Clon
 	}
 }
 """)
-		}
-	}
+    }
+  }
 }

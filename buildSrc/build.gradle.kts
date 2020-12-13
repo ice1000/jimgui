@@ -5,7 +5,7 @@ plugins { kotlin("jvm") version "1.4.20" }
 
 kotlin.sourceSets["main"].kotlin.srcDir("src")
 sourceSets.main {
-	java.srcDir("src")
+  java.srcDir("src")
 }
 
 repositories { jcenter() }
