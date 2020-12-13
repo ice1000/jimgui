@@ -12,21 +12,21 @@ package org.ice1000.jimgui.dsl
  * @see org.ice1000.jimgui.util.JImGuiUtil.runPer(long, java.util.function.Consumer<org.ice1000.jimgui.JImGui>)
  */
 inline fun runPer(millis: Long, block: JImGuiBlock) {
-	JImGuiContext().use { imGui ->
-		var latestRefresh = System.currentTimeMillis()
-		imGui.initBeforeMainLoop()
-		while (!imGui.windowShouldClose()) {
-			val currentTimeMillis = System.currentTimeMillis()
-			val deltaTime = currentTimeMillis - latestRefresh
-			Thread.sleep(deltaTime / 2)
-			if (deltaTime > millis) {
-				imGui.initNewFrame()
-				block(imGui)
-				imGui.render()
-				latestRefresh = currentTimeMillis
-			}
-		}
-	}
+  JImGuiContext().use { imGui ->
+    var latestRefresh = System.currentTimeMillis()
+    imGui.initBeforeMainLoop()
+    while (!imGui.windowShouldClose()) {
+      val currentTimeMillis = System.currentTimeMillis()
+      val deltaTime = currentTimeMillis - latestRefresh
+      Thread.sleep(deltaTime / 2)
+      if (deltaTime > millis) {
+        imGui.initNewFrame()
+        block(imGui)
+        imGui.render()
+        latestRefresh = currentTimeMillis
+      }
+    }
+  }
 }
 
 /**
@@ -38,23 +38,23 @@ inline fun runPer(millis: Long, block: JImGuiBlock) {
  * @see org.ice1000.jimgui.util.JImGuiUtil.runPer(java.util.function.LongSupplier, java.util.function.Consumer<org.ice1000.jimgui.JImGui>)
  */
 inline fun runPer(millisSupplier: () -> Long, block: JImGuiBlock) {
-	JImGuiContext().use { imGui ->
-		var latestRefresh = System.currentTimeMillis()
-		var millis = millisSupplier()
-		imGui.initBeforeMainLoop()
-		while (!imGui.windowShouldClose()) {
-			val currentTimeMillis = System.currentTimeMillis()
-			val deltaTime = currentTimeMillis - latestRefresh
-			Thread.sleep(deltaTime / 2)
-			if (deltaTime > millis) {
-				imGui.initNewFrame()
-				block(imGui)
-				imGui.render()
-				latestRefresh = currentTimeMillis
-				millis = millisSupplier()
-			}
-		}
-	}
+  JImGuiContext().use { imGui ->
+    var latestRefresh = System.currentTimeMillis()
+    var millis = millisSupplier()
+    imGui.initBeforeMainLoop()
+    while (!imGui.windowShouldClose()) {
+      val currentTimeMillis = System.currentTimeMillis()
+      val deltaTime = currentTimeMillis - latestRefresh
+      Thread.sleep(deltaTime / 2)
+      if (deltaTime > millis) {
+        imGui.initNewFrame()
+        block(imGui)
+        imGui.render()
+        latestRefresh = currentTimeMillis
+        millis = millisSupplier()
+      }
+    }
+  }
 }
 
 /**
@@ -66,15 +66,15 @@ inline fun runPer(millisSupplier: () -> Long, block: JImGuiBlock) {
  * @see org.ice1000.jimgui.util.JImGuiUtil.runWithin
  */
 inline fun runWithin(millis: Long, block: JImGuiBlock) {
-	JImGuiContext().use { imGui ->
-		val end = System.currentTimeMillis() + millis
-		imGui.initBeforeMainLoop()
-		while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
-			imGui.initNewFrame()
-			block(imGui)
-			imGui.render()
-		}
-	}
+  JImGuiContext().use { imGui ->
+    val end = System.currentTimeMillis() + millis
+    imGui.initBeforeMainLoop()
+    while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
+      imGui.initNewFrame()
+      block(imGui)
+      imGui.render()
+    }
+  }
 }
 
 /**
@@ -85,12 +85,12 @@ inline fun runWithin(millis: Long, block: JImGuiBlock) {
  * @see org.ice1000.jimgui.util.JImGuiUtil.run
  */
 inline fun run(block: JImGuiBlock) {
-	JImGuiContext().use { imGui ->
-		imGui.initBeforeMainLoop()
-		while (!imGui.windowShouldClose()) {
-			imGui.initNewFrame()
-			block(imGui)
-			imGui.render()
-		}
-	}
+  JImGuiContext().use { imGui ->
+    imGui.initBeforeMainLoop()
+    while (!imGui.windowShouldClose()) {
+      imGui.initNewFrame()
+      block(imGui)
+      imGui.render()
+    }
+  }
 }
