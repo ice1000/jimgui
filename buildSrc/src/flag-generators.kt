@@ -14,20 +14,20 @@ abstract class GenFlagTask(className: String, private vararg val list: Pair<Stri
     list.forEach { (name, value) ->
       val keyName = "${className.replace("JIm", "imGui")}_$name"
       val comment = GenGenTask.parser.map[keyName]
-      if (comment != null) append("\t/**").append(comment).appendln("*/")
-      append('\t')
+      if (comment != null) append("  /**").append(comment).appendln("*/")
+      append("  ")
       genStatement(name, value)
       appendln(";")
     }
-    appendln("\tenum Type implements Flag {")
+    appendln("  enum Type implements Flag {")
     preType()
     list.forEach { (name, _) ->
-      append("\t\t").append(name).append("(").append(className).append(".").append(name).appendln("),")
+      append("    ").append(name).append("(").append(className).append(".").append(name).appendln("),")
     }
-    appendln("\t\t;\n\t\tpublic final int flag;")
-        .appendln("\t\tType(int flag) { this.flag = flag; }")
-        .appendln("\t\t@Override public int get() { return flag; }")
-    appendln("\t}").appendln('}')
+    appendln("    ;\n    public final int flag;")
+        .appendln("    Type(int flag) { this.flag = flag; }")
+        .appendln("    @Override public int get() { return flag; }")
+    appendln("  }").appendln('}')
   }.let { targetJavaFile.writeText(it) }
 
   open fun StringBuilder.preType() {

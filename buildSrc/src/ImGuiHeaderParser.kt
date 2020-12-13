@@ -39,7 +39,7 @@ class ImGuiHeaderParser(imguiHeader: File) {
           }
           .forEach { (name, javadoc) ->
             val original = map[name]
-            if (original != null) map[name] = "$original\n\t$javadoc"
+            if (original != null) map[name] = "$original\n  $javadoc"
             else map[name] = javadoc
           }
     }

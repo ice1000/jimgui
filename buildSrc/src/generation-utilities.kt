@@ -11,32 +11,37 @@ fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", defa
 fun configPtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "JImFontConfig", "ImFontConfig", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "JImFontConfig", "ImFontConfig", nullable)
+
+fun fontPtr(
+    name: String,
+    nullable: Boolean = false,
+) = PointerParam(name, "JImFont", "ImFont", nullable)
 
 fun stylePtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "JImStyle", "ImGuiStyle", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "JImStyle", "ImGuiStyle", nullable)
 
 fun drawListPtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "JImDrawList", "ImDrawList", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "JImDrawList", "ImDrawList", nullable)
 
 fun boolPtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "NativeBool", "bool", nullable)
 
 fun floatPtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "NativeFloat", "float", nullable)
 
 fun doublePtr(
     name: String,
     nullable: Boolean = false,
-) = PointerParam(name, "NativeDouble", "double", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+) = PointerParam(name, "NativeDouble", "double", nullable)
 
 fun texture(
     name: String,
@@ -233,6 +238,9 @@ data class PointerParam(
     val annotation: String = "@NotNull",
     override val default: Any? = null,
 ) : Param() {
+  constructor(name: String, jvmType: String, nativeType: String, nullable: Boolean)
+      : this(name, jvmType, nativeType, if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+
   override fun java() = "long $name"
   override fun javaDefault() = "@NotNull $jvmType $name"
   override fun javaExpr() = "$name.nativeObjectPtr"
@@ -249,7 +257,7 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 
 fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder {
   (default ?: GenGenTask.parser.map[name])?.let { javadoc ->
-    append("\t/**").append(javadoc).appendln("*/")
+    append("  /**").append(javadoc).appendln("*/")
   }
   return this
 }
