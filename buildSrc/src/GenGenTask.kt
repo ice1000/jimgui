@@ -18,9 +18,9 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
   }
 
   override val userCode = """
-	/** %.3f */ public static final @NotNull byte[] FLOAT_FMT = new byte[]{${"%.3f".toList().joinToString { "${it.toInt()}" }}, 0};
-	/** %.6f */ public static final @NotNull byte[] DOUBLE_FMT = new byte[]{${"%.6f".toList().joinToString { "${it.toInt()}" }}, 0};
-	/** %d */ public static final @NotNull byte[] INT_FMT = new byte[]{${"%d".toList().joinToString { "${it.toInt()}" }}, 0};
+  /** %.3f */ public static final @NotNull byte[] FLOAT_FMT = new byte[]{${"%.3f".toList().joinToString { "${it.toInt()}" }}, 0};
+  /** %.6f */ public static final @NotNull byte[] DOUBLE_FMT = new byte[]{${"%.6f".toList().joinToString { "${it.toInt()}" }}, 0};
+  /** %d */ public static final @NotNull byte[] INT_FMT = new byte[]{${"%d".toList().joinToString { "${it.toInt()}" }}, 0};
 """
 
   override fun java(javaCode: StringBuilder) {

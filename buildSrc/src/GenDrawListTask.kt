@@ -13,13 +13,13 @@ open class GenDrawListTask : GenTask("JImGuiDrawListGen", "imgui_draw_list") {
   }
 
   @Language("JAVA", prefix = "class A{", suffix = "}")
-  override val userCode = """/** subclass-private by design */
-	protected long nativeObjectPtr;
+  override val userCode = """  /** subclass-private by design */
+  protected long nativeObjectPtr;
 
-	/** package-private by design */
-	JImGuiDrawListGen(long nativeObjectPtr) {
-		this.nativeObjectPtr = nativeObjectPtr;
-	}
+  /** package-private by design */
+  JImGuiDrawListGen(long nativeObjectPtr) {
+    this.nativeObjectPtr = nativeObjectPtr;
+  }
 """
 
   override fun java(javaCode: StringBuilder) {

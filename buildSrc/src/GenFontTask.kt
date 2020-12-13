@@ -13,18 +13,18 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
   }
 
   @Language("JAVA", prefix = "class A{", suffix = "}")
-  override val userCode = """@Contract(pure = true)
-	public static @NotNull JImFont getInstance(@NotNull JImGui owner) {
-		return owner.getFont();
-	}
+  override val userCode = """  @Contract(pure = true)
+  public static @NotNull JImFont getInstance(@NotNull JImGui owner) {
+  	return owner.getFont();
+  }
 
-	/** package-private by design */
-	protected long nativeObjectPtr;
+  /** package-private by design */
+  protected long nativeObjectPtr;
 
-	/** package-private by design */
-	$className(long nativeObjectPtr) {
-		this.nativeObjectPtr = nativeObjectPtr;
-	}
+  /** package-private by design */
+  $className(long nativeObjectPtr) {
+    this.nativeObjectPtr = nativeObjectPtr;
+  }
 """
 
   override fun java(javaCode: StringBuilder) {

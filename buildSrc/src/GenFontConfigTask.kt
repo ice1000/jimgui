@@ -15,10 +15,10 @@ open class GenFontConfigTask : GenTask("JImGuiFontConfigGen", "imgui_font_config
   @Language("JAVA", prefix = "class A{", suffix = "}")
   override val userCode = """protected long nativeObjectPtr;
 
-	/** package-private by design */
-	$className(long nativeObjectPtr) {
-		this.nativeObjectPtr = nativeObjectPtr;
-	}
+  /** package-private by design */
+  $className(long nativeObjectPtr) {
+    this.nativeObjectPtr = nativeObjectPtr;
+  }
 """
 
   override fun java(javaCode: StringBuilder) {

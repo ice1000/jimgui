@@ -15,13 +15,13 @@ open class GenIOTask : GenTask("JImGuiIOGen", "imgui_io") {
   }
 
   @Language("JAVA", prefix = "class A{", suffix = "}")
-  override val userCode = """@Contract(pure = true)
-	public static @NotNull JImGuiIOGen getInstance(@NotNull JImGui owner) {
-		return owner.getIO();
-	}
+  override val userCode = """  @Contract(pure = true)
+  public static @NotNull JImGuiIOGen getInstance(@NotNull JImGui owner) {
+    return owner.getIO();
+  }
 
-	/** package-private by design */
-	JImGuiIOGen() { }
+  /** package-private by design */
+  JImGuiIOGen() { }
 """
 
   override fun java(javaCode: StringBuilder) {

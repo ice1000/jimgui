@@ -386,9 +386,9 @@ open class GenMouseButton : GenFlagTask(
 ) {
   override fun StringBuilder.preType() {
     appendln("""		/**
-		 * Used for reverse lookup results and enum comparison.
-		 * Return the None or Default flag to prevent errors.
-		 */
-		NoSuchFlag(-1),""")
+     * Used for reverse lookup results and enum comparison.
+     * Return the None or Default flag to prevent errors.
+     */
+    NoSuchFlag(-1),""")
   }
 }

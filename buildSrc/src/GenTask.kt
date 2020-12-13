@@ -52,24 +52,24 @@ $JNI_FUNC_PREFIX${className}_get$name(JNIEnv *, jclass ${additionalOrEmpty(addit
 
   fun `c++BooleanArrayAccessor`(name: String, jvmName: String, `c++Name`: String) =
       """$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jclass, jint index, jboolean newValue) -> void {
-	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
+  $`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
 $JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jclass, jint index) -> jboolean {
-	return static_cast<jboolean> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
+  return static_cast<jboolean> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)] ? JNI_TRUE : JNI_FALSE);
 }"""
 
   fun `c++PrimitiveArrayAccessor`(type: String, name: String, jvmName: String, `c++Name`: String) =
       """$JNI_FUNC_PREFIX${className}_$jvmName(JNIEnv *, jclass, jint index, j$type newValue) -> void {
-	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
+  $`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
 $JNI_FUNC_PREFIX${className}_${jvmName}At(JNIEnv *, jclass, jint index) -> j$type {
-	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
+  return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
 }
 $JNI_C_FUNC_PREFIX${className}_$jvmName(jint index, j$type newValue) -> void {
-	$`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
+  $`c++Expr`$`c++Name`[static_cast<size_t> (index)] = newValue;
 }
 $JNI_C_FUNC_PREFIX${className}_${jvmName}At(jint index) -> j$type {
-	return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
+  return static_cast<j$type> ($`c++Expr`$`c++Name`[static_cast<size_t> (index)]);
 }"""
 
   fun `c++StringedFunction`(

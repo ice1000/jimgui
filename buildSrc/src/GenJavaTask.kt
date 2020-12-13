@@ -23,7 +23,7 @@ open class GenJavaTask(
 
   @Language("Text")
   open val userCode = """/** package-private by design */
-	$className() { }
+  $className() { }
 """
 
   protected val prefixJava

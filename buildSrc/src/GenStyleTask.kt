@@ -13,15 +13,15 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
   }
 
   @Language("JAVA")
-  override val userCode = """@Contract(pure = true)
-	public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }
+  override val userCode = """  @Contract(pure = true)
+  public static @NotNull $className getInstance(@NotNull JImGui owner) { return owner.getStyle(); }
 
-	/** package-private by design */
-	$className(long nativeObjectPtr) {
-		this.nativeObjectPtr = nativeObjectPtr;
-	}
+  /** package-private by design */
+  $className(long nativeObjectPtr) {
+    this.nativeObjectPtr = nativeObjectPtr;
+  }
 
-	protected long nativeObjectPtr;
+  protected long nativeObjectPtr;
 """
 
   override fun java(javaCode: StringBuilder) {
