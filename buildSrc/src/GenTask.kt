@@ -147,11 +147,7 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
     javaCode.javadoc(capitalName, comment).append("  ").append(visibility)
     if (isStatic(params)) {
       javaCode.append(" final ").append(type(type)).append(' ').append(name).append('(')
-      params.joinTo(javaCode) { it.javaDefault() }
-      javaCode.append("){")
-      if (type != null) javaCode.append("return ")
-      javaCode.append(name).append('(')
-      params.joinTo(javaCode) { it.javaExpr() }
+      returnStatementJava(params, javaCode, type, name)
       javaCode.append(");}").append(eol)
       if (params.any { param -> param is StringParam && param !is SizedStringParam && param.default == null }) {
         javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
@@ -177,15 +173,24 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
       defaults += default
       javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
       val newParams = params.dropLast(index + 1)
-      newParams.joinTo(javaCode) { it.javaDefault() }
-      javaCode.append("){")
-      if (type != null) javaCode.append("return ")
-      javaCode.append(name).append('(')
-      newParams.joinTo(javaCode) { it.javaExpr() }
+      returnStatementJava(newParams, javaCode, type, name)
       if (newParams.isNotEmpty()) javaCode.append(',')
       defaults.asReversed().joinTo(javaCode)
       javaCode.append(");}").append(eol)
     }
+  }
+
+  private fun returnStatementJava(
+      params: List<Param>,
+      javaCode: StringBuilder,
+      type: String?,
+      name: String,
+  ) {
+    params.joinTo(javaCode) { it.javaDefault() }
+    javaCode.append("){")
+    if (type != null) javaCode.append("return ")
+    javaCode.append(name).append('(')
+    params.joinTo(javaCode) { it.javaExpr() }
   }
 
   fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =

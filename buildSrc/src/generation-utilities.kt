@@ -5,50 +5,60 @@ package org.ice1000.gradle
 import org.intellij.lang.annotations.Language
 import org.intellij.lang.annotations.MagicConstant
 
-val strNull = "(byte[]) null"
+const val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
 fun bool(name: String, default: Any? = null) = SimpleParam(name, "boolean", default)
 fun configPtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "JImFontConfig", "ImFontConfig", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "JImFontConfig", "ImFontConfig", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun stylePtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "JImStyle", "ImGuiStyle", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "JImStyle", "ImGuiStyle", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun drawListPtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "JImDrawList", "ImDrawList", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "JImDrawList", "ImDrawList", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun boolPtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "NativeBool", "bool", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun floatPtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "NativeFloat", "float", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun doublePtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+    nullable: Boolean = false,
+) = PointerParam(name, "NativeDouble", "double", if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
 fun texture(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
+    nullable: Boolean = false,
+) = PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
 
 fun intPtr(
     name: String,
-    nullable: Boolean = false) = PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
+    nullable: Boolean = false,
+) = PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
 
 fun int(
     name: String,
     default: Any? = null,
-    annotation: String? = null) = SimpleParam(name, "int", default, annotation.orEmpty())
+    annotation: String? = null,
+) = SimpleParam(name, "int", default, annotation.orEmpty())
 
 fun double(
     name: String,
     default: Any? = null,
-    annotation: String? = null) = SimpleParam(name, "double", default, annotation.orEmpty())
+    annotation: String? = null,
+) = SimpleParam(name, "double", default, annotation.orEmpty())
 
 fun float(name: String, default: Any? = null) = SimpleParam(name, "float", default)
 fun vec2(nameX: String, nameY: String, default: Any? = null) = ImVec2Param(nameX, nameY, default)
@@ -59,11 +69,13 @@ fun size(name: String = "", default: Any? = null) = vec2("width$name", "height$n
 fun pos(name: String = "pos", default: Any? = null) = vec2("${name}X", "${name}Y", default)
 fun string(
     name: String,
-    default: String? = null) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
+    default: String? = null,
+) = StringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
 
 fun stringSized(
     name: String,
-    default: String? = null) = SizedStringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
+    default: String? = null,
+) = SizedStringParam(name, if (default != strNull) "@NotNull" else "@Nullable", default)
 
 fun numSegments(default: Int?) = int("numSegments", default = default)
 val cond = int("condition", "JImCond.Always", "@MagicConstant(valuesFromClass = JImCond.class)")
@@ -120,12 +132,14 @@ data class Fun(
     fun protected(
         name: String,
         type: String?,
-        vararg param: Param) = Fun(name, type, *param).apply { visibility = "protected" }
+        vararg param: Param,
+    ) = Fun(name, type, *param).apply { visibility = "protected" }
 
     fun private(
         name: String,
         type: String?,
-        vararg param: Param) = Fun(name, type, *param).apply { visibility = "private" }
+        vararg param: Param,
+    ) = Fun(name, type, *param).apply { visibility = "private" }
   }
 }
 

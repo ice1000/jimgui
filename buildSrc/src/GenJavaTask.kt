@@ -7,7 +7,7 @@ open class GenJavaTask(
     val className: String,
     val since: String = "v0.1",
     private val packageName: String = "org.ice1000.jimgui",
-    relativePath: String = packageName.replace('.', '/')
+    relativePath: String = packageName.replace('.', '/'),
 ) : DefaultTask() {
   val targetJavaFile = project
       .projectDir
