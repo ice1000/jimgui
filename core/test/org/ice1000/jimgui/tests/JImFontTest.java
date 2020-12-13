@@ -27,15 +27,14 @@ public class JImFontTest {
       fontSize.modifyValue(18);
       JImFontAtlas fonts = imGui.getIO().getFonts();
       fonts.addFontDefault();
-      JImFont fontFromFile = fonts.addFontFromFile("testRes/font/FiraCode-Regular.ttf", 18);
-      System.out.println(fontFromFile.getDebugName());
+      JImFont fontFromFile = fonts.addFontFromFile("core/testRes/font/FiraCode-Regular.ttf", 18);
+      if (fontFromFile.isLoaded()) System.out.println(fontFromFile.getDebugName());
       long latestRefresh = System.currentTimeMillis();
       imGui.initBeforeMainLoop();
       while (!imGui.windowShouldClose()) {
         long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - initialTime > 8000) break;
         long deltaTime = currentTimeMillis - latestRefresh;
-        Thread.sleep(deltaTime / 2);
         if (deltaTime > (long) 15) {
           imGui.initNewFrame();
           JImFont font = imGui.findFont();
@@ -45,6 +44,12 @@ public class JImFontTest {
           } else imGui.text("Not found");
           imGui.dragFloat("Font size", fontSize);
           imGui.showFontSelector("Wtf");
+          imGui.pushFont(imGui.getIO().getFontDefault());
+          imGui.text("Default font");
+          imGui.popFont();
+          imGui.pushFont(fontFromFile);
+          imGui.text("FiraCode font");
+          imGui.popFont();
           imGui.render();
           latestRefresh = currentTimeMillis;
         }

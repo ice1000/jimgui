@@ -52,7 +52,7 @@ public class Sandbox {
     JImGuiUtil.runWithinPer(9000, 10, imGui -> {
       JImFont font = imGui.getFont();
       font.setFallbackChar('*');
-      if (imGui.inputText("WTF", buffer)) ;
+      imGui.inputText("WTF", buffer);
       if (imGui.beginMainMenuBar()) {
         if (imGui.beginMenu("Main", true)) {
           imGui.menuItem("Copy", "Ctrl+C");
@@ -77,7 +77,7 @@ public class Sandbox {
       imGui.dragIntRange2("Wtf", anInt, anInt2);
       imGui.text("Int2 = " + anInt2.accessValue());
       float bizarreValue = (System.currentTimeMillis() - start) / 2000f;
-      imGui.getStyle().setWindowBorderSize(bizarreValue);
+      // imGui.getStyle().setWindowBorderSize(bizarreValue);
       JImVec4 background = imGui.getBackground();
       assertNotNull(background);
       // System.out.print(background);
@@ -105,15 +105,15 @@ public class Sandbox {
       }
       imGui.plotHistogram("Wtf", new float[]{1, 2, 3, 4}, "What?");
       imGui.newLine();
-      font.setFontSize(bizarreValue + 13);
+      // font.setFontSize(bizarreValue + 13);
       JImFontAtlas containerAtlas = font.getContainerAtlas();
       containerAtlas.setFlags(containerAtlas.getFlags() | JImFontAtlasFlags.NoMouseCursors);
       imGui.text(String.valueOf(font.getFontSize()));
       imGui.text(font.getDebugName());
       String inputString = io.getInputString();
       imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
-      if (io.mouseClickedAt(JImMouseButton.Left)) imGui.text("Left is down.");
-      if (io.mouseClickedAt(JImMouseButton.Right)) imGui.text("Right is down.");
+      // if (io.mouseClickedAt(JImMouseButton.Left)) imGui.text("Left is down.");
+      // if (io.mouseClickedAt(JImMouseButton.Right)) imGui.text("Right is down.");
       imGui.text("MousePos: [" + io.getMousePosX() + ", " + io.getMousePosY() + "]");
       imGui.text("MouseDelta: [" + io.getMouseDeltaX() + ", " + io.getMouseDeltaY() + "]");
       if (imGui.button("Click me!")) count.getAndIncrement();

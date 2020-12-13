@@ -26,6 +26,7 @@ allprojects {
       isDeprecation = true
       isWarnings = true
       isDebug = !isCI
+      options.encoding = "UTF-8"
       compilerArgs.add("-Xlint:unchecked")
     }
   }

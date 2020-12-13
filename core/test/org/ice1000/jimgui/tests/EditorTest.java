@@ -17,19 +17,19 @@ public class EditorTest {
     try (JImGui gui = new JImGui()) {
       JImGuiIO io = gui.getIO();
       JImFontAtlas fonts = io.getFonts();
-      String fontPath = EditorTest.class.getResource("/font/sarasa-gothic-sc-regular.ttf").toURI().getPath();
+      // String fontPath = EditorTest.class.getResource("/font/sarasa-gothic-sc-regular.ttf").toURI().getPath();
       int texHeight = 20;
-      JImFont sarasaGothic = fonts.addFontFromFile(fontPath,
-          texHeight,
-          fonts.getGlyphRangesForChineseSimplifiedCommon());
+      // JImFont sarasaGothic = fonts.addFontFromFile(fontPath,
+      //     texHeight,
+      //     fonts.getGlyphRangesForChineseSimplifiedCommon());
       System.out.println(texHeight);
       long lastMovedTime = 0;
       JImStyle style = gui.getStyle();
       style.setItemSpacingX(2f);
       gui.initBeforeMainLoop();
       while (!gui.windowShouldClose()) {
-        long deltaTime = (long) (io.getDeltaTime() * 1000);
-        Thread.sleep(LIMIT - deltaTime < 0 ? 0 : (LIMIT - deltaTime));
+        // long deltaTime = (long) (io.getDeltaTime() * 1000);
+        // Thread.sleep(LIMIT - deltaTime < 0 ? 0 : (LIMIT - deltaTime));
         gui.initNewFrame();
         char[] inputString = io.getInputChars();
         io.clearInputCharacters();
