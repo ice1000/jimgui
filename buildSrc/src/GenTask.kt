@@ -147,17 +147,9 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
     javaCode.javadoc(capitalName, comment).append("  ").append(visibility)
     if (isStatic(params)) {
       javaCode.append(" final ").append(type(type)).append(' ').append(name).append('(')
-      returnStatementJava(params, javaCode, type, name)
+      methodBodyJava(params, javaCode, type, name)
       javaCode.append(");}").append(eol)
-      if (params.any { param -> param is StringParam && param !is SizedStringParam && param.default == null }) {
-        javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
-        params.joinTo(javaCode) { it.javaDefaultStr() }
-        javaCode.append("){")
-        if (type != null) javaCode.append("return ")
-        javaCode.append(name).append('(')
-        params.joinTo(javaCode) { it.javaExprStr() }
-        javaCode.append(");}").append(eol)
-      }
+      stringParamExtraCare(params, javaCode, capitalName, comment, type, name)
       javaCode.append("  protected static native ")
     } else javaCode.append(" static native ")
     javaCode.append(type(type)).append(' ').append(name).append('(')
@@ -173,14 +165,39 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
       defaults += default
       javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
       val newParams = params.dropLast(index + 1)
-      returnStatementJava(newParams, javaCode, type, name)
+      methodBodyJava(newParams, javaCode, type, name)
       if (newParams.isNotEmpty()) javaCode.append(',')
       defaults.asReversed().joinTo(javaCode)
+      javaCode.append(");}").append(eol)
+      stringParamExtraCare(newParams, javaCode, capitalName, comment, type, name, defaults)
+    }
+  }
+
+  private fun stringParamExtraCare(
+      params: List<Param>,
+      javaCode: StringBuilder,
+      capitalName: String,
+      comment: String?,
+      type: String?,
+      name: String,
+      defaults: List<String>? = null,
+  ) {
+    if (params.any { param -> param is StringParam && param !is SizedStringParam && param.default == null }) {
+      javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
+      params.joinTo(javaCode) { it.javaDefaultStr() }
+      javaCode.append("){")
+      if (type != null) javaCode.append("return ")
+      javaCode.append(name).append('(')
+      params.joinTo(javaCode) { it.javaExprStr() }
+      if (defaults != null) {
+        javaCode.append(",")
+        defaults.asReversed().joinTo(javaCode)
+      }
       javaCode.append(");}").append(eol)
     }
   }
 
-  private fun returnStatementJava(
+  private fun methodBodyJava(
       params: List<Param>,
       javaCode: StringBuilder,
       type: String?,
