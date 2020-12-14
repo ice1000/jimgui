@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Implement and test `NativeString`
++ Generate `inputText`, `inputTextMultiline` and `inputTextWithHint`!
+
 ## v0.12.0
 
 + Link CoreFoundation on macOS
