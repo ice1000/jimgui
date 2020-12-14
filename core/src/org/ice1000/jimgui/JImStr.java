@@ -15,7 +15,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @since 0.9
  */
 public final class JImStr {
-  public final byte[] bytes;
+  public final byte @NotNull [] bytes;
 
   public JImStr(@NotNull String source) {
     bytes = getBytes(source);

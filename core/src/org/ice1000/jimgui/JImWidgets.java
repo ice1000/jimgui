@@ -42,6 +42,9 @@ public abstract class JImWidgets extends JImGuiGen {
   private static native boolean inputText(
       final byte @NotNull [] label, byte @NotNull [] buffer, final int bufferSize, int flags);
 
+  private static native boolean inputTextMutable(
+      final byte @NotNull [] label, long stringPtr, int flags);
+
   private static native boolean menuItem(
       final byte @NotNull [] label, final byte @Nullable [] shortcut, boolean selected, boolean enabled);
 
@@ -70,6 +73,12 @@ public abstract class JImWidgets extends JImGuiGen {
   public void textColored(@NotNull JImVec4 color, @NotNull String text) {
     pushStyleColor(JImStyleColors.Text, color);
     textUnformatted(text);
+    popStyleColor();
+  }
+
+  public void textColored(@NotNull JImVec4 color, @NotNull JImStr text) {
+    pushStyleColor(JImStyleColors.Text, color);
+    textUnformatted(text.bytes);
     popStyleColor();
   }
 
@@ -175,6 +184,34 @@ public abstract class JImWidgets extends JImGuiGen {
   }
 
   /**
+   * @param label        label text
+   * @param values       plot values
+   * @param valuesOffset offset in [values]
+   * @param valuesLength length in [values]
+   * @param overlayText  tooltip text when plot is hovered
+   */
+  public void plotLines(
+      @NotNull JImStr label,
+      float @NotNull [] values,
+      int valuesOffset,
+      int valuesLength,
+      @NotNull JImStr overlayText,
+      float scaleMin,
+      float scaleMax,
+      float graphWidth,
+      float graphHeight) {
+    plotLines(label.bytes,
+        values,
+        valuesOffset,
+        valuesLength,
+        overlayText.bytes,
+        scaleMin,
+        scaleMax,
+        graphWidth,
+        graphHeight);
+  }
+
+  /**
    * @param label  label text
    * @param values plot values
    */
@@ -241,6 +278,27 @@ public abstract class JImWidgets extends JImGuiGen {
         valuesOffset,
         valuesLength,
         getBytes(overlayText),
+        scaleMin,
+        scaleMax,
+        graphWidth,
+        graphHeight);
+  }
+
+  public void plotHistogram(
+      @NotNull JImStr label,
+      float @NotNull [] values,
+      int valuesOffset,
+      int valuesLength,
+      @NotNull JImStr overlayText,
+      float scaleMin,
+      float scaleMax,
+      float graphWidth,
+      float graphHeight) {
+    plotHistogram(label.bytes,
+        values,
+        valuesOffset,
+        valuesLength,
+        overlayText.bytes,
         scaleMin,
         scaleMax,
         graphWidth,
@@ -324,6 +382,28 @@ public abstract class JImWidgets extends JImGuiGen {
   }
 
   public boolean inputText(@NotNull JImStr label, byte @NotNull [] buffer) {
+    return inputText(label, buffer, JImInputTextFlags.None);
+  }
+
+  public boolean inputText(
+      @NotNull String label,
+      @NotNull NativeString buffer,
+      @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
+    return inputTextMutable(getBytes(label), buffer.nativeObjectPtr, flags);
+  }
+
+  public boolean inputText(
+      @NotNull JImStr label,
+      @NotNull NativeString buffer,
+      @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
+    return inputTextMutable(label.bytes, buffer.nativeObjectPtr, flags);
+  }
+
+  public boolean inputText(@NotNull String label, @NotNull NativeString buffer) {
+    return inputText(label, buffer, JImInputTextFlags.None);
+  }
+
+  public boolean inputText(@NotNull JImStr label, @NotNull NativeString buffer) {
     return inputText(label, buffer, JImInputTextFlags.None);
   }
 

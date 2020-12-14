@@ -329,7 +329,7 @@ JavaCritical_org_ice1000_jimgui_JImWidgets_inputText(
     Ptr<jbyte> buffer,
     jint bufferLen,
     jint flags
-    ) -> jboolean {
+) -> jboolean {
   auto ret = ImGui::InputText(STR_J2C(label), PTR_J2C(char, buffer), static_cast<size_t>(bufferLen), flags);
   return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
 }
@@ -349,6 +349,20 @@ Java_org_ice1000_jimgui_JImWidgets_inputText(
   __release(Byte, label)
   __release(Byte, buffer)
   return ret;
+}
+
+JNIEXPORT jboolean JNICALL
+JavaCritical_org_ice1000_jimgui_JImWidgets_inputTextMutable(jint, Ptr<jbyte> label, jlong nativeObjectPtr, jint flags) {
+  auto ret = ImGui::InputText(STR_J2C(label), PTR_J2C(std::string, nativeObjectPtr), flags);
+  return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_org_ice1000_jimgui_JImWidgets_inputTextMutable(JNIEnv *env, jclass, jbyteArray _label, jlong nativeObjectPtr, jint flags) {
+  __get(Byte, label)
+  auto ret = JavaCritical_org_ice1000_jimgui_JImWidgets_inputTextMutable(-1, label, nativeObjectPtr, flags);
+  __release(Byte, label)
+  return static_cast<jboolean>(ret ? JNI_TRUE : JNI_FALSE);
 }
 
 JNIEXPORT auto JNICALL
