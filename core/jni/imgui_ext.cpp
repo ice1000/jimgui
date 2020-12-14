@@ -5,21 +5,6 @@
 #include <imgui_ext.h>
 #include <imgui_internal.h>
 
-static int InputTextCallbackStdString(ImGuiInputTextCallbackData* data) {
-  if (data->EventFlag == ImGuiInputTextFlags_CallbackResize) {
-    // Resize string callback
-    std::string* str = (std::string*)data->UserData;
-    IM_ASSERT(data->Buf == str->c_str());
-    str->resize(data->BufTextLen);
-    data->Buf = (char*)str->c_str();
-  }
-}
-
-auto ImGui::InputText(const char* label, std::string* str, ImGuiInputTextFlags flags) -> bool {
-    flags |= ImGuiInputTextFlags_CallbackResize;
-    return InputText(label, (char*)str->c_str(), str->capacity() + 1, flags, InputTextCallbackStdString, (void*)str);
-}
-
 auto ImGui::LineTo(ComVec2 delta, ComVec4 color, const float thickness) -> void {
 	ImGuiWindow *window = GetCurrentWindow();
 	if (window->SkipItems) return;
