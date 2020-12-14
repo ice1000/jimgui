@@ -73,7 +73,7 @@ public abstract class JImWidgets extends JImGuiGen {
     popStyleColor();
   }
 
-  @Contract(value = " -> fail", pure = true) protected final void alreadyDisposed() {
+  @Contract(value = " -> fail", pure = true) protected final <T> T alreadyDisposed() {
     throw new IllegalStateException("Native object is nullptr.");
   }
 

@@ -114,20 +114,17 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   }
 
   @Contract(pure = true) public @NotNull JImGuiIO getIO() {
-    if (null == io) alreadyDisposed();
-    return io;
+    return null == io ? alreadyDisposed() : io;
   }
 
   @Contract(pure = true) public @NotNull JImStyle getStyle() {
     JImStyle style = findStyle();
-    if (null == style) alreadyDisposed();
-    return style;
+    return null == style ? alreadyDisposed() : style;
   }
 
   @Contract(pure = true) public @NotNull JImFont getFont() {
     JImFont font = findFont();
-    if (null == font) alreadyDisposed();
-    return font;
+    return null == font ? alreadyDisposed() : font;
   }
 
   /**
@@ -142,8 +139,7 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
 
   @Contract(pure = true) public @NotNull JImDrawList getWindowDrawList() {
     @Nullable JImDrawList windowDrawList = findWindowDrawList();
-    if (null == windowDrawList) alreadyDisposed();
-    return windowDrawList;
+    return null == windowDrawList ? alreadyDisposed() : windowDrawList;
   }
 
   /**
@@ -158,8 +154,7 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
 
   @Contract(pure = true) public @NotNull JImDrawList getForegroundDrawList() {
     @Nullable JImDrawList windowDrawList = findForegroundDrawList();
-    if (null == windowDrawList) alreadyDisposed();
-    return windowDrawList;
+    return null == windowDrawList ? alreadyDisposed() : windowDrawList;
   }
 
   /**
