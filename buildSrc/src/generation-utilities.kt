@@ -13,6 +13,7 @@ fun fontPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImFo
 fun stylePtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImStyle", "ImGuiStyle", nullable)
 fun drawListPtr(name: String, nullable: Boolean = false) = PointerParam(name, "JImDrawList", "ImDrawList", nullable)
 fun boolPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeBool", "bool", nullable)
+fun stringPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeString", "std::string", nullable)
 fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeFloat", "float", nullable)
 fun doublePtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", nullable)
 
@@ -248,7 +249,8 @@ const val CXX_PREFIX = """///
 #endif
 
 #include <imgui.h>
-#include "imgui_ext.h"
+#include <imgui_stdlib.h>
+#include <imgui_ext.h>
 #include "basics.hpp"
 #include "overloads_helper.hpp"
 #ifdef __cplusplus

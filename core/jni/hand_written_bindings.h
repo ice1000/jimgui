@@ -5,7 +5,6 @@
 #include <imgui.h>
 #include <cstring>
 #include "basics.hpp"
-#include <imgui_stdlib.h>
 
 #include <org_ice1000_jimgui_JImVec4.h>
 #include <org_ice1000_jimgui_MutableJImVec4.h>
@@ -161,9 +160,6 @@ JavaCritical_org_ice1000_jimgui_JImWidgets_inputText(
     jint bufferLen,
     jint flags
 ) -> jboolean;
-
-JNIEXPORT jboolean JNICALL
-JavaCritical_org_ice1000_jimgui_JImWidgets_inputTextMutable(jint, Ptr<jbyte> label, jlong nativeObjectPtr, jint flags);
 
 #define XY_ACCESSOR(Property) \
 JNIEXPORT auto JNICALL \

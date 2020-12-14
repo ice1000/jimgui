@@ -260,6 +260,17 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
           double("stepFast", default = 0),
           string("format", default = "DOUBLE_FMT"),
           flags("InputText", default = "None")),
+      Fun("inputText", "boolean", label,
+          stringPtr("value"),
+          flags("InputText", default = "None")),
+      Fun("inputTextMultiline", "boolean", label,
+          stringPtr("value"),
+          size(default = "0,0"),
+          flags("InputText", default = "None")),
+      Fun("inputTextWithHint", "boolean", label,
+          string("hint"),
+          stringPtr("value"),
+          flags("InputText", default = "None")),
 
       // Widgets: Sliders
       Fun("sliderFloat", "boolean", label,

@@ -42,9 +42,6 @@ public abstract class JImWidgets extends JImGuiGen {
   private static native boolean inputText(
       final byte @NotNull [] label, byte @NotNull [] buffer, final int bufferSize, int flags);
 
-  private static native boolean inputTextMutable(
-      final byte @NotNull [] label, long stringPtr, int flags);
-
   private static native boolean menuItem(
       final byte @NotNull [] label, final byte @Nullable [] shortcut, boolean selected, boolean enabled);
 
@@ -382,28 +379,6 @@ public abstract class JImWidgets extends JImGuiGen {
   }
 
   public boolean inputText(@NotNull JImStr label, byte @NotNull [] buffer) {
-    return inputText(label, buffer, JImInputTextFlags.None);
-  }
-
-  public boolean inputText(
-      @NotNull String label,
-      @NotNull NativeString buffer,
-      @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
-    return inputTextMutable(getBytes(label), buffer.nativeObjectPtr, flags);
-  }
-
-  public boolean inputText(
-      @NotNull JImStr label,
-      @NotNull NativeString buffer,
-      @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
-    return inputTextMutable(label.bytes, buffer.nativeObjectPtr, flags);
-  }
-
-  public boolean inputText(@NotNull String label, @NotNull NativeString buffer) {
-    return inputText(label, buffer, JImInputTextFlags.None);
-  }
-
-  public boolean inputText(@NotNull JImStr label, @NotNull NativeString buffer) {
     return inputText(label, buffer, JImInputTextFlags.None);
   }
 
