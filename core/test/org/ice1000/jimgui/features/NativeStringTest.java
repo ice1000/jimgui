@@ -6,8 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.ice1000.jimgui.util.JImGuiUtil.EMPTY_BYTES;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class NativeStringTest {
   @BeforeClass public static void setup() {
@@ -37,6 +36,16 @@ public class NativeStringTest {
     assertEquals('A', string.charAt(0));
     string.setCharAt(0, 'B');
     assertEquals('B', string.charAt(0));
+    string.deallocateNativeObject();
+  }
+
+  @Test public void clearText() {
+    NativeString string = new NativeString();
+    string.append('A');
+    assertEquals(1, string.length());
+    assertEquals('A', string.charAt(0));
+    string.clear();
+    assertTrue(string.isEmpty());
     string.deallocateNativeObject();
   }
 

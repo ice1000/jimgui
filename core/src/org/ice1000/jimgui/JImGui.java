@@ -281,12 +281,12 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   }
 
   /** Should be called after drawing all widgets */
-  public void render() {
+  @Contract public void render() {
     render(nativeObjectPtr, background.nativeObjectPtr);
   }
 
   /** Should be called before drawing all widgets */
-  public void initNewFrame() {
+  @Contract public void initNewFrame() {
     initNewFrame(nativeObjectPtr);
   }
 
