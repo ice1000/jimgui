@@ -20,4 +20,30 @@ public class NativeStringTest {
     assertArrayEquals(EMPTY_BYTES, string.toBytes());
     string.deallocateNativeObject();
   }
+
+  @Test public void appendOneChar() {
+    NativeString string = new NativeString();
+    string.append('A');
+    assertEquals(1, string.length());
+    assertEquals('A', string.charAt(0));
+    assertEquals("A", string.toString());
+    string.deallocateNativeObject();
+  }
+
+  @Test public void appendTwoChars() {
+    NativeString string = new NativeString();
+    string.append('X');
+    string.append('Y');
+    assertEquals(2, string.length());
+    assertEquals('X', string.charAt(0));
+    assertEquals('Y', string.charAt(1));
+    assertEquals("XY", string.toString());
+    NativeString subSequence01 = string.subSequence(0, 1);
+    assertEquals("X", subSequence01.toString());
+    NativeString subSequence12 = string.subSequence(1, 2);
+    assertEquals("Y", subSequence12.toString());
+    subSequence01.deallocateNativeObject();
+    subSequence12.deallocateNativeObject();
+    string.deallocateNativeObject();
+  }
 }

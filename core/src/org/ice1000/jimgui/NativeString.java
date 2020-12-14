@@ -44,6 +44,10 @@ public class NativeString implements CharSequence, DeallocatableObject {
     appendChar(nativeObjectPtr, chr);
   }
 
+  @Contract public void append(char chr) {
+    appendChar(nativeObjectPtr, (byte) chr);
+  }
+
   @Override @Contract(pure = true) public char charAt(int position) {
     return (char) byteAt(nativeObjectPtr, position);
   }
