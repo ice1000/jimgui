@@ -5,6 +5,8 @@
 + New functions: `pushFont`
 + Adapt official TableFlags changes
 + Allow deallocating native types multiple times
++ Generate overloads for `JImStr`
++ Download imgui_std for `NativeString` in the future
 
 ## v0.11.3
 

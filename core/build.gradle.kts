@@ -94,6 +94,8 @@ val downloadImgui = tasks.register<Download>("downloadImgui") {
   src("$imguiCoding/imstb_rectpack.h")
   src("$imguiCoding/imstb_textedit.h")
   src("$imguiCoding/imstb_truetype.h")
+  src("$imguiCoding/misc/cpp/imgui_stdlib.cpp")
+  src("$imguiCoding/misc/cpp/imgui_stdlib.h")
   src("$github/nothings/stb/master/stb_image.h")
   dest(imguiDir)
   overwrite(false)
