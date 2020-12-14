@@ -12,6 +12,8 @@ import java.util.function.LongSupplier;
  * @since v0.1
  */
 public interface JImGuiUtil {
+  byte @NotNull [] EMPTY_BYTES = new byte[0];
+
   /** defined in C++ float.h */
   float FLT_MAX = 3.402823466e+38F;
   /**

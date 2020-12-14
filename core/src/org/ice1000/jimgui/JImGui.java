@@ -1,8 +1,8 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
-import org.ice1000.jimgui.flag.JImTabItemFlags;
 import org.ice1000.jimgui.flag.JImInputTextFlags;
+import org.ice1000.jimgui.flag.JImTabItemFlags;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.ApiStatus;
@@ -10,8 +10,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static org.ice1000.jimgui.util.JImGuiUtil.FLT_MAX;
-import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
+import static org.ice1000.jimgui.util.JImGuiUtil.*;
 
 /**
  * @author ice1000
@@ -282,8 +281,20 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
     popStyleColor();
   }
 
+  public void textDisabled(@NotNull JImStr text) {
+    long styleNativeObjectPtr = getStyleNativeObjectPtr();
+    if (styleNativeObjectPtr == 0) alreadyDisposed();
+    pushStyleColor(JImStyleColors.Text, JImStyle.getColor0(styleNativeObjectPtr, JImStyleColors.TextDisabled));
+    textUnformatted(text.bytes);
+    popStyleColor();
+  }
+
   public final void progressBar(float fraction, @Nullable String overlay) {
     progressBar(fraction, -1, 0, getBytes(overlay));
+  }
+
+  public final void progressBar(float fraction, @Nullable JImStr overlay) {
+    progressBar(fraction, -1, 0, overlay != null ? overlay.bytes : EMPTY_BYTES);
   }
 
   /**
@@ -545,6 +556,17 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
     return menuItem(getBytes(label), getBytes(shortcut), selected, enabled);
   }
 
+  /**
+   * @param label    label text
+   * @param shortcut displayed for convenience but not processed by ImGui at the moment
+   * @param selected like checkbox
+   * @param enabled  if not, will be grey
+   * @return true when activated.
+   */
+  public boolean menuItem(@NotNull JImStr label, @Nullable JImStr shortcut, boolean selected, boolean enabled) {
+    return menuItem(label.bytes, shortcut != null ? shortcut.bytes : EMPTY_BYTES, selected, enabled);
+  }
+
   public boolean beginTabItem(@NotNull String label, @MagicConstant(flagsFromClass = JImTabItemFlags.class) int flags) {
     return beginTabItem(getBytes(label), 0, flags);
   }
@@ -611,7 +633,18 @@ public class JImGui extends JImGuiGen implements DeallocatableObject {
     return inputText(getBytes(label), buffer, buffer.length, flags);
   }
 
+  public boolean inputText(
+      @NotNull JImStr label,
+      byte @NotNull [] buffer,
+      @MagicConstant(flagsFromClass = JImInputTextFlags.class) int flags) {
+    return inputText(label.bytes, buffer, buffer.length, flags);
+  }
+
   public boolean inputText(@NotNull String label, byte @NotNull [] buffer) {
+    return inputText(label, buffer, JImInputTextFlags.None);
+  }
+
+  public boolean inputText(@NotNull JImStr label, byte @NotNull [] buffer) {
     return inputText(label, buffer, JImInputTextFlags.None);
   }
 
