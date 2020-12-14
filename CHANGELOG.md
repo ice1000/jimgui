@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.12.0
+
 + Link CoreFoundation on macOS
 + Tweak code style, use 2-spaces instead of tabs
 + New functions: `pushFont`
