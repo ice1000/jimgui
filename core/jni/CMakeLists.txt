@@ -82,13 +82,13 @@ set(ALL_LIBRARIES
 		imgui/imgui_demo.cpp
 		${IMGUI_IMPL}
 		javah
-		generated_imgui.cpp
-		generated_imgui_io.cpp
-		generated_imgui_font.cpp
-		generated_imgui_font_atlas.cpp
-		generated_imgui_font_config.cpp
-		generated_imgui_draw_list.cpp
-		generated_imgui_style.cpp
+		gen/generated_imgui.cpp
+		gen/generated_imgui_io.cpp
+		gen/generated_imgui_font.cpp
+		gen/generated_imgui_font_atlas.cpp
+		gen/generated_imgui_font_config.cpp
+		gen/generated_imgui_draw_list.cpp
+		gen/generated_imgui_style.cpp
 		hand_written_bindings.h
 		hand_written_bindings.cpp
 		overloads_helper.cpp

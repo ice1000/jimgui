@@ -20,6 +20,7 @@ abstract class GenTask(
     val `targetC++File` = project
         .projectDir
         .resolve("jni")
+        .resolve("gen")
         .resolve("generated_$`c++FileSuffix`.cpp")
         .absoluteFile
     targetJavaFile.parentFile.mkdirs()

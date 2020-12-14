@@ -165,7 +165,7 @@ val msbuildWin64 = tasks.register<CxxCompile>("msbuildWin64") {
 
 val clearGenerated = tasks.register<Delete>("clearGenerated") {
   group = cleanGroup
-  delete(projectDir.resolve("gen"), javahDir, *jni.listFiles { f: File -> f.name.startsWith("generated") }.orEmpty())
+  delete(projectDir.resolve("gen"), javahDir, jni.resolve("gen"))
 }
 
 val clearCMake = tasks.register<Delete>("clearCMake") {
