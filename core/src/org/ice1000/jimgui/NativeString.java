@@ -40,6 +40,10 @@ public class NativeString implements CharSequence, DeallocatableObject {
     return length(nativeObjectPtr);
   }
 
+  @Contract public void clear() {
+    clear(nativeObjectPtr);
+  }
+
   @Contract public void append(byte chr) {
     appendChar(nativeObjectPtr, chr);
   }
@@ -86,7 +90,9 @@ public class NativeString implements CharSequence, DeallocatableObject {
 
   private static native void setByteAt(long nativeObjectPtr, int position, byte newValue);
 
-  private static native byte length(long nativeObjectPtr);
+  private static native int length(long nativeObjectPtr);
+
+  private static native void clear(long nativeObjectPtr);
 
   private static native long substring(long nativeObjectPtr, int start, int end);
 
