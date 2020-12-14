@@ -30,6 +30,16 @@ public class NativeStringTest {
     string.deallocateNativeObject();
   }
 
+  @Test public void modifyOneChar() {
+    NativeString string = new NativeString();
+    string.append('A');
+    assertEquals(1, string.length());
+    assertEquals('A', string.charAt(0));
+    string.setCharAt(0, 'B');
+    assertEquals('B', string.charAt(0));
+    string.deallocateNativeObject();
+  }
+
   @Test public void appendTwoChars() {
     NativeString string = new NativeString();
     string.append('X');

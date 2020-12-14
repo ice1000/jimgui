@@ -52,6 +52,14 @@ public class NativeString implements CharSequence, DeallocatableObject {
     return (char) byteAt(nativeObjectPtr, position);
   }
 
+  @Contract public void setByteAt(int position, byte newValue) {
+    setByteAt(nativeObjectPtr, position, newValue);
+  }
+
+  @Contract public void setCharAt(int position, char newValue) {
+    setByteAt(nativeObjectPtr, position, (byte) newValue);
+  }
+
   @Override public @NotNull NativeString subSequence(int start, int end) {
     return new NativeString(substring(nativeObjectPtr, start, end));
   }
@@ -75,6 +83,8 @@ public class NativeString implements CharSequence, DeallocatableObject {
   private static native void deallocateNativeObject0(long nativeObjectPtr);
 
   private static native byte byteAt(long nativeObjectPtr, int position);
+
+  private static native void setByteAt(long nativeObjectPtr, int position, byte newValue);
 
   private static native byte length(long nativeObjectPtr);
 

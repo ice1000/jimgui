@@ -149,6 +149,12 @@ JavaCritical_org_ice1000_jimgui_NativeString_byteAt(jlong nativeObjectPtr, jint 
   return nativeObject->at(at);
 }
 
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_NativeString_setByteAt(jlong nativeObjectPtr, jint at, jbyte newValue) {
+  auto nativeObject = PTR_J2C(std::string, nativeObjectPtr);
+  nativeObject->at(at) = newValue;
+}
+
 JNIEXPORT jbyte JNICALL
 JavaCritical_org_ice1000_jimgui_NativeString_length(jlong nativeObjectPtr) {
   auto nativeObject = PTR_J2C(std::string, nativeObjectPtr);
@@ -190,6 +196,11 @@ Java_org_ice1000_jimgui_NativeString_deallocateNativeObject0(JNIEnv *, jclass, j
 JNIEXPORT jbyte JNICALL
 Java_org_ice1000_jimgui_NativeString_byteAt(JNIEnv *, jclass, jlong nativeObjectPtr, jint at) {
   return JavaCritical_org_ice1000_jimgui_NativeString_byteAt(nativeObjectPtr, at);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_NativeString_setByteAt(JNIEnv *, jclass, jlong nativeObjectPtr, jint at, jbyte newValue) {
+  JavaCritical_org_ice1000_jimgui_NativeString_setByteAt(nativeObjectPtr, at, newValue);
 }
 
 JNIEXPORT jbyte JNICALL

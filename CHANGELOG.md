@@ -2,6 +2,7 @@
 
 + Implement and test `NativeString`
 + Generate `inputText`, `inputTextMultiline` and `inputTextWithHint`!
++ Delete deprecated functions for platform windows
 
 ## v0.12.0
 
