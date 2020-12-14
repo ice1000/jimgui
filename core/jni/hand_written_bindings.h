@@ -12,6 +12,7 @@
 #include <org_ice1000_jimgui_JImFont.h>
 #include <org_ice1000_jimgui_JImFontAtlas.h>
 #include <org_ice1000_jimgui_JImGui.h>
+#include <org_ice1000_jimgui_JImWidgets.h>
 #include <org_ice1000_jimgui_JImStyle.h>
 
 #ifndef WIN32
@@ -55,7 +56,7 @@ ALLOCATE_AND_DEALLOCATE_H(JImFontAtlas)
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
-		jint pathLen, Ptr<jbyte> path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong;
+    jint pathLen, Ptr<jbyte> path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong;
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(jlong nativeObjectPtr) -> jlong;
@@ -109,48 +110,56 @@ JIMVEC4_SETTER(w, W)
 #undef JIMVEC4_SETTER
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_menuItem(jint labelLen,
-                                                Ptr<jbyte> label,
-                                                jint shortcutLen,
-                                                Ptr<jbyte> shortcut,
-                                                jboolean selected,
-                                                jboolean enabled) -> jboolean;
+JavaCritical_org_ice1000_jimgui_JImWidgets_menuItem(
+    jint labelLen,
+    Ptr<jbyte> label,
+    jint shortcutLen,
+    Ptr<jbyte> shortcut,
+    jboolean selected,
+    jboolean enabled
+) -> jboolean;
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_plotLines(jint labelLen,
-                                                 Ptr<jbyte> label,
-                                                 jint valuesLen,
-                                                 Ptr<jfloat> values,
-                                                 jint valuesOffset,
-                                                 jint valuesLength,
-                                                 jint overlayTextLen,
-                                                 Ptr<jbyte> overlayText,
-                                                 jfloat scaleMin,
-                                                 jfloat scaleMax,
-                                                 jfloat graphWidth,
-                                                 jfloat graphHeight);
+JavaCritical_org_ice1000_jimgui_JImWidgets_plotLines(
+    jint labelLen,
+    Ptr<jbyte> label,
+    jint valuesLen,
+    Ptr<jfloat> values,
+    jint valuesOffset,
+    jint valuesLength,
+    jint overlayTextLen,
+    Ptr<jbyte> overlayText,
+    jfloat scaleMin,
+    jfloat scaleMax,
+    jfloat graphWidth,
+    jfloat graphHeight
+);
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_plotHistogram(jint labelLen,
-                                                     Ptr<jbyte> label,
-                                                     jint valuesLen,
-                                                     Ptr<jfloat> values,
-                                                     jint valuesOffset,
-                                                     jint valuesLength,
-                                                     jint overlayTextLen,
-                                                     Ptr<jbyte> overlayText,
-                                                     jfloat scaleMin,
-                                                     jfloat scaleMax,
-                                                     jfloat graphWidth,
-                                                     jfloat graphHeight);
+JavaCritical_org_ice1000_jimgui_JImWidgets_plotHistogram(
+    jint labelLen,
+    Ptr<jbyte> label,
+    jint valuesLen,
+    Ptr<jfloat> values,
+    jint valuesOffset,
+    jint valuesLength,
+    jint overlayTextLen,
+    Ptr<jbyte> overlayText,
+    jfloat scaleMin,
+    jfloat scaleMax,
+    jfloat graphWidth,
+    jfloat graphHeight
+);
 
-JNIEXPORT auto  JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_inputText(jint labelLen,
-                                                 Ptr<jbyte> label,
-                                                 jint bufferLen_,
-                                                 Ptr<jbyte> buffer,
-                                                 jint bufferLen,
-                                                 jint flags) -> jboolean;
+JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImWidgets_inputText(
+    jint labelLen,
+    Ptr<jbyte> label,
+    jint bufferLen_,
+    Ptr<jbyte> buffer,
+    jint bufferLen,
+    jint flags
+) -> jboolean;
 
 #define XY_ACCESSOR(Property) \
 JNIEXPORT auto JNICALL \
