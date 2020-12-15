@@ -32,6 +32,11 @@ if (WIN32)
 		list(APPEND TARGET_LINK_LIBS ${DIRECTX_D3DX9_LIBRARIES})
 
 	endif ()
+
+	if (MSVC)
+		add_definitions(-D_USE_MATH_DEFINES)
+		add_definitions(-DMSVC)
+	endif ()
 else ()
 	find_package(OpenGL REQUIRED)
 	find_package(PkgConfig REQUIRED)

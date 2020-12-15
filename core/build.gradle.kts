@@ -10,6 +10,7 @@ plugins {
 
 val jni = projectDir.resolve("jni").absoluteFile
 val imguiDir = jni.resolve("imgui")
+val fdDir = jni.resolve("fd")
 val implDir = jni.resolve("impl")
 val `cmake-build-win64` = jni.resolve("cmake-build-win64")
 val `cmake-build` = jni.resolve("cmake-build")
@@ -80,6 +81,7 @@ val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
 val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
+val imguiFD = "$github/aiekick/ImGuiFileDialog/master"
 val imguiExamples = "$imguiCoding/backends"
 
 val downloadImgui = tasks.register<Download>("downloadImgui") {
@@ -121,6 +123,17 @@ val downloadImplGL = tasks.register<Download>("downloadImplGL") {
   src("$github/covscript/covscript-imgui/master/include/GL/gl3w.h")
   src("$github/covscript/covscript-imgui/master/include/GL/glcorearb.h")
   dest(implDir.resolve("GL"))
+  overwrite(false)
+}
+
+val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
+  group = downloadGroup
+  src("$imguiFD/CustomFont.h")
+  src("$imguiFD/CustomFont.cpp")
+  src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.h")
+  src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.cpp")
+  src("$github/tronkko/dirent/blob/master/include/dirent.h")
+  dest(fdDir)
   overwrite(false)
 }
 
@@ -175,7 +188,7 @@ val clearCMake = tasks.register<Delete>("clearCMake") {
 
 val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
   group = cleanGroup
-  delete(imguiDir, implDir)
+  delete(imguiDir, implDir, fdDir)
 }
 
 downloadAll.configure {
