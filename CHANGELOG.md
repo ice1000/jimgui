@@ -4,6 +4,7 @@
 + Generate `inputText`, `inputTextMultiline` and `inputTextWithHint`!
 + Delete deprecated functions for platform windows
 + Improve `plotLines` and `plotHistogram`
++ Implement simple support for `JImFileDialog` based on https://github.com/aiekick/ImGuiFileDialog
 
 ## v0.12.0
 
