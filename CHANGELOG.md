@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.13.0
+
 + Implement and test `NativeString`
 + Generate `inputText`, `inputTextMultiline` and `inputTextWithHint`!
 + Delete deprecated functions for platform windows
