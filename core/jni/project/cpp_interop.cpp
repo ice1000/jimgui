@@ -2,8 +2,6 @@
 /// Created by ice1000 on 18-5-14.
 ///
 
-#include "basics.hpp"
-
 #include <string>
 #include <org_ice1000_jimgui_NativeBool.h>
 #include <org_ice1000_jimgui_NativeString.h>
@@ -12,6 +10,8 @@
 #include <org_ice1000_jimgui_NativeDouble.h>
 #include <org_ice1000_jimgui_NativeLong.h>
 #include <org_ice1000_jimgui_NativeShort.h>
+
+#include "basics.hpp"
 
 #ifndef WIN32
 #pragma clang diagnostic push
