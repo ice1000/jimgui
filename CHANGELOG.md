@@ -3,6 +3,7 @@
 + Implement and test `NativeString`
 + Generate `inputText`, `inputTextMultiline` and `inputTextWithHint`!
 + Delete deprecated functions for platform windows
++ Improve `plotLines` and `plotHistogram`
 
 ## v0.12.0
 

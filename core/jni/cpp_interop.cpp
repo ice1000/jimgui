@@ -133,8 +133,10 @@ Java_org_ice1000_jimgui_NativeBool_deallocateNativeObject0(JNIEnv *, jclass, jlo
 }
 
 JNIEXPORT jlong JNICALL
-JavaCritical_org_ice1000_jimgui_NativeString_allocateNativeObject() {
-  return PTR_C2J(new std::string());
+JavaCritical_org_ice1000_jimgui_NativeString_allocateNativeObject(jint initialCapacity) {
+  auto str = new std::string();
+  str->reserve(initialCapacity);
+  return PTR_C2J(str);
 }
 
 JNIEXPORT void JNICALL
@@ -190,8 +192,8 @@ JavaCritical_org_ice1000_jimgui_NativeString_appendChar(jlong nativeObjectPtr, j
 }
 
 JNIEXPORT jlong JNICALL
-Java_org_ice1000_jimgui_NativeString_allocateNativeObject(JNIEnv *, jclass) {
-  return JavaCritical_org_ice1000_jimgui_NativeString_allocateNativeObject();
+Java_org_ice1000_jimgui_NativeString_allocateNativeObject(JNIEnv *, jclass, jint initialCapacity) {
+  return JavaCritical_org_ice1000_jimgui_NativeString_allocateNativeObject(initialCapacity);
 }
 
 JNIEXPORT void JNICALL

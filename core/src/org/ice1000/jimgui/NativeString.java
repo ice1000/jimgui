@@ -16,7 +16,11 @@ public class NativeString implements CharSequence, DeallocatableObject {
   long nativeObjectPtr;
 
   @Contract public NativeString() {
-    this(allocateNativeObject());
+    this(16);
+  }
+
+  @Contract public NativeString(int initialCapacity) {
+    this(allocateNativeObject(initialCapacity));
   }
 
   @Contract(pure = true) private NativeString(long nativeObjectPtr) {
@@ -82,7 +86,7 @@ public class NativeString implements CharSequence, DeallocatableObject {
     return new String(toBytes());
   }
 
-  private static native long allocateNativeObject();
+  private static native long allocateNativeObject(int initialCapacity);
 
   private static native void deallocateNativeObject0(long nativeObjectPtr);
 
