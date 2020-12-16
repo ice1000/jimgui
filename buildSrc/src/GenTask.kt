@@ -164,7 +164,7 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
         return
       }
       defaults += default
-      javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
+      javaCode.javadoc(capitalName, comment).append("  public final ").append(type(type)).append(' ').append(name).append('(')
       val newParams = params.dropLast(index + 1)
       methodBodyJava(newParams, javaCode, type, name)
       if (newParams.isNotEmpty()) javaCode.append(',')
@@ -184,7 +184,7 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
       defaults: List<String>? = null,
   ) {
     if (params.any { param -> param is StringParam && param !is SizedStringParam && param.default == null }) {
-      javaCode.javadoc(capitalName, comment).append("  public ").append(type(type)).append(' ').append(name).append('(')
+      javaCode.javadoc(capitalName, comment).append("  public final ").append(type(type)).append(' ').append(name).append('(')
       params.joinTo(javaCode) { it.javaDefaultStr() }
       javaCode.append("){")
       if (type != null) javaCode.append("return ")

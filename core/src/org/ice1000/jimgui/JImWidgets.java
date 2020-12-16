@@ -55,15 +55,6 @@ public abstract class JImWidgets extends JImGuiGen {
     textUnformatted(text.bytes);
   }
 
-  public boolean begin(
-      @NotNull JImStr str, @NotNull NativeBool openPtr, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
-    return begin(str.bytes, openPtr.nativeObjectPtr, flags);
-  }
-
-  public boolean begin(@NotNull JImStr str) {
-    return begin(str.bytes, 0, JImWindowFlags.None);
-  }
-
   public boolean begin(@NotNull JImStr str, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
     return begin(str.bytes, 0, flags);
   }
