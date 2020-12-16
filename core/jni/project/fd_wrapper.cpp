@@ -16,13 +16,13 @@ JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialogP(
 );
 }
 
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *, jclass) {
+JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *, jclass, jfloat fontSize) {
   static const ImWchar icons_ranges[] = {ICON_MIN_IGFD, ICON_MAX_IGFD, 0};
   ImFontConfig icons_config;
   icons_config.MergeMode = true;
   icons_config.PixelSnapH = true;
   ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(
-      FONT_ICON_BUFFER_NAME_IGFD, 15.0f, &icons_config, icons_ranges);
+      FONT_ICON_BUFFER_NAME_IGFD, fontSize, &icons_config, icons_ranges);
 }
 
 JNIEXPORT jboolean JNICALL
@@ -39,7 +39,7 @@ JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialogP(
 
 JNIEXPORT jboolean JNICALL
 Java_org_ice1000_jimgui_JImFileDialog_fileDialogP(
-    JNIEnv *env, jclass,
+    JNIEnv *, jclass,
     jlong stringPtr, jint flags,
     jfloat minSizeX, jfloat minSizeY,
     jfloat maxSizeX, jfloat maxSizeY
