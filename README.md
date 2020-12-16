@@ -17,28 +17,47 @@ Linux Build | Windows Build
 
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
-Features (can be considered as both advantages and disadvantages):
+## Features
+Can be considered as both advantages and disadvantages.
 
-+ Java. It is Java-only with an optional Kotlin DSL wrapper.
-+ **Pure**. It hides everything about rendering behind-the-scene,
-  so you don't need to worry about GLFW, OpenGL or DirectX stuffs
-  (speaking of lwjgl or jogl integration -- see [#18], it's hard).
-+ Usability. It is well-known that dear imgui doesn't have image loading out-of-the-box,
-  but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
-+ Efficiency. This is twofold.
-  + JNI efficiency. It exploits [Critical Native] and it avoids accessing Java from C++.
-    Only arrays and primitive types are passed from Java to C++,
-    and only primitive types are returned.
-  + Optimization for strings. It costs a lot to convert a Java string to C++ `char*`,
-    so there are `NativeString` and `JImStr` for caching.
+### Java
+It is Java-only with an optional Kotlin DSL wrapper.
+
+### Pure
+It hides everything about rendering behind-the-scene,
+so you don't need to worry about GLFW, OpenGL or DirectX stuffs
+(speaking of lwjgl or jogl integration -- see [#18], it's hard).
+
+### Usability
+It is well-known that dear imgui doesn't have image loading out-of-the-box,
+but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
+
+### Efficiency
+This is twofold.
+
++ JNI efficiency. It exploits [Critical Native] and it avoids accessing Java from C++.
+  Only arrays and primitive types are passed from Java to C++,
+  and only primitive types are returned.
++ Optimization for strings. That jimgui by default uses an inefficient way to convert `java.lang.String` into byte arrays that C++ is happy with.
+  You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`,
+  or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
+
+### IDE-friendliness
+
+It exploits [JetBrains annotations], particularly with `MagicConstant`,
+`NotNull`, `Nullable` and `Contract`.
+
+`MagicConstant` annotation enables IntelliJ IDEA to provide completion for `int flags` arguments
+with only the flags needed:
+
+![image](https://user-images.githubusercontent.com/16398479/102420233-9c558d80-403c-11eb-921c-9c68003fe923.png)
 
  [#18]: https://github.com/ice1000/jimgui/issues/18
+ [JetBrains annotations]: https://www.jetbrains.com/help/idea/annotating-source-code.html
 
 This project was created for a code editor and a game engine, both dead.
 
 For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when running applications built with jimgui.
-Note that jimgui uses a not-very-efficient way to convert `java.lang.String` into byte arrays that C++ is happy with.
-You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`, or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
 
 # Demo
 
