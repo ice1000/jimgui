@@ -218,20 +218,21 @@ tasks.withType<JavaExec>().configureEach {
 First you need to make sure you have `cmake` newer than 3.14 and the following software installed:
 
 + For Linux
-	+ `make`
-	+ `pkg-config`
-	+ `libglfw3-dev`
+  + `make`
+  + `pkg-config`
+  + `libglfw3-dev`
 + For Windows (\>= XP)
-	+ Visual Studio 2019 with `msbuild` (needs to be on PATH)
-	+ DirectX 9 Libraries (should be pre-installed on Windows or with Visual Studio)
-	+ [DirectX SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
-+ For Mac OS X
-	+ Everything needed on Linux
-	+ Frameworks including `Cocoa`, `GLUT`, `OpenGL`
-	+ Run with JVM Argument: `-XstartOnFirstThread`
-		+ You can use `export _JAVA_OPTIONS='-XstartOnFirstThread'`.
+  + Visual Studio 2019 with `msbuild` (needs to be on PATH)
+  + DirectX 9 Libraries (should be pre-installed on Windows or with Visual Studio)
+  + [DirectX SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
++ For macOS
+  + Everything needed on Linux
+  + Frameworks including `Cocoa`, `GLUT`, `OpenGL`
+  + Run with JVM Argument: `-XstartOnFirstThread`
+    (You can use `export _JAVA_OPTIONS='-XstartOnFirstThread'`)
 
-To compile a jar library, run:
+To compile a jar library, run
+(you need to use the developer command prompt for this on Windows):
 
 ```
 $ ./gradlew assemble
