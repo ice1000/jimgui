@@ -132,7 +132,7 @@ val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
   src("$imguiFD/CustomFont.cpp")
   src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.h")
   src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.cpp")
-  src("$github/tronkko/dirent/blob/master/include/dirent.h")
+  src("$github/tronkko/dirent/master/include/dirent.h")
   dest(fdDir)
   overwrite(false)
 }
@@ -192,7 +192,7 @@ val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
 }
 
 downloadAll.configure {
-  dependsOn(downloadImplGL, downloadImpl, downloadImgui)
+  dependsOn(downloadImplGL, downloadImpl, downloadImgui, downloadFileDialog)
 }
 tasks.compileJava {
   options.compilerArgs = listOf("-h", "$javahDir")

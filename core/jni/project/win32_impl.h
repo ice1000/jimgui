@@ -5,7 +5,7 @@
 #ifndef JIMGUI_WIN32_IMPL_H
 #define JIMGUI_WIN32_IMPL_H
 
-#include <imgui/imgui.h>
+#include <imgui.h>
 #include <Windows.h>
 
 namespace jimgui {

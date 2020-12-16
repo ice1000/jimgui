@@ -238,7 +238,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
   ShowWindow(object->hwnd, SW_SHOWDEFAULT);
   UpdateWindow(object->hwnd);
 
-  // Setup Dear ImGui binding
+  // Setup Dear ImGui project
   IMGUI_CHECKVERSION();
   ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
   ImGuiIO &io = ImGui::GetIO();

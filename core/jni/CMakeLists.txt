@@ -13,7 +13,7 @@ if (WIN32)
 	set(USE_WINSDK_HEADERS TRUE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Ox -source-charset:utf-8")
 	if (DX11)
-		set(IMGUI_IMPL win32_impl.cpp impl/imgui_impl_dx11.cpp impl/imgui_impl_win32.cpp dx11_impl.cpp)
+		set(IMGUI_IMPL project/win32_impl.cpp impl/imgui_impl_dx11.cpp impl/imgui_impl_win32.cpp project/dx11_impl.cpp)
 		list(APPEND TARGET_LINK_LIBS d3d11 d3dcompiler dxgi)
 		set(RENDERER_NAME DirectX11)
 	else ()
@@ -27,7 +27,7 @@ if (WIN32)
 		include_directories(${DIRECTX_INCLUDE_DIRS})
 		include_directories("${DXSDK_DIRS}\\Include")
 
-		set(IMGUI_IMPL win32_impl.cpp impl/imgui_impl_dx9.cpp impl/imgui_impl_win32.cpp dx9_impl.cpp)
+		set(IMGUI_IMPL project/win32_impl.cpp impl/imgui_impl_dx9.cpp impl/imgui_impl_win32.cpp project/dx9_impl.cpp)
 		set(TARGET_LINK_LIBS d3d9)
 		list(APPEND TARGET_LINK_LIBS ${DIRECTX_D3DX9_LIBRARIES})
 
@@ -48,7 +48,7 @@ else ()
 		message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
 	endif ()
 
-	set(IMGUI_IMPL impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c glfw_impl.cpp)
+	set(IMGUI_IMPL impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c project/glfw_impl.cpp)
 	include_directories(${GLFW_INCLUDE_DIRS})
 
 	set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
@@ -74,7 +74,7 @@ if (JNI_FOUND)
 	message(STATUS "JNI_LIBRARIES=${JNI_LIBRARIES}")
 endif ()
 
-include_directories(${JNI_INCLUDE_DIRS} . imgui javah impl config)
+include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config)
 
 link_directories(imgui impl)
 
@@ -95,13 +95,13 @@ set(ALL_LIBRARIES
 		gen/generated_imgui_font_config.cpp
 		gen/generated_imgui_draw_list.cpp
 		gen/generated_imgui_style.cpp
-		hand_written_bindings.h
-		hand_written_bindings.cpp
-		overloads_helper.cpp
-		basics.hpp
-		imgui_ext.cpp
-		impl_header.h
-		cpp_interop.cpp)
+		project/hand_written_bindings.h
+		project/hand_written_bindings.cpp
+		project/overloads_helper.cpp
+		project/basics.hpp
+		project/imgui_ext.cpp
+		project/impl_header.h
+		project/cpp_interop.cpp)
 
 message(STATUS "CMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}")
 message(STATUS "TARGET_LINK_LIBS=${TARGET_LINK_LIBS}")

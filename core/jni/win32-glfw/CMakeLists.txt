@@ -24,7 +24,7 @@ find_package(glfw3 REQUIRED)
 if (glfw3_FOUND)
 	message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
 endif ()
-set(IMGUI_IMPL ../impl/imgui_impl_glfw.cpp ../impl/imgui_impl_opengl3.cpp ../impl/gl3w.c ../glfw_impl.cpp)
+set(IMGUI_IMPL ../impl/imgui_impl_glfw.cpp ../impl/imgui_impl_opengl3.cpp ../impl/gl3w.c ../project/glfw_impl.cpp)
 include_directories(${GLFW_INCLUDE_DIRS})
 
 set(TARGET_LINK_LIBS glfw opengl32 pthread gdi32 -static-libgcc -static-libstdc++ -static)
@@ -45,13 +45,13 @@ set(ALL_LIBRARIES
 		../generated_imgui_font_config.cpp
 		../generated_imgui_draw_list.cpp
 		../generated_imgui_style.cpp
-		../hand_written_bindings.h
-		../hand_written_bindings.cpp
-		../overloads_helper.cpp
-		../basics.hpp
-		../imgui_ext.cpp
-		../impl_header.h
-		../cpp_interop.cpp)
+		../project/hand_written_bindings.h
+		../project/hand_written_bindings.cpp
+		../project/overloads_helper.cpp
+		../project/basics.hpp
+		../project/imgui_ext.cpp
+		../project/impl_header.h
+		../project/cpp_interop.cpp)
 if (NOT X86)
 	message(STATUS "64 bit architecture")
 	add_library(jimgui-glfw SHARED ${ALL_LIBRARIES})
