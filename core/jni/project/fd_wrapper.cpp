@@ -14,27 +14,24 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *,
 }
 
 JNIEXPORT jboolean JNICALL
-JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialog(
-    jint keyLen, jbyte *key, jint flags,
+JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialogP(
+    jlong stringPtr, jint flags,
     jfloat minSizeX, jfloat minSizeY,
     jfloat maxSizeX, jfloat maxSizeY
 ) {
   auto ret = igfd::ImGuiFileDialog::Instance()->FileDialog(
-      STR_J2C(key), flags, ImVec2(minSizeX, minSizeY),
+      *PTR_J2C(std::string, stringPtr), flags, ImVec2(minSizeX, minSizeY),
       ImVec2(maxSizeX, maxSizeY));
   return (ret ? JNI_TRUE : JNI_FALSE);
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_ice1000_jimgui_JImFileDialog_fileDialog(
+Java_org_ice1000_jimgui_JImFileDialog_fileDialogP(
     JNIEnv *env, jclass,
-    jbyteArray _key, jint flags,
+    jlong stringPtr, jint flags,
     jfloat minSizeX, jfloat minSizeY,
     jfloat maxSizeX, jfloat maxSizeY
 ) {
-  __get(Byte, key)
-  auto ret = JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialog(
-      -1, key, flags, minSizeX, minSizeY, maxSizeX, maxSizeY);
-  __release(Byte, key)
-  return ret;
+  return JavaCritical_org_ice1000_jimgui_JImFileDialog_fileDialogP(
+      stringPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY);
 }

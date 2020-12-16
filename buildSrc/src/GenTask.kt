@@ -214,6 +214,11 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
   fun StringBuilder.`c++Expr`(name: String, params: List<Param>, type: String?) =
       append(`c++Expr`).append(name.capitalize()).append('(').append(params.`c++Expr`()).append(')').append(boolean(type))
 
+  fun `genC++Fun`(function: Fun, cppCode: StringBuilder) {
+    val (name, type, params) = function
+    `genC++Fun`(params, name, type, cppCode)
+  }
+
   fun `genC++Fun`(
       params: List<Param>,
       name: String,

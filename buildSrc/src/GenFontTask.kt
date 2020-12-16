@@ -15,7 +15,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
   @Language("JAVA", prefix = "class A{", suffix = "}")
   override val userCode = """  @Contract(pure = true)
   public static @NotNull JImFont getInstance(@NotNull JImGui owner) {
-  	return owner.getFont();
+    return owner.getFont();
   }
 
   /** package-private by design */
@@ -66,5 +66,6 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
       "short" to "ConfigDataCount",
       "float" to "Ascent",
       "float" to "Descent",
-      "int" to "MetricsTotalSurface")
+      "int" to "MetricsTotalSurface",
+  )
 }
