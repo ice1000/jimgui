@@ -16,6 +16,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.*;
  * @author ice1000
  * @since v0.12
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public abstract class JImWidgets extends JImGuiGen {
   private static native void plotLines(
       final byte @NotNull [] label,
@@ -223,6 +224,14 @@ public abstract class JImWidgets extends JImGuiGen {
    */
   public void plotHistogram(@NotNull String label, float @NotNull [] values, @NotNull String overlayText) {
     plotHistogram(label, values, 0, values.length, overlayText);
+  }
+
+  /**
+   * @param label  label text
+   * @param values plot values
+   */
+  public void plotHistogram(@NotNull JImStr label, float @NotNull [] values) {
+    plotHistogram(label, values, 0, values.length, JImStr.EMPTY, FLT_MAX, FLT_MAX, 0, 0);
   }
 
   /**

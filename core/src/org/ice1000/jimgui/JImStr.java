@@ -15,10 +15,16 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @since 0.9
  */
 public final class JImStr {
+  public static final @NotNull JImStr EMPTY = new JImStr("");
+
   public final byte @NotNull [] bytes;
 
+  private JImStr(byte @NotNull [] bytes) {
+    this.bytes = bytes;
+  }
+
   public JImStr(@NotNull String source) {
-    bytes = getBytes(source);
+    this(getBytes(source));
   }
 
   @Override public boolean equals(Object o) {
