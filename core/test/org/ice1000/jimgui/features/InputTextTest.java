@@ -35,7 +35,7 @@ public class InputTextTest {
             height.accessValue()));
         imGui.checkbox("Return value of InputTextMultiline", bool);
         imGui.text("Text length: " + multiline.length());
-        if (!multiline.isEmpty()) imGui.text("First char: " + multiline.charAt(0));
+        if (multiline.length() != 0) imGui.text("First char: " + multiline.charAt(0));
         if (imGui.button("Clear multiline text")) multiline.clear();
         if (imGui.button("Upshift the first character")) multiline.setByteAt(0, (byte) (multiline.byteAt(0) + 1));
         if (imGui.button("Downshift the first character")) multiline.setByteAt(0, (byte) (multiline.byteAt(0) - 1));
