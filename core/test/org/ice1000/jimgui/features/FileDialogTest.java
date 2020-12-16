@@ -10,6 +10,7 @@ public class FileDialogTest {
     JniLoader.load();
     try (JImGui imGui = new JImGui()) {
       imGui.initBeforeMainLoop();
+      imGui.getIO().getFonts().addFontDefault();
       JImFileDialog.loadIcons(15);
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
