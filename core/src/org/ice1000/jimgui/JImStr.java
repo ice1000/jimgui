@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -14,9 +15,21 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @author ice1000
  * @since 0.9
  */
-public final class JImStr {
-  public static final @NotNull JImStr EMPTY = new JImStr("");
+public class JImStr {
+  public static class Cached extends JImStr {
+    public final @NotNull String source;
 
+    public Cached(@NotNull String source) {
+      super(source);
+      this.source = source;
+    }
+
+    @Override public @NotNull String toString() {
+      return source;
+    }
+  }
+
+  public static final @NotNull JImStr EMPTY = new JImStr("");
   public final byte @NotNull [] bytes;
 
   private JImStr(byte @NotNull [] bytes) {
@@ -36,5 +49,9 @@ public final class JImStr {
 
   @Override public int hashCode() {
     return Arrays.hashCode(bytes);
+  }
+
+  @Contract(pure = true) @Override public @NotNull String toString() {
+    return new String(bytes);
   }
 }

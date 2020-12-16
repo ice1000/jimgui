@@ -10,12 +10,15 @@ public class FileDialogTest {
     JniLoader.load();
     try (JImGui imGui = new JImGui()) {
       imGui.initBeforeMainLoop();
-      JImFileDialog.loadIcons(16);
+      JImFileDialog.loadIcons(15);
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
+        imGui.showDemoWindow();
         JImFileDialog instance = JImFileDialog.INSTANCE;
-        if (imGui.button("Open dialog"))
-          instance.openDialog("deep_dark_fantasy", "Choose a Java file", ".java", ".");
+        if (imGui.button("Open dialog")) instance.openDialog("deep_dark_fantasy",
+            JImFileDialog.Icons.FOLDER_OPEN + " Choose a Java file",
+            ".java",
+            ".");
         if (instance.fileDialog("deep_dark_fantasy")) {
           if (instance.isOk()) {
             try (NativeString currentPath = instance.currentPath()) {
