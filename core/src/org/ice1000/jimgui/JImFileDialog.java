@@ -18,6 +18,10 @@ public final class JImFileDialog extends JImFileDialogGen {
   private JImFileDialog() {
   }
 
+  public boolean isOk() {
+    return getIsOk();
+  }
+
   public boolean fileDialog(
       @NotNull NativeString key,
       @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {

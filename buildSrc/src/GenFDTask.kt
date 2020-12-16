@@ -7,10 +7,12 @@ open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog") {
 
   override fun `c++`(cppCode: StringBuilder) {
     functions.forEach { `genC++Fun`(it, cppCode) }
+    cppCode.appendln(`c++PrimitiveAccessor`("boolean", "IsOk"))
   }
 
   override fun java(javaCode: StringBuilder) {
     functions.forEach { genJavaFun(javaCode, it) }
+    genJavaPrimitiveMember(javaCode, "IsOk", "", "boolean", false, "", "114514")
   }
 
   private val functions = listOf(
@@ -18,5 +20,6 @@ open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog") {
           windowFlags, size("Min", default = "0, 0"), size("Max", default = "FLT_MAX, FLT_MAX")),
       Fun("openDialog", string("key"), string("title"),
           string("filters"), string("basePath")),
+      Fun("closeDialog", string("key")),
   )
 }
