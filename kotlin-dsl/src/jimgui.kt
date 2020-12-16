@@ -3,6 +3,7 @@
 
 package org.ice1000.jimgui.dsl
 
+import org.ice1000.jimgui.JImGui
 import org.ice1000.jimgui.JImGuiGen.*
 import org.ice1000.jimgui.JImStyleVar
 import org.ice1000.jimgui.NativeBool

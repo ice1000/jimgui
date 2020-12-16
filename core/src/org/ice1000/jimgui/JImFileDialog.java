@@ -23,8 +23,7 @@ public final class JImFileDialog extends JImFileDialogGen {
   }
 
   public boolean fileDialog(
-      @NotNull NativeString key,
-      @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
+      @NotNull NativeString key, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
     return fileDialog(key, flags, 0, 0, FLT_MAX, FLT_MAX);
   }
 
@@ -36,6 +35,24 @@ public final class JImFileDialog extends JImFileDialogGen {
       float maxSizeX,
       float maxSizeY) {
     return fileDialogP(key.nativeObjectPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY);
+  }
+
+  private static native long currentPath0();
+
+  private static native long currentFileName0();
+
+  private static native long filePathName0();
+
+  public @NotNull NativeString currentPath() {
+    return new NativeString(currentPath0());
+  }
+
+  public @NotNull NativeString currentFileName() {
+    return new NativeString(currentFileName0());
+  }
+
+  public @NotNull NativeString filePathName() {
+    return new NativeString(filePathName0());
   }
 
   private static native boolean fileDialogP(

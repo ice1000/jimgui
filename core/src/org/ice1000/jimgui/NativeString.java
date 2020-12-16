@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
  * @author ice1000
  * @since v0.13
  */
-public class NativeString implements CharSequence, DeallocatableObject {
+public final class NativeString implements CharSequence, DeallocatableObject {
   /** package-private by design */
   long nativeObjectPtr;
 
@@ -23,7 +23,7 @@ public class NativeString implements CharSequence, DeallocatableObject {
     this(allocateNativeObject(initialCapacity));
   }
 
-  @Contract(pure = true) private NativeString(long nativeObjectPtr) {
+  @Contract(pure = true) protected NativeString(long nativeObjectPtr) {
     this.nativeObjectPtr = nativeObjectPtr;
   }
 
