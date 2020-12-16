@@ -17,6 +17,7 @@ JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *,
   icons_config.PixelSnapH = true;
   ImGui::GetIO().Fonts->AddFontFromMemoryCompressedBase85TTF(
       FONT_ICON_BUFFER_NAME_IGFD, fontSize, &icons_config, icons_ranges);
+  ImGuiFileDialog::Instance()->SetExtentionInfos(".java", ImVec4(0.0f, 1.0f, 1.0f, 0.9f), ICON_IGFD_FILE_PIC);
 }
 
 JNIEXPORT jboolean JNICALL

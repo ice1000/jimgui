@@ -68,21 +68,21 @@ public final class JImFileDialog extends JImFileDialogGen {
   public interface Icons {
     int MIN = 0xf002;
     int MAX = 0xf1c9;
-    @NotNull JImStr.Cached ADD = new JImStr.Cached("\uf067");
-    @NotNull JImStr.Cached BOOKMARK = new JImStr.Cached("\uf02e");
-    @NotNull JImStr.Cached CANCEL = new JImStr.Cached("\uf00d");
-    @NotNull JImStr.Cached DRIVES = new JImStr.Cached("\uf0a0");
-    @NotNull JImStr.Cached EDIT = new JImStr.Cached("\uf040");
-    @NotNull JImStr.Cached FILE = new JImStr.Cached("\uf15b");
-    @NotNull JImStr.Cached FILE_PIC = new JImStr.Cached("\uf1c5");
-    @NotNull JImStr.Cached FOLDER = new JImStr.Cached("\uf07b");
-    @NotNull JImStr.Cached FOLDER_OPEN = new JImStr.Cached("\uf07c");
-    @NotNull JImStr.Cached LINK = new JImStr.Cached("\uf1c9");
-    @NotNull JImStr.Cached OK = new JImStr.Cached("\uf00c");
-    @NotNull JImStr.Cached REFRESH = new JImStr.Cached("\uf021");
-    @NotNull JImStr.Cached REMOVE = new JImStr.Cached("\uf068");
-    @NotNull JImStr.Cached RESET = new JImStr.Cached("\uf064");
-    @NotNull JImStr.Cached SAVE = new JImStr.Cached("\uf0c7");
-    @NotNull JImStr.Cached SEARCH = new JImStr.Cached("\uf002");
+    @NotNull JImStr ADD = new JImStr.Cached("\uf067");
+    @NotNull JImStr BOOKMARK = new JImStr.Cached("\uf02e");
+    @NotNull JImStr CANCEL = new JImStr.Cached("\uf00d");
+    @NotNull JImStr DRIVES = new JImStr.Cached("\uf0a0");
+    @NotNull JImStr EDIT = new JImStr.Cached("\uf040");
+    @NotNull JImStr FILE = new JImStr.Cached("\uf15b");
+    @NotNull JImStr FILE_PIC = new JImStr.Cached("\uf1c5");
+    @NotNull JImStr FOLDER = new JImStr.Cached("\uf07b");
+    @NotNull JImStr FOLDER_OPEN = new JImStr.Cached("\uf07c");
+    @NotNull JImStr LINK = new JImStr.Cached("\uf1c9");
+    @NotNull JImStr OK = new JImStr.Cached("\uf00c");
+    @NotNull JImStr REFRESH = new JImStr.Cached("\uf021");
+    @NotNull JImStr REMOVE = new JImStr.Cached("\uf068");
+    @NotNull JImStr RESET = new JImStr.Cached("\uf064");
+    @NotNull JImStr SAVE = new JImStr.Cached("\uf0c7");
+    @NotNull JImStr SEARCH = new JImStr.Cached("\uf002");
   }
 }

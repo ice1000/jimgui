@@ -13,7 +13,6 @@ public class FileDialogTest {
       JImFileDialog.loadIcons(15);
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
-        imGui.showDemoWindow();
         JImFileDialog instance = JImFileDialog.INSTANCE;
         if (imGui.button("Open dialog")) instance.openDialog("deep_dark_fantasy",
             JImFileDialog.Icons.FOLDER_OPEN + " Choose a Java file",
