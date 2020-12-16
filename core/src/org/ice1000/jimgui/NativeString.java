@@ -53,7 +53,7 @@ public class NativeString implements CharSequence, DeallocatableObject {
   }
 
   @Contract public void append(char chr) {
-    appendChar(nativeObjectPtr, (byte) chr);
+    append((byte) chr);
   }
 
   @Override @Contract(pure = true) public char charAt(int position) {
@@ -65,7 +65,7 @@ public class NativeString implements CharSequence, DeallocatableObject {
   }
 
   @Contract public void setCharAt(int position, char newValue) {
-    setByteAt(nativeObjectPtr, position, (byte) newValue);
+    setByteAt(position, (byte) newValue);
   }
 
   @Override public @NotNull NativeString subSequence(int start, int end) {
