@@ -29,22 +29,19 @@ include_directories(${GLFW_INCLUDE_DIRS})
 
 set(TARGET_LINK_LIBS glfw opengl32 pthread gdi32 -static-libgcc -static-libstdc++ -static)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security -O3")
-include_directories(${JNI_INCLUDE_DIRS} .. ../imgui ../javah ../impl ../config glfw/include)
+add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG="fd_customization.h")
+include_directories(${JNI_INCLUDE_DIRS} .. ../imgui ../javah ../impl ../config glfw/include ../fd)
 link_directories(../imgui ../impl)
 
+file(GLOB IMGUI_FILES "../imgui/*")
+file(GLOB GENERATED_FILES "../gen/*")
+file(GLOB FILE_DIALOG_FILES "../fd/*")
+
 set(ALL_LIBRARIES
-		../imgui/imgui.cpp
-		../imgui/imgui_widgets.cpp
-		../imgui/imgui_draw.cpp
-		../imgui/imgui_demo.cpp
-		${IMGUI_IMPL}
-		../generated_imgui.cpp
-		../generated_imgui_io.cpp
-		../generated_imgui_font.cpp
-		../generated_imgui_font_atlas.cpp
-		../generated_imgui_font_config.cpp
-		../generated_imgui_draw_list.cpp
-		../generated_imgui_style.cpp
+		${IMGUI_FILES} ${IMGUI_IMPL}
+		${GENERATED_FILES}
+		${FILE_DIALOG_FILES}
+		../project/fd_wrapper.cpp
 		../project/hand_written_bindings.h
 		../project/hand_written_bindings.cpp
 		../project/overloads_helper.cpp

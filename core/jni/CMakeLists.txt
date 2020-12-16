@@ -74,17 +74,22 @@ if (JNI_FOUND)
   message(STATUS "JNI_LIBRARIES=${JNI_LIBRARIES}")
 endif ()
 
-include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config)
+add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG="fd_customization.h")
+
+include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config fd)
 
 link_directories(imgui impl)
 
 file(GLOB IMGUI_FILES "imgui/*")
 file(GLOB GENERATED_FILES "gen/*")
+file(GLOB FILE_DIALOG_FILES "fd/*")
 
 set(ALL_LIBRARIES
     imgui ${IMGUI_FILES} ${IMGUI_IMPL}
 		javah
-		gen ${GENERATED_FILES}
+    gen ${GENERATED_FILES}
+    fd ${FILE_DIALOG_FILES}
+    project/fd_wrapper.cpp
     project/hand_written_bindings.h
     project/hand_written_bindings.cpp
     project/overloads_helper.cpp
