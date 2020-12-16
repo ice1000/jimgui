@@ -50,6 +50,7 @@ val generations = arrayOf(
     g<GenStyleColorsTask>(),
     g<GenDefaultKeysTask>(),
     g<GenFontTask>(),
+    g<GenFDTask>(),
     g<GenFontAtlasTask>(),
     g<GenFontConfigTask>(),
     g<GenDrawListTask>(),

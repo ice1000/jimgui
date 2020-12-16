@@ -9,7 +9,7 @@ abstract class GenTask(
     private val `c++FileSuffix`: String,
     since: String = "v0.1",
 ) : GenJavaTask(className, since), Runnable {
-  private val `prefixC++`
+  protected open val `prefixC++`
     @Language("C++")
     get() = """$CXX_PREFIX
 #include <org_ice1000_jimgui_$className.h>
