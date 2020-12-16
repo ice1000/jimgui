@@ -5,7 +5,7 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
-#include "impl/GL/glcorearb.h" // avoid conflicting with system include
+#include "../impl/GL/glcorearb.h" // avoid conflicting with system include
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 
