@@ -10,7 +10,8 @@
 using igfd::ImGuiFileDialog;
 
 extern "C" {
-JNIEXPORT void JNICALL Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *, jclass, jfloat fontSize) {
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImFileDialog_loadIcons(JNIEnv *, jclass, jfloat fontSize) {
   static const ImWchar icons_ranges[] = {ICON_MIN_IGFD, ICON_MAX_IGFD, 0};
   ImFontConfig icons_config;
   icons_config.MergeMode = true;

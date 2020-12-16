@@ -5,6 +5,7 @@
 + Delete deprecated functions for platform windows
 + Improve `plotLines` and `plotHistogram`
 + Implement simple support for `JImFileDialog` based on https://github.com/aiekick/ImGuiFileDialog
+  + Icons are not yet working -- figuring out why
 
 ## v0.12.0
 

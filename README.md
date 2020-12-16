@@ -17,8 +17,24 @@ Linux Build | Windows Build
 
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
-This project is created for a code editor and a game engine, both not open-sourced currently.
-You can find jimgui on [Maven Repositories](https://mvnrepository.com/artifact/org.ice1000.jimgui).
+Features (can be considered as both advantages and disadvantages):
+
++ Java. It is Java-only with an optional Kotlin DSL wrapper.
++ **Pure**. It hides everything about rendering behind-the-scene,
+  so you don't need to worry about GLFW, OpenGL or DirectX stuffs
+  (speaking of lwjgl or jogl integration -- see [#18], it's hard).
++ Usability. It is well-known that dear imgui doesn't have image loading out-of-the-box,
+  but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
++ Efficiency. This is twofold.
+  + JNI efficiency. It exploits [Critical Native] and it avoids accessing Java from C++.
+    Only arrays and primitive types are passed from Java to C++,
+    and only primitive types are returned.
+  + Optimization for strings. It costs a lot to convert a Java string to C++ `char*`,
+    so there are `NativeString` and `JImStr` for caching.
+
+ [#18]: https://github.com/ice1000/jimgui/issues/18
+
+This project was created for a code editor and a game engine, both dead.
 
 For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when running applications built with jimgui.
 Note that jimgui uses a not-very-efficient way to convert `java.lang.String` into byte arrays that C++ is happy with.
@@ -45,10 +61,14 @@ You can customize the string-to-bytes function yourself by using `org.ice1000.ji
 + [X] Functions to access and modify platform window size/pos
 + [X] Use `MagicConstant` annotation to specify where the constant parameters are from (IntelliJ IDEA understands this!)
   + [X] Generate functions with `MagicConstant` annotation
-+ [X] [Critical Native](https://stackoverflow.com/a/36309652/7083401) function generations
++ [X] [Critical Native] function generations
 + [X] A few extensions, including `emptyButton`, `dragVec4`, `sliderVec4`, `lineTo`, `circle`,
       `bufferingBar`, `dialogBox`, `spinner` (Android style!), `toggleButton` (iOS style!),
       mostly from the issues and the communities.
++ [X] Integration of [aiekick/ImGuiFileDialog] as `JImFileDialog`
+
+ [aiekick/ImGuiFileDialog]: https://github.com/aiekick/ImGuiFileDialog
+ [Critical Native]: https://stackoverflow.com/a/36309652/7083401
 
 ## C++ interoperability
 
@@ -97,6 +117,30 @@ public class Main {
         imGui.text("Hello, World!");
         imGui.render();
         // mostly do nothing here
+      }
+    }
+  }
+}
+```
+
+Kotlin DSL:
+
+```kotlin
+runPer(10) {
+  "Window with Tabs" {
+    tabBar("tab bar id") {
+      tabItem("Tab One") { text("I am in Tab one!") }
+      tabItem("Tab Two") { button("I am in Tab two!") }
+      tabItem("Tab Three") { bulletText("I am in Tab three!") }
+    }
+
+    treeNode("PsiClassBody") {
+      treeNode("PsiConstructor") {
+        text("PsiIdentifier")
+      }
+      treeNode("PsiMethod") {
+        text("PsiAnnotation")
+        text("PsiLeafElement")
       }
     }
   }
