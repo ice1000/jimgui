@@ -133,7 +133,7 @@ val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
   src("$imguiFD/CustomFont.cpp")
   src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.h")
   src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.cpp")
-  src("$github/tronkko/dirent/master/include/dirent.h")
+  if (isWindows) src("$github/tronkko/dirent/master/include/dirent.h")
   dest(fdDir)
   overwrite(false)
 }
