@@ -45,7 +45,7 @@ public class NativeStringTest {
     assertEquals(1, string.length());
     assertEquals('A', string.charAt(0));
     string.clear();
-    assertTrue(string.isEmpty());
+    assertEquals(0, string.length());
     string.deallocateNativeObject();
   }
 
