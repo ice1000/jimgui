@@ -10,6 +10,7 @@
 #include <dinput.h>
 #include <tchar.h>
 #include <winuser.h>
+#include <impl_header.h>
 
 static auto WINDOW_ID = "JIMGUI_WINDOW";
 
