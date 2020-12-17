@@ -14,6 +14,8 @@
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImWidgets.h>
 #include <org_ice1000_jimgui_JImStyle.h>
+#include <org_ice1000_jimgui_NativeBool.h>
+#include <org_ice1000_jimgui_NativeString.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -51,6 +53,8 @@ JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong n
 ALLOCATE_AND_DEALLOCATE_H(JImStyle)
 ALLOCATE_AND_DEALLOCATE_H(JImFontConfig)
 ALLOCATE_AND_DEALLOCATE_H(JImFontAtlas)
+ALLOCATE_AND_DEALLOCATE_H(NativeBool)
+ALLOCATE_AND_DEALLOCATE_H(NativeString)
 
 #undef ALLOCATE_AND_DEALLOCATE_H
 
