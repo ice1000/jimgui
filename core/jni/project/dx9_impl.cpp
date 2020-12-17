@@ -26,8 +26,11 @@
 
 // Data
 static LPDIRECT3DDEVICE9 g_pd3dDevice = nullptr;
-static D3DPRESENT_PARAMETERS g_d3dpp;
-static LPDIRECT3D9 pD3D;
+static D3DPRESENT_PARAMETERS g_d3dpp = {};
+static LPDIRECT3D9 g_pD3D = nullptr;
+bool CreateDeviceD3D(HWND hWnd);
+void CleanupDeviceD3D();
+void ResetDevice();
 
 //extern LRESULT D3DXCreateTextureFromFile(LPDIRECT3DDEVICE9, Ptr<const char>, Ptr<LPDIRECT3DTEXTURE9>);
 
@@ -118,7 +121,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
   auto *object = new NativeObject(width, height, STR_J2C(title));
 
   __release(Byte, title);
-  if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
+  if ((g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
     UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
     return NULL;
   }
@@ -134,13 +137,10 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
   // Present without vsync, maximum unthrottled framerate
 
   // Create the D3DDevice
-  if (pD3D->CreateDevice(
-      D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, object->hwnd,
-      D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp,
-      &g_pd3dDevice) < 0) {
-    pD3D->Release();
-    UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
-    return NULL;
+  if (!CreateDeviceD3D(object->hwnd)) {
+    CleanupDeviceD3D();
+    ::UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
+    return 0;
   }
   return PTR_C2J(object);
 }
@@ -186,9 +186,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
   // Handle loss of D3D9 device
   if (result == D3DERR_DEVICELOST &&
       g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
-    ImGui_ImplDX9_InvalidateDeviceObjects();
-    g_pd3dDevice->Reset(&g_d3dpp);
-    ImGui_ImplDX9_CreateDeviceObjects();
+    ResetDevice();
   }
 }
 
@@ -202,8 +200,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjec
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr) {
   auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
-  if (g_pd3dDevice) g_pd3dDevice->Release();
-  if (pD3D) pD3D->Release();
+  CleanupDeviceD3D();
   DestroyWindow(wc->hwnd);
   UnregisterClass(_T(WINDOW_ID), wc->wc.hInstance);
   delete wc;
@@ -215,14 +212,10 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
   switch (msg) {
     case WM_SIZE:
-      if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED) {
-        ImGui_ImplDX9_InvalidateDeviceObjects();
+      if (g_pd3dDevice != nullptr && wParam != SIZE_MINIMIZED) {
         g_d3dpp.BackBufferWidth = LOWORD(lParam);
         g_d3dpp.BackBufferHeight = HIWORD(lParam);
-        HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
-        if (hr == D3DERR_INVALIDCALL)
-          IM_ASSERT(0);
-        ImGui_ImplDX9_CreateDeviceObjects();
+        ResetDevice();
       }
       return 0;
     case WM_SYSCOMMAND:
@@ -230,10 +223,49 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         return 0;
       break;
     case WM_DESTROY:
-      PostQuitMessage(0);
+      ::PostQuitMessage(0);
       return 0;
   }
-  return DefWindowProc(hWnd, msg, wParam, lParam);
+  return ::DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+bool CreateDeviceD3D(HWND hWnd) {
+  if ((g_pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr)
+    return false;
+
+// Create the D3DDevice
+  ZeroMemory(&g_d3dpp, sizeof(g_d3dpp));
+  g_d3dpp.Windowed = TRUE;
+  g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+  g_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+  g_d3dpp.EnableAutoDepthStencil = TRUE;
+  g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+  g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;           // Present with vsync
+//g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;   // Present without vsync, maximum unthrottled framerate
+  if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp,
+                           &g_pd3dDevice) < 0)
+    return false;
+
+  return true;
+}
+
+void CleanupDeviceD3D() {
+  if (g_pd3dDevice) {
+    g_pd3dDevice->Release();
+    g_pd3dDevice = nullptr;
+  }
+  if (g_pD3D) {
+    g_pD3D->Release();
+    g_pD3D = nullptr;
+  }
+}
+
+void ResetDevice() {
+  ImGui_ImplDX9_InvalidateDeviceObjects();
+  HRESULT hr = g_pd3dDevice->Reset(&g_d3dpp);
+  if (hr == D3DERR_INVALIDCALL)
+    IM_ASSERT(0);
+  ImGui_ImplDX9_CreateDeviceObjects();
 }
 
 #ifndef WIN32

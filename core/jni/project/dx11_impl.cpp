@@ -104,7 +104,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 
 void CreateRenderTarget() {
   ID3D11Texture2D *pBackBuffer;
-  g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID *) &pBackBuffer);
+  g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
   g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
   pBackBuffer->Release();
 }
@@ -119,7 +119,7 @@ void CleanupRenderTarget() {
 HRESULT CreateDeviceD3D(HWND hWnd) {
   // Setup swap chain
   DXGI_SWAP_CHAIN_DESC sd;
-  ZeroMemory(&sd, sizeof(sd));
+  ZeroMemory(&sd, sizeof sd);
   sd.BufferCount = 2;
   sd.BufferDesc.Width = 0;
   sd.BufferDesc.Height = 0;
@@ -142,11 +142,11 @@ HRESULT CreateDeviceD3D(HWND hWnd) {
       nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags, featureLevelArray, 2,
       D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &featureLevel,
       &g_pd3dDeviceContext) != S_OK)
-    return E_FAIL;
+    return false;
 
   CreateRenderTarget();
 
-  return S_OK;
+  return true;
 }
 
 void CleanupDeviceD3D() {
@@ -161,13 +161,9 @@ void CleanupDeviceD3D() {
   }
   if (g_pd3dDevice) {
     g_pd3dDevice->Release();
-    g_pd3dDevice = NULL;
+    g_pd3dDevice = nullptr;
   }
 }
-
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-void dispatchMessage(const NativeObject *object);
 
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
   if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
@@ -176,24 +172,20 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
   switch (msg) {
     case WM_SIZE:
       if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED) {
-        ImGui_ImplDX11_InvalidateDeviceObjects();
         CleanupRenderTarget();
         g_pSwapChain->ResizeBuffers(0, (UINT) LOWORD(lParam), (UINT) HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
         CreateRenderTarget();
-        ImGui_ImplDX11_CreateDeviceObjects();
-      void setupImgui(jlong nativeObjectPtr, jlong fontAtlas);
-
-}
+      }
       return 0;
     case WM_SYSCOMMAND:
       if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
         return 0;
       break;
     case WM_DESTROY:
-      PostQuitMessage(0);
+      ::PostQuitMessage(0);
       return 0;
   }
-  return DefWindowProc(hWnd, msg, wParam, lParam);
+  return ::DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 JNIEXPORT auto JNICALL
