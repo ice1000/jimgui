@@ -86,8 +86,7 @@ file(GLOB FILE_DIALOG_FILES "fd/*")
 
 set(ALL_LIBRARIES
     imgui ${IMGUI_FILES} ${IMGUI_IMPL}
-		javah
-    gen ${GENERATED_FILES}
+    javah gen ${GENERATED_FILES}
     fd ${FILE_DIALOG_FILES}
     project/fd_wrapper.cpp
     project/hand_written_bindings.h
