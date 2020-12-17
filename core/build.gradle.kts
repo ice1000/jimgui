@@ -21,7 +21,7 @@ val res = projectDir.resolve("res")
 fun NativeBuildTask.preconfigure(vararg deps: TaskProvider<*>) {
   jniDir = jni
   resDir = res
-  listOf(fdDir, genDir, imguiDir, implDir, jni.resolve("config")).map(inputs::dir)
+  listOf(fdDir, genDir, imguiDir, implDir, jni.resolve("config"), jni.resolve("project")).map(inputs::dir)
   dependsOn(*deps)
 }
 
