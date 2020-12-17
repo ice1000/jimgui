@@ -1,3 +1,5 @@
+@file:Suppress("PropertyName")
+
 import de.undercouch.gradle.tasks.download.Download
 import org.ice1000.gradle.*
 import org.jetbrains.kotlin.com.intellij.openapi.util.text.StringUtil.escapeStringCharacters

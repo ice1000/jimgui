@@ -55,9 +55,11 @@ auto loadTextureInMemory(Ptr<void> rawData, size_t size, LPDIRECT3DTEXTURE9 &tex
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
-                                                           jclass,
-                                                           jbyteArray _fileName) -> jlongArray {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(
+    Ptr<JNIEnv> env,
+    jclass,
+    jbyteArray _fileName
+) -> jlongArray {
   __get(Byte, fileName)
   LPDIRECT3DTEXTURE9 texture;
   auto success = loadTexture(STR_J2C(fileName), texture);
@@ -79,10 +81,12 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(Ptr<JNIEnv> env,
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
-                                                            jclass,
-                                                            jbyteArray _rawData,
-                                                            jint size) -> jlongArray {
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
+    Ptr<JNIEnv> env,
+    jclass,
+    jbyteArray _rawData,
+    jint size
+) -> jlongArray {
   __get(Byte, rawData)
   LPDIRECT3DTEXTURE9 texture;
   auto success = loadTextureInMemory(PTR_J2C(void, rawData), size, texture);
@@ -104,31 +108,39 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(Ptr<JNIEnv> env,
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width,
-                                                                   jint height,
-                                                                   Ptr<jbyte> title,
-                                                                   jlong anotherWindow) -> jlong {
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
+    jint width,
+    jint height,
+    Ptr<jbyte> title,
+    jlong anotherWindow
+) -> jlong {
   return 0;
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *env,
-                                                     jclass,
-                                                     jint width,
-                                                     jint height,
-                                                     jlong fontAtlas,
-                                                     jbyteArray _title,
-                                                     jlong anotherWindow) -> jlong {
+Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
+    JNIEnv *env,
+    jclass,
+    jint width,
+    jint height,
+    jlong fontAtlas,
+    jbyteArray _title,
+    jlong anotherWindow
+) -> jlong {
   // Create application window
-  auto *wc = new WNDCLASSEX{sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(nullptr), nullptr,
-                            nullptr, nullptr, nullptr, _T(WINDOW_ID), nullptr};
+  auto *wc = new WNDCLASSEX{
+      sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L,
+      GetModuleHandle(nullptr), nullptr,
+      nullptr, nullptr, nullptr, _T(WINDOW_ID), nullptr};
 
   RegisterClassEx(wc);
   auto style = WS_OVERLAPPEDWINDOW;
   __get(Byte, title);
 
-  hwnd = CreateWindow(_T(WINDOW_ID), _T(STR_J2C(title)), style, 100, 100, width, height, nullptr, nullptr,
-                      wc->hInstance, nullptr);
+  hwnd = CreateWindow(
+      _T(WINDOW_ID), _T(STR_J2C(title)), style, 100, 100, width,
+      height, nullptr, nullptr,
+      wc->hInstance, nullptr);
 
   __release(Byte, title);
   if ((pD3D = Direct3DCreate9(D3D_SDK_VERSION)) == nullptr) {
@@ -147,8 +159,10 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(JNIEnv *env,
   // Present without vsync, maximum unthrottled framerate
 
   // Create the D3DDevice
-  if (pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp,
-                         &g_pd3dDevice) < 0) {
+  if (pD3D->CreateDevice(
+      D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd,
+      D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp,
+      &g_pd3dDevice) < 0) {
     pD3D->Release();
     UnregisterClass(_T(WINDOW_ID), wc->hInstance);
     return NULL;
@@ -197,11 +211,14 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
   g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, FALSE);
   g_pd3dDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
   g_pd3dDevice->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-  D3DCOLOR clear_col_dx = D3DCOLOR_RGBA((int) (clear_color->x * 255.0f),
-                                        (int) (clear_color->y * 255.0f),
-                                        (int) (clear_color->z * 255.0f),
-                                        (int) (clear_color->w * 255.0f));
-  g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx, 1.0f, 0);
+  D3DCOLOR clear_col_dx = D3DCOLOR_RGBA(
+      (int) (clear_color->x * 255.0f),
+      (int) (clear_color->y * 255.0f),
+      (int) (clear_color->z * 255.0f),
+      (int) (clear_color->w * 255.0f));
+  g_pd3dDevice->Clear(
+      0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clear_col_dx,
+      1.0f, 0);
   if (g_pd3dDevice->BeginScene() >= 0) {
     ImGui::Render();
     ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
@@ -210,7 +227,8 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
   HRESULT result = g_pd3dDevice->Present(NULL, NULL, NULL, NULL);
 
   // Handle loss of D3D9 device
-  if (result == D3DERR_DEVICELOST && g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
+  if (result == D3DERR_DEVICELOST &&
+      g_pd3dDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET) {
     ImGui_ImplDX9_InvalidateDeviceObjects();
     g_pd3dDevice->Reset(&g_d3dpp);
     ImGui_ImplDX9_CreateDeviceObjects();
@@ -263,7 +281,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObjectPtr) -> float {
-  auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
   RECT rect{};
   GetWindowRect(hwnd, &rect);
   return static_cast<float>(rect.right - rect.left);
@@ -271,7 +288,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObject
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObjectPtr) -> float {
-  auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
   RECT rect{};
   GetWindowRect(hwnd, &rect);
   return static_cast<float>(rect.bottom - rect.top);
@@ -279,7 +295,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObject
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectPtr) -> float {
-  auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
   RECT rect{};
   GetWindowRect(hwnd, &rect);
   return static_cast<float>(rect.left);
@@ -287,7 +302,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectP
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectPtr) -> float {
-  auto wc = reinterpret_cast<Ptr<WNDCLASSEX>> (nativeObjectPtr);
   RECT rect{};
   GetWindowRect(hwnd, &rect);
   return static_cast<float>(rect.top);

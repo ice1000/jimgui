@@ -74,8 +74,6 @@ add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG="fd_customization.h")
 
 include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config fd)
 
-link_directories(imgui impl)
-
 file(GLOB IMGUI_FILES "imgui/*")
 file(GLOB GENERATED_FILES "gen/*")
 file(GLOB FILE_DIALOG_FILES "fd/*")
@@ -85,12 +83,10 @@ set(ALL_LIBRARIES
     javah gen ${GENERATED_FILES}
     fd ${FILE_DIALOG_FILES}
     project/fd_wrapper.cpp
-    project/hand_written_bindings.h
     project/hand_written_bindings.cpp
     project/overloads_helper.cpp
     project/basics.hpp
     project/imgui_ext.cpp
-    project/impl_header.h
     project/cpp_interop.cpp)
 
 message(STATUS "CMAKE_GENERATOR_PLATFORM=${CMAKE_GENERATOR_PLATFORM}")
@@ -107,17 +103,23 @@ endif ()
 if (${64BIT})
   message(STATUS "64 bit architecture")
   add_library(jimgui SHARED ${ALL_LIBRARIES})
-  add_library(jimgui-dx9 SHARED ${DX9_IMPL})
-  add_library(jimgui-dx11 SHARED ${DX11_IMPL})
   target_link_libraries(jimgui ${TARGET_LINK_LIBS})
-  target_link_libraries(jimgui-dx9 ${TARGET_LINK_LIBS_DX9})
-  target_link_libraries(jimgui-dx11 ${TARGET_LINK_LIBS_DX11})
+  if (WIN32)
+    add_library(jimgui-dx9 SHARED ${DX9_IMPL})
+    # add_library(jimgui-dx11 SHARED ${DX11_IMPL})
+    target_link_libraries(jimgui-dx9 jimgui)
+    target_link_libraries(jimgui-dx9 ${TARGET_LINK_LIBS_DX9})
+    # target_link_libraries(jimgui-dx11 ${TARGET_LINK_LIBS_DX11})
+  endif ()
 else ()
   message(STATUS "32 bit architecture")
   add_library(jimgui32 SHARED ${ALL_LIBRARIES})
-  add_library(jimgui32-dx9 SHARED ${DX9_IMPL})
-  add_library(jimgui32-dx11 SHARED ${DX11_IMPL})
   target_link_libraries(jimgui32 ${TARGET_LINK_LIBS})
-  target_link_libraries(jimgui32-dx9 ${TARGET_LINK_LIBS_DX9})
-  target_link_libraries(jimgui32-dx11 ${TARGET_LINK_LIBS_DX11})
+  if (WIN32)
+    add_library(jimgui32-dx9 SHARED ${DX9_IMPL})
+    # add_library(jimgui32-dx11 SHARED ${DX11_IMPL})
+    target_link_libraries(jimgui32-dx9 jimgui32)
+    target_link_libraries(jimgui32-dx9 ${TARGET_LINK_LIBS_DX9})
+    # target_link_libraries(jimgui32-dx11 ${TARGET_LINK_LIBS_DX11})
+  endif ()
 endif ()
