@@ -21,7 +21,9 @@
 //#define IM_ASSERT(_EXPR)  ((void)(_EXPR))     // Disable asserts
 
 //---- Define attributes of all API symbols declarations, e.g. for DLL under Windows.
-//#define IMGUI_API __declspec( dllexport )
+#ifdef WIN32
+#define IMGUI_API __declspec( dllexport )
+#endif
 //#define IMGUI_API __declspec( dllimport )
 
 //---- Don't define obsolete functions/enums names. Consider enabling from time to time after updating to avoid using soon-to-be obsolete function/names.
