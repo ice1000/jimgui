@@ -5,6 +5,7 @@
 
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
+#include "dx_shared.cpp"
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
@@ -18,10 +19,6 @@
 
 #include <d3d11.h>
 #include <d3d11_1.h>
-#include <dinput.h>
-#include <tchar.h>
-
-#include "basics.hpp"
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -52,9 +49,6 @@ static ID3D11Device *g_pd3dDevice = NULL;
 static ID3D11DeviceContext *g_pd3dDeviceContext = NULL;
 static IDXGISwapChain *g_pSwapChain = NULL;
 static ID3D11RenderTargetView *g_mainRenderTargetView = NULL;
-static auto WINDOW_ID = "JIMGUI_WINDOW";
-
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // see https://github.com/Microsoft/DirectXTex/blob/94b06c90728a08c1eab43a190fe0376e8426cb1d/DDSTextureLoader/DDSTextureLoader.cpp#L914-L1145
 JNIEXPORT auto JNICALL
@@ -109,25 +103,6 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
   delete[] ret;
   return _ret;
 }
-
-struct NativeObject {
-  HWND hwnd;
-  MSG msg;
-  WNDCLASSEX wc;
-
-  NativeObject(jint width, jint height, Ptr<const char> title) : wc(
-      {
-          sizeof(WNDCLASSEX),
-          CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-          _T(WINDOW_ID), NULL
-      }) {
-    RegisterClassEx(&wc);
-    ZeroMemory(&msg, sizeof(msg));
-    hwnd = CreateWindow(
-        _T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-        100, 100, width, height, NULL, NULL, wc.hInstance, NULL);
-  };
-};
 
 void CreateRenderTarget() {
   ID3D11Texture2D *pBackBuffer;
@@ -194,6 +169,8 @@ void CleanupDeviceD3D() {
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+void dispatchMessage(const NativeObject *object);
+
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
   if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
     return true;
@@ -220,12 +197,28 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
+    jint width,
+    jint height,
+    Ptr<jbyte> title,
+    jlong anotherWindow
+) -> jlong {
+  return 0;
+}
+
+JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
-    JNIEnv *env, jclass, jint width, jint height, jlong fontAtlas, jbyteArray _title) -> jlong {
+    JNIEnv *env,
+    jclass,
+    jint width,
+    jint height,
+    jlong fontAtlas,
+    jbyteArray _title,
+    jlong anotherWindow) -> jlong {
   __get(Byte, title);
 
   // Create application window
-  auto object = new NativeObject(width, height, reinterpret_cast<Ptr<const char>> (title));
+  auto object = new NativeObject(width, height, STR_J2C(title));
   __release(Byte, title);
   // Initialize Direct3D
   if (CreateDeviceD3D(object->hwnd) < 0) {
@@ -233,57 +226,52 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
     UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
     return NULL;
   }
+  return PTR_C2J(object);
+}
 
-  // Show the window
-  ShowWindow(object->hwnd, SW_SHOWDEFAULT);
-  UpdateWindow(object->hwnd);
-
-  // Setup Dear ImGui project
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
   ImGuiIO &io = ImGui::GetIO();
   (void) io;
   // Enable Keyboard Controls
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  ImGui_ImplDX11_Init(object->hwnd, g_pd3dDevice, g_pd3dDeviceContext);
-  return reinterpret_cast<jlong> (object);
+  ImGui_ImplWin32_Init((PTR_J2C(NativeObject, nativeObjectPtr))->hwnd);
+  ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 }
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_windowShouldClose(JNIEnv *, jclass, jlong nativeObjectPtr) -> jboolean {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-  return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
-}
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initNewFrame(JNIEnv *, jclass, jlong nativeObjectPtr) {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-  while (object->msg.message != WM_QUIT && PeekMessage(&object->msg, NULL, 0U, 0U, PM_REMOVE)) {
-    TranslateMessage(&object->msg);
-    DispatchMessage(&object->msg);
-  }
+void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
+  dispatchMessage(PTR_J2C(NativeObject, nativeObjectPtr));
   ImGui_ImplDX11_NewFrame();
+  ImGui_ImplWin32_NewFrame();
+  ImGui::NewFrame();
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_render(JNIEnv *, jclass, jlong, jlong colorPtr) {
+JavaCritical_org_ice1000_jimgui_JImGui_render(jlong, jlong colorPtr) {
   auto clear_color = reinterpret_cast<Ptr<ImVec4>> (colorPtr);
-// Rendering
+  // Rendering
+  ImGui::Render();
   g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
   g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, (float *) clear_color);
-  ImGui::Render();
   ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
   g_pSwapChain->Present(1, 0); // Present with vsync
-//g_pSwapChain->Present(0, 0); // Present without vsync
+  //g_pSwapChain->Present(0, 0); // Present without vsync
 }
 
 JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_deallocateNativeObjects(JNIEnv *, jclass, jlong nativeObjectPtr) {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateNativeObjects(jlong nativeObjectPtr) {
   ImGui_ImplDX11_Shutdown();
+  ImGui_ImplWin32_Shutdown();
   ImGui::DestroyContext();
+}
 
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_deallocateGuiFramework(jlong nativeObjectPtr) {
+  auto object = PTR_J2C(NativeObject, nativeObjectPtr);
   CleanupDeviceD3D();
   DestroyWindow(object->hwnd);
   UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
