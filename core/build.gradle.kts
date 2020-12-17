@@ -24,6 +24,7 @@ fun NativeBuildTask.preconfigure(vararg deps: TaskProvider<*>) {
   jniDir = jni
   resDir = res
   listOf(fdDir, genDir, imguiDir, implDir, jni.resolve("config"), jni.resolve("project")).map(inputs::dir)
+  inputs.file(jni.resolve("CMakeLists.txt"))
   dependsOn(*deps)
 }
 
