@@ -108,9 +108,9 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
     jclass,
     jint width,
     jint height,
-    jlong fontAtlas,
+    jlong,
     jbyteArray _title,
-    jlong anotherWindow
+    jlong
 ) -> jlong {
   // Create application window
   __get(Byte, title);
@@ -147,13 +147,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
-  ImGuiIO &io = ImGui::GetIO();
-  // Enable Keyboard Controls
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  ImGui_ImplWin32_Init(object->hwnd);
+  setupImgui(nativeObjectPtr, fontAtlas);
   ImGui_ImplDX9_Init(g_pd3dDevice);
 }
 

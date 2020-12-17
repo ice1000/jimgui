@@ -166,11 +166,6 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 }
 
 JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong) {
-  // Do nothing
-}
-
-JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
   gl3wInit();
   auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);

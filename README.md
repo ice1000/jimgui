@@ -129,7 +129,6 @@ public class Main {
     JniLoader.load();
     try (JImGui imGui = new JImGui()) {
       // load fonts, global initializations, etc.
-      imGui.initBeforeMainLoop();
       while (!imGui.windowShouldClose()) {
         // some drawing-unrelated initializations
         // mostly do nothing here

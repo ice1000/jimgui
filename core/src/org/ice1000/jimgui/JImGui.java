@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -189,8 +190,10 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   }
   //endregion
 
+  /** Don't call it. */
+  @Deprecated
+  @ApiStatus.ScheduledForRemoval
   public void initBeforeMainLoop() {
-    initBeforeMainLoop(nativeObjectPtr);
   }
 
   public float getPlatformWindowSizeX() {
@@ -314,8 +317,6 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
       int width, int height, long fontAtlas, byte @NotNull [] title, long anotherWindow);
 
   protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
-
-  private static native void initBeforeMainLoop(long nativeObjectPtr);
 
   private static native void deallocateNativeObjects(long nativeObjectPtr);
 

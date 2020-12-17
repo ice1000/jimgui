@@ -10,25 +10,30 @@ NativeObject::NativeObject(jint width, jint height, Ptr<const char> title) : wc{
     GetModuleHandle(nullptr), nullptr,
     nullptr, nullptr, nullptr, _T(WINDOW_ID),
     nullptr
-} {
+}, msg{} {
   RegisterClassEx(&wc);
   ZeroMemory(&msg, sizeof msg);
   hwnd = CreateWindow(
       _T(WINDOW_ID), _T(title), WS_OVERLAPPEDWINDOW,
-      100, 100, width, height, nullptr, nullptr, wc.hInstance, NULL);
-}
-
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong nativeObjectPtr) {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
-  ShowWindow(object->hwnd, SW_SHOWDEFAULT);
-  UpdateWindow(object->hwnd);
+      100, 100, width, height, nullptr, nullptr, wc.hInstance, nullptr);
 }
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_windowShouldClose(jlong nativeObjectPtr) -> jboolean {
-  auto object = reinterpret_cast<Ptr<NativeObject>> (nativeObjectPtr);
+  auto object = PTR_J2C(NativeObject, nativeObjectPtr);
   return static_cast<jboolean> (object->msg.message == WM_QUIT ? JNI_TRUE : JNI_FALSE);
+}
+
+void setupImgui(jlong nativeObjectPtr, jlong fontAtlas) {
+  auto *object = PTR_J2C(NativeObject, nativeObjectPtr);
+  ShowWindow(object->hwnd, SW_SHOWDEFAULT);
+  UpdateWindow(object->hwnd);
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
+  ImGuiIO &io = ImGui::GetIO();
+  // Enable Keyboard Controls
+  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+  ImGui_ImplWin32_Init(object->hwnd);
 }
 
 void dispatchMessage(NativeObject *object) {

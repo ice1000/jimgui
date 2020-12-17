@@ -18,6 +18,7 @@
 #include <stb_image.h>
 
 #include <d3d11.h>
+#include <WinUser.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -104,14 +105,14 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
 void CreateRenderTarget() {
   ID3D11Texture2D *pBackBuffer;
   g_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID *) &pBackBuffer);
-  g_pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_mainRenderTargetView);
+  g_pd3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &g_mainRenderTargetView);
   pBackBuffer->Release();
 }
 
 void CleanupRenderTarget() {
   if (g_mainRenderTargetView) {
     g_mainRenderTargetView->Release();
-    g_mainRenderTargetView = NULL;
+    g_mainRenderTargetView = nullptr;
   }
 }
 
@@ -138,7 +139,7 @@ HRESULT CreateDeviceD3D(HWND hWnd) {
   D3D_FEATURE_LEVEL featureLevel;
   const D3D_FEATURE_LEVEL featureLevelArray[2] = {D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0,};
   if (D3D11CreateDeviceAndSwapChain(
-      NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, featureLevelArray, 2,
+      nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, createDeviceFlags, featureLevelArray, 2,
       D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &featureLevel,
       &g_pd3dDeviceContext) != S_OK)
     return E_FAIL;
@@ -152,11 +153,11 @@ void CleanupDeviceD3D() {
   CleanupRenderTarget();
   if (g_pSwapChain) {
     g_pSwapChain->Release();
-    g_pSwapChain = NULL;
+    g_pSwapChain = nullptr;
   }
   if (g_pd3dDeviceContext) {
     g_pd3dDeviceContext->Release();
-    g_pd3dDeviceContext = NULL;
+    g_pd3dDeviceContext = nullptr;
   }
   if (g_pd3dDevice) {
     g_pd3dDevice->Release();
@@ -180,7 +181,9 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         g_pSwapChain->ResizeBuffers(0, (UINT) LOWORD(lParam), (UINT) HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
         CreateRenderTarget();
         ImGui_ImplDX11_CreateDeviceObjects();
-      }
+      void setupImgui(jlong nativeObjectPtr, jlong fontAtlas);
+
+}
       return 0;
     case WM_SYSCOMMAND:
       if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
@@ -209,9 +212,9 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
     jclass,
     jint width,
     jint height,
-    jlong fontAtlas,
+    jlong,
     jbyteArray _title,
-    jlong anotherWindow) -> jlong {
+    jlong) -> jlong {
   __get(Byte, title);
 
   // Create application window
@@ -222,24 +225,18 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
   if (CreateDeviceD3D(object->hwnd) < 0) {
     CleanupDeviceD3D();
     UnregisterClass(_T(WINDOW_ID), object->wc.hInstance);
-    return NULL;
+    return 0;
   }
   return PTR_C2J(object);
 }
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas) {
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext(PTR_J2C(ImFontAtlas, fontAtlas));
-  ImGuiIO &io = ImGui::GetIO();
-  (void) io;
-  // Enable Keyboard Controls
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-  ImGui_ImplWin32_Init((PTR_J2C(NativeObject, nativeObjectPtr))->hwnd);
+  setupImgui(nativeObjectPtr, fontAtlas);
   ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
 }
 
-void JNICALL
+JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
   dispatchMessage(PTR_J2C(NativeObject, nativeObjectPtr));
   ImGui_ImplDX11_NewFrame();

@@ -23,10 +23,11 @@ struct NativeObject {
   MSG msg;
   WNDCLASSEX wc;
 
-  NativeObject(jint width, jint height, Ptr<const char> title);;
+  NativeObject(jint width, jint height, Ptr<const char> title);
 };
 
 void dispatchMessage(NativeObject *object);
+void setupImgui(jlong nativeObjectPtr, jlong fontAtlas);
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

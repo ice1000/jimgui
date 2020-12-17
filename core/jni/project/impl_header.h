@@ -35,9 +35,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong color
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas);
 
-JNIEXPORT void JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(jlong nativeObjectPtr);
-
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
     jint width,

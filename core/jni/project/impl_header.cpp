@@ -92,8 +92,3 @@ Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
   __release(Byte, title)
   return ret;
 }
-
-JNIEXPORT void JNICALL
-Java_org_ice1000_jimgui_JImGui_initBeforeMainLoop(JNIEnv *, jclass, jlong nativeObjectPtr) {
-  JavaCritical_org_ice1000_jimgui_JImGui_initBeforeMainLoop(nativeObjectPtr);
-}
