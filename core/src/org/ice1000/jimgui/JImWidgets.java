@@ -50,18 +50,6 @@ public abstract class JImWidgets extends JImGuiGen {
     return begin(str.bytes, 0, flags);
   }
 
-  public void textColored(@NotNull JImVec4 color, @NotNull String text) {
-    pushStyleColor(JImStyleColors.Text, color);
-    textUnformatted(text);
-    popStyleColor();
-  }
-
-  public void textColored(@NotNull JImVec4 color, @NotNull JImStr text) {
-    pushStyleColor(JImStyleColors.Text, color);
-    text(text.bytes);
-    popStyleColor();
-  }
-
   @Contract(value = " -> fail", pure = true) protected final <T> T alreadyDisposed() {
     throw new IllegalStateException("Native object is nullptr.");
   }

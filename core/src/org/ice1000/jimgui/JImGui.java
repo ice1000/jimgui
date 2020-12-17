@@ -217,22 +217,6 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
     setPlatformWindowPos(nativeObjectPtr, newX, newY);
   }
 
-  public void textDisabled(@NotNull String text) {
-    long styleNativeObjectPtr = getStyleNativeObjectPtr();
-    if (styleNativeObjectPtr == 0) alreadyDisposed();
-    pushStyleColor(JImStyleColors.Text, JImStyle.getColor0(styleNativeObjectPtr, JImStyleColors.TextDisabled));
-    textUnformatted(text);
-    popStyleColor();
-  }
-
-  public void textDisabled(@NotNull JImStr text) {
-    long styleNativeObjectPtr = getStyleNativeObjectPtr();
-    if (styleNativeObjectPtr == 0) alreadyDisposed();
-    pushStyleColor(JImStyleColors.Text, JImStyle.getColor0(styleNativeObjectPtr, JImStyleColors.TextDisabled));
-    textUnformatted(text.bytes);
-    popStyleColor();
-  }
-
   public static native void pushID(int intID);
 
   public static native float getWindowPosX();

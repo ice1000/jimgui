@@ -3,7 +3,6 @@
 ///
 
 #include "hand_written_bindings.h"
-#include <string>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -91,8 +90,6 @@ Java_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(JNIEnv *, jclas
 ALLOCATE_AND_DEALLOCATE(ImGuiStyle, JImStyle)
 ALLOCATE_AND_DEALLOCATE(ImFontConfig, JImFontConfig)
 ALLOCATE_AND_DEALLOCATE(ImFontAtlas, JImFontAtlas)
-ALLOCATE_AND_DEALLOCATE(bool, NativeBool)
-ALLOCATE_AND_DEALLOCATE(std::string, NativeString)
 
 #undef ALLOCATE_AND_DEALLOCATE
 
