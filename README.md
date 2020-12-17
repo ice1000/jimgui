@@ -39,8 +39,9 @@ This is twofold.
   Only arrays and primitive types are passed from Java to C++,
   and only primitive types are returned.
 + Optimization for strings. That jimgui by default uses an inefficient way to convert `java.lang.String` into byte arrays that C++ is happy with.
-  You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`,
-  or use the more efficient alternative to `java.lang.String` -- `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
+  You can customize the string-to-bytes function yourself by using `org.ice1000.jimgui.util.JImGuiUtil.setStringToBytes`
+  the default caching `JImGuiUtil.cacheStringToBytes()`, or use the more efficient alternative to `java.lang.String` --
+  `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
 
 ### IDE-friendliness
 

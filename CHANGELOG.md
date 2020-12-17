@@ -1,6 +1,8 @@
 ## Unreleased
 
 + Enable `USE_IMGUI_TABLES` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` back
++ Add bookmarks and extension-info support from file dialog
++ Add `JImGuiUtil.cacheStringToBytes()` from #29
 
 ## v0.13.0
 

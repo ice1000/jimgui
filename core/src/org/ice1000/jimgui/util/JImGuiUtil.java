@@ -3,6 +3,7 @@ package org.ice1000.jimgui.util;
 import org.ice1000.jimgui.JImGui;
 import org.jetbrains.annotations.*;
 
+import java.util.WeakHashMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.LongSupplier;
@@ -13,7 +14,6 @@ import java.util.function.LongSupplier;
  */
 public interface JImGuiUtil {
   byte @NotNull [] EMPTY_BYTES = new byte[0];
-
   /** defined in C++ float.h */
   float FLT_MAX = 3.402823466e+38F;
   /**
@@ -112,6 +112,14 @@ public interface JImGuiUtil {
    */
   static void setStringToBytes(@NotNull Function<@Nullable String, byte @Nullable []> stringToBytes) {
     SharedState.STRING_TO_BYTES = stringToBytes;
+  }
+  /**
+   * The string-to-byte provided in <a href="https://github.com/ice1000/jimgui/issues/29">#29</a>,
+   * by <a href="https://github.com/Mr00Anderson">@Mr00Anderson</a>.
+   */
+  static void cacheStringToBytes() {
+    WeakHashMap<String, byte[]> cachedBytes = new WeakHashMap<>();
+    setStringToBytes(s -> cachedBytes.computeIfAbsent(s, SharedState::getBytesDefaultImpl));
   }
   @Contract(value = "!null -> !null; null -> null", pure = true)
   static byte @Nullable [] getBytes(@Nullable String text) {
