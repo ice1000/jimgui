@@ -1,5 +1,3 @@
-/// TODO
-
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
 #include <win32_impl.h>
@@ -9,8 +7,6 @@
 
 #include <d3d9.h>
 #include <d3dx9tex.h>
-
-#define DIRECTINPUT_VERSION 0x0800
 
 // for Linux editing experience
 #ifndef WIN32
@@ -118,6 +114,7 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
 ) -> jlong {
   // Create application window
   __get(Byte, title);
+  ImGui_ImplWin32_EnableDpiAwareness();
   auto *object = new NativeObject(width, height, STR_J2C(title));
 
   __release(Byte, title);

@@ -32,9 +32,7 @@ public interface JniLoader {
       loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
     } else if (Windows7 || Windows8 || Windows10) {
       loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
-      // TODO: implement and use dx11
-      loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
-      // loadLib(X86 ? "jimgui32-dx11.dll" : "jimgui-dx11.dll");
+      loadLib(X86 ? "jimgui32-dx11.dll" : "jimgui-dx11.dll");
     } else if (OSX) loadLib("libjimgui.dylib");
       // Unsupported OS
     else if (Windows98 || Windows95 || Windows200X)

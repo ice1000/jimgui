@@ -18,14 +18,11 @@
 #include <stb_image.h>
 
 #include <d3d11.h>
-#include <d3d11_1.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #endif
-
-#define DIRECTINPUT_VERSION 0x0800
 
 // for Linux editing experience
 #ifndef WIN32
@@ -218,7 +215,8 @@ Java_org_ice1000_jimgui_JImGui_allocateNativeObjects(
   __get(Byte, title);
 
   // Create application window
-  auto object = new NativeObject(width, height, STR_J2C(title));
+  ImGui_ImplWin32_EnableDpiAwareness();
+  auto *object = new NativeObject(width, height, STR_J2C(title));
   __release(Byte, title);
   // Initialize Direct3D
   if (CreateDeviceD3D(object->hwnd) < 0) {

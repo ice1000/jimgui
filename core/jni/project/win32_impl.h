@@ -5,6 +5,8 @@
 #ifndef JIMGUI_WIN32_IMPL_H
 #define JIMGUI_WIN32_IMPL_H
 
+#define DIRECTINPUT_VERSION 0x0800
+
 #include <imgui_impl_win32.h>
 #include <basics.hpp>
 #include <dinput.h>
