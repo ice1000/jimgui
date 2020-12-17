@@ -97,6 +97,7 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
 + [X] `ImVec4` wrapper with optional mutability
 + [X] `ImTextureID` wrapper with platform-dependent implementations
   + [X] `LPDIRECT3DTEXTURE9` on WindowsXP+
+  + [X] `ID3D11ShaderResourceView*` on Windows7+
   + [X] `GLuint` on MacOS/Linux
 
 ## Backends and platforms
@@ -111,6 +112,9 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
   + [X] with directX9 implementation
     + [X] 32-bit hosted on my laptop
     + [X] 64-bit hosted on my laptop
++ [X] Windows7+ native library with directX11 implementation
+  + [X] 32-bit hosted on my laptop
+  + [X] 64-bit hosted on my laptop
 + [X] MacOS native library with Cocoa, glut as additions to Linux implementation
   + [X] hosted on @newk5 's VM
 
