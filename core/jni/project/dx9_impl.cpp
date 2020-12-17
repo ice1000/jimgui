@@ -65,6 +65,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(
   __init(Long, ret, RET_LEN);
 #undef RET_LEN
   delete[] ret;
+  __release(Long, ret);
   return _ret;
 }
 
@@ -92,6 +93,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
   __init(Long, ret, RET_LEN);
 #undef RET_LEN
   delete[] ret;
+  __release(Long, ret);
   return _ret;
 }
 

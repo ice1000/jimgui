@@ -48,57 +48,111 @@ static ID3D11DeviceContext *g_pd3dDeviceContext = NULL;
 static IDXGISwapChain *g_pSwapChain = NULL;
 static ID3D11RenderTargetView *g_mainRenderTargetView = NULL;
 
+HRESULT initTexture(Ptr<void> imageData, ID3D11ShaderResourceView **texture, int width, int height) {
+  HRESULT hr{S_OK};
+
+  // Create texture
+  D3D11_TEXTURE2D_DESC desc;
+  desc.Width = width;
+  desc.Height = height;
+  desc.MipLevels = 1;
+  desc.ArraySize = 1;
+  desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+  desc.SampleDesc.Count = 1;
+  desc.SampleDesc.Quality = 0;
+  desc.Usage = D3D11_USAGE_DEFAULT;
+  desc.CPUAccessFlags = 0;
+  desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+  desc.MiscFlags = 0;
+
+  size_t bpp = 32;
+  size_t rowPitch = (width * bpp + 7) / 8;
+  size_t imageSize = rowPitch * height;
+
+  D3D11_SUBRESOURCE_DATA initData;
+  initData.pSysMem = imageData;
+  initData.SysMemPitch = static_cast<UINT>(rowPitch);
+  initData.SysMemSlicePitch = static_cast<UINT>(imageSize);
+
+  ID3D11Texture2D* tex = nullptr;
+  hr = g_pd3dDevice->CreateTexture2D(
+      &desc,
+      &initData,
+      &tex);
+  if (SUCCEEDED(hr) && tex) {
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+    srvDesc.Format = desc.Format;
+    srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MipLevels = 1;
+    srvDesc.Texture2D.MostDetailedMip = 0;
+
+    ID3D11ShaderResourceView* localTexture = nullptr;
+    hr = g_pd3dDevice->CreateShaderResourceView(tex, &srvDesc, &localTexture);
+    if (SUCCEEDED(hr) && localTexture)
+      *texture = localTexture;
+    tex->Release();
+  }
+
+  return hr;
+}
+
 // see https://github.com/Microsoft/DirectXTex/blob/94b06c90728a08c1eab43a190fe0376e8426cb1d/DDSTextureLoader/DDSTextureLoader.cpp#L914-L1145
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, jbyteArray _fileName) -> jlongArray {
   __get(Byte, fileName)
-  int width, height, channels;
-  auto *imageData = stbi_load(STR_J2C(fileName), &width, &height, &channels, 4);
+  int channels;
+  int forceChannels = 4;
+  int w, h;
+  auto *imageData = stbi_load(STR_J2C(fileName), &w, &h, &channels, forceChannels);
   __release(Byte, fileName)
-  if (imageData == nullptr) {
-    return nullptr;
-  }
-  D3D11_TEXTURE1D_DESC desc;
-  desc.Width = static_cast<UINT> (width);
-  // desc.Height = static_cast<UINT> (height);
-  desc.MipLevels = static_cast<UINT> (1);
-  desc.ArraySize = static_cast<UINT> (1);
-  desc.BindFlags = static_cast<UINT> (D3D11_BIND_SHADER_RESOURCE);
-  switch (channels) {
-    case 3:
-    case 4:
-      desc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
-      break;
-    default:
-      delete[] imageData;
-      return nullptr;
-  }
-  desc.Usage = D3D11_USAGE_IMMUTABLE;
-  desc.CPUAccessFlags = 0;
-  ID3D11Texture1D *tex = nullptr;
-  ID3D11ShaderResourceView *resourceView = nullptr;
-  HRESULT hr = E_FAIL;
-  hr = g_pd3dDevice->CreateTexture1D(&desc, PTR_J2C(const D3D11_SUBRESOURCE_DATA, imageData), &tex);
-  if (SUCCEEDED(hr) && tex != nullptr) {
-    D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
-    SRVDesc.Format = desc.Format;
-    SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
-    SRVDesc.Texture1D.MipLevels = 1;
-    hr = g_pd3dDevice->CreateShaderResourceView(tex, &SRVDesc, &resourceView);
-    if (FAILED(hr)) {
-      tex->Release();
-      delete[] imageData;
-      return nullptr;
+  ImTextureID texture;
+  if (nullptr != imageData) {
+    ID3D11ShaderResourceView* localTexture = nullptr;
+    if (SUCCEEDED(initTexture(imageData, &localTexture, w, h))) {
+      texture = reinterpret_cast<ImTextureID>(localTexture);
     }
+
+    stbi_image_free(imageData);
   }
-  __release(Byte, fileName)
-  auto ret = new jlong[4];
-  ret[0] = PTR_C2J(resourceView);
-  ret[1] = static_cast<jlong> (width);
-  ret[2] = static_cast<jlong> (height);
-  ret[3] = static_cast<jlong> (channels);
-  __init(Long, ret, 4);
+  auto ret = new jlong[3];
+  ret[0] = PTR_C2J(texture);
+  ret[1] = static_cast<jlong> (w);
+  ret[2] = static_cast<jlong> (h);
+  __init(Long, ret, 3);
   delete[] ret;
+  __release(Long, ret);
+  return _ret;
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
+    Ptr<JNIEnv> env,
+    jclass,
+    jbyteArray _rawData,
+    jint size
+) -> jlongArray {
+  __get(Byte, rawData)
+  int channels;
+  int forceChannels = 4;
+  int w, h;
+  auto *imageData = stbi_load_from_memory(PTR_J2C(stbi_uc, rawData), size, &w, &h, &channels, forceChannels);
+  __release(Byte, rawData)
+  ImTextureID texture;
+  if (nullptr != imageData) {
+    ID3D11ShaderResourceView* localTexture = nullptr;
+    if (SUCCEEDED(initTexture(imageData, &localTexture, w, h))) {
+      texture = reinterpret_cast<ImTextureID>(localTexture);
+    }
+    stbi_image_free(imageData);
+  }
+
+  auto ret = new jlong[3];
+  ret[0] = PTR_C2J(texture);
+  ret[1] = static_cast<jlong> (w);
+  ret[2] = static_cast<jlong> (h);
+  __init(Long, ret, 3);
+  delete[] ret;
+  __release(Long, ret);
   return _ret;
 }
 

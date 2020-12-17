@@ -3,6 +3,7 @@
 + Render with DX11 on Windows7, 8, 10 now.
 + Deprecated `JImGui.initBeforeMainLoop` -- you no longer need to call it.
 + \[Internal] `jimgui[32].dll` is now split into `jimgui[32].dll` and `jimgui[32]-dx9.dll`
++ Fix the constructor of `JImFontConfig`
 
 ## v0.13.1
 

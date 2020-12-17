@@ -46,7 +46,7 @@ public final class JImTextureID {
   }
 
   @Contract("_, null -> fail") private static @NotNull JImTextureID createJImTextureID(
-      @NotNull String errorMessage, @Nullable long[] extractedData) {
+      @NotNull String errorMessage, long @Nullable [] extractedData) {
     if (extractedData == null || extractedData.length != 3 || extractedData[0] == 0)
       throw new IllegalStateException(errorMessage);
     return new JImTextureID(extractedData[0], (int) extractedData[1], (int) extractedData[2]);
@@ -92,7 +92,7 @@ public final class JImTextureID {
    * @return the texture
    * @throws IllegalStateException if native interface cannot create texture
    */
-  public static @NotNull JImTextureID fromBytes(@NotNull byte[] rawData) {
+  public static @NotNull JImTextureID fromBytes(byte @NotNull [] rawData) {
     long[] texture = createTextureFromBytes(rawData, rawData.length);
     return createJImTextureID("Failed to create texture!", texture);
   }
