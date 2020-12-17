@@ -28,6 +28,8 @@ It hides everything about rendering behind-the-scene,
 so you don't need to worry about GLFW, OpenGL or DirectX stuffs
 (speaking of lwjgl or jogl integration -- see [#18], it's hard).
 
+Also, it doesn't separate jars for different platforms. One jar works on all platforms.
+
 ### Usability
 It is well-known that dear imgui doesn't have image loading out-of-the-box,
 but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
@@ -44,7 +46,6 @@ This is twofold.
   `org.ice1000.jimgui.JImStr`, which is supposed to be created as global constants.
 
 ### IDE-friendliness
-
 It exploits [JetBrains annotations], particularly with `MagicConstant`,
 `NotNull`, `Nullable` and `Contract`.
 
