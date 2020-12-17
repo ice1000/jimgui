@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 #include <imgui_impl_dx9.h>
-#include "dx_shared.cpp"
+#include <win32_impl.h>
 
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>

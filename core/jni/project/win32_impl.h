@@ -5,13 +5,25 @@
 #ifndef JIMGUI_WIN32_IMPL_H
 #define JIMGUI_WIN32_IMPL_H
 
-#include <imgui.h>
-#include <Windows.h>
+#include <imgui_impl_win32.h>
+#include <basics.hpp>
+#include <dinput.h>
+#include <tchar.h>
+#include <winuser.h>
 
-namespace jimgui {
-	auto getWindowBounds(HWND hwnd) -> ImVec4;
-	auto setWindowBounds(HWND hwnd, ImVec4) -> void;
-}
+static auto WINDOW_ID = "JIMGUI_WINDOW";
+
+LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+struct NativeObject {
+  HWND hwnd;
+  MSG msg;
+  WNDCLASSEX wc;
+
+  NativeObject(jint width, jint height, Ptr<const char> title);;
+};
+
+void dispatchMessage(NativeObject *object);
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
