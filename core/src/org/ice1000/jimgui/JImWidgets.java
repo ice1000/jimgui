@@ -46,15 +46,6 @@ public abstract class JImWidgets extends JImGuiGen {
   private static native boolean menuItem(
       final byte @NotNull [] label, final byte @Nullable [] shortcut, boolean selected, boolean enabled);
 
-  /** alias to {@link JImGuiGen#textUnformatted(String)} */
-  public void text(@NotNull String text) {
-    textUnformatted(text);
-  }
-
-  public void text(@NotNull JImStr text) {
-    textUnformatted(text.bytes);
-  }
-
   public boolean begin(@NotNull JImStr str, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
     return begin(str.bytes, 0, flags);
   }
@@ -67,7 +58,7 @@ public abstract class JImWidgets extends JImGuiGen {
 
   public void textColored(@NotNull JImVec4 color, @NotNull JImStr text) {
     pushStyleColor(JImStyleColors.Text, color);
-    textUnformatted(text.bytes);
+    text(text.bytes);
     popStyleColor();
   }
 
