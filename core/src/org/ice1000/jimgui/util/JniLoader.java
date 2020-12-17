@@ -25,7 +25,6 @@ public interface JniLoader {
   boolean OSX = "Mac OS X".equals(OsName);
   static void load() {
     if (SharedState.isLoaded) return;
-    String libraryName;
     // Supported OS
     if (Linux) loadLib(X86 ? "libjimgui32.so" : "libjimgui.so");
     else if (WindowsVista || WindowsXP) {
@@ -33,6 +32,7 @@ public interface JniLoader {
       loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
     } else if (Windows7 || Windows8 || Windows10) {
       loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
+      // TODO: implement and use dx11
       loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
       // loadLib(X86 ? "jimgui32-dx11.dll" : "jimgui-dx11.dll");
     } else if (OSX) loadLib("libjimgui.dylib");
