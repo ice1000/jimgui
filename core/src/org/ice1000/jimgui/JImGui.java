@@ -11,7 +11,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.getBytes;
  * @author ice1000
  * @since v0.1
  */
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class JImGui extends JImWidgets implements DeallocatableObject {
   public static final @NotNull String DEFAULT_TITLE = "ImGui window created by JImGui";
   /** package-private by design */
