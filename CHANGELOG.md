@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Enable `USE_IMGUI_TABLES` and `IMGUI_DISABLE_OBSOLETE_FUNCTIONS` back
+
 ## v0.13.0
 
 + Implement and test `NativeString`

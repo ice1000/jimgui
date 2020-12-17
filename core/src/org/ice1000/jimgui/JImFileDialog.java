@@ -73,6 +73,8 @@ public final class JImFileDialog extends JImFileDialogGen {
     @NotNull JImStr CANCEL = new JImStr.Cached("\uf00d");
     @NotNull JImStr DRIVES = new JImStr.Cached("\uf0a0");
     @NotNull JImStr EDIT = new JImStr.Cached("\uf040");
+    @NotNull JImStr CHEVRON_DOWN = new JImStr.Cached("\uf078");
+    @NotNull JImStr CHEVRON_UP = new JImStr.Cached("\uf077");
     @NotNull JImStr FILE = new JImStr.Cached("\uf15b");
     @NotNull JImStr FILE_PIC = new JImStr.Cached("\uf1c5");
     @NotNull JImStr FOLDER = new JImStr.Cached("\uf07b");

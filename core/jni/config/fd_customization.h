@@ -12,8 +12,7 @@
 //#define MAX_FILE_DIALOG_NAME_BUFFER 1024
 //#define MAX_PATH_BUFFER_SIZE 1024
 
-// See https://github.com/aiekick/ImGuiFileDialog/issues/33
-//#define USE_IMGUI_TABLES
+#define USE_IMGUI_TABLES
 
 //#define USE_EXPLORATION_BY_KEYS
 // this mapping by default is for GLFW but you can use another

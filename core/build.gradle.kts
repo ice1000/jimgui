@@ -12,6 +12,7 @@ val jni = projectDir.resolve("jni").absoluteFile
 val imguiDir = jni.resolve("imgui")
 val fdDir = jni.resolve("fd")
 val implDir = jni.resolve("impl")
+val genDir = jni.resolve("gen")
 val `cmake-build-win64` = jni.resolve("cmake-build-win64")
 val `cmake-build` = jni.resolve("cmake-build")
 val javahDir = jni.resolve("javah")
@@ -20,6 +21,7 @@ val res = projectDir.resolve("res")
 fun NativeBuildTask.preconfigure(vararg deps: TaskProvider<*>) {
   jniDir = jni
   resDir = res
+  listOf(fdDir, genDir, imguiDir, implDir, jni.resolve("config")).map(inputs::dir)
   dependsOn(*deps)
 }
 
@@ -179,7 +181,7 @@ val msbuildWin64 = tasks.register<CxxCompile>("msbuildWin64") {
 
 val clearGenerated = tasks.register<Delete>("clearGenerated") {
   group = cleanGroup
-  delete(projectDir.resolve("gen"), javahDir, jni.resolve("gen"))
+  delete(projectDir.resolve("gen"), javahDir, genDir)
 }
 
 val clearCMake = tasks.register<Delete>("clearCMake") {
