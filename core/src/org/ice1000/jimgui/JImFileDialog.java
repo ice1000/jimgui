@@ -13,9 +13,8 @@ import static org.ice1000.jimgui.util.JImGuiUtil.FLT_MAX;
  * @since v0.13.0
  */
 public final class JImFileDialog extends JImFileDialogGen {
-  public static final @NotNull JImFileDialog INSTANCE = new JImFileDialog();
-
-  private JImFileDialog() {
+  public JImFileDialog() {
+    super(allocateNativeObject());
   }
 
   public void setExtensionInfo(@NotNull String filters, @NotNull JImVec4 color) {
@@ -44,6 +43,9 @@ public final class JImFileDialog extends JImFileDialogGen {
       float maxSizeY) {
     return fileDialogP(key.nativeObjectPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY);
   }
+
+  private static native long allocateNativeObject();
+  private static native void deallocateNativeObject(long nativeObjectPtr);
 
   private static native long currentPath0();
 

@@ -4,6 +4,7 @@
 
 #include <imgui.h>
 #include <cstring>
+#include <ImGuiFileDialog.h>
 #include "basics.hpp"
 
 #include <org_ice1000_jimgui_JImVec4.h>
@@ -15,6 +16,7 @@
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImWidgets.h>
 #include <org_ice1000_jimgui_JImStyle.h>
+#include <org_ice1000_jimgui_JImFileDialog.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -52,6 +54,7 @@ JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong n
 ALLOCATE_AND_DEALLOCATE_H(JImStyle)
 ALLOCATE_AND_DEALLOCATE_H(JImFontConfig)
 ALLOCATE_AND_DEALLOCATE_H(JImFontAtlas)
+ALLOCATE_AND_DEALLOCATE_H(JImFileDialog)
 
 #undef ALLOCATE_AND_DEALLOCATE_H
 
