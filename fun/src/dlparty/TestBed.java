@@ -109,8 +109,7 @@ public interface TestBed {
     JniLoader.load();
     try (JImGui imGui = new JImGui(sizeX + 80, sizeY + 120, "FX")) {
       JImStr str = new JImStr("FX");
-      imGui.initBeforeMainLoop();
-      while (!imGui.windowShouldClose()) {
+	    while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.setNextWindowPos(0, 0);
         testBed(imGui, str);

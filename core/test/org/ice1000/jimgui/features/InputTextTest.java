@@ -24,8 +24,7 @@ public class InputTextTest {
          NativeString withHint = new NativeString()) {
       width.modifyValue(300);
       height.modifyValue(200);
-      imGui.initBeforeMainLoop();
-      while (!imGui.windowShouldClose()) {
+	    while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.sliderFloat("Width", width, 100, 500);
         imGui.sliderFloat("Height", height, 100, 300);

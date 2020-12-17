@@ -49,8 +49,7 @@ public class BigCollection {
           new TixyLand(),
           new Guitar(),
           new QuickSortVisualization()).map(Case::new).collect(Collectors.toList());
-      imGui.initBeforeMainLoop();
-      while (!imGui.windowShouldClose()) {
+	    while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         float x = 0, y = 0;
         float windowSizeX = imGui.getPlatformWindowSizeX();

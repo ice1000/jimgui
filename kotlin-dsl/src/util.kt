@@ -14,8 +14,8 @@ package org.ice1000.jimgui.dsl
 inline fun runPer(millis: Long, block: JImGuiBlock) {
   JImGuiContext().use { imGui ->
     var latestRefresh = System.currentTimeMillis()
-    imGui.initBeforeMainLoop()
-    while (!imGui.windowShouldClose()) {
+	  /** Don't call it.  */
+	  while (!imGui.windowShouldClose()) {
       val currentTimeMillis = System.currentTimeMillis()
       val deltaTime = currentTimeMillis - latestRefresh
       Thread.sleep(deltaTime / 2)
@@ -41,8 +41,8 @@ inline fun runPer(millisSupplier: () -> Long, block: JImGuiBlock) {
   JImGuiContext().use { imGui ->
     var latestRefresh = System.currentTimeMillis()
     var millis = millisSupplier()
-    imGui.initBeforeMainLoop()
-    while (!imGui.windowShouldClose()) {
+	  /** Don't call it.  */
+	  while (!imGui.windowShouldClose()) {
       val currentTimeMillis = System.currentTimeMillis()
       val deltaTime = currentTimeMillis - latestRefresh
       Thread.sleep(deltaTime / 2)
@@ -68,8 +68,8 @@ inline fun runPer(millisSupplier: () -> Long, block: JImGuiBlock) {
 inline fun runWithin(millis: Long, block: JImGuiBlock) {
   JImGuiContext().use { imGui ->
     val end = System.currentTimeMillis() + millis
-    imGui.initBeforeMainLoop()
-    while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
+	  /** Don't call it.  */
+	  while (!imGui.windowShouldClose() && System.currentTimeMillis() < end) {
       imGui.initNewFrame()
       block(imGui)
       imGui.render()
@@ -86,8 +86,8 @@ inline fun runWithin(millis: Long, block: JImGuiBlock) {
  */
 inline fun run(block: JImGuiBlock) {
   JImGuiContext().use { imGui ->
-    imGui.initBeforeMainLoop()
-    while (!imGui.windowShouldClose()) {
+	  /** Don't call it.  */
+	  while (!imGui.windowShouldClose()) {
       imGui.initNewFrame()
       block(imGui)
       imGui.render()

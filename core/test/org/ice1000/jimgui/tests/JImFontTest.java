@@ -30,8 +30,7 @@ public class JImFontTest {
       JImFont fontFromFile = fonts.addFontFromFile("core/testRes/font/FiraCode-Regular.ttf", 18);
       if (fontFromFile.isLoaded()) System.out.println(fontFromFile.getDebugName());
       long latestRefresh = System.currentTimeMillis();
-      imGui.initBeforeMainLoop();
-      while (!imGui.windowShouldClose()) {
+	    while (!imGui.windowShouldClose()) {
         long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - initialTime > 8000) break;
         long deltaTime = currentTimeMillis - latestRefresh;

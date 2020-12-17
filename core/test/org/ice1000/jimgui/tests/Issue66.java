@@ -11,8 +11,7 @@ public class Issue66 {
     JImGuiUtil.cacheStringToBytes();
     try (JImGui imgui = new JImGui(); NativeBool bool = new NativeBool()) {
       byte[] b = new byte[100];
-      imgui.initBeforeMainLoop();
-      while (!imgui.windowShouldClose()) {
+	    while (!imgui.windowShouldClose()) {
         imgui.initNewFrame();
         imgui.checkbox("Check to test input, uncheck to test ID", bool);
         if (imgui.button("System.gc()")) System.gc();

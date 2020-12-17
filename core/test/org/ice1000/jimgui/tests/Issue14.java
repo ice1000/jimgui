@@ -20,8 +20,7 @@ public class Issue14 {
           .toURI()
           .getPath(), 18, fonts.getGlyphRangesForChineseSimplifiedCommon());
       long latestRefresh = System.currentTimeMillis();
-      imGui.initBeforeMainLoop();
-      while (!imGui.windowShouldClose()) {
+	    while (!imGui.windowShouldClose()) {
         long currentTimeMillis = System.currentTimeMillis();
         //if (currentTimeMillis - initialTime > 8000) break;
         long deltaTime = currentTimeMillis - latestRefresh;

@@ -13,8 +13,8 @@ fun main() {
   JImGui().use { imGui ->
     var latestRefresh = System.currentTimeMillis()
     val texture = JImTextureID.fromBytes(PlaceHolder::class.java.getResourceAsStream("/pics/ice1000.png").readBytes())
-    imGui.initBeforeMainLoop()
-    while (!imGui.windowShouldClose()) {
+	  /** Don't call it.  */
+	  while (!imGui.windowShouldClose()) {
       val currentTimeMillis = System.currentTimeMillis()
       val deltaTime = currentTimeMillis - latestRefresh
       if (deltaTime > 16.toLong()) {
