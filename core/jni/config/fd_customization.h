@@ -7,6 +7,8 @@
 
 // Fixing a typo
 #define SetExtentionInfos SetExtensionInfo
+#define GetExtentionInfos GetExtensionInfo
+#define ClearExtentionInfos ClearExtensionInfo
 
 // https://github.com/aiekick/ImGuiFileDialog/blob/master/ImGuiFileDialog/ImGuiFileDialogConfig.h
 
