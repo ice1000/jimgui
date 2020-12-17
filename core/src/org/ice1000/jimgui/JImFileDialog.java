@@ -18,6 +18,14 @@ public final class JImFileDialog extends JImFileDialogGen {
   private JImFileDialog() {
   }
 
+  public void setExtensionInfo(@NotNull String filters, @NotNull JImVec4 color) {
+    setExtensionInfo(filters, color, "");
+  }
+
+  public void setExtensionInfo(@NotNull JImStr filters, @NotNull JImVec4 color) {
+    setExtensionInfo(filters, color, JImStr.EMPTY);
+  }
+
   public boolean isOk() {
     return getIsOk();
   }

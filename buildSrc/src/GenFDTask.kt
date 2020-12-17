@@ -15,13 +15,16 @@ open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog") {
     genJavaPrimitiveMember(javaCode, "IsOk", "", "boolean", false, "", "114514")
   }
 
+  private val filters = string("filters")
+  private val key = string("key")
   private val functions = listOf(
-      Fun("fileDialog", "boolean", string("key"),
+      Fun("fileDialog", "boolean", key,
           windowFlags, size("Min", default = "0, 0"), size("Max", default = "FLT_MAX, FLT_MAX")),
-      Fun("openDialog", string("key"), string("title"),
-          string("filters"), string("basePath")),
-      Fun("openModal", string("key"), string("title"),
-          string("filters"), string("basePath")),
-      Fun("closeDialog", string("key")),
+      Fun("openDialog", key, string("title"),
+          filters, string("basePath")),
+      Fun("openModal", key, string("title"),
+          filters, string("basePath")),
+      Fun("closeDialog", key),
+      Fun("setExtensionInfo", filters, vec4("color"), string("text")),
   )
 }

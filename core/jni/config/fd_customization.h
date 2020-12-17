@@ -5,6 +5,9 @@
 #ifndef JIMGUI_FD_CUSTOMIZATION_H
 #define JIMGUI_FD_CUSTOMIZATION_H
 
+// Fixing a typo
+#define SetExtentionInfos SetExtensionInfo
+
 // https://github.com/aiekick/ImGuiFileDialog/blob/master/ImGuiFileDialog/ImGuiFileDialogConfig.h
 
 // uncomment and modify defines under for customize ImGuiFileDialog

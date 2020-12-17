@@ -3,6 +3,8 @@ package org.ice1000.jimgui.features;
 import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.util.JniLoader;
 
+import java.awt.*;
+
 public class FileDialogTest {
   public static void main(String... args) {
     JniLoader.load();
@@ -14,10 +16,11 @@ public class FileDialogTest {
       JImStr title = new JImStr(JImFileDialog.Icons.FOLDER_OPEN + " Choose a Java file");
       JImStr filter = new JImStr(".java");
       JImStr pwd = new JImStr(".");
+      JImFileDialog instance = JImFileDialog.INSTANCE;
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.checkbox("Use modal dialog", modal);
-        JImFileDialog instance = JImFileDialog.INSTANCE;
+        instance.setExtensionInfo(".java", JImVec4.fromAWT(Color.ORANGE), "[Java]");
         if (imGui.button("Open dialog")) {
           if (modal.accessValue()) instance.openModal(key, title, filter, pwd);
           else instance.openDialog(key, title, filter, pwd);
