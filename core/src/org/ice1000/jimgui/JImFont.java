@@ -1,6 +1,5 @@
 package org.ice1000.jimgui;
 
-import org.ice1000.jimgui.flag.JImFontAtlasFlags;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

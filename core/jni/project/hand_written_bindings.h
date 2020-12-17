@@ -11,6 +11,7 @@
 #include <org_ice1000_jimgui_JImGuiIO.h>
 #include <org_ice1000_jimgui_JImFont.h>
 #include <org_ice1000_jimgui_JImFontAtlas.h>
+#include <org_ice1000_jimgui_JImFontConfig.h>
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImWidgets.h>
 #include <org_ice1000_jimgui_JImStyle.h>

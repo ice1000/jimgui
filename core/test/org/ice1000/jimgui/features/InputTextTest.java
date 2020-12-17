@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.features;
 
 import org.ice1000.jimgui.*;
+import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
 
@@ -13,6 +14,7 @@ public class InputTextTest {
 
   public static void main(String... args) {
     JniLoader.load();
+    JImGuiUtil.cacheStringToBytes();
     try (JImGui imGui = new JImGui();
          NativeString multiline = new NativeString();
          NativeFloat width = new NativeFloat();
@@ -21,6 +23,12 @@ public class InputTextTest {
          NativeString withHint = new NativeString()) {
       width.modifyValue(300);
       height.modifyValue(200);
+      try (JImFontConfig config = new JImFontConfig()) {
+        JImFontAtlas fontAtlas = imGui.getIO().getFonts();
+        fontAtlas.clearFonts();
+        config.setSizePixels(26);
+        fontAtlas.addDefaultFont(config);
+      }
       imGui.getStyle().scaleAllSizes(2);
 	    while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
