@@ -111,6 +111,9 @@ JIMVEC4_SETTER(w, W)
 #undef JIMVEC4_SETTER
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImWidgets_testButton(jlong stringPtr) -> jboolean;
+
+JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImWidgets_menuItem(
     jint labelLen,
     Ptr<jbyte> label,

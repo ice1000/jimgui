@@ -40,6 +40,12 @@ public abstract class JImWidgets extends JImGuiGen {
       float graphWidth,
       float graphHeight);
 
+  private static native boolean testButton(long nativeStringPtr);
+
+  public boolean testButton(@NotNull NativeString string) {
+    return testButton(string.nativeObjectPtr);
+  }
+
   private static native boolean inputText(
       final byte @NotNull [] label, byte @NotNull [] buffer, final int bufferSize, int flags);
 
