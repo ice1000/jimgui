@@ -45,7 +45,7 @@ else ()
     message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
   endif ()
 
-  set(IMGUI_IMPL impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c project/glfw_impl.cpp)
+  set(IMGUI_IMPL project/impl_header.cpp impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c project/glfw_impl.cpp)
   include_directories(${GLFW_INCLUDE_DIRS})
 
   set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
