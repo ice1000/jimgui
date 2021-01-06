@@ -1,4 +1,4 @@
-## Unreleased
+## v0.14.1
 
 + Fix Linux build
 + Add `JniLoader.loadDX9` and `JniLoader.loadDX11`
