@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Fix Linux build
++ Add `JniLoader.loadDX9` and `JniLoader.loadDX11`
+
 ## v0.14.0
 
 + Render with DX11 on Windows7, 8, 10 now.

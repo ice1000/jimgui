@@ -27,13 +27,9 @@ public interface JniLoader {
     if (SharedState.isLoaded) return;
     // Supported OS
     if (Linux) loadLib(X86 ? "libjimgui32.so" : "libjimgui.so");
-    else if (WindowsVista || WindowsXP) {
-      loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
-      loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
-    } else if (Windows7 || Windows8 || Windows10) {
-      loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
-      loadLib(X86 ? "jimgui32-dx11.dll" : "jimgui-dx11.dll");
-    } else if (OSX) loadLib("libjimgui.dylib");
+    else if (WindowsVista || WindowsXP) loadDX9();
+    else if (Windows7 || Windows8 || Windows10) loadDX11();
+    else if (OSX) loadLib("libjimgui.dylib");
       // Unsupported OS
     else if (Windows98 || Windows95 || Windows200X)
       throw new UnsupportedOperationException("Windows 98/95/2000/2003 are not supported and won't be supported.");
@@ -41,6 +37,14 @@ public interface JniLoader {
           OsName +
           ", please submit issue to https://github.com/ice1000/jimgui/issues");
     SharedState.isLoaded = true;
+  }
+  static void loadDX11() {
+    loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
+    loadLib(X86 ? "jimgui32-dx11.dll" : "jimgui-dx11.dll");
+  }
+  static void loadDX9() {
+    loadLib(X86 ? "jimgui32.dll" : "jimgui.dll");
+    loadLib(X86 ? "jimgui32-dx9.dll" : "jimgui-dx9.dll");
   }
   static void loadLib(String libraryName) {
     NativeUtil.loadLibraryFromJar(libraryName, NativeUtil.class);
