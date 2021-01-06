@@ -2,6 +2,7 @@
 
 + Fix Linux build
 + Add `JniLoader.loadDX9` and `JniLoader.loadDX11`
++ Adapt latest imgui and FD changes
 
 ## v0.14.0
 

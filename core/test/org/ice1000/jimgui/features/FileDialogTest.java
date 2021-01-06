@@ -32,7 +32,7 @@ public class FileDialogTest {
           }
           instance.closeDialog(key);
         }
-        instance.drawBookmarkPane(100, 100);
+        // instance.drawBookmarkPane(100, 100);
         imGui.render();
       }
     }
