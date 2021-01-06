@@ -13,7 +13,7 @@ public class Curves implements TestBed {
       cp0.y -= (0.5f + cos(ts * ts) * 0.4f) * sz.y;
       cp1.x -= (0.4f + cos(t) * 0.4f) * sz.x;
       cp1.y -= (0.5f + sin(ts * t) * 0.3f) * sz.y;
-      d.addBezierCurve(a.x,
+      d.addBezierCubic(a.x,
           b.y,
           cp0.x,
           cp0.y,

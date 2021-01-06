@@ -27,7 +27,7 @@ public class Guitar implements TestBed {
       int N = 10;
       for (int j = 0; j < N; j++) {
         float x = a.x + j * s.x / N, k = (w *= -1) * amp[i] * st;
-        d.addBezierCurve(x, y + k, x + 10, y + k, x + s.x / N - 10, y - k, x + s.x / N, y - k, -1, th);
+        d.addBezierCubic(x, y + k, x + 10, y + k, x + s.x / N - 10, y - k, x + s.x / N, y - k, -1, th);
       }
       amp[i] *= 0.9;
       if (pk == 3) {
