@@ -284,6 +284,15 @@ JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObj
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_initNewFrame(jlong nativeObjectPtr) {
+  // see https://github.com/ocornut/imgui/issues/2496#issuecomment-483357656
+  static UINT presentFlags = 0;
+  if (g_pSwapChain->Present(1, presentFlags) == DXGI_STATUS_OCCLUDED) {
+    presentFlags = DXGI_PRESENT_TEST;
+    Sleep(20);
+  } else {
+    presentFlags = 0;
+  }
+
   dispatchMessage(PTR_J2C(NativeObject, nativeObjectPtr));
   ImGui_ImplDX11_NewFrame();
   ImGui_ImplWin32_NewFrame();

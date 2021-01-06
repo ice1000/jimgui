@@ -3,6 +3,7 @@
 + Fix Linux build
 + Add `JniLoader.loadDX9` and `JniLoader.loadDX11`
 + Adapt latest imgui and FD changes
++ Fix DX11 rendering CPU usage issue
 
 ## v0.14.0
 
