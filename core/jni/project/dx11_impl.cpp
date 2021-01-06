@@ -118,7 +118,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(JNIEnv *env, jclass, 
   ret[0] = PTR_C2J(texture);
   ret[1] = static_cast<jlong> (w);
   ret[2] = static_cast<jlong> (h);
-  __init(Long, ret, 3);
+  __init_array(Long, ret, 3);
   delete[] ret;
   __release(Long, ret);
   return _ret;
@@ -150,7 +150,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
   ret[0] = PTR_C2J(texture);
   ret[1] = static_cast<jlong> (w);
   ret[2] = static_cast<jlong> (h);
-  __init(Long, ret, 3);
+  __init_array(Long, ret, 3);
   delete[] ret;
   __release(Long, ret);
   return _ret;

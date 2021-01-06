@@ -30,10 +30,10 @@ auto name = _ ## name == nullptr ? nullptr : env->Get ## type ## ArrayElements(_
 #define __new(type, name, len) \
 auto _ ## name = env->New ## type ## Array(len);
 
-#define __set(type, name, len) \
+#define __set_array(type, name, len) \
 env->Set ## type ## ArrayRegion(_ ## name, 0, (len), name);
 
-#define __init(type, name, len) \
+#define __init_array(type, name, len) \
 auto _ ## name = env->New ## type ## Array(len); \
 env->Set ## type ## ArrayRegion(_ ## name, 0, (len), name);
 

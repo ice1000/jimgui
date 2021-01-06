@@ -124,7 +124,7 @@ Java_org_ice1000_jimgui_JImFont_getDebugName0(Ptr<JNIEnv> env, jclass, jlong nat
   auto debugName = font->GetDebugName();
   auto len = static_cast<jsize> (strlen(debugName));
   auto *data = PTR_J2C(const jbyte, debugName);
-  __init(Byte, data, len);
+  __init_array(Byte, data, len);
   return _data;
 }
 
@@ -173,7 +173,7 @@ Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcha
   for (int i = 0; i < len; ++i) {
     inputStr[i] = static_cast<jchar> (inputShorts[i]);
   }
-  __init(Char, inputStr, len);
+  __init_array(Char, inputStr, len);
   delete[] inputStr;
   return _inputStr;
 }
@@ -469,7 +469,7 @@ Java_org_ice1000_jimgui_JImGui_saveIniSettingsToMemory0(Ptr<JNIEnv> env, jclass)
   auto ini_data = ImGui::SaveIniSettingsToMemory();
   auto len = static_cast<jsize> (strlen(ini_data));
   auto *data = PTR_J2C(const jbyte, ini_data);
-  __init(Byte, data, len);
+  __init_array(Byte, data, len);
   return _data;
 }
 
@@ -478,7 +478,7 @@ Java_org_ice1000_jimgui_JImGui_getClipboardText0(Ptr<JNIEnv> env, jclass) -> jby
   auto ini_data = ImGui::GetClipboardText();
   auto len = static_cast<jsize> (strlen(ini_data));
   auto *data = PTR_J2C(const jbyte, ini_data);
-  __init(Byte, data, len);
+  __init_array(Byte, data, len);
   return _data;
 }
 

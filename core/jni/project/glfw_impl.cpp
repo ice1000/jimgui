@@ -111,7 +111,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromFile(
   ret[0] = static_cast<jlong> (texture);
   ret[1] = static_cast<jlong> (width);
   ret[2] = static_cast<jlong> (height);
-  __init(Long, ret, RET_LEN);
+  __init_array(Long, ret, RET_LEN);
 #undef RET_LEN
   delete[] ret;
   return _ret;
@@ -138,7 +138,7 @@ Java_org_ice1000_jimgui_JImTextureID_createTextureFromBytes(
   ret[0] = static_cast<jlong> (texture);
   ret[1] = static_cast<jlong> (width);
   ret[2] = static_cast<jlong> (height);
-  __init(Long, ret, RET_LEN);
+  __init_array(Long, ret, RET_LEN);
 #undef RET_LEN
   delete[] ret;
   return _ret;
