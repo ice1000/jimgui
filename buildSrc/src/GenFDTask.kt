@@ -25,6 +25,8 @@ open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog") {
       Fun("openModal", key, string("title"),
           filters, string("basePath")),
       Fun("closeDialog", key),
+      Fun("wasOpenedThisFrame", "boolean", key),
+      Fun("isOpened", "boolean", stringPtr("text", nullable = true)),
       Fun("setExtensionInfo", filters, vec4("color"), string("text")),
       Fun("getExtensionInfo", "boolean", filters, vec4Ptr("color"), stringPtr("text", nullable = true)),
       Fun("clearExtensionInfo"),
