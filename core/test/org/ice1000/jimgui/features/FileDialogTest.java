@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.features;
 
 import org.ice1000.jimgui.*;
+import org.ice1000.jimgui.tests.Sandbox;
 import org.ice1000.jimgui.util.JniLoader;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class FileDialogTest {
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.checkbox("Use modal dialog", modal);
-        instance.setExtensionInfo(".java", JImVec4.fromAWT(Color.ORANGE), "[Java]");
+        instance.setExtensionInfo(".java", Sandbox.fromAWT(Color.ORANGE), "[Java]");
         if (imGui.button("Open dialog")) {
           if (modal.accessValue()) instance.openModal(key, title, filter, pwd);
           else instance.openDialog(key, title, filter, pwd);

@@ -3,6 +3,7 @@ package org.ice1000.jimgui.features;
 import org.ice1000.jimgui.JImStr;
 import org.ice1000.jimgui.JImVec4;
 import org.ice1000.jimgui.NativeBool;
+import org.ice1000.jimgui.tests.Sandbox;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
 import org.junit.BeforeClass;
@@ -27,7 +28,7 @@ public class ToggleButtonTest {
     NativeBool pOpen = new NativeBool();
     JImStr ok = new JImStr("Checked");
     JImStr not = new JImStr("Unchecked");
-    JImVec4 color = JImVec4.fromAWT(Color.GREEN);
+    JImVec4 color = Sandbox.fromAWT(Color.GREEN);
     pOpen.modifyValue(false);
     JImGuiUtil.runWithinPer(totalMillis, 15, imGui -> {
       imGui.spinner(80, 10, 10, color);

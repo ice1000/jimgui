@@ -4,9 +4,9 @@ import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.cpp.DeallocatableObjectManager;
 import org.ice1000.jimgui.flag.JImDirection;
 import org.ice1000.jimgui.flag.JImFontAtlasFlags;
-import org.ice1000.jimgui.flag.JImMouseButton;
 import org.ice1000.jimgui.util.JImGuiUtil;
 import org.ice1000.jimgui.util.JniLoader;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,6 +21,17 @@ public class Sandbox {
 
   @BeforeClass public static void setup() {
     useAlternativeJniLibAndCheckHeadless();
+  }
+
+  /**
+   * @param color AWT color
+   * @return a mutable imgui vec4 instance
+   */
+  @Contract public static @NotNull MutableJImVec4 fromAWT(@NotNull java.awt.Color color) {
+    return new MutableJImVec4(color.getRed() / 256f,
+        color.getGreen() / 256f,
+        color.getBlue() / 256f,
+        color.getAlpha() / 256f);
   }
 
   @Test public void testSandbox() {
@@ -133,9 +144,9 @@ public class Sandbox {
       }
       imGui.text(ini);
       imGui.newLine();
-      try (MutableJImVec4 red = JImVec4.fromAWT(java.awt.Color.RED);
-           MutableJImVec4 yellow = JImVec4.fromAWT(java.awt.Color.YELLOW);
-           MutableJImVec4 green = JImVec4.fromAWT(java.awt.Color.GREEN)) {
+      try (MutableJImVec4 red = fromAWT(java.awt.Color.RED);
+           MutableJImVec4 yellow = fromAWT(java.awt.Color.YELLOW);
+           MutableJImVec4 green = fromAWT(java.awt.Color.GREEN)) {
         imGui.textColored(red, "Woa!");
         imGui.textColored(imGui.getStyle().getColor(JImStyleColors.TextSelectedBg), "Woa!");
         imGui.separator();

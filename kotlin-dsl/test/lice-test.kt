@@ -2,6 +2,7 @@ package test
 
 import org.ice1000.jimgui.JImStyleVars
 import org.ice1000.jimgui.JImVec4
+import org.ice1000.jimgui.MutableJImVec4
 import org.ice1000.jimgui.cpp.DeallocatableObjectManager
 import org.ice1000.jimgui.dsl.JImGuiContext
 import org.ice1000.jimgui.dsl.runPer
@@ -16,6 +17,11 @@ import org.lice.parse.Lexer
 import org.lice.parse.Parser
 import java.awt.Color
 
+fun fromAWT(color: Color) = MutableJImVec4(color.red / 256f,
+    color.green / 256f,
+    color.blue / 256f,
+    color.alpha / 256f)
+
 fun main() {
   JniLoader.load()
   val sourceCode = JImGuiContext::class.java
@@ -24,9 +30,9 @@ fun main() {
   val liceAST = Parser
       .parseTokenStream(Lexer(sourceCode))
       .accept(SymbolList())
-  val keywords = JImVec4.fromAWT(Color.decode("#CC7832"))
-  val strings = JImVec4.fromAWT(Color.decode("#6A8759"))
-  val numbers = JImVec4.fromAWT(Color.decode("#6897BB"))
+  val keywords = fromAWT(Color.decode("#CC7832"))
+  val strings = fromAWT(Color.decode("#6A8759"))
+  val numbers = fromAWT(Color.decode("#6897BB"))
   val manager = DeallocatableObjectManager(listOf(keywords, strings, numbers))
   val codeColors = arrayOfNulls<JImVec4>(sourceCode.length)
   val eolLen = System.lineSeparator().length
@@ -72,7 +78,7 @@ fun main() {
       var tokenStart = 0
       var attributeSet = codeColors[0]
       codeColors[0] = null
-      for (i in 0 until codeColors.size) {
+      for (i in codeColors.indices) {
         val isEol = sourceCode[i] == '\n'
         if (attributeSet != codeColors[i] || isEol) {
           val token = sourceCode.substring(tokenStart, i)

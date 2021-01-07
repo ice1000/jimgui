@@ -60,45 +60,6 @@ public class JImVec4 implements DeallocatableObject {
     deallocateNativeObjects(nativeObjectPtr);
   }
 
-  public @NotNull java.awt.Color toAWT() {
-    return new java.awt.Color(getW(), getX(), getY(), getZ());
-  }
-
-/* Note: JavaFX is no longer installed in OpenJDK 12 by default
-	/**
-	 * @apiNote Don't call if JavaFX is not installed
-	 * /
-	public @NotNull javafx.scene.paint.Color toJFX() {
-		return new javafx.scene.paint.Color(getW(), getX(), getY(), getZ());
-	}
-*/
-
-  /**
-   * @param color AWT color
-   * @return a mutable imgui vec4 instance
-   */
-  @Contract public static @NotNull MutableJImVec4 fromAWT(@NotNull java.awt.Color color) {
-    return new MutableJImVec4(color.getRed() / 256f,
-        color.getGreen() / 256f,
-        color.getBlue() / 256f,
-        color.getAlpha() / 256f);
-  }
-
-/* Note: JavaFX is no longer installed in OpenJDK 12 by default
-	/**
-	 * @apiNote Don't call if JavaFX is not installed
-	 * @param color JavaFX color
-	 * @return a mutable imgui vec4 instance
-	 * /
-	@Contract
-	public static @NotNull MutableJImVec4 fromJFX(@NotNull javafx.scene.paint.Color color) {
-		return new MutableJImVec4((float) color.getRed(),
-				(float) color.getGreen(),
-				(float) color.getBlue(),
-				(float) color.getOpacity());
-	}
-*/
-
   /**
    * Convert HSV color to RGB
    *
