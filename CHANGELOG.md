@@ -1,3 +1,7 @@
+## Unreleased
+
++ Remove dependency on AWT
+
 ## v0.14.1
 
 + Fix Linux build

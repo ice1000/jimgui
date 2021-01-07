@@ -102,20 +102,20 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
 
 ## Backends and platforms
 
-+ [ ] Linux native library with glfw3 + opengl3 implementation
++ Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
   + [X] 64-bit hosted on CircleCI
-+ [X] WindowsXP+ native library
-  + [X] with glfw + opengl3 implementation
++ WindowsXP+ native library
+  + with glfw + opengl3 implementation (no longer maintained)
     + [ ] 32-bit hosted on ?
     + [ ] 64-bit hosted on ?
-  + [X] with directX9 implementation
+  + with directX9 implementation
     + [X] 32-bit hosted on my laptop
     + [X] 64-bit hosted on my laptop
-+ [X] Windows7+ native library with directX11 implementation
++ Windows7+ native library with directX11 implementation
   + [X] 32-bit hosted on my laptop
   + [X] 64-bit hosted on my laptop
-+ [X] MacOS native library with Cocoa, glut as additions to Linux implementation
++ MacOS native library with Cocoa, glut as additions to Linux implementation
   + [X] hosted on @newk5 's VM
 
 # Usage
@@ -227,7 +227,9 @@ tasks.withType<JavaExec>().configureEach {
     <url>https://jcenter.bintray.com</url>
   </repository>
 </repositories>
+```
 
+```xml
 <dependency>
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
