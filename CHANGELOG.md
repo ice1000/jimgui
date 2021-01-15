@@ -1,6 +1,8 @@
 ## Unreleased
 
 + Remove dependency on AWT
++ Update file dialog
++ Update tables' flags
 
 ## v0.14.1
 

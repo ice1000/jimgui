@@ -52,6 +52,6 @@ public class JImStr {
   }
 
   @Contract(pure = true) @Override public @NotNull String toString() {
-    return new String(bytes);
+    return new String(Arrays.copyOfRange(bytes, 0, bytes.length - 1));
   }
 }

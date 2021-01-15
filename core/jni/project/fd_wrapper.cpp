@@ -7,7 +7,7 @@
 #include <org_ice1000_jimgui_JImFileDialog.h>
 #include "basics.hpp"
 
-using igfd::ImGuiFileDialog;
+using IGFD::ImGuiFileDialog;
 
 extern "C" {
 JNIEXPORT void JNICALL

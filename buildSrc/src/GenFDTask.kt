@@ -1,7 +1,7 @@
 package org.ice1000.gradle
 
 open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog") {
-  override val `c++Expr` = "igfd::ImGuiFileDialog::Instance()->"
+  override val `c++Expr` = "IGFD::ImGuiFileDialog::Instance()->"
   override val `prefixC++`: String
     get() = "#include <ImGuiFileDialog.h>\n${super.`prefixC++`}"
 
