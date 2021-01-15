@@ -10,7 +10,7 @@ public class FileDialogTest {
   public static void main(String... args) {
     JniLoader.load();
     try (JImGui imGui = new JImGui(); NativeBool modal = new NativeBool()) {
-	    imGui.getIO().getFonts().addFontDefault();
+      imGui.getIO().getFonts().addFontDefault();
       JImFileDialog.loadIcons(15);
       JImStr key = new JImStr("deep_dark_fantasy");
       JImStr title = new JImStr(JImFileDialog.Icons.FOLDER_OPEN + " Choose a Java file");
@@ -26,10 +26,8 @@ public class FileDialogTest {
           else instance.openDialog(key, title, filter, pwd);
         }
         if (instance.display(key)) {
-          if (instance.isOk()) {
-            try (NativeString currentPath = instance.currentPath()) {
-              System.out.println(currentPath);
-            }
+          if (instance.isOk()) try (NativeString currentPath = instance.currentPath()) {
+            System.out.println(currentPath);
           }
           instance.close();
         }
