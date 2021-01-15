@@ -5,6 +5,7 @@
 + Remove dependency on AWT
 + Update file dialog (`fileDialog` -> `display`, `closeDialog` -> `close`)
 + Update tables' flags
++ Now `JImStr::toString` returns a string without the terminating `\0`
 
 ## v0.14.1
 
