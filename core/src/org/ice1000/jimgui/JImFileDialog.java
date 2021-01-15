@@ -1,5 +1,6 @@
 package org.ice1000.jimgui;
 
+import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.FLT_MAX;
  * @author ice1000
  * @since v0.13.0
  */
-public final class JImFileDialog extends JImFileDialogGen {
+public final class JImFileDialog extends JImFileDialogGen implements DeallocatableObject {
   public JImFileDialog() {
     super(allocateNativeObject());
   }
@@ -25,44 +26,41 @@ public final class JImFileDialog extends JImFileDialogGen {
     setExtensionInfo(filters, color, JImStr.EMPTY);
   }
 
-  public boolean isOk() {
-    return getIsOk();
-  }
-
-  public boolean fileDialog(
+  public boolean display(
       @NotNull NativeString key, @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags) {
-    return fileDialog(key, flags, 0, 0, FLT_MAX, FLT_MAX);
+    return display(key, flags, 0, 0, FLT_MAX, FLT_MAX);
   }
 
-  public boolean fileDialog(
+  public boolean display(
       @NotNull NativeString key,
       @MagicConstant(flagsFromClass = JImWindowFlags.class) int flags,
       float minSizeX,
       float minSizeY,
       float maxSizeX,
       float maxSizeY) {
-    return fileDialogP(key.nativeObjectPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY);
+    return fileDialogP(key.nativeObjectPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY, nativeObjectPtr);
   }
 
   private static native long allocateNativeObject();
+
   private static native void deallocateNativeObject(long nativeObjectPtr);
 
-  private static native long currentPath0();
+  private static native long currentPath0(long nativeObjectPtr);
 
-  private static native long currentFileName0();
+  private static native long currentFileName0(long nativeObjectPtr);
 
-  private static native long filePathName0();
+  private static native long filePathName0(long nativeObjectPtr);
 
   public @NotNull NativeString currentPath() {
-    return new NativeString(currentPath0());
+    return new NativeString(currentPath0(nativeObjectPtr));
   }
 
   public @NotNull NativeString currentFileName() {
-    return new NativeString(currentFileName0());
+    return new NativeString(currentFileName0(nativeObjectPtr));
   }
 
   public @NotNull NativeString filePathName() {
-    return new NativeString(filePathName0());
+    return new NativeString(filePathName0(nativeObjectPtr));
   }
 
   private static native boolean fileDialogP(
@@ -71,9 +69,14 @@ public final class JImFileDialog extends JImFileDialogGen {
       float minSizeX,
       float minSizeY,
       float maxSizeX,
-      float maxSizeY);
+      float maxSizeY,
+      long nativeObjectPtr);
 
   public static native void loadIcons(float fontSize);
+
+  @Override public void deallocateNativeObject() {
+    deallocateNativeObject(nativeObjectPtr);
+  }
 
   public interface Icons {
     int MIN = 0xf002;

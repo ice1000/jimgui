@@ -16,7 +16,7 @@ public class FileDialogTest {
       JImStr title = new JImStr(JImFileDialog.Icons.FOLDER_OPEN + " Choose a Java file");
       JImStr filter = new JImStr(".java");
       JImStr pwd = new JImStr(".");
-      JImFileDialog instance = JImFileDialog.INSTANCE;
+      JImFileDialog instance = new JImFileDialog();
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.checkbox("Use modal dialog", modal);
@@ -25,17 +25,18 @@ public class FileDialogTest {
           if (modal.accessValue()) instance.openModal(key, title, filter, pwd);
           else instance.openDialog(key, title, filter, pwd);
         }
-        if (instance.fileDialog(key)) {
+        if (instance.display(key)) {
           if (instance.isOk()) {
             try (NativeString currentPath = instance.currentPath()) {
               System.out.println(currentPath);
             }
           }
-          instance.closeDialog(key);
+          instance.close();
         }
         // instance.drawBookmarkPane(100, 100);
         imGui.render();
       }
+      instance.deallocateNativeObject();
     }
   }
 }

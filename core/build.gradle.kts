@@ -134,13 +134,19 @@ val downloadImplGL = tasks.register<Download>("downloadImplGL") {
   overwrite(false)
 }
 
+val downloadDirent = tasks.register<Download>("downloadDirent") {
+  src("$github/tronkko/dirent/master/include/dirent.h")
+  dest(fdDir.resolve("dirent").resolve("dirent.h"))
+  overwrite(false)
+}
+
 val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
   group = downloadGroup
+  if (isWindows) dependsOn(downloadDirent)
   src("$imguiFD/master/CustomFont.h")
   src("$imguiFD/master/CustomFont.cpp")
   src("$imguiFD/Lib_Only/ImGuiFileDialog.h")
   src("$imguiFD/Lib_Only/ImGuiFileDialog.cpp")
-  if (isWindows) src("$github/tronkko/dirent/master/include/dirent.h")
   dest(fdDir)
   overwrite(false)
 }
