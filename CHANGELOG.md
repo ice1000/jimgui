@@ -1,7 +1,9 @@
 ## Unreleased
 
+## v0.15.0
+
 + Remove dependency on AWT
-+ Update file dialog
++ Update file dialog (`fileDialog` -> `display`, `closeDialog` -> `close`)
 + Update tables' flags
 
 ## v0.14.1
