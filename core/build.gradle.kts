@@ -87,7 +87,7 @@ val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
 val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
-val imguiFD = "$github/aiekick/ImGuiFileDialog/master"
+val imguiFD = "$github/aiekick/ImGuiFileDialog"
 val imguiExamples = "$imguiCoding/backends"
 
 val downloadImgui = tasks.register<Download>("downloadImgui") {
@@ -136,10 +136,10 @@ val downloadImplGL = tasks.register<Download>("downloadImplGL") {
 
 val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
   group = downloadGroup
-  src("$imguiFD/CustomFont.h")
-  src("$imguiFD/CustomFont.cpp")
-  src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.h")
-  src("$imguiFD/ImGuiFileDialog/ImGuiFileDialog.cpp")
+  src("$imguiFD/master/CustomFont.h")
+  src("$imguiFD/master/CustomFont.cpp")
+  src("$imguiFD/Lib_Only/ImGuiFileDialog.h")
+  src("$imguiFD/Lib_Only/ImGuiFileDialog.cpp")
   if (isWindows) src("$github/tronkko/dirent/master/include/dirent.h")
   dest(fdDir)
   overwrite(false)
