@@ -37,6 +37,8 @@ class ImGuiHeaderParser {
             else
               name.decapitalize() to javadoc
           }
+          .filter { (name, _) -> name.isNotEmpty() }
+          .filter { (name, _) -> !name[0].isDigit() }
           .forEach { (name, javadoc) ->
             val original = map[name]
             if (original != null) map[name] = "$original\n  $javadoc"
