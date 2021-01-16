@@ -401,3 +401,10 @@ open class GenTableBgTarget : GenFlagTask(
     "RowBg1" to "2",
     "CellBg" to "3",
 )
+
+open class GenSortDirection : GenFlagTask(
+    "JImSortDirection",
+    "None" to "0",
+    "Ascending" to "1",
+    "Descending" to "2",
+)

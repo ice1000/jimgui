@@ -3,6 +3,7 @@
 + Add `tableSetBgColor`, `tableGetColumnName`, `tableGetColumnFlags`
 + Refactor `JImFont.getDebugName` to `JImFont.debugName`
 + Improve generation
++ Add `JImSortDirection` and `JImTableBgTarget`
 
 ## v0.15.0
 

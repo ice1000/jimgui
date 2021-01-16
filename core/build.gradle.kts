@@ -65,6 +65,7 @@ val generations = arrayOf(
     g<GenColorEditFlags>(),
     g<GenMouseButton>(),
     g<GenTableBgTarget>(),
+    g<GenSortDirection>(),
     g<GenComboFlags>(),
     g<GenSliderFlags>(),
     g<GenFontAtlasFlags>(),
