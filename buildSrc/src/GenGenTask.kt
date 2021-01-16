@@ -6,7 +6,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
   companion object {
     lateinit var parser: ImGuiHeaderParser
     private var isParserInitialized = false
-    fun checkParserInitialized(project: Project) {
+    fun checkParserInitialized(project: Project) = synchronized(isParserInitialized) {
       if (isParserInitialized) return
       val imguiDir = project.projectDir.resolve("jni").resolve("imgui")
       parser = ImGuiHeaderParser()

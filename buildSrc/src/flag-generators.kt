@@ -7,6 +7,10 @@ import org.gradle.api.tasks.TaskAction
 
 abstract class GenFlagTask(className: String, private vararg val list: Pair<String, String>)
   : GenJavaTask(className, packageName = "org.ice1000.jimgui.flag", since = "undecidable"), Runnable {
+  init {
+    GenGenTask.checkParserInitialized(project)
+  }
+
   @TaskAction
   override fun run() = buildString {
     GenGenTask.checkParserInitialized(project)

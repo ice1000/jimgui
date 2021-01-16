@@ -11,7 +11,7 @@ class ImGuiHeaderParser {
   fun parseHeader(imguiHeader: File) {
     imguiHeader.bufferedReader().use { reader ->
       reader.lineSequence()
-          .dropWhile { it != "namespace ImGui" }
+          .dropWhile { it != "#pragma once" }
           .map { it.trimStart() }
           .map { it.removePrefix("IMGUI_API ") }
           .filter { it.indexOf(';') > 0 || it.indexOf('=') > 0 }
