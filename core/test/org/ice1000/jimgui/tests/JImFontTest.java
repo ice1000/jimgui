@@ -25,7 +25,7 @@ public class JImFontTest {
       JImFontAtlas fonts = imGui.getIO().getFonts();
       fonts.addFontDefault();
       JImFont fontFromFile = fonts.addFontFromFile("core/testRes/font/FiraCode-Regular.ttf", 18);
-      if (fontFromFile.isLoaded()) System.out.println(fontFromFile.getDebugName());
+      if (fontFromFile.isLoaded()) System.out.println(fontFromFile.debugName());
       long latestRefresh = System.currentTimeMillis();
 	    while (!imGui.windowShouldClose()) {
         long currentTimeMillis = System.currentTimeMillis();

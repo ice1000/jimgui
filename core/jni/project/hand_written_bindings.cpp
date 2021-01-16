@@ -120,16 +120,6 @@ Java_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
 }
 
 JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImFont_getDebugName0(Ptr<JNIEnv> env, jclass, jlong nativeObjectPtr) -> jbyteArray {
-  auto *font = PTR_J2C(ImFont, nativeObjectPtr);
-  auto debugName = font->GetDebugName();
-  auto len = static_cast<jsize> (strlen(debugName));
-  auto *data = PTR_J2C(const jbyte, debugName);
-  __init_array(Byte, data, len);
-  return _data;
-}
-
-JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFont_getContainerFontAtlas(jlong nativeObjectPtr) -> jlong {
   auto *font = PTR_J2C(ImFont, nativeObjectPtr);
   return PTR_C2J(font->ContainerAtlas);
