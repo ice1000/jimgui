@@ -7,6 +7,7 @@
 + Improve generation
 + Add `JImSortDirection` and `JImTableBgTarget`
 + Fix issues with file dialog introduced in previous release
++ Address latest flags changes in imgui
 
 ## v0.15.0
 
