@@ -23,6 +23,10 @@ public final class NativeString implements CharSequence, DeallocatableObject {
     this(allocateNativeObject(initialCapacity));
   }
 
+  public boolean isNull() {
+    return nativeObjectPtr == 0;
+  }
+
   @Contract(pure = true) protected NativeString(long nativeObjectPtr) {
     this.nativeObjectPtr = nativeObjectPtr;
   }
@@ -86,7 +90,13 @@ public final class NativeString implements CharSequence, DeallocatableObject {
     return new String(toBytes());
   }
 
+  @Contract("_ -> new") public static @NotNull NativeString fromRaw(long constCharPtr) {
+    return new NativeString(allocateNativeObjectFromRaw(constCharPtr));
+  }
+
   private static native long allocateNativeObject(int initialCapacity);
+
+  private static native long allocateNativeObjectFromRaw(long constCharPtr);
 
   private static native void deallocateNativeObject0(long nativeObjectPtr);
 

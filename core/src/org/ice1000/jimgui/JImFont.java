@@ -17,8 +17,8 @@ public final class JImFont extends JImGuiFontGen {
     super(nativeObjectPtr);
   }
 
-  @Contract public @NotNull String getDebugName() {
-    return new String(getDebugName0(nativeObjectPtr));
+  @Contract("->new") public @NotNull NativeString debugName() {
+    return NativeString.fromRaw(getDebugName());
   }
 
   public void setFallbackChar(char wChar) {
@@ -33,8 +33,6 @@ public final class JImFont extends JImGuiFontGen {
     return new JImFontConfig(getConfigData(nativeObjectPtr));
   }
   // public native void setDisplayOffset(float newX, float newY);
-
-  @Contract private static native byte[] getDebugName0(long nativeObjectPtr);
 
   private static native long getContainerFontAtlas(long nativeObjectPtr);
 

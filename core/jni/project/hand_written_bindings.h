@@ -113,8 +113,8 @@ JIMVEC4_SETTER(w, W)
 
 #undef JIMVEC4_SETTER
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImWidgets_testButton(jlong stringPtr) -> jboolean;
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImWidgets_text(jlong stringPtr);
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImWidgets_menuItem(

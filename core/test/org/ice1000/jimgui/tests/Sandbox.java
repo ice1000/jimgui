@@ -120,7 +120,7 @@ public class Sandbox {
       JImFontAtlas containerAtlas = font.getContainerAtlas();
       containerAtlas.setFlags(containerAtlas.getFlags() | JImFontAtlasFlags.NoMouseCursors);
       imGui.text(String.valueOf(font.getFontSize()));
-      imGui.text(font.getDebugName());
+      imGui.text(font.debugName());
       String inputString = io.getInputString();
       imGui.text("Input characters (len: " + inputString.length() + "): " + inputString);
       // if (io.mouseClickedAt(JImMouseButton.Left)) imGui.text("Left is down.");

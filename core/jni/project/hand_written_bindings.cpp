@@ -201,14 +201,14 @@ Java_org_ice1000_jimgui_JImVec4_fromHSV0(Ptr<JNIEnv>, jclass, jfloat h, jfloat s
   return JavaCritical_org_ice1000_jimgui_JImVec4_fromHSV0(h, s, v, a);
 }
 
-JNIEXPORT jboolean JNICALL
-JavaCritical_org_ice1000_jimgui_JImWidgets_testButton(jlong stringPtr) {
-  return ImGui::Button(PTR_J2C(std::string, stringPtr)->c_str());
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImWidgets_text(jlong stringPtr) {
+  ImGui::Text(PTR_J2C(std::string, stringPtr)->c_str());
 }
 
-JNIEXPORT jboolean JNICALL
-Java_org_ice1000_jimgui_JImWidgets_testButton(JNIEnv *, jclass, jlong stringPtr) {
-  return JavaCritical_org_ice1000_jimgui_JImWidgets_testButton(stringPtr);
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImWidgets_text(JNIEnv *, jclass, jlong stringPtr) {
+  JavaCritical_org_ice1000_jimgui_JImWidgets_text(stringPtr);
 }
 
 JNIEXPORT void JNICALL

@@ -50,6 +50,7 @@ open class GenFontTask : GenTask("JImGuiFontGen", "imgui_font") {
       Fun.private("clearOutputData", nativeObjectPtr),
       Fun.private("setFallbackChar", p("wChar", "int"), nativeObjectPtr),
       Fun.private("isLoaded", "boolean", nativeObjectPtr),
+      Fun.private("getDebugName", "long", nativeObjectPtr),
       Fun.private("growIndex", int("newSize"), nativeObjectPtr),
       Fun.private("addRemapChar", int("dst"), int("src"), bool("overwriteDst", default = true), nativeObjectPtr),
       // TODO: add this back

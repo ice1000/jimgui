@@ -2,6 +2,7 @@ package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.flag.JImInputTextFlags;
 import org.ice1000.jimgui.flag.JImTabItemFlags;
+import org.ice1000.jimgui.flag.JImTableColumnFlags;
 import org.ice1000.jimgui.flag.JImWindowFlags;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.Contract;
@@ -16,7 +17,7 @@ import static org.ice1000.jimgui.util.JImGuiUtil.*;
  * @author ice1000
  * @since v0.12
  */
-@SuppressWarnings({"unused", "UnusedReturnValue"})
+@SuppressWarnings({"unused", "UnusedReturnValue", "MagicConstant"})
 public abstract class JImWidgets extends JImGuiGen {
   private static native void plotLines(
       final byte @NotNull [] label,
@@ -40,10 +41,28 @@ public abstract class JImWidgets extends JImGuiGen {
       float graphWidth,
       float graphHeight);
 
-  private static native boolean testButton(long nativeStringPtr);
+  private static native void text(long nativeStringPtr);
 
-  public boolean testButton(@NotNull NativeString string) {
-    return testButton(string.nativeObjectPtr);
+  public void text(@NotNull NativeString string) {
+    text(string.nativeObjectPtr);
+  }
+
+  @MagicConstant(flagsFromClass = JImTableColumnFlags.class)
+  public int tableColumnFlags(int column_n) {
+    return tableGetColumnFlags(column_n);
+  }
+
+  @MagicConstant(flagsFromClass = JImTableColumnFlags.class)
+  public int tableColumnFlags() {
+    return tableGetColumnFlags(-1);
+  }
+
+  @Contract public @NotNull NativeString tableColumnName(int column_n) {
+    return NativeString.fromRaw(tableGetColumnName(column_n));
+  }
+
+  @Contract public @NotNull NativeString tableColumnName() {
+    return NativeString.fromRaw(tableGetColumnName(-1));
   }
 
   private static native boolean inputText(

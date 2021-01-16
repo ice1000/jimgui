@@ -385,8 +385,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
           float("minRowHeight", default = 0)),
       Fun("tableNextColumn", "boolean"),
       Fun("tableSetColumnIndex", "boolean", int("columnN")),
-      Fun("tableGetColumnIndex", "int"),
-      Fun("tableGetRowIndex", "int"),
 
       // Tables: Headers & Columns declaration
       Fun("tableSetupColumn",
@@ -400,6 +398,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
 
       // Tables: Miscellaneous functions
       Fun("tableGetColumnCount", "int"),
+      Fun("tableGetColumnIndex", "int"),
+      Fun("tableGetRowIndex", "int"),
+      Fun.protected("tableGetColumnName", "long", int("column_n")),
+      Fun.protected("tableGetColumnFlags", "int", int("column_n")),
 
       // Columns (legacy)
       Fun("columns",

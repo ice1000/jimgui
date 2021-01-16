@@ -1,9 +1,6 @@
 package org.ice1000.jimgui.tests;
 
-import org.ice1000.jimgui.JImFont;
-import org.ice1000.jimgui.JImFontAtlas;
-import org.ice1000.jimgui.JImGui;
-import org.ice1000.jimgui.NativeFloat;
+import org.ice1000.jimgui.*;
 import org.ice1000.jimgui.util.JniLoader;
 import org.jetbrains.annotations.NotNull;
 import org.junit.BeforeClass;
@@ -39,7 +36,9 @@ public class JImFontTest {
           JImFont font = imGui.findFont();
           if (font != null) {
             font.setFontSize(fontSize.accessValue());
-            imGui.text(font.getDebugName());
+            final NativeString string = font.debugName();
+            if (string.isNull()) imGui.text("Dunno");
+            else imGui.text(string);
           } else imGui.text("Not found");
           imGui.dragFloat("Font size", fontSize);
           imGui.showFontSelector("Wtf");
