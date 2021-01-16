@@ -1,9 +1,12 @@
 ## Unreleased
 
+## v0.15.1
+
 + Add `tableSetBgColor`, `tableGetColumnName`, `tableGetColumnFlags`
 + Refactor `JImFont.getDebugName` to `JImFont.debugName`
 + Improve generation
 + Add `JImSortDirection` and `JImTableBgTarget`
++ Fix issues with file dialog introduced in previous release
 
 ## v0.15.0
 

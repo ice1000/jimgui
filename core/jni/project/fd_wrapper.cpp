@@ -46,15 +46,15 @@ Java_org_ice1000_jimgui_JImFileDialog_fileDialogP(
 }
 
 JNIEXPORT jlong JNICALL JavaCritical_org_ice1000_jimgui_JImFileDialog_currentPath0(jlong nativeObjectPtr) {
-  return PTR_C2J(new std::string(ImGuiFileDialog::Instance()->GetCurrentPath()));
+  return PTR_C2J(new std::string(PTR_J2C(FileDialog, nativeObjectPtr)->GetCurrentPath()));
 }
 
 JNIEXPORT jlong JNICALL JavaCritical_org_ice1000_jimgui_JImFileDialog_currentFileName0(jlong nativeObjectPtr) {
-  return PTR_C2J(new std::string(ImGuiFileDialog::Instance()->GetCurrentFileName()));
+  return PTR_C2J(new std::string(PTR_J2C(FileDialog, nativeObjectPtr)->GetCurrentFileName()));
 }
 
 JNIEXPORT jlong JNICALL JavaCritical_org_ice1000_jimgui_JImFileDialog_filePathName0(jlong nativeObjectPtr) {
-  return PTR_C2J(new std::string(ImGuiFileDialog::Instance()->GetFilePathName()));
+  return PTR_C2J(new std::string(PTR_J2C(FileDialog, nativeObjectPtr)->GetFilePathName()));
 }
 
 #define GET_STRING_FUNCTION(name) \
