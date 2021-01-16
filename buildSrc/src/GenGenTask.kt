@@ -402,6 +402,7 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
       Fun("tableGetRowIndex", "int"),
       Fun.protected("tableGetColumnName", "long", int("column_n")),
       Fun.protected("tableGetColumnFlags", "int", int("column_n")),
+      Fun("tableSetBgColor", rawFlags("JImTableBgTarget", isFlag = false), u32, int("column_n", default = -1)),
 
       // Columns (legacy)
       Fun("columns",

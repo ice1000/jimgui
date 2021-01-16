@@ -73,9 +73,11 @@ val stringID = string("stringID")
 val nStringID = string("stringID", default = strNull)
 val pos = pos()
 val userKeyIndex = int("userKeyIndex")
-fun flags(from: String? = null, default: String? = null, name: String = "flags") = int(name,
-    default = default?.let { from?.let { "JIm${from}Flags.$default" } } ?: 0,
-    annotation = from?.let { "@MagicConstant(flagsFromClass = JIm${it}Flags.class)" })
+fun rawFlags(from: String, default: String? = null, name: String = "flags", isFlag: Boolean = true) = int(name,
+    default = default?.let { "$from.$default" } ?: 0,
+    annotation = "@MagicConstant(${if (isFlag) "flags" else "values"}FromClass = $from.class)")
+fun flags(from: String, default: String? = null, name: String = "flags") =
+    rawFlags("JIm${from}Flags", default, name)
 
 /**
  * @property name String function name
@@ -226,9 +228,7 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 }
 
 fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder {
-  (default ?: GenGenTask.parser.map[name])?.let { javadoc ->
-    append("  /**").append(javadoc).appendln("*/")
-  }
+  (default ?: GenGenTask.parser.map[name])?.let { append("  /**").append(it).appendln("*/") }
   return this
 }
 

@@ -107,7 +107,7 @@ $JNI_C_FUNC_PREFIX${className}_$name(${
       ?: "$orElse;"
 
   fun auto(type: String?) = type?.let { "auto res = " }.orEmpty()
-  fun orVoid(type: String?) = type?.let { "j$it" } ?: "void"
+  fun orVoid(type: String?) = type?.let { type -> "j$type" } ?: "void"
   fun isStatic(params: List<Param>) = params.any { it is StringParam || it is ImVec4Param || it is PointerParam }
 
   fun genJavaXYAccessor(javaCode: StringBuilder, name: String, type: String) {

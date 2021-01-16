@@ -393,3 +393,11 @@ open class GenMouseButton : GenFlagTask(
     NoSuchFlag(-1),""")
   }
 }
+
+open class GenTableBgTarget : GenFlagTask(
+    "JImTableBgTarget",
+    "None" to "0",
+    "RowBg0" to "1",
+    "RowBg1" to "2",
+    "CellBg" to "3",
+)
