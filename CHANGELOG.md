@@ -1,5 +1,9 @@
 ## Unreleased
 
++ Add `tableSetBgColor`, `tableGetColumnName`, `tableGetColumnFlags`
++ Refactor `JImFont.getDebugName` to `JImFont.debugName`
++ Improve generation
+
 ## v0.15.0
 
 + Remove dependency on AWT
