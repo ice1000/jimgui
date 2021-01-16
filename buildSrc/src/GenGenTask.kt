@@ -8,7 +8,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
     private var isParserInitialized = false
     fun checkParserInitialized(project: Project) {
       if (isParserInitialized) return
-      parser = ImGuiHeaderParser(project.projectDir.resolve("jni").resolve("imgui").resolve("imgui.h"))
+      val imguiDir = project.projectDir.resolve("jni").resolve("imgui")
+      parser = ImGuiHeaderParser()
+      parser.parseHeader(imguiDir.resolve("imgui.h"))
+      parser.parseHeader(imguiDir.resolve("imgui_internal.h"))
       isParserInitialized = true
     }
   }
@@ -36,6 +39,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
       trivialMethods.forEach { `genC++Fun`(it, cppCode) }
 
   private val trivialMethods = listOf(
+      // Required internals
+      Fun("popItemFlag"),
+      Fun("pushItemFlag", flags("Item"), bool("enabled")),
+
       // Styles
       Fun("styleColorsDark", stylePtr("style", true)),
       Fun("styleColorsClassic", stylePtr("style", true)),

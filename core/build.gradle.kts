@@ -61,6 +61,7 @@ val generations = arrayOf(
     g<GenDrawListTask>(),
     g<GenStyleTask>(),
     g<GenTabBarFlags>(),
+    g<GenItemFlags>(),
     g<GenBackendFlags>(),
     g<GenColorEditFlags>(),
     g<GenMouseButton>(),

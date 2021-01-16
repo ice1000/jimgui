@@ -41,6 +41,21 @@ abstract class GenFlagTask(className: String, private vararg val list: Pair<Stri
   }
 }
 
+// Internal
+open class GenItemFlags : GenFlagTask(
+    "JImItemFlags",
+    "None" to "0",
+    "NoTabStop" to "1 << 0",
+    "ButtonRepeat" to "1 << 1",
+    "Disabled" to "1 << 2",
+    "NoNav" to "1 << 3",
+    "NoNavDefaultFocus" to "1 << 4",
+    "SelectableDontClosePopup" to "1 << 5",
+    "MixedValue" to "1 << 6",
+    "ReadOnly" to "1 << 7",
+    "Default" to "0",
+)
+
 open class GenTabBarFlags : GenFlagTask(
     "JImTabBarFlags",
     "None" to "0",

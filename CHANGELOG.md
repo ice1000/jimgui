@@ -8,6 +8,7 @@
 + Add `JImSortDirection` and `JImTableBgTarget`
 + Fix issues with file dialog introduced in previous release
 + Address latest flags changes in imgui
++ Add `[push|pop]ItemFlag`
 
 ## v0.15.0
 

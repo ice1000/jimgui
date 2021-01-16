@@ -5,10 +5,10 @@ import java.io.File
 /**
  * @author ice1000
  */
-class ImGuiHeaderParser(imguiHeader: File) {
+class ImGuiHeaderParser {
   val map: MutableMap<String, String> = hashMapOf()
 
-  init {
+  fun parseHeader(imguiHeader: File) {
     imguiHeader.bufferedReader().use { reader ->
       reader.lineSequence()
           .dropWhile { it != "namespace ImGui" }
