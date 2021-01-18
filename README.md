@@ -35,7 +35,8 @@ Also, it doesn't separate jars for different platforms. One jar works on all pla
 
 ### Usability
 It is well-known that dear imgui doesn't have image loading out-of-the-box,
-but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
+but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog]
+and [Flix01/imguidatechooser].
 
 ### Efficiency
 This is twofolded.
@@ -90,8 +91,10 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
       `bufferingBar`, `dialogBox`, `spinner` (Android style!), `toggleButton` (iOS style!),
       mostly from the issues and the communities.
 + [X] Integration of [aiekick/ImGuiFileDialog] as `JImFileDialog`
++ [X] Integration of [Flix01/imguidatechooser] as `imgui.dateChooser`
 
  [aiekick/ImGuiFileDialog]: https://github.com/aiekick/ImGuiFileDialog
+ [Flix01/imguidatechooser]: https://github.com/Flix01/imgui/tree/imgui_with_addons/addons/imguidatechooser
  [Critical Native]: https://stackoverflow.com/a/36309652/7083401
 
 ## C++ interoperability
