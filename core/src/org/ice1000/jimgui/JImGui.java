@@ -223,39 +223,24 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   public static native void pushID(int intID);
 
   public static native float getWindowPosX();
-
   public static native float getWindowPosY();
-
   public static native float getContentRegionMaxX();
-
   public static native float getContentRegionMaxY();
-
+  public static native float getContentRegionAvailX();
+  public static native float getContentRegionAvailY();
   public static native float getWindowContentRegionMinX();
-
   public static native float getWindowContentRegionMinY();
-
   public static native float getWindowContentRegionMaxX();
-
   public static native float getWindowContentRegionMaxY();
-
   public static native float getFontTexUvWhitePixelX();
-
   public static native float getFontTexUvWhitePixelY();
-
   public static native float getItemRectMinX();
-
   public static native float getItemRectMinY();
-
   public static native float getItemRectMaxX();
-
   public static native float getItemRectMaxY();
-
   public static native float getItemRectSizeX();
-
   public static native float getItemRectSizeY();
-
   public static native float getMousePosOnOpeningCurrentPopupX();
-
   public static native float getMousePosOnOpeningCurrentPopupY();
 
   /**

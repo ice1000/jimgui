@@ -523,6 +523,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## Y() -> jfloat { \
 
 XY_ACCESSOR(WindowPos)
 XY_ACCESSOR(ContentRegionMax)
+XY_ACCESSOR(ContentRegionAvail)
 XY_ACCESSOR(WindowContentRegionMin)
 XY_ACCESSOR(WindowContentRegionMax)
 XY_ACCESSOR(FontTexUvWhitePixel)

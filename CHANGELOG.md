@@ -1,5 +1,7 @@
 ## Unreleased
 
++ Add `getContentRegionAvail[X|Y}`
+
 ## v0.15.1
 
 + Add `tableSetBgColor`, `tableGetColumnName`, `tableGetColumnFlags`
