@@ -43,6 +43,25 @@ val compileCxx = tasks.register("compileCxx") {
   description = "Virtual task representing all C++ compilation tasks"
 }
 
+val downloadImgui = tasks.register<Download>("downloadImgui") {
+  group = downloadGroup
+  src("$imguiCoding/imgui.cpp")
+  src("$imguiCoding/imgui.h")
+  src("$imguiCoding/imgui_draw.cpp")
+  src("$imguiCoding/imgui_demo.cpp")
+  src("$imguiCoding/imgui_widgets.cpp")
+  src("$imguiCoding/imgui_tables.cpp")
+  src("$imguiCoding/imgui_internal.h")
+  src("$imguiCoding/imstb_rectpack.h")
+  src("$imguiCoding/imstb_textedit.h")
+  src("$imguiCoding/imstb_truetype.h")
+  src("$imguiCoding/misc/cpp/imgui_stdlib.cpp")
+  src("$imguiCoding/misc/cpp/imgui_stdlib.h")
+  src("$github/nothings/stb/master/stb_image.h")
+  dest(imguiDir)
+  overwrite(false)
+}
+
 inline fun <reified Task : GenJavaTask> g() =
     tasks.register<Task>(Task::class.simpleName!!.decapitalize()) {
       dependsOn(downloadImgui)
@@ -92,25 +111,6 @@ val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
 val imguiFD = "$github/aiekick/ImGuiFileDialog"
 val imguiExamples = "$imguiCoding/backends"
-
-val downloadImgui = tasks.register<Download>("downloadImgui") {
-  group = downloadGroup
-  src("$imguiCoding/imgui.cpp")
-  src("$imguiCoding/imgui.h")
-  src("$imguiCoding/imgui_draw.cpp")
-  src("$imguiCoding/imgui_demo.cpp")
-  src("$imguiCoding/imgui_widgets.cpp")
-  src("$imguiCoding/imgui_tables.cpp")
-  src("$imguiCoding/imgui_internal.h")
-  src("$imguiCoding/imstb_rectpack.h")
-  src("$imguiCoding/imstb_textedit.h")
-  src("$imguiCoding/imstb_truetype.h")
-  src("$imguiCoding/misc/cpp/imgui_stdlib.cpp")
-  src("$imguiCoding/misc/cpp/imgui_stdlib.h")
-  src("$github/nothings/stb/master/stb_image.h")
-  dest(imguiDir)
-  overwrite(false)
-}
 
 val downloadImpl = tasks.register<Download>("downloadImpl") {
   group = downloadGroup
