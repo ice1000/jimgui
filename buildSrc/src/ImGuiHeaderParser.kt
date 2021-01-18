@@ -9,6 +9,7 @@ class ImGuiHeaderParser {
   val map: MutableMap<String, String> = hashMapOf()
 
   fun parseHeader(imguiHeader: File) {
+    if (!imguiHeader.exists()) return
     imguiHeader.bufferedReader().use { reader ->
       reader.lineSequence()
           .dropWhile { it != "#pragma once" }
