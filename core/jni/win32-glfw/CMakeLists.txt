@@ -30,17 +30,19 @@ include_directories(${GLFW_INCLUDE_DIRS})
 set(TARGET_LINK_LIBS glfw opengl32 pthread gdi32 -static-libgcc -static-libstdc++ -static)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security -O3")
 add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG="fd_customization.h")
-include_directories(${JNI_INCLUDE_DIRS} .. ../imgui ../javah ../impl ../config glfw/include ../fd)
+include_directories(${JNI_INCLUDE_DIRS} .. ../imgui ../javah ../impl ../config glfw/include ../3rdparty/fd)
 link_directories(../imgui ../impl)
 
 file(GLOB IMGUI_FILES "../imgui/*")
 file(GLOB GENERATED_FILES "../gen/*")
-file(GLOB FILE_DIALOG_FILES "../fd/*")
+file(GLOB FILE_DIALOG_FILES "../3rdparty/fd/*")
+file(GLOB DATE_TIME_CHOOSER_FILES "../3rdparty/dtc/*")
 
 set(ALL_LIBRARIES
 		${IMGUI_FILES} ${IMGUI_IMPL}
 		${GENERATED_FILES}
 		${FILE_DIALOG_FILES}
+		${DATE_TIME_CHOOSER_FILES}
 		../project/fd_wrapper.cpp
 		../project/hand_written_bindings.h
 		../project/hand_written_bindings.cpp

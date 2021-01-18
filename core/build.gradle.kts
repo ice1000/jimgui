@@ -12,7 +12,9 @@ plugins {
 
 val jni = projectDir.resolve("jni").absoluteFile
 val imguiDir = jni.resolve("imgui")
-val fdDir = jni.resolve("fd")
+val thirdParty = jni.resolve("3rdparty")
+val fdDir = thirdParty.resolve("fd")
+val dtcDir = thirdParty.resolve("dtc")
 val implDir = jni.resolve("impl")
 val genDir = jni.resolve("gen")
 val `cmake-build-win64` = jni.resolve("cmake-build-win64")
@@ -23,7 +25,7 @@ val res = projectDir.resolve("res")
 fun NativeBuildTask.preconfigure(vararg deps: TaskProvider<*>) {
   jniDir = jni
   resDir = res
-  listOf(fdDir, genDir, imguiDir, implDir, jni.resolve("config"), jni.resolve("project")).map(inputs::dir)
+  listOf(fdDir, dtcDir, genDir, imguiDir, implDir, jni.resolve("config"), jni.resolve("project")).map(inputs::dir)
   inputs.file(jni.resolve("CMakeLists.txt"))
   dependsOn(*deps)
 }
@@ -110,6 +112,7 @@ val github = "https://raw.githubusercontent.com"
 val coding = "https://coding.net/u/ice1000/p"
 val imguiCoding = "$github/ocornut/imgui/master"
 val imguiFD = "$github/aiekick/ImGuiFileDialog"
+val imguiDTC = "$github/Flix01/imgui"
 val imguiExamples = "$imguiCoding/backends"
 
 val downloadImpl = tasks.register<Download>("downloadImpl") {
@@ -151,6 +154,14 @@ val downloadFileDialog = tasks.register<Download>("downloadFileDialog") {
   src("$imguiFD/Lib_Only/ImGuiFileDialog.h")
   src("$imguiFD/Lib_Only/ImGuiFileDialog.cpp")
   dest(fdDir)
+  overwrite(false)
+}
+
+val downloadDateTimeChooser = tasks.register<Download>("downloadDateTimeChooser") {
+  group = downloadGroup
+  src("$imguiDTC/imgui_with_addons/addons/imguidatechooser/imguidatechooser.h")
+  src("$imguiDTC/imgui_with_addons/addons/imguidatechooser/imguidatechooser.cpp")
+  dest(dtcDir)
   overwrite(false)
 }
 
@@ -205,11 +216,11 @@ val clearCMake = tasks.register<Delete>("clearCMake") {
 
 val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
   group = cleanGroup
-  delete(imguiDir, implDir, fdDir)
+  delete(imguiDir, implDir, thirdParty)
 }
 
 downloadAll.configure {
-  dependsOn(downloadImplGL, downloadImpl, downloadImgui, downloadFileDialog)
+  dependsOn(downloadImplGL, downloadImpl, downloadImgui, downloadFileDialog, downloadDateTimeChooser)
 }
 tasks.compileJava {
   options.compilerArgs = listOf("-h", "$javahDir")

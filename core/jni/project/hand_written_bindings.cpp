@@ -4,7 +4,7 @@
 
 #include "hand_written_bindings.h"
 #include <string>
-#include <time.h>
+#include <ctime>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -172,6 +172,8 @@ Java_org_ice1000_jimgui_JImGuiIO_getInputChars(Ptr<JNIEnv> env, jobject) -> jcha
   delete[] inputStr;
   return _inputStr;
 }
+
+extern "C" {
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGuiIO_getFonts0() -> jlong {
@@ -386,6 +388,7 @@ Java_org_ice1000_jimgui_JImVec4_allocateNativeObjects(Ptr<JNIEnv>, jclass, jfloa
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects(jfloat x, jfloat y, jfloat z, jfloat w) -> jlong {
   return PTR_C2J(new ImVec4(x, y, z, w));
+}
 }
 
 #define JIMVEC4_GETTER(name, Name) \

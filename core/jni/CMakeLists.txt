@@ -73,16 +73,18 @@ endif ()
 
 add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG="fd_customization.h")
 
-include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config fd)
+include_directories(${JNI_INCLUDE_DIRS} project imgui javah impl config 3rdparty/fd 3rdparty/dtc)
 
 file(GLOB IMGUI_FILES "imgui/*")
 file(GLOB GENERATED_FILES "gen/*")
-file(GLOB FILE_DIALOG_FILES "fd/*")
+file(GLOB FILE_DIALOG_FILES "3rdparty/fd/*")
+file(GLOB DATE_TIME_CHOOSER_FILES "3rdparty/dtc/*")
 
 set(ALL_LIBRARIES
     imgui ${IMGUI_FILES} ${IMGUI_IMPL}
     javah gen ${GENERATED_FILES}
-    fd ${FILE_DIALOG_FILES}
+    3rdparty/fd ${FILE_DIALOG_FILES}
+    3rdparty/dtc ${DATE_TIME_CHOOSER_FILES}
     project/fd_wrapper.cpp
     project/hand_written_bindings.cpp
     project/overloads_helper.cpp

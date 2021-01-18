@@ -2,7 +2,7 @@ imgui
 javah
 impl
 .idea
-fd
+3rdparty
 cmake-build-debug/
 cmake-build-release/
 generated*.cpp
