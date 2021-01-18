@@ -195,36 +195,33 @@ class SizedStringParam(
   override fun `c++CriticalExpr`() = "STR_J2C($name), STR_J2C($name + ${name}Len)"
 }
 
-data class ImVec4Param(val name: String, override val default: Any?) : Param() {
+abstract class BasePtrParam(val name: String) : Param() {
   override fun java() = "long $name"
-  override fun javaDefault() = "@NotNull JImVec4 $name"
   override fun javaExpr() = "$name.nativeObjectPtr"
   override fun `c++`() = "jlong $name"
+}
+
+class ImVec4Param(name: String, override val default: Any?) : BasePtrParam(name) {
+  override fun javaDefault() = "@NotNull JImVec4 $name"
   override fun `c++Expr`() = "*PTR_J2C(ImVec4, $name)"
 }
 
-data class TmParam(val name: String, override val default: Any? = null) : Param() {
-  override fun java() = "long $name"
+class TmParam(name: String, override val default: Any? = null) : BasePtrParam(name) {
   override fun javaDefault() = "@NotNull NativeTime $name"
-  override fun javaExpr() = "$name.nativeObjectPtr"
-  override fun `c++`() = "jlong $name"
   override fun `c++Expr`() = "*PTR_J2C(tm, $name)"
 }
 
-data class PointerParam(
-    val name: String,
+class PointerParam(
+    name: String,
     val jvmType: String,
     val nativeType: String,
     val annotation: String = "@NotNull",
     override val default: Any? = null,
-) : Param() {
+) : BasePtrParam(name) {
   constructor(name: String, jvmType: String, nativeType: String, nullable: Boolean)
       : this(name, jvmType, nativeType, if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
 
-  override fun java() = "long $name"
-  override fun javaDefault() = "@NotNull $jvmType $name"
-  override fun javaExpr() = "$name.nativeObjectPtr"
-  override fun `c++`() = "jlong $name"
+  override fun javaDefault() = "$annotation $jvmType $name"
   override fun `c++Expr`() = "PTR_J2C($nativeType, $name)"
 }
 

@@ -27,7 +27,7 @@ public class FileDialogTest {
         }
         if (instance.display(key)) {
           if (instance.isOk()) try (NativeString currentPath = instance.currentPath()) {
-            System.out.println(currentPath);
+            imGui.text(currentPath);
           }
           instance.close();
         }
