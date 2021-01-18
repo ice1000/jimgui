@@ -44,8 +44,7 @@ set(ALL_LIBRARIES
 		${FILE_DIALOG_FILES}
 		${DATE_TIME_CHOOSER_FILES}
 		../project/fd_wrapper.cpp
-		../project/hand_written_bindings.h
-		../project/hand_written_bindings.cpp
+    ../project/hand_written_bindings.cpp
 		../project/overloads_helper.cpp
 		../project/basics.hpp
 		../project/imgui_ext.cpp
