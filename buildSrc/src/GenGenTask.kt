@@ -25,6 +25,10 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
   public static final byte@NotNull[] DOUBLE_FMT = new byte[]{${"%.6f".toList().joinToString { "${it.toInt()}" }}, 0};
   public static final byte@NotNull[] INT_FMT = new byte[]{${"%d".toList().joinToString { "${it.toInt()}" }}, 0};
   public static final byte@NotNull[] TIME_FMT = new byte[]{${"%d/%m/%Y".toList().joinToString { "${it.toInt()}" }}, 0};
+  public static final byte@NotNull[] LEFT_ARROW = new byte[]{${"<".toList().joinToString { "${it.toInt()}" }}, 0};
+  public static final byte@NotNull[] RIGHT_ARROW = new byte[]{${">".toList().joinToString { "${it.toInt()}" }}, 0};
+  public static final byte@NotNull[] UP_ARROW = new byte[]{${"   ^   ".toList().joinToString { "${it.toInt()}" }}, 0};
+  public static final byte@NotNull[] DOWN_ARROW = new byte[]{${"   v   ".toList().joinToString { "${it.toInt()}" }}, 0};
 """
 
   override fun java(javaCode: StringBuilder) {
@@ -75,6 +79,14 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
       Fun("spinner", float("radius"), thickness,
           numSegments(30), vec4("color")),
       Fun("toggleButton", stringID, pOpen),
+      Fun("dateChooser", "boolean", label, TmParam("time"),
+          string("dateFormat", default = "TIME_FMT"),
+          bool("closeWhenMouseLeavesIt", default = true),
+          boolPtr("pSetStartDateToDateOutThisFrame", nullable = true),
+          string("leftArrow", default = "LEFT_ARROW"),
+          string("rightArrow", default = "RIGHT_ARROW"),
+          string("upArrow", default = "UP_ARROW"),
+          string("downArrow", default = "DOWN_ARROW")),
 
       // Cursor / Layout
       Fun("separator"),

@@ -27,12 +27,12 @@ public class NativeTime implements DeallocatableObject {
     reset(nativeObjectPtr);
   }
 
-  public long toAbsoluteMillis() {
-    return toAbsoluteMillis(nativeObjectPtr);
+  public long toAbsoluteSeconds() {
+    return toAbsoluteSeconds(nativeObjectPtr);
   }
 
   private static native long allocateNativeObject();
-  private static native long toAbsoluteMillis(long nativeObjectPtr);
+  private static native long toAbsoluteSeconds(long nativeObjectPtr);
   private static native void resetToToday(long nativeObjectPtr);
   private static native void reset(long nativeObjectPtr);
   private static native void deallocateNativeObject(long nativeObjectPtr);

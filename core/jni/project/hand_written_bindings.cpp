@@ -569,6 +569,38 @@ XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
 
 #undef XY_ACCESSOR
 
+extern "C" {
+JNIEXPORT jlong JNICALL
+JavaCritical_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(jlong nativeObjectPtr) {
+  return mktime(PTR_J2C(tm, nativeObjectPtr));
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_NativeTime_resetToToday(jlong nativeObjectPtr) {
+  ImGui::SetDateToday(PTR_J2C(tm, nativeObjectPtr));
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_NativeTime_reset(jlong nativeObjectPtr) {
+  ImGui::SetDateZero(PTR_J2C(tm, nativeObjectPtr));
+}
+}
+
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  return JavaCritical_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_NativeTime_resetToToday(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  JavaCritical_org_ice1000_jimgui_NativeTime_resetToToday(nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_NativeTime_reset(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  JavaCritical_org_ice1000_jimgui_NativeTime_reset(nativeObjectPtr);
+}
+
 #ifndef WIN32
 #pragma clang diagnostic pop
 #endif

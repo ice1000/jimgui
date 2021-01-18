@@ -190,12 +190,6 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   }
   //endregion
 
-  /** Don't call it. */
-  @Deprecated
-  @ApiStatus.ScheduledForRemoval
-  public void initBeforeMainLoop() {
-  }
-
   public float getPlatformWindowSizeX() {
     return getPlatformWindowSizeX(nativeObjectPtr);
   }

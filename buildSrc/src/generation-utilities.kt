@@ -18,10 +18,10 @@ fun floatPtr(name: String, nullable: Boolean = false) = PointerParam(name, "Nati
 fun doublePtr(name: String, nullable: Boolean = false) = PointerParam(name, "NativeDouble", "double", nullable)
 
 fun texture(name: String, nullable: Boolean = false) =
-    PointerParam(name, "JImTextureID", "ImTextureID", if (nullable) "@Nullable" else "@NotNull")
+    PointerParam(name, "JImTextureID", "ImTextureID")
 
 fun intPtr(name: String, nullable: Boolean = false) =
-    PointerParam(name, "NativeInt", "int", if (nullable) "@Nullable" else "@NotNull")
+    PointerParam(name, "NativeInt", "int")
 
 fun int(
     name: String,
@@ -215,13 +215,12 @@ class PointerParam(
     name: String,
     val jvmType: String,
     val nativeType: String,
-    val annotation: String = "@NotNull",
     override val default: Any? = null,
 ) : BasePtrParam(name) {
   constructor(name: String, jvmType: String, nativeType: String, nullable: Boolean)
-      : this(name, jvmType, nativeType, if (nullable) "@Nullable" else "@NotNull", if (nullable) 0 else null)
+      : this(name, jvmType, nativeType, if (nullable) 0 else null)
 
-  override fun javaDefault() = "$annotation $jvmType $name"
+  override fun javaDefault() = "@NotNull $jvmType $name"
   override fun `c++Expr`() = "PTR_J2C($nativeType, $name)"
 }
 
@@ -257,6 +256,7 @@ const val CXX_PREFIX = """///
 #include <imgui_internal.h>
 #include <imgui_stdlib.h>
 #include <time.h>
+#include <imguidatechooser.h>
 #include <imgui_ext.h>
 #include "basics.hpp"
 #include "overloads_helper.hpp"
