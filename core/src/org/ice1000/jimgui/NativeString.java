@@ -95,22 +95,13 @@ public final class NativeString implements CharSequence, DeallocatableObject {
   }
 
   private static native long allocateNativeObject(int initialCapacity);
-
   private static native long allocateNativeObjectFromRaw(long constCharPtr);
-
   private static native void deallocateNativeObject0(long nativeObjectPtr);
-
   private static native byte byteAt(long nativeObjectPtr, int position);
-
   private static native void setByteAt(long nativeObjectPtr, int position, byte newValue);
-
   private static native int length(long nativeObjectPtr);
-
   private static native void clear(long nativeObjectPtr);
-
   private static native long substring(long nativeObjectPtr, int start, int end);
-
   private static native void appendChar(long nativeObjectPtr, byte chr);
-
   private static native void readValues(long nativeObjectPtr, byte @NotNull [] buf);
 }

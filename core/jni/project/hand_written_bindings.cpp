@@ -4,6 +4,7 @@
 
 #include "hand_written_bindings.h"
 #include <string>
+#include <time.h>
 
 #ifndef WIN32
 #pragma clang diagnostic push
@@ -71,6 +72,7 @@ Java_org_ice1000_jimgui_JImStyle_getColor0(Ptr<JNIEnv>, jclass, jlong nativeObje
 }
 
 #define ALLOCATE_AND_DEALLOCATE(cxxClass, javaClass) \
+extern "C" { \
 JNIEXPORT auto JNICALL \
 JavaCritical_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject() -> jlong { \
   return PTR_C2J(new cxxClass()); \
@@ -86,12 +88,14 @@ JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong n
 JNIEXPORT void JNICALL \
 Java_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(JNIEnv *, jclass, jlong nativeObjectPtr) { \
   JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(nativeObjectPtr); \
+} \
 }
 
 ALLOCATE_AND_DEALLOCATE(ImGuiStyle, JImStyle)
 ALLOCATE_AND_DEALLOCATE(ImFontConfig, JImFontConfig)
 ALLOCATE_AND_DEALLOCATE(ImFontAtlas, JImFontAtlas)
 ALLOCATE_AND_DEALLOCATE(IGFD::FileDialog, JImFileDialog)
+ALLOCATE_AND_DEALLOCATE(tm, NativeTime)
 
 #undef ALLOCATE_AND_DEALLOCATE
 
@@ -385,6 +389,7 @@ JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects(jfloat x, jfloat y
 }
 
 #define JIMVEC4_GETTER(name, Name) \
+extern "C" { \
 JNIEXPORT auto JNICALL \
 Java_org_ice1000_jimgui_JImVec4_get ## Name(Ptr<JNIEnv>, jclass, jlong nativeObjectPtr) -> jfloat { \
   return PTR_J2C(ImVec4, nativeObjectPtr)->name; \
@@ -392,6 +397,7 @@ Java_org_ice1000_jimgui_JImVec4_get ## Name(Ptr<JNIEnv>, jclass, jlong nativeObj
 JNIEXPORT auto JNICALL \
 JavaCritical_org_ice1000_jimgui_JImVec4_get ## Name(jlong nativeObjectPtr) -> jfloat { \
   return PTR_J2C(ImVec4, nativeObjectPtr)->name; \
+} \
 }
 
 JIMVEC4_GETTER(x, X)
@@ -422,6 +428,7 @@ Java_org_ice1000_jimgui_JImVec4_fromImU32(Ptr<JNIEnv>, jclass, jint u32) -> jlon
 }
 
 #define JIMVEC4_SETTER(name, Name) \
+extern "C" { \
 JNIEXPORT void JNICALL \
 Java_org_ice1000_jimgui_MutableJImVec4_set ## Name(Ptr<JNIEnv>, jclass, jlong nativeObjectPtr, jfloat newValue) { \
   PTR_J2C(ImVec4, nativeObjectPtr)->name = newValue; \
@@ -437,6 +444,7 @@ JavaCritical_org_ice1000_jimgui_MutableJImVec4_set ## Name(jlong nativeObjectPtr
 JNIEXPORT void JNICALL \
 JavaCritical_org_ice1000_jimgui_MutableJImVec4_inc ## Name(jlong nativeObjectPtr, jfloat increment) { \
   PTR_J2C(ImVec4, nativeObjectPtr)->name += increment; \
+} \
 }
 
 JIMVEC4_SETTER(x, X)
@@ -504,6 +512,7 @@ Java_org_ice1000_jimgui_JImWidgets_menuItem(
 }
 
 #define XY_ACCESSOR(Property) \
+extern "C" { \
 JNIEXPORT auto JNICALL \
 Java_org_ice1000_jimgui_JImGui_get ## Property ## X(Ptr<JNIEnv>, jclass) -> jfloat { \
   return ImGui::Get ## Property().x; \
@@ -519,6 +528,7 @@ JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## X() -> jfloat { \
 JNIEXPORT auto JNICALL \
 JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## Y() -> jfloat { \
   return ImGui::Get ## Property().y; \
+} \
 }
 
 XY_ACCESSOR(WindowPos)

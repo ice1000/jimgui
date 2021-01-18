@@ -45,19 +45,6 @@ JavaCritical_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr() ->
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong;
 
-#define ALLOCATE_AND_DEALLOCATE_H(javaClass) \
-JNIEXPORT auto JNICALL \
-JavaCritical_org_ice1000_jimgui_ ## javaClass ## _allocateNativeObject() -> jlong; \
-JNIEXPORT void JNICALL \
-JavaCritical_org_ice1000_jimgui_ ## javaClass ## _deallocateNativeObject(jlong nativeObjectPtr); \
-
-ALLOCATE_AND_DEALLOCATE_H(JImStyle)
-ALLOCATE_AND_DEALLOCATE_H(JImFontConfig)
-ALLOCATE_AND_DEALLOCATE_H(JImFontAtlas)
-ALLOCATE_AND_DEALLOCATE_H(JImFileDialog)
-
-#undef ALLOCATE_AND_DEALLOCATE_H
-
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImFontAtlas_addFontFromFileTTF0(
     jint pathLen, Ptr<jbyte> path, jfloat size, jlong config, jlong range, jlong nativeObjectPtr) -> jlong;
@@ -83,35 +70,11 @@ JavaCritical_org_ice1000_jimgui_JImVec4_deallocateNativeObjects(jlong nativeObje
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImVec4_allocateNativeObjects(jfloat x, jfloat y, jfloat z, jfloat w) -> jlong;
 
-#define JIMVEC4_GETTER(name, Name) \
-JNIEXPORT auto JNICALL \
-JavaCritical_org_ice1000_jimgui_JImVec4_get ## Name(jlong nativeObjectPtr) -> jfloat;
-
-JIMVEC4_GETTER(x, X)
-JIMVEC4_GETTER(y, Y)
-JIMVEC4_GETTER(z, Z)
-JIMVEC4_GETTER(w, W)
-
-#undef JIMVEC4_GETTER
-
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImVec4_toU32(jlong nativeObjectPtr) -> jint;
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImVec4_fromImU32(jint u32) -> jlong;
-
-#define JIMVEC4_SETTER(name, Name) \
-JNIEXPORT void JNICALL \
-JavaCritical_org_ice1000_jimgui_MutableJImVec4_set ## Name(jlong nativeObjectPtr, jfloat newValue); \
-JNIEXPORT void JNICALL \
-JavaCritical_org_ice1000_jimgui_MutableJImVec4_inc ## Name(jlong nativeObjectPtr, jfloat increment); \
-
-JIMVEC4_SETTER(x, X)
-JIMVEC4_SETTER(y, Y)
-JIMVEC4_SETTER(z, Z)
-JIMVEC4_SETTER(w, W)
-
-#undef JIMVEC4_SETTER
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImWidgets_text(jlong stringPtr);
@@ -167,25 +130,6 @@ JavaCritical_org_ice1000_jimgui_JImWidgets_inputText(
     jint bufferLen,
     jint flags
 ) -> jboolean;
-
-#define XY_ACCESSOR(Property) \
-JNIEXPORT auto JNICALL \
-JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## X() -> jfloat; \
-JNIEXPORT auto JNICALL \
-JavaCritical_org_ice1000_jimgui_JImGui_get ## Property ## Y() -> jfloat;
-
-XY_ACCESSOR(WindowPos)
-XY_ACCESSOR(ContentRegionMax)
-XY_ACCESSOR(ContentRegionAvail)
-XY_ACCESSOR(WindowContentRegionMin)
-XY_ACCESSOR(WindowContentRegionMax)
-XY_ACCESSOR(FontTexUvWhitePixel)
-XY_ACCESSOR(ItemRectMin)
-XY_ACCESSOR(ItemRectMax)
-XY_ACCESSOR(ItemRectSize)
-XY_ACCESSOR(MousePosOnOpeningCurrentPopup)
-
-#undef XY_ACCESSOR
 
 #ifdef __cplusplus
 }
