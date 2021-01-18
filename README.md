@@ -17,6 +17,9 @@ Linux Build | Windows Build
 
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
+This binding a rather bare, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles.
+There is a declarative wrapper of jimgui, namely [flui](https://github.com/newk5/flui) available.
+
 ## Features
 Can be considered as both advantages and disadvantages.
 
@@ -35,7 +38,7 @@ It is well-known that dear imgui doesn't have image loading out-of-the-box,
 but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog].
 
 ### Efficiency
-This is twofold.
+This is twofolded.
 
 + JNI efficiency. It exploits [Critical Native] and it avoids accessing Java from C++.
   Only arrays and primitive types are passed from Java to C++,
@@ -63,7 +66,7 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
 
 # Demo
 
-+ [Partly re-implementation of imgui_demo.cpp](core/test/org/ice1000/jimgui/tests/Demo.java).
++ [Partial re-implementation of imgui_demo.cpp](core/test/org/ice1000/jimgui/tests/Demo.java).
 + [A sample text editor](core/test/org/ice1000/jimgui/tests/EditorTest.java)
 + [DrawList party](fun/src/dlparty/BigCollection.java), with a [YouTube video](https://youtu.be/ojgWnelaRfw)
 
