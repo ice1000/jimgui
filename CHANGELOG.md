@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.16.0
+
 + Add `getContentRegionAvail[X|Y}`
 + Add `imgui.dateChooser`, ported from [here](https://github.com/Flix01/imgui/tree/imgui_with_addons/addons/imguidatechooser)
 + Add `NativeTime` type
