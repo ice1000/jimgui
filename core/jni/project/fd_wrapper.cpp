@@ -45,6 +45,19 @@ Java_org_ice1000_jimgui_JImFileDialog_fileDialogP(
       stringPtr, flags, minSizeX, minSizeY, maxSizeX, maxSizeY, nativeObjectPtr);
 }
 
+JNIEXPORT jlong JNICALL
+JavaCritical_org_ice1000_jimgui_JImFileDialog_selectedFiles(jlong nativeObjectPtr) {
+  auto &&map = PTR_J2C(FileDialog, nativeObjectPtr)->GetSelection();
+  auto *vec = new std::vector<std::string>(map.size());
+  for (auto &&selection : map) vec->push_back(selection.second);
+  return PTR_C2J(vec);
+}
+
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_JImFileDialog_selectedFiles(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  return JavaCritical_org_ice1000_jimgui_JImFileDialog_selectedFiles(nativeObjectPtr);
+}
+
 JNIEXPORT jlong JNICALL JavaCritical_org_ice1000_jimgui_JImFileDialog_currentPath0(jlong nativeObjectPtr) {
   return PTR_C2J(new std::string(PTR_J2C(FileDialog, nativeObjectPtr)->GetCurrentPath()));
 }

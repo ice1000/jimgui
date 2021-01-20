@@ -19,7 +19,7 @@ public class SetWindowTitle {
   public static void main(String... args) {
     JniLoader.load();
     NativeString string = new NativeString();
-    JImGuiUtil.runPer(15, imgui -> {
+    JImGuiUtil.runWithinPer(6000, 15, imgui -> {
       if (imgui.button("Hey Jude")) imgui.setWindowTitle("Don't make it bad");
       imgui.inputText("Sally can wait", string);
       if (imgui.button("She knows it's too late")) imgui.setWindowTitle(string);

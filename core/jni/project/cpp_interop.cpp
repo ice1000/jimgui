@@ -3,8 +3,10 @@
 ///
 
 #include <string>
+#include <vector>
 #include <org_ice1000_jimgui_NativeBool.h>
 #include <org_ice1000_jimgui_NativeString.h>
+#include <org_ice1000_jimgui_NativeStrings.h>
 #include <org_ice1000_jimgui_NativeInt.h>
 #include <org_ice1000_jimgui_NativeFloat.h>
 #include <org_ice1000_jimgui_NativeDouble.h>
@@ -246,6 +248,37 @@ Java_org_ice1000_jimgui_NativeString_readValues(JNIEnv *env, jclass, jlong nativ
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_NativeString_appendChar(JNIEnv *, jclass, jlong nativeObjectPtr, jbyte newChar) {
   JavaCritical_org_ice1000_jimgui_NativeString_appendChar(nativeObjectPtr, newChar);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_NativeStrings_deallocateNativeObject(jlong nativeObjectPtr) {
+  delete PTR_J2C(std::vector<std::string>, nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_NativeStrings_deallocateNativeObject(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  JavaCritical_org_ice1000_jimgui_NativeStrings_deallocateNativeObject(nativeObjectPtr);
+}
+
+JNIEXPORT jlong JNICALL
+JavaCritical_org_ice1000_jimgui_NativeStrings_get(jlong nativeObjectPtr, jint index) {
+  auto *str = new std::string(PTR_J2C(std::vector<std::string>, nativeObjectPtr)->at(index));
+  return PTR_C2J(str);
+}
+
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_NativeStrings_get(JNIEnv *, jclass, jlong nativeObjectPtr, jint index) {
+  return JavaCritical_org_ice1000_jimgui_NativeStrings_get(nativeObjectPtr, index);
+}
+
+JNIEXPORT jint JNICALL
+JavaCritical_org_ice1000_jimgui_NativeStrings_size(jlong nativeObjectPtr) {
+  return PTR_J2C(std::vector<std::string>, nativeObjectPtr)->size();
+}
+
+JNIEXPORT jint JNICALL
+Java_org_ice1000_jimgui_NativeStrings_size(JNIEnv *, jclass, jlong nativeObjectPtr) {
+  return JavaCritical_org_ice1000_jimgui_NativeStrings_size(nativeObjectPtr);
 }
 
 }
