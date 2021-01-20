@@ -243,12 +243,8 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 }
 
 JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
-    jint width,
-    jint height,
-    Ptr<jbyte> title,
-    jlong anotherWindow
-) -> jlong {
+JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(jint width, jint height, jint titleSize,
+                                                                   Ptr<jbyte> title, jlong anotherWindow) -> jlong {
   return 0;
 }
 

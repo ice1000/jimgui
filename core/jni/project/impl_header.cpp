@@ -88,7 +88,7 @@ Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
     jbyteArray _title,
     jlong anotherWindow) -> jlong {
   __get(Byte, title)
-  auto ret = JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(w, h, title, anotherWindow);
+  auto ret = JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(w, h, -1, title, anotherWindow);
   __release(Byte, title)
   return ret;
 }
