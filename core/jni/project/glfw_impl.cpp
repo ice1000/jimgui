@@ -37,6 +37,8 @@
   #define OPENGL_MINOR_VERSION 0
 #endif
 
+#include <string>
+
 static void glfw_error_callback(int error, Ptr<const char> description) {
   fprintf(stderr, "JImGui Error %d: %s\n", error, description);
 }
