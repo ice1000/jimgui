@@ -22,8 +22,8 @@ public class FileDialogTest {
         imGui.checkbox("Use modal dialog", modal);
         instance.setExtensionInfo(".java", Sandbox.fromAWT(Color.ORANGE), "[Java]");
         if (imGui.button("Open dialog")) {
-          if (modal.accessValue()) instance.openModal(key, title, filter, pwd);
-          else instance.openDialog(key, title, filter, pwd);
+          if (modal.accessValue()) instance.openModal(key, title, filter, pwd, 2);
+          else instance.openDialog(key, title, filter, pwd, 2);
         }
         if (instance.display(key)) {
           if (instance.isOk()) try (NativeString currentPath = instance.currentPath();

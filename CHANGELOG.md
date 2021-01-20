@@ -4,6 +4,7 @@
 + Add `imgui.setWindowTitle` with 3 overloads
 + Add `fileDialog.selections`
 + Add `NativeStrings` for an unmodifiable vector of strings
++ Add `maxSelection` argument to `open[Modal/Dialog]`
 
 ## v0.16.0
 
