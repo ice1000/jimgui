@@ -2,6 +2,8 @@
 
 + Fix a binding issue of `GlfwUtil` (unused/unmaintained, but it was wrongly written)
 + Add `imgui.setWindowTitle` with 3 overloads
++ Add `fileDialog.selections`
++ Add `NativeStrings` for an unmodifiable vector of strings
 
 ## v0.16.0
 
