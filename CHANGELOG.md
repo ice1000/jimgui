@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Fix a binding issue of `GlfwUtil` (unused/unmaintained, but it was wrongly written)
++ Add `imgui.setWindowTitle` with 3 overloads
+
 ## v0.16.0
 
 + Add `getContentRegionAvail[X|Y}`
