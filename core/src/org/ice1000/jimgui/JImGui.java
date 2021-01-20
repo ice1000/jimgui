@@ -251,6 +251,18 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
     render(nativeObjectPtr, background.nativeObjectPtr);
   }
 
+  @Contract public void setWindowTitle(@NotNull String title) {
+    setWindowTitle(nativeObjectPtr, getBytes(title));
+  }
+
+  @Contract public void setWindowTitle(@NotNull JImStr title) {
+    setWindowTitle(nativeObjectPtr, title.bytes);
+  }
+
+  @Contract public void setWindowTitle(@NotNull NativeString title) {
+    setWindowTitlePtr(nativeObjectPtr, title.nativeObjectPtr);
+  }
+
   /** Should be called before drawing all widgets */
   @Contract public void initNewFrame() {
     initNewFrame(nativeObjectPtr);
@@ -296,41 +308,25 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
       int width, int height, long fontAtlas, byte @NotNull [] title, long anotherWindow);
 
   protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
-
   private static native void deallocateNativeObjects(long nativeObjectPtr);
-
   private static native void deallocateGuiFramework(long nativeObjectPtr);
-
   private static native void initNewFrame(long nativeObjectPtr);
-
   private static native long getFontNativeObjectPtr();
-
   private static native long getStyleNativeObjectPtr();
-
   private static native long getWindowDrawListNativeObjectPtr();
-
   private static native long getForegroundDrawListNativeObjectPtr();
-
   private static native boolean windowShouldClose(long nativeObjectPtr);
-
   private static native void render(long nativeObjectPtr, long colorPtr);
-
+  private static native void setWindowTitle(long nativeObjectPtr, byte @NotNull [] title);
+  private static native void setWindowTitlePtr(long nativeObjectPtr, long titlePtr);
   private static native float getPlatformWindowSizeX(long nativeObjectPtr);
-
   private static native float getPlatformWindowSizeY(long nativeObjectPtr);
-
   private static native float getPlatformWindowPosX(long nativeObjectPtr);
-
   private static native float getPlatformWindowPosY(long nativeObjectPtr);
-
   private static native void setPlatformWindowSize(long nativeObjectPtr, float newX, float newY);
-
   private static native void setPlatformWindowPos(long nativeObjectPtr, float newX, float newY);
-
   private static native void loadIniSettingsFromMemory(final byte @NotNull [] data);
-
   private static native byte @NotNull [] saveIniSettingsToMemory0();
-
   private static native byte @NotNull [] getClipboardText0();
   //endregion
 }

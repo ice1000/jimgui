@@ -3,6 +3,7 @@
 //
 
 #include "win32_impl.h"
+#include <string>
 
 NativeObject::NativeObject(jint width, jint height, Ptr<const char> title) : wc{
     sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L,
@@ -99,4 +100,16 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPt
       0,
       0,
       SWP_NOSIZE | SWP_NOZORDER);
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitle(jlong nativeObjectPtr, jint, jbyte* title){
+  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
+  SetWindowTextA(wc->hwnd, STR_J2C(title));
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitlePtr(jlong nativeObjectPtr, jlong titlePtr) {
+  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
+  SetWindowTextA(wc->hwnd, PTR_J2C(std::string, titlePtr)->c_str());
 }

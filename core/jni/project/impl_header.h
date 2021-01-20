@@ -33,12 +33,19 @@ JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_render(jlong nativeObjectPtr, jlong colorPtr);
 
 JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitle(jlong nativeObjectPtr, jint titleSize, jbyte* title);
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitlePtr(jlong nativeObjectPtr, jlong titlePtr);
+
+JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(jlong nativeObjectPtr, jlong fontAtlas);
 
 JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
     jint width,
     jint height,
+    jint titleSize,
     Ptr<jbyte> title,
     jlong anotherWindow) -> jlong;
 

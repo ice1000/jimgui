@@ -79,6 +79,18 @@ Java_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(JNIEnv *, jclass, jlong
   JavaCritical_org_ice1000_jimgui_JImGui_setupImguiSpecificObjects(nativeObjectPtr, fontAtlas);
 }
 
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_setWindowTitle(JNIEnv *env, jclass, jlong nativeObjectPtr, jbyteArray _title) {
+  __get(Byte, title);
+  JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitle(nativeObjectPtr, -1, title);
+  __release(Byte, title);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_setWindowTitlePtr(JNIEnv *env, jclass, jlong nativeObjectPtr, jlong stringPtr) {
+  JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitlePtr(nativeObjectPtr, stringPtr);
+}
+
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_glfw_GlfwUtil_createWindowPointer0(
     JNIEnv *env,

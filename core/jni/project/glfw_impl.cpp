@@ -265,4 +265,16 @@ JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowPos(jlong nativeObjectPt
   glfwSetWindowPos(window, static_cast<int>(newX), static_cast<int>(newY));
 }
 
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitle(jlong nativeObjectPtr, jint, jbyte* title){
+  auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
+  glfwSetWindowTitle(window, STR_J2C(title));
+}
+
+JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_setWindowTitlePtr(jlong nativeObjectPtr, jlong titlePtr) {
+  auto *window = PTR_J2C(GLFWwindow, nativeObjectPtr);
+  glfwSetWindowTitle(window, PTR_J2C(std::string, titlePtr)->c_str());
+}
+
 #pragma clang diagnostic pop
