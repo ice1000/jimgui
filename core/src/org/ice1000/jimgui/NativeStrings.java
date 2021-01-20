@@ -1,6 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -18,7 +19,10 @@ public class NativeStrings implements DeallocatableObject {
     return size(nativeObjectPtr);
   }
 
-  public @NotNull NativeString get(int index) {
+  /**
+   * @apiNote you need to close the returned string.
+   */
+  @Contract public @NotNull NativeString get(int index) {
     return new NativeString(get(nativeObjectPtr, index));
   }
 

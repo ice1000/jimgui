@@ -26,8 +26,15 @@ public class FileDialogTest {
           else instance.openDialog(key, title, filter, pwd);
         }
         if (instance.display(key)) {
-          if (instance.isOk()) try (NativeString currentPath = instance.currentPath()) {
+          if (instance.isOk()) try (NativeString currentPath = instance.currentPath();
+                                    NativeStrings selectedFiles = instance.selections()) {
             imGui.text(currentPath);
+            for (int i = 0, size = selectedFiles.size(); i < size; i++) {
+              try (NativeString string = selectedFiles.get(i)) {
+                System.out.println(string);
+                imGui.text(string);
+              }
+            }
           }
           instance.close();
         }

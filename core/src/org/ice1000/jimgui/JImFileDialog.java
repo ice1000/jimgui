@@ -42,13 +42,10 @@ public final class JImFileDialog extends JImFileDialogGen implements Deallocatab
   }
 
   private static native long allocateNativeObject();
-
   private static native void deallocateNativeObject(long nativeObjectPtr);
-
   private static native long currentPath0(long nativeObjectPtr);
-
   private static native long currentFileName0(long nativeObjectPtr);
-
+  private static native long selectedFiles(long nativeObjectPtr);
   private static native long filePathName0(long nativeObjectPtr);
 
   public @NotNull NativeString currentPath() {
@@ -61,6 +58,10 @@ public final class JImFileDialog extends JImFileDialogGen implements Deallocatab
 
   public @NotNull NativeString filePathName() {
     return new NativeString(filePathName0(nativeObjectPtr));
+  }
+
+  public @NotNull NativeStrings selections() {
+    return new NativeStrings(selectedFiles(nativeObjectPtr));
   }
 
   private static native boolean fileDialogP(
