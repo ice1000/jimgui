@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.17.0
+
 + Fix a binding issue of `GlfwUtil` (unused/unmaintained, but it was wrongly written)
 + Add `imgui.setWindowTitle` with 3 overloads
 + Add `fileDialog.selections`
