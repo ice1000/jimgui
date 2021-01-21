@@ -215,7 +215,6 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   }
 
   public static native void pushID(int intID);
-
   public static native float getWindowPosX();
   public static native float getWindowPosY();
   public static native float getContentRegionMaxX();
@@ -303,10 +302,19 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
     windowDrawListAddLine(aX, aY, bX, bY, u32Color, 1);
   }
 
+  public static void setTimeLocale(@NotNull String locale) {
+    setTimeLocale(getBytes(locale));
+  }
+
+  public static void setTimeLocale(@NotNull JImStr locale) {
+    setTimeLocale(locale.bytes);
+  }
+
   //region Private native interfaces
   private static native long allocateNativeObjects(
       int width, int height, long fontAtlas, byte @NotNull [] title, long anotherWindow);
 
+  private static native void setTimeLocale(byte @NotNull [] locale);
   protected static native void setupImguiSpecificObjects(long nativeObjectPtr, long fontAtlas);
   private static native void deallocateNativeObjects(long nativeObjectPtr);
   private static native void deallocateGuiFramework(long nativeObjectPtr);

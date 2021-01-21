@@ -21,11 +21,19 @@
 #include <org_ice1000_jimgui_NativeTime.h>
 #include <string>
 #include <ctime>
+#include <clocale>
 
 #ifndef WIN32
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #endif
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_JImGui_setTimeLocale(JNIEnv *env, jclass, jbyteArray _locale) {
+  __get(Byte, locale);
+  setlocale(LC_TIME, locale);
+  __release(Byte, locale);
+}
 
 extern "C" {
 JNIEXPORT auto JNICALL
