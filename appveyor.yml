@@ -24,6 +24,6 @@ artifacts:
     name: jimgui-core
   - path: 'kotlin-dsl\build\libs\*.jar'
     name: jimgui-dsl
-  - path: 'extension\build\libs\*.jar'
-    name: jimgui-extension
+  - path: 'fun\build\libs\*.jar'
+    name: jimgui-fun
 #
