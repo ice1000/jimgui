@@ -31,7 +31,7 @@
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_setTimeLocale(JNIEnv *env, jclass, jbyteArray _locale) {
   __get(Byte, locale);
-  setlocale(LC_TIME, locale);
+  setlocale(LC_TIME, STR_J2C(locale));
   __release(Byte, locale);
 }
 
