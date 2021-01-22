@@ -3,6 +3,7 @@
 + Add two Bezier-Quadratic functions in draw list
 + Add some missing style color/flags 
 + Update table flags
++ Add `io.ConfigDragClickToInputText`
 
 ## v0.17.0
 
