@@ -75,6 +75,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
       "WindowTitleAlign",
       "FramePadding",
       "ItemSpacing",
+      "CellPadding",
       "ItemInnerSpacing",
       "TouchExtraPadding",
       "ButtonTextAlign",

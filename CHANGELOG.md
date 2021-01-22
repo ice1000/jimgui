@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Add two Bezier-Quadratic functions in draw list
++ Add some missing style color/flags 
+
 ## v0.17.0
 
 + Fix a binding issue of `GlfwUtil` (unused/unmaintained, but it was wrongly written)
