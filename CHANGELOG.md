@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.17.1
+
 + Add two Bezier-Quadratic functions in draw list
 + Add some missing style color/flags 
 + Update table flags
