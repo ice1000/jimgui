@@ -5,6 +5,7 @@
 + Update table flags
 + Add `io.ConfigDragClickToInputText`
 + Deprecate `toAbsoluteSeconds` for `accessAbsoluteSeconds` for naming consistency
++ Add `modifyAbsoluteSeconds`
 
 ## v0.17.0
 

@@ -584,6 +584,12 @@ JavaCritical_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(jlong nativeObjectP
 }
 
 JNIEXPORT void JNICALL
+JavaCritical_org_ice1000_jimgui_NativeTime_fromAbsoluteSeconds(jlong nativeObjectPtr, jlong absoluteSeconds) {
+  auto *time = PTR_J2C(tm, nativeObjectPtr);
+  *time = *localtime(&absoluteSeconds);
+}
+
+JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_NativeTime_resetToToday(jlong nativeObjectPtr) {
   ImGui::SetDateToday(PTR_J2C(tm, nativeObjectPtr));
 }
@@ -597,6 +603,11 @@ JavaCritical_org_ice1000_jimgui_NativeTime_reset(jlong nativeObjectPtr) {
 JNIEXPORT jlong JNICALL
 Java_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(JNIEnv *, jclass, jlong nativeObjectPtr) {
   return JavaCritical_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(nativeObjectPtr);
+}
+
+JNIEXPORT void JNICALL
+Java_org_ice1000_jimgui_NativeTime_fromAbsoluteSeconds(JNIEnv *, jclass, jlong nativeObjectPtr, jlong absoluteSeconds) {
+  JavaCritical_org_ice1000_jimgui_NativeTime_fromAbsoluteSeconds(nativeObjectPtr, absoluteSeconds);
 }
 
 JNIEXPORT void JNICALL

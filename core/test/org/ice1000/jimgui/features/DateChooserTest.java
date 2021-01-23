@@ -12,8 +12,10 @@ public class DateChooserTest {
     try (JImGui imGui = new JImGui(); NativeTime time = new NativeTime()) {
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
-        imGui.text("Picked text: " + time.accessAbsoluteSeconds() * 1000);
-        imGui.text("Current time text: " + System.currentTimeMillis());
+        imGui.text("Picked text: " + time.accessAbsoluteSeconds());
+        final long now = System.currentTimeMillis() / 1000;
+        imGui.text("Current time text: " + now);
+        if (imGui.button("Set to now")) time.modifyAbsoluteSeconds(now);
         if (imGui.dateChooser("Pick a time", time)) imGui.text("Text");
         imGui.render();
       }
