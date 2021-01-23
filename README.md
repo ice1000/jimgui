@@ -17,7 +17,7 @@ Linux Build | Windows Build
 
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
-This binding a rather bare, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles.
+This binding is rather bare, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles.
 There is a declarative wrapper of jimgui, namely [flui](https://github.com/newk5/flui) available.
 
 ## Features
@@ -36,7 +36,7 @@ Also, it doesn't separate jars for different platforms. One jar works on all pla
 ### Usability
 It is well-known that dear imgui doesn't have image loading out-of-the-box,
 but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog]
-and [Flix01/imguidatechooser].
+and [Flix01/imguidatechooser] and some other minor widgets.
 
 ### Efficiency
 This is twofolded.
