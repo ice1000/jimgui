@@ -4,6 +4,7 @@
 + Add some missing style color/flags 
 + Update table flags
 + Add `io.ConfigDragClickToInputText`
++ Deprecate `toAbsoluteSeconds` for `accessAbsoluteSeconds` for naming consistency
 
 ## v0.17.0
 
