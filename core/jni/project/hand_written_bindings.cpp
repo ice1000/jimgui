@@ -586,7 +586,8 @@ JavaCritical_org_ice1000_jimgui_NativeTime_toAbsoluteSeconds(jlong nativeObjectP
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_NativeTime_fromAbsoluteSeconds(jlong nativeObjectPtr, jlong absoluteSeconds) {
   auto *time = PTR_J2C(tm, nativeObjectPtr);
-  *time = *localtime(&absoluteSeconds);
+  auto newTime = static_cast<time_t>(absoluteSeconds);
+  *time = *localtime(&newTime);
 }
 
 JNIEXPORT void JNICALL
