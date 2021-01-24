@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Fix a bug of `org.ice1000.jimgui.JImFileDialog.selections`
++ Add `NativeStrings.isEmpty`
+
 ## v0.17.1
 
 + Add two Bezier-Quadratic functions in draw list
