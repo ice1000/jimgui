@@ -49,7 +49,8 @@ JNIEXPORT jlong JNICALL
 JavaCritical_org_ice1000_jimgui_JImFileDialog_selectedFiles(jlong nativeObjectPtr) {
   auto &&map = PTR_J2C(FileDialog, nativeObjectPtr)->GetSelection();
   auto *vec = new std::vector<std::string>(map.size());
-  for (auto &&selection : map) if (!selection.second.empty()) vec->push_back(selection.second);
+  vec->clear();
+  for (auto &&selection : map) vec->push_back(selection.second);
   return PTR_C2J(vec);
 }
 

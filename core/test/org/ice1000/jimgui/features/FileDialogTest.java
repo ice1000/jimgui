@@ -32,6 +32,7 @@ public class FileDialogTest {
           if (instance.isOk()) try (NativeString currentPath = instance.currentPath();
                                     NativeStrings selectedFiles = instance.selections()) {
             imGui.text(currentPath);
+            imGui.text("Size: " + selectedFiles.size());
             if (!selectedFiles.isEmpty()) {
               for (NativeString string : strings) string.deallocateNativeObject();
               strings.clear();
