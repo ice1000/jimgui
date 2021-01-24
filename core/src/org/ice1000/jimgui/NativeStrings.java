@@ -15,6 +15,10 @@ public class NativeStrings implements DeallocatableObject {
     this.nativeObjectPtr = nativeObjectPtr;
   }
 
+  public boolean isEmpty() {
+    return size() == 0;
+  }
+
   public int size() {
     return size(nativeObjectPtr);
   }
