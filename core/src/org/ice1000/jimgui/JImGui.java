@@ -138,6 +138,10 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
     return drawListNativeObjectPtr == 0 ? null : new JImDrawList(drawListNativeObjectPtr);
   }
 
+  @Contract(pure = true) public @NotNull JImSortSpecs tableGetSortSpecs() {
+    return new JImSortSpecs(getTableSortSpecsNativeObjectPtr());
+  }
+
   @Contract(pure = true) public @NotNull JImDrawList getWindowDrawList() {
     @Nullable JImDrawList windowDrawList = findWindowDrawList();
     return null == windowDrawList ? alreadyDisposed() : windowDrawList;
@@ -322,6 +326,7 @@ public class JImGui extends JImWidgets implements DeallocatableObject {
   private static native long getFontNativeObjectPtr();
   private static native long getStyleNativeObjectPtr();
   private static native long getWindowDrawListNativeObjectPtr();
+  private static native long getTableSortSpecsNativeObjectPtr();
   private static native long getForegroundDrawListNativeObjectPtr();
   private static native boolean windowShouldClose(long nativeObjectPtr);
   private static native void render(long nativeObjectPtr, long colorPtr);

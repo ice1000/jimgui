@@ -57,6 +57,11 @@ JavaCritical_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr() -> jlo
 }
 
 JNIEXPORT auto JNICALL
+JavaCritical_org_ice1000_jimgui_JImGui_getTableSortSpecsNativeObjectPtr() -> jlong {
+  return PTR_C2J(ImGui::TableGetSortSpecs());
+}
+
+JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_getForegroundDrawListNativeObjectPtr() -> jlong {
   return PTR_C2J(ImGui::GetForegroundDrawList());
 }
@@ -85,6 +90,11 @@ Java_org_ice1000_jimgui_JImGui_pushID(Ptr<JNIEnv>, jclass, jint id) {
 JNIEXPORT auto JNICALL
 Java_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
   return JavaCritical_org_ice1000_jimgui_JImGui_getWindowDrawListNativeObjectPtr();
+}
+
+JNIEXPORT auto JNICALL
+Java_org_ice1000_jimgui_JImGui_getTableSortSpecsNativeObjectPtr(Ptr<JNIEnv>, jclass) -> jlong {
+  return JavaCritical_org_ice1000_jimgui_JImGui_getTableSortSpecsNativeObjectPtr();
 }
 
 JNIEXPORT auto JNICALL
