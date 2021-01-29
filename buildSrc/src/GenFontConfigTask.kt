@@ -41,7 +41,7 @@ open class GenFontConfigTask : GenTask("JImGuiFontConfigGen", "imgui_font_config
       "int" to "FontNo",
       "int" to "OversampleH",
       "int" to "OversampleV",
-      "int" to "RasterizerFlags",
+      "int" to "FontBuilderFlags",
       "float" to "SizePixels",
       "float" to "RasterizerMultiply",
       "float" to "GlyphMinAdvanceX",
