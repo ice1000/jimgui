@@ -1,5 +1,5 @@
 group = "org.ice1000.gradle"
-version = "v0.1"
+version = "114514"
 
 plugins { kotlin("jvm") version "1.4.20" }
 

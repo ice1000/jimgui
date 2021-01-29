@@ -104,6 +104,8 @@ val generations = arrayOf(
     g<GenTableFlags>(),
     g<GenTableColumnFlags>(),
     g<GenTableRowFlags>(),
+    g<GenTableSortSpecsTask>(),
+    g<GenColumnSortSpecsTask>(),
     g<GenCond>(),
     g<GenGenTask>())
 
