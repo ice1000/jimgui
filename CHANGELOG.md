@@ -1,5 +1,8 @@
 ## Unreleased
 
++ Add `JImSortSpecs` and `JImSortSpecs.Column`
++ Add `imgui.tableGetSortSpecs`
+
 ## v0.17.2
 
 + Fix a bug of `org.ice1000.jimgui.JImFileDialog.selections`

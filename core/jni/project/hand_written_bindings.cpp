@@ -19,6 +19,7 @@
 #include <org_ice1000_jimgui_JImStyle.h>
 #include <org_ice1000_jimgui_JImFileDialog.h>
 #include <org_ice1000_jimgui_NativeTime.h>
+#include <org_ice1000_jimgui_JImSortSpecs.h>
 #include <string>
 #include <ctime>
 #include <clocale>
@@ -70,6 +71,17 @@ JNIEXPORT auto JNICALL
 JavaCritical_org_ice1000_jimgui_JImStyle_getColor0(jlong nativeObjectPtr, jint index) -> jlong {
   return PTR_C2J(&PTR_J2C(ImGuiStyle, nativeObjectPtr)->Colors[index]);
 }
+
+JNIEXPORT jlong JNICALL
+JavaCritical_org_ice1000_jimgui_JImSortSpecs_columnSortSpecs(jlong nativeObjectPtr, jint index) {
+  auto *p = PTR_J2C(ImGuiTableSortSpecs, nativeObjectPtr)->Specs + index;
+  return PTR_C2J(p);
+}
+}
+
+JNIEXPORT jlong JNICALL
+Java_org_ice1000_jimgui_JImSortSpecs_columnSortSpecs(JNIEnv *, jclass, jlong nativeObjectPtr, jint index) {
+  return JavaCritical_org_ice1000_jimgui_JImSortSpecs_columnSortSpecs(nativeObjectPtr, index);
 }
 
 JNIEXPORT auto JNICALL
