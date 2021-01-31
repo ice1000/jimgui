@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v0.18.0
+
 + Add `JImSortSpecs` and `JImSortSpecs.Column`
 + Add `imgui.tableGetSortSpecs`
 
