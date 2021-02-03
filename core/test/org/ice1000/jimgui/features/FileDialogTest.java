@@ -24,6 +24,7 @@ public class FileDialogTest {
         imGui.initNewFrame();
         imGui.checkbox("Use modal dialog", modal);
         instance.setExtensionInfo(".java", Sandbox.fromAWT(Color.ORANGE), "[Java]");
+        instance.setExtensionInfo(".md", Sandbox.fromAWT(Color.BLUE), JImFileDialog.Icons.FILE_PIC.toString());
         if (imGui.button("Open dialog")) {
           if (modal.accessValue()) instance.openModal(key, title, filter, pwd, 2);
           else instance.openDialog(key, title, filter, pwd, 2);
