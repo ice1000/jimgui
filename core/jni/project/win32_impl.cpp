@@ -44,37 +44,19 @@ void dispatchMessage(NativeObject *object) {
   }
 }
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(jlong nativeObjectPtr) -> float {
-  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
-  RECT rect{};
-  GetWindowRect(wc->hwnd, &rect);
-  return static_cast<float>(rect.right - rect.left);
+#define DEFINE_PLATFORM_WINDOW_FUNCTIONS(name, expr) \
+JNIEXPORT auto JNICALL \
+JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindow ## name(jlong nativeObjectPtr) -> float { \
+  auto wc = PTR_J2C(NativeObject, nativeObjectPtr); \
+  RECT rect{}; \
+  GetWindowRect(wc->hwnd, &rect); \
+  return static_cast<float>(expr); \
 }
 
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(jlong nativeObjectPtr) -> float {
-  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
-  RECT rect{};
-  GetWindowRect(wc->hwnd, &rect);
-  return static_cast<float>(rect.bottom - rect.top);
-}
-
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(jlong nativeObjectPtr) -> float {
-  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
-  RECT rect{};
-  GetWindowRect(wc->hwnd, &rect);
-  return static_cast<float>(rect.left);
-}
-
-JNIEXPORT auto JNICALL
-JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(jlong nativeObjectPtr) -> float {
-  auto wc = PTR_J2C(NativeObject, nativeObjectPtr);
-  RECT rect{};
-  GetWindowRect(wc->hwnd, &rect);
-  return static_cast<float>(rect.top);
-}
+DEFINE_PLATFORM_WINDOW_FUNCTIONS(SizeX, rect.right - rect.left)
+DEFINE_PLATFORM_WINDOW_FUNCTIONS(SizeY, rect.bottom - rect.top)
+DEFINE_PLATFORM_WINDOW_FUNCTIONS(PosX, rect.left)
+DEFINE_PLATFORM_WINDOW_FUNCTIONS(PosY, rect.top)
 
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY) {
