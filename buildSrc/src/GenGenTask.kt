@@ -228,12 +228,8 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
           int("popupMaxHeightInItems", default = -1)),
 
       // Widgets: List Boxes
-      Fun("listBoxHeader0", "boolean", label, size(),
-          document = "Use if you want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
-      Fun("listBoxHeader", "boolean", label,
-          int("itemsCount"), int("heightInItems", default = -1),
-          document = "Use if you want to reimplement listBox() will custom data or interactions. if the function return true, you can output elements then call listBoxFooter() afterwards."),
-      Fun("listBoxFooter"),
+      Fun("beginListBox", "boolean", label, size()),
+      Fun("endListBox"),
 
       // Widgets: Drags
       Fun("dragFloat", "boolean", label,
