@@ -58,6 +58,8 @@ DEFINE_PLATFORM_WINDOW_FUNCTIONS(SizeY, rect.bottom - rect.top)
 DEFINE_PLATFORM_WINDOW_FUNCTIONS(PosX, rect.left)
 DEFINE_PLATFORM_WINDOW_FUNCTIONS(PosY, rect.top)
 
+#undef DEFINE_PLATFORM_WINDOW_FUNCTIONS
+
 JNIEXPORT void JNICALL
 JavaCritical_org_ice1000_jimgui_JImGui_setPlatformWindowSize(jlong nativeObjectPtr, float newX, float newY) {
   auto wc = PTR_J2C(NativeObject, nativeObjectPtr);

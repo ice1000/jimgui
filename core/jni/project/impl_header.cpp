@@ -5,37 +5,18 @@
 #include <impl_header.h>
 #include <org_ice1000_jimgui_JImGui.h>
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(
-    JNIEnv *,
-    jclass,
-    jlong nativeObjectPtr) -> float {
-  return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeX(nativeObjectPtr);
+#define DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS(name) \
+JNIEXPORT auto JNICALL \
+Java_org_ice1000_jimgui_JImGui_getPlatformWindow ## name(JNIEnv *, jclass, jlong nativeObjectPtr) -> float { \
+  return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindow ## name(nativeObjectPtr); \
 }
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(
-    JNIEnv *,
-    jclass,
-    jlong nativeObjectPtr) -> float {
-  return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowSizeY(nativeObjectPtr);
-}
+DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS(SizeX)
+DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS(SizeY)
+DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS(PosX)
+DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS(PosY)
 
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(
-    JNIEnv *,
-    jclass,
-    jlong nativeObjectPtr) -> float {
-  return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosX(nativeObjectPtr);
-}
-
-JNIEXPORT auto JNICALL
-Java_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(
-    JNIEnv *,
-    jclass,
-    jlong nativeObjectPtr) -> float {
-  return JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindowPosY(nativeObjectPtr);
-}
+#undef DEFINE_PLATFORM_WINDOW_JNI_ACCESSORS
 
 JNIEXPORT void JNICALL
 Java_org_ice1000_jimgui_JImGui_setPlatformWindowSize(
