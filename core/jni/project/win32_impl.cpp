@@ -49,7 +49,7 @@ JNIEXPORT auto JNICALL \
 JavaCritical_org_ice1000_jimgui_JImGui_getPlatformWindow ## name(jlong nativeObjectPtr) -> float { \
   auto wc = PTR_J2C(NativeObject, nativeObjectPtr); \
   RECT rect{}; \
-  GetWindowRect(wc->hwnd, &rect); \
+  GetClientRect(wc->hwnd, &rect); \
   return static_cast<float>(expr); \
 }
 

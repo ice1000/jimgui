@@ -1,5 +1,9 @@
 ## Unreleased
 
+## v0.18.1
+
++ Fix windows `imgui.getPlatformWindow[Size|Pos][X|Y]`
+
 ## v0.18.0
 
 + Add `JImSortSpecs` and `JImSortSpecs.Column`
