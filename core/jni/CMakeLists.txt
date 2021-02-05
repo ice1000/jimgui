@@ -10,6 +10,8 @@ find_package(Java REQUIRED)
 find_package(JNI REQUIRED)
 
 if (WIN32)
+  add_compile_definitions(WINVER=0x0601)
+  add_compile_definitions(_WIN32_WINNT=0x0601)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Ox -source-charset:utf-8")
   set(DX_COMMON project/impl_header.cpp project/win32_impl.cpp)
   set(DX11_IMPL ${DX_COMMON} impl/imgui_impl_dx11.cpp project/dx11_impl.cpp)

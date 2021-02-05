@@ -3,9 +3,6 @@
 /// [WARNING] OBSOLETE, see dx9_impl.cpp
 ///
 
-#define _WIN32_WINNT 0x0601
-#define WINVER 0x0601
-
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
 #include <win32_impl.h>
