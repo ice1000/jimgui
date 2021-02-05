@@ -6,6 +6,8 @@
 #define JIMGUI_WIN32_IMPL_H
 
 #define DIRECTINPUT_VERSION 0x0800
+#define _WIN32_WINNT 0x0601
+#define WINVER 0x0601
 
 #include <imgui_impl_win32.h>
 #include <basics.hpp>

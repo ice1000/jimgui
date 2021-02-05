@@ -3,6 +3,7 @@
 ## v0.18.1
 
 + Fix windows `imgui.getPlatformWindow[Size|Pos][X|Y]`
++ Address list box related renaming
 
 ## v0.18.0
 
