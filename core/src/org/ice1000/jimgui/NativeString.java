@@ -4,6 +4,7 @@ import org.ice1000.jimgui.cpp.DeallocatableObject;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A wrapper of C++ <code>std::string</code>.
@@ -87,7 +88,7 @@ public final class NativeString implements CharSequence, DeallocatableObject {
   }
 
   @Override public @NotNull String toString() {
-    return new String(toBytes());
+    return new String(toBytes(), StandardCharsets.UTF_8);
   }
 
   @Contract("_ -> new") public static @NotNull NativeString fromRaw(long constCharPtr) {
