@@ -143,7 +143,7 @@ val downloadImplGL = tasks.register<Download>("downloadImplGL") {
 }
 
 val downloadDirent = tasks.register<Download>("downloadDirent") {
-  src("$github/tronkko/dirent/master/include/dirent.h")
+  src("$imguiFD/Lib_Only/dirent/dirent.h")
   dest(fdDir.resolve("dirent").resolve("dirent.h"))
   overwrite(false)
 }
