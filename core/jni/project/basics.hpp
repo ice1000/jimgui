@@ -7,6 +7,8 @@
 #ifndef __JIMGUI_BASICS_HPP__
 #define __JIMGUI_BASICS_HPP__
 
+#define STR_HELPER(x) #x
+
 template<typename T>
 using Ptr = T *;
 

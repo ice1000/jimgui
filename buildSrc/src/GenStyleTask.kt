@@ -66,7 +66,7 @@ open class GenStyleTask : GenTask("JImGuiStyleGen", "imgui_style") {
       "float" to "TabMinWidthForCloseButton",
       "float" to "MouseCursorScale",
       "float" to "CurveTessellationTol",
-      "float" to "CircleSegmentMaxError",
+      "float" to "CircleTessellationMaxError",
   )
 
   private val imVec2Members = listOf(

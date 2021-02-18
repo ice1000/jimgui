@@ -4,6 +4,7 @@
 
 + Fix windows `imgui.getPlatformWindow[Size|Pos][X|Y]`
 + Address list box related renaming
++ Upgrade imgui
 
 ## v0.18.0
 
