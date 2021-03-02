@@ -4,6 +4,7 @@ import org.ice1000.jimgui.JImGui;
 import org.ice1000.jimgui.NativeString;
 import org.ice1000.jimgui.util.JniLoader;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class InputNativeString {
@@ -11,6 +12,8 @@ public class InputNativeString {
     JniLoader.load();
     try (NativeString s = new NativeString();
          JImGui imGui = new JImGui()) {
+      byte[] bytes = "não".getBytes(StandardCharsets.UTF_8);
+      for (byte b : bytes) s.append(b);
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.inputText("input", s);
