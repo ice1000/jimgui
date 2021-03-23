@@ -8,11 +8,14 @@ plugins {
 
 val isCI = !System.getenv("CI").isNullOrBlank()
 
-allprojects {
+subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.18.1"
+  version = "v0.19.0"
 
-  apply { plugin("java") }
+  apply {
+    plugin("java")
+    plugin("maven-publish")
+  }
 
   repositories {
     mavenCentral()
@@ -45,13 +48,11 @@ allprojects {
     archiveClassifier.set("sources")
   }
 
-  artifacts { add("archives", sourcesJar) }
-}
-
-subprojects {
-  apply {
-    plugin("maven-publish")
+  tasks.withType<Jar>().configureEach {
+    archiveBaseName.set("jimgui-" + archiveBaseName.get())
   }
+
+  artifacts { add("archives", sourcesJar) }
 
   publishing.publications {
     create<MavenPublication>("maven") {
