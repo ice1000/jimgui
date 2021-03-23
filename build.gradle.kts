@@ -10,7 +10,7 @@ val isCI = !System.getenv("CI").isNullOrBlank()
 
 subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.19.0"
+  version = "v0.20.0"
 
   apply {
     plugin("java")
@@ -57,6 +57,16 @@ subprojects {
 
   signing {
     sign(configurations.archives.get())
+  }
+
+  publishing.repositories {
+    maven("https://oss.sonatype.org/service/local/staging/deploy/maven2") {
+      name = "MavenCentral"
+      credentials {
+        username = property("ossrhUsername").toString()
+        password = property("ossrhPassword").toString()
+      }
+    }
   }
 
   publishing.publications {
