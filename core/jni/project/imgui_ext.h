@@ -81,20 +81,20 @@ namespace ImGui {
 	          ComVec4 color = ImGui::GetStyle().Colors[ImGuiCol_Button],
 	          float rounding = 0.0f,
 	          float thickness = 1.0f,
-	          int rounding_corners_flags = ImDrawCornerFlags_All) -> void;
+	          int rounding_corners_flags = ImDrawFlags_RoundCornersAll) -> void;
 	/// if @param thickness < 0, rect will be filled
 	auto DrawRect(ComVec4 border,
 	              ComVec4 color = ImGui::GetStyle().Colors[ImGuiCol_Button],
 	              float rounding = 0.0f,
 	              float thickness = 1.0f,
-	              int rounding_corners_flags = ImDrawCornerFlags_All) -> void;
+	              int rounding_corners_flags = ImDrawFlags_RoundCornersAll) -> void;
 	/// if @param thickness < 0, rect will be filled
 	auto DrawRect(ComVec2 pos,
 	              ComVec2 size,
 	              ComVec4 color = ImGui::GetStyle().Colors[ImGuiCol_Button],
 	              float rounding = 0.0f,
 	              float thickness = 1.0f,
-	              int rounding_corners_flags = ImDrawCornerFlags_All) -> void;
+	              int rounding_corners_flags = ImDrawFlags_RoundCornersAll) -> void;
 
 	auto BufferingBar(float value,
 	                  ComVec2 size,

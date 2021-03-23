@@ -58,6 +58,9 @@ else ()
 
     mark_as_advanced(COCOA_LIBRARY GLUT_LIBRARY OpenGL_LIBRARY)
 
+    # Compiled universal library to support both x86_64 and arm64
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+
     # Fix _CVDisplayLinkRelease
     set(CMAKE_SHARED_LINK_FLAGS "${CMAKE_SHARED_LINK_FLAGS} -framework IOKit -framework CoreVideo -framework CoreFoundation")
     set(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
