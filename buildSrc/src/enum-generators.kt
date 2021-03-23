@@ -1,9 +1,10 @@
 package org.ice1000.gradle
 
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 abstract class GenEnumTask<T>(className: String) : GenJavaTask(className), Runnable {
-  abstract val list: List<T>
+  @get:Input abstract val list: List<T>
 
   @TaskAction
   override fun run() = buildString {

@@ -50,7 +50,6 @@ allprojects {
 
 subprojects {
   apply {
-    plugin("maven")
     plugin("maven-publish")
     plugin("com.jfrog.bintray")
   }

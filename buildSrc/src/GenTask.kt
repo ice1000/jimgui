@@ -1,15 +1,16 @@
 package org.ice1000.gradle
 
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.intellij.lang.annotations.Language
 
 @Suppress("PrivatePropertyName", "LocalVariableName", "FunctionName")
 abstract class GenTask(
     className: String,
-    private val `c++FileSuffix`: String,
+    @Internal private val `c++FileSuffix`: String,
     since: String = "v0.1",
 ) : GenJavaTask(className, since), Runnable {
-  protected open val `prefixC++`
+  @get:Internal protected open val `prefixC++`
     @Language("C++")
     get() = """$CXX_PREFIX
 #include <org_ice1000_jimgui_$className.h>
@@ -348,6 +349,6 @@ $JNI_C_FUNC_PREFIX${className}_get${name}Y(${additionalParamText.orEmpty()}) -> 
         .append("(){return get").append(name).append('(').append(ptrName).appendln(");}")
   }
 
-  abstract val `c++Expr`: String
+  @get:Internal abstract val `c++Expr`: String
   //endregion
 }

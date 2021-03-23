@@ -2,6 +2,8 @@ package org.ice1000.gradle
 
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
 import java.io.File
 
 private val nativeLibraryExtensions = listOf("so", "dll", "dylib")
@@ -11,8 +13,8 @@ const val Makefiles = "Unix Makefiles"
 const val VS2019 = "Visual Studio 16 2019"
 
 abstract class NativeBuildTask : Exec() {
-  lateinit var jniDir: File
-  lateinit var resDir: File
+  @Internal lateinit var jniDir: File
+  @Internal lateinit var resDir: File
 
   init {
     group = "native compile"
@@ -20,7 +22,7 @@ abstract class NativeBuildTask : Exec() {
 }
 
 open class CMake : NativeBuildTask() {
-  var cmakePath = "cmake"
+  @Input var cmakePath = "cmake"
 
   fun simple(workingDir: File, arch: String) {
     if (isWindows) cmake(workingDir, VS2019, "-A", arch)

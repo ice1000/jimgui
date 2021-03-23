@@ -1,15 +1,18 @@
 package org.ice1000.gradle
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.OutputFile
 import org.intellij.lang.annotations.Language
 
 open class GenJavaTask(
-    val className: String,
-    val since: String = "v0.1",
-    private val packageName: String = "org.ice1000.jimgui",
+    @Input val className: String,
+    @Input val since: String = "v0.1",
+    @Input private val packageName: String = "org.ice1000.jimgui",
     relativePath: String = packageName.replace('.', '/'),
 ) : DefaultTask() {
-  val targetJavaFile = project
+  @OutputFile val targetJavaFile = project
       .projectDir
       .resolve("gen")
       .resolve(relativePath)
@@ -21,12 +24,12 @@ open class GenJavaTask(
     targetJavaFile.parentFile.mkdirs()
   }
 
-  @Language("Text")
+  @Language("Text") @Internal
   open val userCode = """/** package-private by design */
   $className() { }
 """
 
-  protected val prefixJava
+  @get:Internal protected val prefixJava
     @Language("JAVA", suffix = "}")
     get() = """package $packageName;
 
@@ -49,7 +52,7 @@ public class $className {
 $userCode
 """
 
-  protected val prefixInterfacedJava
+  @get:Internal protected val prefixInterfacedJava
     @Language("JAVA", suffix = "}")
     get() = """package $packageName;
 
@@ -71,5 +74,5 @@ import static org.ice1000.jimgui.util.JImGuiUtil.*;
 public interface $className {
 """
 
-  val eol: String = System.lineSeparator()
+  @Internal val eol: String = System.lineSeparator()
 }

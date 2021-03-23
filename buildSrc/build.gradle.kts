@@ -1,7 +1,7 @@
 group = "org.ice1000.gradle"
 version = "114514"
 
-plugins { kotlin("jvm") version "1.4.20" }
+plugins { kotlin("jvm") version "1.4.30" }
 
 kotlin.sourceSets["main"].kotlin.srcDir("src")
 sourceSets.main {

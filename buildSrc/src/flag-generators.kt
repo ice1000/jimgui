@@ -3,9 +3,10 @@
  */
 package org.ice1000.gradle
 
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
-abstract class GenFlagTask(className: String, private vararg val list: Pair<String, String>)
+abstract class GenFlagTask(className: String, @Input private vararg val list: Pair<String, String>)
   : GenJavaTask(className, packageName = "org.ice1000.jimgui.flag", since = "undecidable"), Runnable {
   init {
     GenGenTask.checkParserInitialized(project)
