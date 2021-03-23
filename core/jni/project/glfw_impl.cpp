@@ -19,6 +19,7 @@
 #include <org_ice1000_jimgui_JImGui.h>
 #include <org_ice1000_jimgui_JImTextureID.h>
 
+#include <string>
 #include <basics.hpp>
 #include <impl_header.h>
 
@@ -36,8 +37,6 @@
   #define OPENGL_MAJOR_VERSION 3
   #define OPENGL_MINOR_VERSION 0
 #endif
-
-#include <string>
 
 static void glfw_error_callback(int error, Ptr<const char> description) {
   fprintf(stderr, "JImGui Error %d: %s\n", error, description);

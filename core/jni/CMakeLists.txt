@@ -36,18 +36,10 @@ if (WIN32)
 else ()
   find_package(OpenGL REQUIRED)
   find_package(PkgConfig REQUIRED)
-  find_package(glfw3 REQUIRED)
-
-  pkg_search_module(GLFW REQUIRED glfw3)
-
-  if (glfw3_FOUND)
-    message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
-  endif ()
 
   set(IMGUI_IMPL project/impl_header.cpp impl/imgui_impl_glfw.cpp impl/imgui_impl_opengl3.cpp impl/gl3w.c project/glfw_impl.cpp)
   include_directories(${GLFW_INCLUDE_DIRS})
 
-  set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-format-security -O3")
 
   if (APPLE)
@@ -58,10 +50,29 @@ else ()
 
     mark_as_advanced(COCOA_LIBRARY GLUT_LIBRARY OpenGL_LIBRARY)
 
+    # Compiled universal library to support both x86_64 and arm64
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+
+    # Statically linking glfw
+    set(OLD_BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS}")
+    set(BUILD_SHARED_LIBS "OFF")
+    set(GLFW_NATIVE_API 1)
+    add_subdirectory(glfw)
+    set(BUILD_SHARED_LIBS "${OLD_BUILD_SHARED_LIBS}")
+    list(APPEND TARGET_LINK_LIBS glfw)
+
     # Fix _CVDisplayLinkRelease
     set(CMAKE_SHARED_LINK_FLAGS "${CMAKE_SHARED_LINK_FLAGS} -framework IOKit -framework CoreVideo -framework CoreFoundation")
     set(EXTRA_LIBS ${COCOA_LIBRARY} ${GLUT_LIBRARY} ${OpenGL_LIBRARY})
     list(APPEND TARGET_LINK_LIBS ${EXTRA_LIBS})
+  else()
+    find_package(glfw3 REQUIRED)
+    pkg_search_module(GLFW REQUIRED glfw3)
+
+    if (glfw3_FOUND)
+      message(STATUS "GLFW_INCLUDE_DIRS=${GLFW_INCLUDE_DIRS}")
+    endif ()
+    set(TARGET_LINK_LIBS ${GLFW_STATIC_LIBRARIES})
   endif ()
 endif ()
 
