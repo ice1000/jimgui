@@ -14,6 +14,7 @@ subprojects {
 
   apply {
     plugin("java")
+    plugin("signing")
     plugin("maven-publish")
   }
 
@@ -53,6 +54,10 @@ subprojects {
   }
 
   artifacts { add("archives", sourcesJar) }
+
+  signing {
+    sign(configurations.archives.get())
+  }
 
   publishing.publications {
     create<MavenPublication>("maven") {
