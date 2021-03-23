@@ -63,8 +63,11 @@ subprojects {
     maven("https://oss.sonatype.org/service/local/staging/deploy/maven2") {
       name = "MavenCentral"
       credentials {
-        username = property("ossrhUsername").toString()
-        password = property("ossrhPassword").toString()
+        try {
+          username = property("ossrhUsername").toString()
+          password = property("ossrhPassword").toString()
+        } catch (ignored: groovy.lang.MissingPropertyException) {
+        }
       }
     }
   }
