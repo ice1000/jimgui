@@ -196,8 +196,8 @@ import org.apache.tools.ant.taskdefs.condition.Os
 // ...
 dependencies {
   String jimguiVersion = 'v0.20.0'
-  implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
-  implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
+  implementation "org.ice1000:jimgui-core:$jimguiVersion" // basic functionality
+  implementation "org.ice1000:jimgui-kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
 // ...
 tasks.withType(JavaExec).configureEach {
@@ -210,9 +210,9 @@ tasks.withType(JavaExec).configureEach {
 ```kotlin
 import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
-  val jimguiVersion = "v0.18.0"
-  implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
-  implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+  val jimguiVersion = "v0.20.0"
+  implementation("org.ice1000:jimgui-core:$jimguiVersion") // basic functionality
+  implementation("org.ice1000:jimgui-kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
 
 tasks.withType<JavaExec>().configureEach {
@@ -223,20 +223,11 @@ tasks.withType<JavaExec>().configureEach {
 ## Maven
 
 ```xml
-<repositories>
-  <repository>
-    <id>jcenter</id>
-    <url>https://jcenter.bintray.com</url>
-  </repository>
-</repositories>
-```
-
-```xml
 <dependency>
-  <groupId>org.ice1000.jimgui</groupId>
+  <groupId>org.ice1000</groupId>
   <!-- basic functionality -->
-  <artifactId>core</artifactId>
-  <version>v0.18.0</version>
+  <artifactId>jimgui-core</artifactId>
+  <version>v0.20.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -263,7 +254,7 @@ To compile a jar library, run
 (you need to use the developer command prompt for this on Windows):
 
 ```
-$ ./gradlew assemble
+$ ./gradlew jar
 ```
 
 To run tests, run:
