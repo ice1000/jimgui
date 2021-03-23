@@ -194,13 +194,8 @@ compileJava.options.encoding = 'UTF-8'
 ```groovy
 import org.apache.tools.ant.taskdefs.condition.Os
 // ...
-repositories {
-  // ...
-  jcenter()
-}
-// ...
 dependencies {
-  String jimguiVersion = 'v0.18.0'
+  String jimguiVersion = 'v0.20.0'
   implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
   implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }

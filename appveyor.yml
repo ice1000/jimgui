@@ -8,7 +8,7 @@ build_script:
   - gradlew :core:cmake --info --stacktrace --no-daemon
   - set JAVA_HOME="C:\Program Files\Java\jdk1.8.0"
   - gradlew :core:cmakeWin64 --info --stacktrace --no-daemon
-  - gradlew assemble
+  - gradlew jar
 
 cache:
   - C:\Users\appveyor\.gradle

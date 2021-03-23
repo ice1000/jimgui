@@ -1,5 +1,10 @@
 ## Unreleased
 
+## v0.20.0
+
++ JCenter -> MavenCentral (finally)
++ Support Apple Silicon (thanks to @imkiva)
+
 ## v0.18.1
 
 + Fix windows `imgui.getPlatformWindow[Size|Pos][X|Y]`

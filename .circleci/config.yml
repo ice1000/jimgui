@@ -48,7 +48,7 @@ jobs:
 
       - run:
           name: Build all projects
-          command: PATH=`pwd`/cmake-3.14/bin:$PATH bash gradlew assemble --info --stacktrace --no-daemon
+          command: PATH=`pwd`/cmake-3.14/bin:$PATH bash gradlew jar --info --stacktrace --no-daemon
 
       - store_artifacts:
           path: core/build/libs
