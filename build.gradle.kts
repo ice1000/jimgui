@@ -1,8 +1,8 @@
 plugins {
   java
   `maven-publish`
-  kotlin("jvm") version "1.4.20" apply false
-  id("com.jfrog.bintray") version "1.8.5"
+  signing
+  kotlin("jvm") version "1.4.30" apply false
   id("de.undercouch.download") version "4.1.1" apply false
 }
 
@@ -51,27 +51,6 @@ allprojects {
 subprojects {
   apply {
     plugin("maven-publish")
-    plugin("com.jfrog.bintray")
-  }
-
-  bintray {
-    user = "ice1000"
-    key = findProperty("key").toString()
-    setConfigurations("archives")
-    pkg.apply {
-      name = rootProject.name
-      repo = "ice1000"
-      githubRepo = "ice1000/jimgui"
-      publicDownloadNumbers = true
-      vcsUrl = "https://github.com/ice1000/jimgui.git"
-      setLicenses("Apache-2.0")
-      setLabels("binding", "imgui", "kotlin")
-      version.apply {
-        vcsTag = "${project.version}"
-        name = vcsTag
-        websiteUrl = "https://github.com/ice1000/jimgui/releases/tag/$vcsTag"
-      }
-    }
   }
 
   publishing.publications {
@@ -88,7 +67,7 @@ subprojects {
         licenses {
           license {
             name.set("The Apache License, Version 2.0")
-            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
           }
         }
         developers {
