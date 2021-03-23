@@ -1,0 +1,3 @@
+[submodule "core/jni/glfw"]
+	path = core/jni/glfw
+	url = https://github.com/glfw/glfw
