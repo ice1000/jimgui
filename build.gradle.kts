@@ -60,15 +60,12 @@ subprojects {
     add("archives", tasks["javadocJar"])
   }
 
-  publishing.repositories {
+  if (hasProperty("ossrhUsername")) publishing.repositories {
     maven("https://oss.sonatype.org/service/local/staging/deploy/maven2") {
       name = "MavenCentral"
       credentials {
-        try {
-          username = property("ossrhUsername").toString()
-          password = property("ossrhPassword").toString()
-        } catch (ignored: groovy.lang.MissingPropertyException) {
-        }
+        username = property("ossrhUsername").toString()
+        password = property("ossrhPassword").toString()
       }
     }
   }
