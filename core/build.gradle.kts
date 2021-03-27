@@ -224,11 +224,13 @@ val clearDownloaded = tasks.register<Delete>("clearDownloaded") {
 downloadAll.configure {
   dependsOn(downloadImplGL, downloadImpl, downloadImgui, downloadFileDialog, downloadDateTimeChooser)
 }
-tasks.compileJava {
+tasks.compileJava.configure {
   options.compilerArgs = listOf("-h", "$javahDir")
   dependsOn(*generations)
 }
-
+tasks.sourcesJar.configure {
+  dependsOn(*generations)
+}
 clean.configure {
   dependsOn(clearCMake, clearDownloaded, clearGenerated)
 }

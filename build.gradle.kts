@@ -24,8 +24,6 @@ subprojects {
   }
 
   tasks.withType<JavaCompile>().configureEach {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
     options.apply {
       isDeprecation = true
       isWarnings = true
@@ -39,9 +37,6 @@ subprojects {
     jvmArgs("-XstartOnFirstThread")
   }
 
-  tasks.jar {
-    manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
-  }
 
   java {
     withSourcesJar()
@@ -59,15 +54,12 @@ subprojects {
 
   tasks.withType<Jar>().configureEach {
     archiveBaseName.set("jimgui-" + archiveBaseName.get())
+    manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
   }
 
   artifacts {
     add("archives", tasks["sourcesJar"])
     add("archives", tasks["javadocJar"])
-  }
-
-  signing {
-    sign(configurations.archives.get())
   }
 
   publishing.repositories {
@@ -113,5 +105,9 @@ subprojects {
         }
       }
     }
+  }
+
+  signing {
+    sign(publishing.publications["maven"])
   }
 }
