@@ -5,6 +5,7 @@ package org.ice1000.gradle
 
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import java.net.URLEncoder
 
 abstract class GenFlagTask(className: String, @Input private vararg val list: Pair<String, String>)
   : GenJavaTask(className, packageName = "org.ice1000.jimgui.flag", since = "undecidable"), Runnable {
@@ -19,7 +20,7 @@ abstract class GenFlagTask(className: String, @Input private vararg val list: Pa
     list.forEach { (name, value) ->
       val keyName = "${className.replace("JIm", "imGui")}_$name"
       val comment = GenGenTask.parser.map[keyName]
-      if (comment != null) append("  /**").append(comment).appendln("*/")
+      if (comment != null) append("  /**").append(URLEncoder.encode(comment)).appendln("*/")
       append("  ")
       genStatement(name, value)
       appendln(";")
