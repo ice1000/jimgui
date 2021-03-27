@@ -4,6 +4,7 @@ package org.ice1000.gradle
 
 import org.intellij.lang.annotations.Language
 import org.intellij.lang.annotations.MagicConstant
+import java.net.URLEncoder
 
 const val strNull = "(byte[]) null"
 fun p(name: String, type: String, default: Any? = null) = SimpleParam(name, type, default)
@@ -232,7 +233,9 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 }
 
 fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder {
-  (default ?: GenGenTask.parser.map[name])?.let { append("  /**").append(it).appendln("*/") }
+  (default ?: GenGenTask.parser.map[name])?.let {
+    append("  /**").append(URLEncoder.encode(it)).appendln("*/")
+  }
   return this
 }
 

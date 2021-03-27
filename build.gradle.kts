@@ -50,6 +50,13 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_1_8
   }
 
+  tasks.withType<Javadoc>().configureEach {
+    (options as StandardJavadocDocletOptions).tags(
+        "apiNote:a:API Note:",
+        "implSpec:a:Implementation Requirements:",
+        "implNote:a:Implementation Note:")
+  }
+
   tasks.withType<Jar>().configureEach {
     archiveBaseName.set("jimgui-" + archiveBaseName.get())
   }
