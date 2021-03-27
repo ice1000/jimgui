@@ -10,7 +10,7 @@ val isCI = !System.getenv("CI").isNullOrBlank()
 
 subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.20.1"
+  version = "v0.20.2"
 
   apply {
     plugin("java")
@@ -75,7 +75,7 @@ subprojects {
       val githubUrl = "https://github.com/ice1000/jimgui"
       from(components["java"])
       groupId = "${project.group}"
-      artifactId = "${rootProject.name}-${project.name}"
+      artifactId = "${project.name}"
       version = "${project.version}"
       pom {
         description.set("Pure Java binding for dear-imgui")

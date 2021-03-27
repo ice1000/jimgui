@@ -196,9 +196,9 @@ compileJava.options.encoding = 'UTF-8'
 import org.apache.tools.ant.taskdefs.condition.Os
 // ...
 dependencies {
-  String jimguiVersion = 'v0.20.1'
-  implementation "org.ice1000.jimgui:jimgui-core:$jimguiVersion" // basic functionality
-  implementation "org.ice1000.jimgui:jimgui-kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
+  String jimguiVersion = 'v0.20.2'
+  implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
+  implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
 // ...
 tasks.withType(JavaExec).configureEach {
@@ -211,9 +211,9 @@ tasks.withType(JavaExec).configureEach {
 ```kotlin
 import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
-  val jimguiVersion = "v0.20.1"
-  implementation("org.ice1000.jimgui:jimgui-core:$jimguiVersion") // basic functionality
-  implementation("org.ice1000.jimgui:jimgui-kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+  val jimguiVersion = "v0.20.2"
+  implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
+  implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
 
 tasks.withType<JavaExec>().configureEach {
@@ -227,8 +227,8 @@ tasks.withType<JavaExec>().configureEach {
 <dependency>
   <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
-  <artifactId>jimgui-core</artifactId>
-  <version>v0.20.1</version>
+  <artifactId>core</artifactId>
+  <version>v0.20.2</version>
   <type>pom</type>
 </dependency>
 ```
