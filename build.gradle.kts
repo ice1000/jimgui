@@ -74,6 +74,7 @@ subprojects {
 
   publishing.publications {
     create<MavenPublication>("maven") {
+      val githubUrl = "https://github.com/ice1000/jimgui"
       from(components["java"])
       groupId = "${project.group}"
       artifactId = "${rootProject.name}-${project.name}"
@@ -82,7 +83,7 @@ subprojects {
       pom {
         description.set("Pure Java binding for dear-imgui")
         name.set(project.name)
-        url.set("https://github.com/ice1000/jimgui")
+        url.set(githubUrl)
         licenses {
           license {
             name.set("The Apache License, Version 2.0")
@@ -95,6 +96,10 @@ subprojects {
             name.set("Tesla Ice Zhang")
             email.set("ice1000kotlin@foxmail.com")
           }
+        }
+        scm {
+          connection.set("scm:git:$githubUrl")
+          url.set(githubUrl)
         }
       }
     }
