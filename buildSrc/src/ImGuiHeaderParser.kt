@@ -1,6 +1,7 @@
 package org.ice1000.gradle
 
 import java.io.File
+import java.net.URLEncoder
 
 /**
  * @author ice1000
@@ -40,6 +41,7 @@ class ImGuiHeaderParser {
           }
           .filter { (name, _) -> name.isNotEmpty() }
           .filter { (name, _) -> !name[0].isDigit() }
+          .map { (name, javadoc) -> name to URLEncoder.encode(javadoc) }
           .forEach { (name, javadoc) ->
             val original = map[name]
             if (original != null) map[name] = "$original\n  $javadoc"

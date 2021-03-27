@@ -43,17 +43,21 @@ subprojects {
     manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
   }
 
-  val sourcesJar = tasks.register<Jar>("sourcesJar") {
-    group = tasks.jar.get().group
-    from(sourceSets["main"].allJava)
-    archiveClassifier.set("sources")
+  java {
+    withSourcesJar()
+    withJavadocJar()
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
   }
 
   tasks.withType<Jar>().configureEach {
     archiveBaseName.set("jimgui-" + archiveBaseName.get())
   }
 
-  artifacts { add("archives", sourcesJar) }
+  artifacts {
+    add("archives", tasks["sourcesJar"])
+    add("archives", tasks["javadocJar"])
+  }
 
   signing {
     sign(configurations.archives.get())
