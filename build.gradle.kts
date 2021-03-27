@@ -90,7 +90,6 @@ subprojects {
       groupId = "${project.group}"
       artifactId = "${rootProject.name}-${project.name}"
       version = "${project.version}"
-      artifact(tasks.named("sourcesJar"))
       pom {
         description.set("Pure Java binding for dear-imgui")
         name.set(project.name)
