@@ -10,7 +10,7 @@ val isCI = !System.getenv("CI").isNullOrBlank()
 
 subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.20.0"
+  version = "v0.20.1"
 
   apply {
     plugin("java")
@@ -36,7 +36,6 @@ subprojects {
   if (org.ice1000.gradle.isMac) tasks.withType<JavaExec>().configureEach {
     jvmArgs("-XstartOnFirstThread")
   }
-
 
   java {
     withSourcesJar()

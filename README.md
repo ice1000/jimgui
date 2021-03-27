@@ -16,6 +16,9 @@ Linux Build | Windows Build
   [2]: https://ci.appveyor.com/api/projects/status/le5v5lne7au0lnn2?svg=true
   [3]: https://ci.appveyor.com/project/ice1000/jimgui
 
+To jcenter users: as the deprecation of jcenter, this library is now published to maven central since `v0.20`.
+Please update your repository setting to reflect the change.
+
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
 This binding is rather bare, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles.
@@ -127,8 +130,6 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
 
 # Usage
 
-Remember to add jcenter to your repositories.
-
 ## Code example
 
 ```java
@@ -195,9 +196,9 @@ compileJava.options.encoding = 'UTF-8'
 import org.apache.tools.ant.taskdefs.condition.Os
 // ...
 dependencies {
-  String jimguiVersion = 'v0.20.0'
-  implementation "org.ice1000:jimgui-core:$jimguiVersion" // basic functionality
-  implementation "org.ice1000:jimgui-kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
+  String jimguiVersion = 'v0.20.1'
+  implementation "org.ice1000.jimgui:core:$jimguiVersion" // basic functionality
+  implementation "org.ice1000.jimgui:kotlin-dsl:$jimguiVersion" // kotlin dsl wrapper
 }
 // ...
 tasks.withType(JavaExec).configureEach {
@@ -210,9 +211,9 @@ tasks.withType(JavaExec).configureEach {
 ```kotlin
 import org.apache.tools.ant.taskdefs.condition.Os
 dependencies {
-  val jimguiVersion = "v0.20.0"
-  implementation("org.ice1000:jimgui-core:$jimguiVersion") // basic functionality
-  implementation("org.ice1000:jimgui-kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
+  val jimguiVersion = "v0.20.1"
+  implementation("org.ice1000.jimgui:core:$jimguiVersion") // basic functionality
+  implementation("org.ice1000.jimgui:kotlin-dsl:$jimguiVersion") // kotlin dsl wrapper
 }
 
 tasks.withType<JavaExec>().configureEach {
@@ -224,10 +225,10 @@ tasks.withType<JavaExec>().configureEach {
 
 ```xml
 <dependency>
-  <groupId>org.ice1000</groupId>
+  <groupId>org.ice1000.jimgui</groupId>
   <!-- basic functionality -->
-  <artifactId>jimgui-core</artifactId>
-  <version>v0.20.0</version>
+  <artifactId>core</artifactId>
+  <version>v0.20.1</version>
   <type>pom</type>
 </dependency>
 ```
