@@ -52,7 +52,6 @@ subprojects {
   }
 
   tasks.withType<Jar>().configureEach {
-    archiveBaseName.set("jimgui-" + archiveBaseName.get())
     manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
   }
 
