@@ -62,7 +62,7 @@ public class Sandbox {
     byte[] buffer = new byte[500];
     JImGuiUtil.runWithinPer(9000, 10, imGui -> {
       JImFont font = imGui.getFont();
-      font.setFallbackChar('*');
+      // font.setFallbackChar('*');
       imGui.inputText("WTF", buffer);
       if (imGui.beginMainMenuBar()) {
         if (imGui.beginMenu("Main", true)) {

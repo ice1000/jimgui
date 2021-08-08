@@ -10,9 +10,6 @@
 #include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#define STBI_NO_LINEAR
-#define STBI_NO_HDR
-#define STBI_NO_GIF
 
 #include <stb_image.h>
 

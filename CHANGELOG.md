@@ -1,5 +1,10 @@
 ## Unreleased
 
++ Upgrade gradle to 7.1.1
++ Upgrade kotlin to 1.5.20
++ Removed `JImFont::setFallbackChar` as https://github.com/ocornut/imgui/commit/9440974f66422d63b2ee6c6288e942ecabd6a521
++ Update `stb_image`, imgui, and many other deps
+
 ## v0.20.3
 
 + Upgrade imgui

@@ -2,15 +2,15 @@ plugins {
   java
   `maven-publish`
   signing
-  kotlin("jvm") version "1.4.30" apply false
-  id("de.undercouch.download") version "4.1.1" apply false
+  kotlin("jvm") version "1.5.20" apply false
+  id("de.undercouch.download") version "4.1.2" apply false
 }
 
 val isCI = !System.getenv("CI").isNullOrBlank()
 
 subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.20.3"
+  version = "v0.21.0"
 
   apply {
     plugin("java")
