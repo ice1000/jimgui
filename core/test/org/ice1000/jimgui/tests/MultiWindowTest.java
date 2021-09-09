@@ -15,7 +15,7 @@ import static org.junit.Assume.assumeTrue;
 public class MultiWindowTest {
   @BeforeClass public static void setup() {
     useAlternativeJniLibAndCheckHeadless();
-    assumeTrue(JniLoader.Linux || JniLoader.OSX);
+    assumeTrue(JniLoader.OS.Current == JniLoader.OS.Linux || JniLoader.OS.Current == JniLoader.OS.MacOS);
   }
 
   @Test public void testSandbox() throws @NotNull NoSuchFieldException, @NotNull IllegalAccessException {
