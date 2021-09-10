@@ -33,8 +33,8 @@ public interface JniLoader {
           loadLib("libjimgui.so");
           break;
         default:
-          throw new UnsupportedOperationException("Unsupported platform 'linux" +
-              OS.Current.name().toLowerCase(Locale.ROOT) +
+          throw new UnsupportedOperationException("Unsupported platform 'linux-" +
+              System.getProperty("os.arch") +
               "', please submit issue to https://github.com/ice1000/jimgui/issues");
       }
     } else if (OS.Current == OS.Windows) {
@@ -60,8 +60,8 @@ public interface JniLoader {
           loadLib("libjimgui.dylib");
           break;
         default:
-          throw new UnsupportedOperationException("Unsupported platform 'linux" +
-              OS.Current.name().toLowerCase(Locale.ROOT) +
+          throw new UnsupportedOperationException("Unsupported platform 'macos-" +
+              System.getProperty("os.arch") +
               "', please submit issue to https://github.com/ice1000/jimgui/issues");
       }
     }
@@ -146,7 +146,7 @@ public interface JniLoader {
     X86, X86_64, ARM32, AArch64, Unknown;
     public static final Arch Current = detectArch();
     private static Arch detectArch() {
-      String arch = System.getProperty("os.arch").toLowerCase(Locale.ROOT).trim();
+      String arch = System.getProperty("os.arch", "").toLowerCase(Locale.ROOT).trim();
       switch (arch) {
         case "x86":
         case "i386":
