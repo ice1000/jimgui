@@ -41,7 +41,7 @@ Also, it doesn't separate jars for different platforms. One jar works on all pla
 
 ### Usability
 It is well-known that dear imgui doesn't have image loading out-of-the-box,
-but this library have, and it even has a wrapper for [aiekick/ImGuiFileDialog]
+but this library has, and it even has a wrapper for [aiekick/ImGuiFileDialog]
 and [Flix01/imguidatechooser] and some other minor widgets.
 
 ### Efficiency
@@ -183,10 +183,10 @@ runPer(10) {
 
 ## Using Unicode strings
 
-You can use `ImGuiFontAtlas` in order to extend glyph ranges for your font, which is needed if you want to display Unicode characters.
+You can use `ImGuiFontAtlas` to extend glyph ranges for your font, which is needed if you want to display Unicode characters.
 You can find more info about glyph ranges at the [dear-imgui repository](https://github.com/ocornut/imgui).
 
-Notice that in order to display Unicode characters you need to have your Java sources encoded and compiled as UTF-8. To compile the sources as UTF-8, add the following line to your `build.gradle`:
+Notice that to display Unicode characters you need to have your Java sources encoded and compiled as UTF-8. To compile the sources as UTF-8, add the following line to your `build.gradle`:
 
 ```groovy
 compileJava.options.encoding = 'UTF-8'

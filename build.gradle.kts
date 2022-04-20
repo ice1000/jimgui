@@ -2,8 +2,8 @@ plugins {
   java
   `maven-publish`
   signing
-  kotlin("jvm") version "1.5.20" apply false
-  id("de.undercouch.download") version "4.1.2" apply false
+  kotlin("jvm") version "1.6.21" apply false
+  id("de.undercouch.download") version "5.0.5" apply false
 }
 
 val isCI = !System.getenv("CI").isNullOrBlank()
