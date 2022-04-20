@@ -123,6 +123,7 @@ val downloadImpl = tasks.register<Download>("downloadImpl") {
   src("$imguiExamples/imgui_impl_glfw.h")
   src("$imguiExamples/imgui_impl_glfw.cpp")
   src("$imguiExamples/imgui_impl_opengl3.h")
+  src("$imguiExamples/imgui_impl_opengl3_loader.h")
   src("$imguiExamples/imgui_impl_opengl3.cpp")
   src("$imguiExamples/imgui_impl_dx9.h")
   src("$imguiExamples/imgui_impl_dx11.h")

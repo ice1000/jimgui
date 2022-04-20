@@ -1,6 +1,7 @@
 package org.ice1000.jimgui.features;
 
 import org.ice1000.jimgui.*;
+import org.ice1000.jimgui.flag.JImFDStyleFlags;
 import org.ice1000.jimgui.tests.Sandbox;
 import org.ice1000.jimgui.util.JniLoader;
 
@@ -23,8 +24,8 @@ public class FileDialogTest {
       while (!imGui.windowShouldClose()) {
         imGui.initNewFrame();
         imGui.checkbox("Use modal dialog", modal);
-        instance.setExtensionInfo(".java", Sandbox.fromAWT(Color.ORANGE), "[Java]");
-        instance.setExtensionInfo(".md", Sandbox.fromAWT(Color.BLUE), JImFileDialog.Icons.FILE_PIC.toString());
+        instance.setFileStyle(JImFDStyleFlags.ByExtension, ".java", Sandbox.fromAWT(Color.ORANGE), "[Java]");
+        instance.setFileStyle(JImFDStyleFlags.ByExtension, ".md", Sandbox.fromAWT(Color.BLUE), JImFileDialog.Icons.FILE_PIC.toString());
         if (imGui.button("Open dialog")) {
           if (modal.accessValue()) instance.openModal(key, title, filter, pwd, 2);
           else instance.openDialog(key, title, filter, pwd, 2);
