@@ -6,6 +6,7 @@
 + Upgrade kotlin to 1.6.21
 + Added JPMS support (with Java 8 compatibility)
 + Upgrade imgui
++ Added loong arch64 support
 
 ## v0.21.0
 
