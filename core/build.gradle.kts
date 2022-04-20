@@ -82,6 +82,7 @@ val generations = arrayOf(
     g<GenDrawListTask>(),
     g<GenStyleTask>(),
     g<GenTabBarFlags>(),
+    g<GenFDStyleFlags>(),
     g<GenItemFlags>(),
     g<GenBackendFlags>(),
     g<GenColorEditFlags>(),
@@ -112,7 +113,7 @@ val generations = arrayOf(
 val github = "https://raw.githubusercontent.com"
 /// It was my own fork, but now I'm using the official one
 val coding = "https://coding.net/u/ice1000/p"
-val imguiCoding = "$github/ocornut/imgui/master"
+val imguiCoding = "$github/ocornut/imgui/v1.86"
 val imguiFD = "$github/aiekick/ImGuiFileDialog"
 val imguiDTC = "$github/Flix01/imgui"
 val imguiExamples = "$imguiCoding/backends"

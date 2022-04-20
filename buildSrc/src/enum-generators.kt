@@ -12,9 +12,9 @@ abstract class GenEnumTask<T>(className: String) : GenJavaTask(className), Runna
     list.forEachIndexed { index, element ->
       append("  ")
       genStatement(index, element)
-      appendln(";")
+      appendLine(";")
     }
-    appendln('}')
+    appendLine('}')
   }.let { targetJavaFile.writeText(it) }
 
   open fun StringBuilder.genStatement(index: Int, element: T) {

@@ -20,20 +20,20 @@ abstract class GenFlagTask(className: String, @Input private vararg val list: Pa
     list.forEach { (name, value) ->
       val keyName = "${className.replace("JIm", "imGui")}_$name"
       val comment = GenGenTask.parser.map[keyName]
-      if (comment != null) append("  /**").append(URLEncoder.encode(comment)).appendln("*/")
+      if (comment != null) append("  /**").append(URLEncoder.encode(comment)).appendLine("*/")
       append("  ")
       genStatement(name, value)
-      appendln(";")
+      appendLine(";")
     }
-    appendln("  enum Type implements Flag {")
+    appendLine("  enum Type implements Flag {")
     preType()
     list.forEach { (name, _) ->
-      append("    ").append(name).append("(").append(className).append(".").append(name).appendln("),")
+      append("    ").append(name).append("(").append(className).append(".").append(name).appendLine("),")
     }
-    appendln("    ;\n    public final int flag;")
-        .appendln("    Type(int flag) { this.flag = flag; }")
-        .appendln("    @Override public int get() { return flag; }")
-    appendln("  }").appendln('}')
+    appendLine("    ;\n    public final int flag;")
+        .appendLine("    Type(int flag) { this.flag = flag; }")
+        .appendLine("    @Override public int get() { return flag; }")
+    appendLine("  }").appendLine('}')
   }.let { targetJavaFile.writeText(it) }
 
   open fun StringBuilder.preType() {
@@ -119,6 +119,17 @@ open class GenBackendFlags : GenFlagTask(
     "RendererHasVtxOffset" to "1 << 3",
 )
 
+open class GenFDStyleFlags : GenFlagTask(
+    "JImFDStyleFlags",
+	"None" to "0",
+	"ByTypeFile" to "1 << 0",
+	"ByTypeDir" to "1 << 1",
+	"ByTypeLink" to "1 << 2",
+	"ByExtension" to "1 << 3",
+	"ByFullName" to "1 << 4",
+	"ByContainedInFullName" to "1 << 5",
+)
+
 open class GenCond : GenFlagTask(
     "JImCond",
     "None" to "0",
@@ -199,10 +210,12 @@ open class GenHoveredFlags : GenFlagTask(
     "ChildWindows" to "1 << 0",
     "RootWindow" to "1 << 1",
     "AnyWindow" to "1 << 2",
-    "AllowWhenBlockedByPopup" to "1 << 3",
-    "AllowWhenBlockedByActiveItem" to "1 << 5",
-    "AllowWhenOverlapped" to "1 << 6",
-    "AllowWhenDisabled" to "1 << 7",
+    "NoPopupHierarchy" to "1 << 3",
+    "AllowWhenBlockedByPopup" to "1 << 5",
+    "AllowWhenBlockedByActiveItem" to "1 << 7",
+    "AllowWhenOverlapped" to "1 << 8",
+    "AllowWhenDisabled" to "1 << 9",
+    // "NoNavOverride" to "1 << 10",
     "RectOnly" to "AllowWhenBlockedByPopup | AllowWhenBlockedByActiveItem | AllowWhenOverlapped",
     "RootAndChildWindows" to "RootWindow | ChildWindows",
 )
@@ -226,6 +239,7 @@ open class GenFocusedFlags : GenFlagTask(
     "ChildWindows" to "1 << 0",
     "RootWindow" to "1 << 1",
     "AnyWindow" to "1 << 2",
+    "NoPopupHierarchy" to "1 << 2",
     "RootAndChildWindows" to "RootWindow | ChildWindows",
 )
 
@@ -407,7 +421,7 @@ open class GenMouseButton : GenFlagTask(
     "ExtraB" to "4",
 ) {
   override fun StringBuilder.preType() {
-    appendln("""		/**
+    appendLine("""		/**
      * Used for reverse lookup results and enum comparison.
      * Return the None or Default flag to prevent errors.
      */

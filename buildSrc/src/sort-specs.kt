@@ -15,7 +15,7 @@ open class GenTableSortSpecsTask : GenTask("JImTableSortSpecsGen", "imgui_table_
 """
 
   override fun `c++`(cppCode: StringBuilder) {
-    cppCode.appendln(`c++PrimitiveAccessor`("int", "SpecsCount", "jlong nativeObjectPtr"))
+    cppCode.appendLine(`c++PrimitiveAccessor`("int", "SpecsCount", "jlong nativeObjectPtr"))
         .append(`c++BooleanAccessor`("SpecsDirty", "jlong nativeObjectPtr"))
   }
 

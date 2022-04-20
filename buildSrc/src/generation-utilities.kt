@@ -234,7 +234,7 @@ data class ImVec2Param(val nameX: String, val nameY: String, override val defaul
 
 fun StringBuilder.javadoc(name: String, default: String? = null): StringBuilder {
   (default ?: GenGenTask.parser.map[name])?.let {
-    append("  /**").append(URLEncoder.encode(it)).appendln("*/")
+    append("  /**").append(URLEncoder.encode(it)).appendLine("*/")
   }
   return this
 }

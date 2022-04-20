@@ -40,10 +40,10 @@ open class GenFDTask : GenTask("JImFileDialogGen", "imgui_file_dialog", since = 
       Fun("isOk", "boolean", nativeObjectPtr),
       Fun("wasOpenedThisFrame", "boolean", key, nativeObjectPtr),
       Fun("isOpened", "boolean", string("text"), nativeObjectPtr),
-      Fun("setExtensionInfo", filters, vec4("color"), string("text"), nativeObjectPtr),
-      Fun("getExtensionInfo", "boolean",
-          filters, vec4Ptr("color"), stringPtr("text"),
+      Fun("setFileStyle", flags(from = "FDStyle"), string("criteria"), vec4("color"), string("icon"), nativeObjectPtr),
+      Fun("getFileStyle", flags(from = "FDStyle"),
+          string("criteria"), vec4Ptr("color"), stringPtr("icon"),
           nativeObjectPtr),
-      Fun("clearExtensionInfo", nativeObjectPtr),
+      Fun("clearFilesStyle", nativeObjectPtr),
   )
 }

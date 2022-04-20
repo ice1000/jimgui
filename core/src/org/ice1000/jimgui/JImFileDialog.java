@@ -1,7 +1,7 @@
 package org.ice1000.jimgui;
 
 import org.ice1000.jimgui.cpp.DeallocatableObject;
-import org.ice1000.jimgui.flag.JImWindowFlags;
+import org.ice1000.jimgui.flag.*;
 import org.intellij.lang.annotations.MagicConstant;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,12 +18,12 @@ public final class JImFileDialog extends JImFileDialogGen implements Deallocatab
     super(allocateNativeObject());
   }
 
-  public void setExtensionInfo(@NotNull String filters, @NotNull JImVec4 color) {
-    setExtensionInfo(filters, color, "");
+  public void setFileStyle(@MagicConstant(flagsFromClass = JImFDStyleFlags.class) int flags, @NotNull String criteria, @NotNull JImVec4 color) {
+    setFileStyle(flags, criteria, color, "");
   }
 
-  public void setExtensionInfo(@NotNull JImStr filters, @NotNull JImVec4 color) {
-    setExtensionInfo(filters, color, JImStr.EMPTY);
+  public void setFileStyle(@MagicConstant(flagsFromClass = JImFDStyleFlags.class) int flags, @NotNull JImStr criteria, @NotNull JImVec4 color) {
+    setFileStyle(flags, criteria, color, JImStr.EMPTY);
   }
 
   public boolean display(

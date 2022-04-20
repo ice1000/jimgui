@@ -128,8 +128,6 @@ open class GenGenTask : GenTask("JImGuiGen", "imgui") {
       Fun("isWindowHovered", "boolean", flags(from = "Hovered", default = "None")),
       Fun("getWindowWidth", "float"),
       Fun("getWindowHeight", "float"),
-      // Fun("getContentRegionAvailWidth", "float"),
-      Fun("getWindowContentRegionWidth", "float"),
 
       Fun("setNextWindowPos", pos, cond, pos("windowPosPivot", default = "0,0")),
       Fun("setNextWindowSize", size(), cond),
