@@ -1,5 +1,12 @@
 ## Unreleased
 
+## v0.22.0
+
++ Upgrade gradle to 7.4.1
++ Upgrade kotlin to 1.6.21
++ Added JPMS support (with Java 8 compatibility)
++ Upgrade imgui
+
 ## v0.21.0
 
 + Upgrade gradle to 7.1.1
