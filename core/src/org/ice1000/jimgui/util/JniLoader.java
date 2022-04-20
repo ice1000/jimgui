@@ -32,6 +32,12 @@ public interface JniLoader {
         case X86_64:
           loadLib("libjimgui.so");
           break;
+        case AArch64:
+          loadLib("libjimgui-aarch64.so");
+          break;
+        case LoongArch64:
+          loadLib("libjimgui-loongarch64.so");
+          break;
         default:
           throw new UnsupportedOperationException("Unsupported platform 'linux-" +
               System.getProperty("os.arch") +
