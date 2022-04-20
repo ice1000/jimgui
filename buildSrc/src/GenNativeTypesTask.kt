@@ -1,21 +1,27 @@
 package org.ice1000.gradle
 
+import org.gradle.api.tasks.OutputFiles
 import org.gradle.api.tasks.TaskAction
 
 open class GenNativeTypesTask : GenJavaTask(""), Runnable {
+  private val types = listOf(
+      "Int" to "int",
+      "Float" to "float",
+      "Double" to "double",
+      "Short" to "short",
+      // "Byte" to "byte",
+      // "Char" to "char",
+      "Long" to "long"
+  )
+
+  @OutputFiles
+  val outputFiles = types.map { (it, _) ->  targetJavaFile.parentFile.resolve("Native$it.java")}
+
   @TaskAction
   override fun run() {
     val cppPackage = targetJavaFile.parentFile
     cppPackage.mkdirs()
-    listOf(
-        "Int" to "int",
-        "Float" to "float",
-        "Double" to "double",
-        "Short" to "short",
-        // "Byte" to "byte",
-        // "Char" to "char",
-        "Long" to "long"
-    ).forEach { (it, java) ->
+    types.forEach { (it, java) ->
       cppPackage
           .resolve("Native$it.java")
           .apply { if (!exists()) createNewFile() }
