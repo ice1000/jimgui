@@ -171,7 +171,7 @@ val downloadDateTimeChooser = tasks.register<Download>("downloadDateTimeChooser"
 
 val downloadFiraCode = tasks.register<Download>("downloadFiraCode") {
   group = downloadGroup
-  src("$github/tonsky/FiraCode/master/distr/ttf/FiraCode-Regular.ttf")
+  src("$github/tonsky/FiraCode/f1f97679985487deaa1f7f178f36f4a1a7910154/distr/ttf/FiraCode-Regular.ttf")
   dest(file("testRes/font/FiraCode-Regular.ttf"))
   overwrite(false)
 }
