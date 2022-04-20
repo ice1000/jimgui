@@ -57,6 +57,7 @@ public interface JniLoader {
     } else if (OS.Current == OS.MacOS) {
       switch (Arch.Current) {
         case X86_64:
+        case AArch64:
           loadLib("libjimgui.dylib");
           break;
         default:
@@ -112,15 +113,6 @@ public interface JniLoader {
         return MacOS;
       }
 
-    /* TODO
-    if (osName.startsWith("darwin")) {
-      if ("robovm".equals(jvmName)) {
-        return "ios";
-      }
-      return "darwin";
-    }
-     */
-
       if (osName.startsWith("linux") || osName.equals("gnu")) {
         if (jvmName.equals("dalvik")) {
           // return "android";
@@ -129,21 +121,12 @@ public interface JniLoader {
         return Linux;
       }
 
-    /* TODO
-    if (osName.startsWith("solaris") || osName.startsWith("sunos")) {
-      return "solaris";
-    }
-    if (osName.startsWith("freebsd")) {
-      return "freebsd";
-    }
-     */
-
       return Unknown;
     }
   }
 
   enum Arch {
-    X86, X86_64, ARM32, AArch64, Unknown;
+    X86, X86_64, ARM32, AArch64, LoongArch64, Unknown;
     public static final Arch Current = detectArch();
     private static Arch detectArch() {
       String arch = System.getProperty("os.arch", "").toLowerCase(Locale.ROOT).trim();
@@ -159,16 +142,8 @@ public interface JniLoader {
         case "x86_64":
         case "amd64":
           return X86_64;
-    /* TODO
-      case "mips":
-        return "mips";
-      case "mips64":
-        return "mips64";
-      case "mipsel":
-        return "mipsel";
-      case "mips64el":
-        return "mips64el";
-     */
+        case "loongarch64":
+          return LoongArch64;
       }
 
       if (arch.startsWith("aarch64") || arch.startsWith("armv8") || arch.startsWith("arm64")) {
