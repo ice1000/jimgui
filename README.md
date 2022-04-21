@@ -23,7 +23,8 @@ Please update your repository setting to reflect the change.
 
 Cross-platform efficient pure Java binding for [dear-imgui](https://github.com/ocornut/imgui), Kotlin is used as code generation tool.
 
-This binding is rather bare, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles.
+This binding is rather bare-metal, that reflects imgui's API directly. I think it's good enough, but you may expect some other styles of bindings.
+
 There is a declarative wrapper of jimgui, namely [flui](https://github.com/newk5/flui) available.
 
 ## Features
@@ -37,7 +38,7 @@ It hides everything about rendering behind-the-scene,
 so you don't need to worry about GLFW, OpenGL or DirectX stuffs
 (speaking of lwjgl or jogl integration -- see [#18], it's hard).
 
-Also, it doesn't separate jars for different platforms. One jar works on all platforms.
+Also, it doesn't separate jars for different platforms. One jar works on all supported platforms.
 
 ### Usability
 It is well-known that dear imgui doesn't have image loading out-of-the-box,
@@ -116,7 +117,8 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
 
 + Linux native library with glfw3 + opengl3 implementation
   + [ ] 32-bit hosted on ?
-  + [X] 64-bit hosted on CircleCI
+  + [X] 64-bit amd64 hosted on CircleCI (Ubuntu 20.04)
+  + [X] 64-bit aarch64, loongarch64 built by @Glavo
 + WindowsXP+ native library
   + with glfw + opengl3 implementation (no longer maintained)
     + [ ] 32-bit hosted on ?
@@ -128,7 +130,7 @@ For macOS users, make sure you add `-XstartOnFirstThread` JVM argument when runn
   + [X] 32-bit hosted on my laptop
   + [X] 64-bit hosted on my laptop
 + MacOS native library with Cocoa, glut as additions to Linux implementation
-  + [X] hosted on @newk5 's VM
+  + [X] built by @imkiva (built by @newk5 's VM in the past)
 
 # Usage
 
