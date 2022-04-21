@@ -4,7 +4,7 @@ buildscript {
   }
 
   dependencies {
-    classpath("org.glavo:module-info-compiler:1.2")
+    classpath("org.glavo:module-info-compiler:1.5")
   }
 }
 
