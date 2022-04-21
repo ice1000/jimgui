@@ -1,3 +1,13 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.glavo:module-info-compiler:1.2")
+  }
+}
+
 plugins {
   java
   `maven-publish`
@@ -10,7 +20,7 @@ val isCI = !System.getenv("CI").isNullOrBlank()
 
 subprojects {
   group = "org.ice1000.jimgui"
-  version = "v0.21.0"
+  version = "v0.22.0"
 
   apply {
     plugin("java")
@@ -51,8 +61,16 @@ subprojects {
         "implNote:a:Implementation Note:")
   }
 
-  tasks.withType<Jar>().configureEach {
-    manifest.attributes("Automatic-Module-Name" to "ice1000.jimgui")
+  if (file("module-info.java").exists()) {
+    val compileModuleInfo = tasks.register<org.glavo.mic.tasks.CompileModuleInfo>("compileModuleInfo") {
+      sourceFile.set(file("module-info.java"))
+      targetFile.set(buildDir.resolve("classes/java/module-info/module-info.class"))
+    }
+
+    tasks.jar {
+      dependsOn(compileModuleInfo)
+      from(compileModuleInfo.get().targetFile)
+    }
   }
 
   artifacts {

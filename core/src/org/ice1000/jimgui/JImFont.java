@@ -15,6 +15,7 @@ public final class JImFont extends JImGuiFontGen {
    */
   @Contract(pure = true) JImFont(long nativeObjectPtr) {
     super(nativeObjectPtr);
+    if (nativeObjectPtr == 0) throw new NullPointerException();
   }
 
   @Contract("->new") public @NotNull NativeString debugName() {
