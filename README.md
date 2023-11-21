@@ -1,12 +1,8 @@
 # jimgui
 
 [![Join the chat at https://gitter.im/imgui-java/community](https://badges.gitter.im/imgui-java/community.svg)](https://gitter.im/imgui-java/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Version][badge-img]][badge-link]
-[![Bintray](https://img.shields.io/bintray/dt/ice1000/ice1000/jimgui)][badge-link]
 [![Maven Central](https://img.shields.io/maven-central/v/org.ice1000.jimgui/core)][maven-link]
 
-  [badge-img]: https://img.shields.io/bintray/v/ice1000/ice1000/jimgui.svg
-  [badge-link]: https://bintray.com/ice1000/ice1000/jimgui
   [maven-link]: https://mvnrepository.com/artifact/org.ice1000.jimgui/core
 
 Linux Build | Windows Build
